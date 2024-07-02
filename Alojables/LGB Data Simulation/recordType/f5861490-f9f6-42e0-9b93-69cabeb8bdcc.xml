@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<recordTypeHaul xmlns:a="http://www.appian.com/ae/types/2009" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <versionUuid>3d5205e7-e846-4788-8e7f-6256139691c0</versionUuid>
+  <recordType a:uuid="f5861490-f9f6-42e0-9b93-69cabeb8bdcc" name="LDS prueba cdt relacionado">
+    <a:pluralName>prueba cdt relacionados</a:pluralName>
+    <a:description>esta relacionado valores con columnas</a:description>
+    <a:urlStub>blpD6Q</a:urlStub>
+    <a:source xsi:type="a:RecordsReplica"/>
+    <a:listViewTemplateExpr>#"SYSTEM_SYSRULES_recordGridField"(
+  columns: {
+    #"SYSTEM_SYSRULES_gridColumn"(
+      label: "Id Catalogo",
+      sortField: 'recordType!{f5861490-f9f6-42e0-9b93-69cabeb8bdcc}LDS prueba cdt relacionado.fields.{e5d4409d-9100-46b4-afe6-bc4643bf160b}idCatalogo',
+      value: fv!row['recordType!{f5861490-f9f6-42e0-9b93-69cabeb8bdcc}LDS prueba cdt relacionado.fields.{e5d4409d-9100-46b4-afe6-bc4643bf160b}idCatalogo'],
+      align: "END"
+    ),
+    #"SYSTEM_SYSRULES_gridColumn"(
+      label: "Id Columna",
+      sortField: 'recordType!{f5861490-f9f6-42e0-9b93-69cabeb8bdcc}LDS prueba cdt relacionado.fields.{8f7e6353-ee94-41bc-a965-870888dc24d5}idColumna',
+      value: #"SYSTEM_SYSRULES_linkField"(
+        links: {
+          #"SYSTEM_SYSRULES_recordLink"(
+            label: fv!row['recordType!{f5861490-f9f6-42e0-9b93-69cabeb8bdcc}LDS prueba cdt relacionado.fields.{8f7e6353-ee94-41bc-a965-870888dc24d5}idColumna'],
+            recordType: #"urn:appian:record-type:v1:f5861490-f9f6-42e0-9b93-69cabeb8bdcc",
+            identifier: fv!identifier
+          )
+        }
+      ),
+      align: "END"
+    ),
+    #"SYSTEM_SYSRULES_gridColumn"(
+      label: "Nombre",
+      sortField: 'recordType!{f5861490-f9f6-42e0-9b93-69cabeb8bdcc}LDS prueba cdt relacionado.fields.{a35527bb-bee0-4c56-88e3-7a9e9291c0d9}nombre',
+      value: fv!row['recordType!{f5861490-f9f6-42e0-9b93-69cabeb8bdcc}LDS prueba cdt relacionado.fields.{a35527bb-bee0-4c56-88e3-7a9e9291c0d9}nombre']
+    ),
+    #"SYSTEM_SYSRULES_gridColumn"(
+      label: "Valor",
+      sortField: 'recordType!{f5861490-f9f6-42e0-9b93-69cabeb8bdcc}LDS prueba cdt relacionado.fields.{e48caa90-a147-4f3a-98c0-432f16807d3c}valor',
+      value: fv!row['recordType!{f5861490-f9f6-42e0-9b93-69cabeb8bdcc}LDS prueba cdt relacionado.fields.{e48caa90-a147-4f3a-98c0-432f16807d3c}valor']
+    ),
+    #"SYSTEM_SYSRULES_gridColumn"(
+      label: "Idvalor",
+      sortField: 'recordType!{f5861490-f9f6-42e0-9b93-69cabeb8bdcc}LDS prueba cdt relacionado.fields.{4fc8787b-b344-4961-bae3-7b017f4ea4f2}idvalor',
+      value: fv!row['recordType!{f5861490-f9f6-42e0-9b93-69cabeb8bdcc}LDS prueba cdt relacionado.fields.{4fc8787b-b344-4961-bae3-7b017f4ea4f2}idvalor'],
+      align: "END"
+    ),
+    #"SYSTEM_SYSRULES_gridColumn"(
+      label: "Version",
+      sortField: 'recordType!{f5861490-f9f6-42e0-9b93-69cabeb8bdcc}LDS prueba cdt relacionado.fields.{710d758b-2c3e-4e63-bbc2-541e0ac66677}version',
+      value: fv!row['recordType!{f5861490-f9f6-42e0-9b93-69cabeb8bdcc}LDS prueba cdt relacionado.fields.{710d758b-2c3e-4e63-bbc2-541e0ac66677}version'],
+      align: "END"
+    )
+  },
+  pageSize: 50,
+  shadeAlternateRows: true
+)</a:listViewTemplateExpr>
+    <a:detailViewCfg>
+      <a:nameExpr>#"SYSTEM_SYSRULES_rtd_getDefaultSummaryViewName"()</a:nameExpr>
+      <a:uiExpr/>
+      <a:visibilityExpr>=true()</a:visibilityExpr>
+      <a:urlStub>summary</a:urlStub>
+      <a:headerExpr/>
+      <a:recordActionLaunchType>DIALOG</a:recordActionLaunchType>
+      <a:recordUiSecurityType>EXPRESSION</a:recordUiSecurityType>
+    </a:detailViewCfg>
+    <a:isSystem>false</a:isSystem>
+    <a:dataSrcExpr/>
+    <a:facetsListExpr/>
+    <a:titleExpr>rv!record[#"urn:appian:record-field:v1:f5861490-f9f6-42e0-9b93-69cabeb8bdcc/a35527bb-bee0-4c56-88e3-7a9e9291c0d9"]</a:titleExpr>
+    <a:defaultFiltersExpr/>
+    <a:layoutType>GRID</a:layoutType>
+    <a:security>16383</a:security>
+    <a:hideLatestNews>false</a:hideLatestNews>
+    <a:hideNewsView>false</a:hideNewsView>
+    <a:hideRelatedActionsView>false</a:hideRelatedActionsView>
+    <a:isExportable>true</a:isExportable>
+    <a:listViewSrcExpr/>
+    <a:recordViewSrcExpr/>
+    <a:recordTypeSearchCfg>
+      <searchFieldsSrc>DEFAULT</searchFieldsSrc>
+      <placeholderSrc>DEFAULT</placeholderSrc>
+      <placeholder/>
+    </a:recordTypeSearchCfg>
+    <a:iconId/>
+    <a:listAutoRefreshInterval>0.0</a:listAutoRefreshInterval>
+    <a:sourceConfiguration>
+      <sourceUuid>ValoresCatalogo@jdbc/Appian</sourceUuid>
+      <sourceType>RDBMS_TABLE</sourceType>
+      <sourceSubType>NONE</sourceSubType>
+      <friendlyName>ValoresCatalogo</friendlyName>
+      <sourceFilterExpr/>
+      <field>
+        <uuid>e5d4409d-9100-46b4-afe6-bc4643bf160b</uuid>
+        <type>{http://www.appian.com/ae/types/2009}Integer</type>
+        <sourceFieldName>ID_CATALOGO</sourceFieldName>
+        <sourceFieldType>INTEGER</sourceFieldType>
+        <fieldName>idCatalogo</fieldName>
+        <isRecordId>false</isRecordId>
+        <isUnique>false</isUnique>
+        <isCustomField>false</isCustomField>
+        <customFieldExpr/>
+        <fieldCalculationType>NA</fieldCalculationType>
+        <fieldTemplateType>NA</fieldTemplateType>
+        <isRollingSyncSortField>false</isRollingSyncSortField>
+      </field>
+      <field>
+        <uuid>8f7e6353-ee94-41bc-a965-870888dc24d5</uuid>
+        <type>{http://www.appian.com/ae/types/2009}Integer</type>
+        <sourceFieldName>Id_Columna</sourceFieldName>
+        <sourceFieldType>INTEGER</sourceFieldType>
+        <fieldName>idColumna</fieldName>
+        <isRecordId>false</isRecordId>
+        <isUnique>false</isUnique>
+        <isCustomField>false</isCustomField>
+        <customFieldExpr/>
+        <fieldCalculationType>NA</fieldCalculationType>
+        <fieldTemplateType>NA</fieldTemplateType>
+        <isRollingSyncSortField>false</isRollingSyncSortField>
+      </field>
+      <field>
+        <uuid>a35527bb-bee0-4c56-88e3-7a9e9291c0d9</uuid>
+        <type>{http://www.appian.com/ae/types/2009}Text</type>
+        <sourceFieldName>Nombre</sourceFieldName>
+        <sourceFieldType>VARCHAR(255)</sourceFieldType>
+        <fieldName>nombre</fieldName>
+        <isRecordId>false</isRecordId>
+        <isUnique>false</isUnique>
+        <isCustomField>false</isCustomField>
+        <customFieldExpr/>
+        <fieldCalculationType>NA</fieldCalculationType>
+        <fieldTemplateType>NA</fieldTemplateType>
+        <isRollingSyncSortField>false</isRollingSyncSortField>
+      </field>
+      <field>
+        <uuid>e48caa90-a147-4f3a-98c0-432f16807d3c</uuid>
+        <type>{http://www.appian.com/ae/types/2009}Text</type>
+        <sourceFieldName>Valor</sourceFieldName>
+        <sourceFieldType>VARCHAR(255)</sourceFieldType>
+        <fieldName>valor</fieldName>
+        <isRecordId>false</isRecordId>
+        <isUnique>false</isUnique>
+        <isCustomField>false</isCustomField>
+        <customFieldExpr/>
+        <fieldCalculationType>NA</fieldCalculationType>
+        <fieldTemplateType>NA</fieldTemplateType>
+        <isRollingSyncSortField>false</isRollingSyncSortField>
+      </field>
+      <field>
+        <uuid>4fc8787b-b344-4961-bae3-7b017f4ea4f2</uuid>
+        <type>{http://www.appian.com/ae/types/2009}Integer</type>
+        <sourceFieldName>IdValor</sourceFieldName>
+        <sourceFieldType>INTEGER</sourceFieldType>
+        <fieldName>idvalor</fieldName>
+        <isRecordId>true</isRecordId>
+        <isUnique>true</isUnique>
+        <isCustomField>false</isCustomField>
+        <customFieldExpr/>
+        <fieldCalculationType>NA</fieldCalculationType>
+        <fieldTemplateType>NA</fieldTemplateType>
+        <isRollingSyncSortField>false</isRollingSyncSortField>
+      </field>
+      <field>
+        <uuid>710d758b-2c3e-4e63-bbc2-541e0ac66677</uuid>
+        <type>{http://www.appian.com/ae/types/2009}Integer</type>
+        <sourceFieldName>Version</sourceFieldName>
+        <sourceFieldType>INTEGER</sourceFieldType>
+        <fieldName>version</fieldName>
+        <isRecordId>false</isRecordId>
+        <isUnique>false</isUnique>
+        <isCustomField>false</isCustomField>
+        <customFieldExpr/>
+        <fieldCalculationType>NA</fieldCalculationType>
+        <fieldTemplateType>NA</fieldTemplateType>
+        <isRollingSyncSortField>false</isRollingSyncSortField>
+      </field>
+      <uuid>7b6530ca-0f70-471b-baf0-371f6b603d8e</uuid>
+      <refreshSchedule>
+        <frequency>DAILY</frequency>
+        <value>{"hour":3,"minute":"00","amPM":"AM","timeZone":"America/Shiprock","version":"v1"}</value>
+        <activated>false</activated>
+      </refreshSchedule>
+      <skipFailureEnabled>true</skipFailureEnabled>
+      <recordIdGeneratorUuid/>
+    </a:sourceConfiguration>
+    <a:enabledFeatures>63</a:enabledFeatures>
+    <a:isVisibleInRecordTypeList>false</a:isVisibleInRecordTypeList>
+    <a:recordActionLaunchType>DIALOG</a:recordActionLaunchType>
+    <a:showSearchBox>true</a:showSearchBox>
+    <a:isVisibleInDataFabric>false</a:isVisibleInDataFabric>
+    <a:usesRollingSyncLimit>false</a:usesRollingSyncLimit>
+  </recordType>
+  <roleMap>
+    <role name="record_type_administrator">
+      <users/>
+      <groups>
+        <groupUuid>179978b4-25a6-4689-80bc-3a0f375b5095</groupUuid>
+      </groups>
+    </role>
+    <role name="record_type_viewer">
+      <users/>
+      <groups>
+        <groupUuid>79060724-da23-4650-b537-1f6abdecfc5e</groupUuid>
+      </groups>
+    </role>
+  </roleMap>
+  <history>
+    <historyInfo versionUuid="3d5205e7-e846-4788-8e7f-6256139691c0"/>
+  </history>
+  <migrationVersion>1</migrationVersion>
+</recordTypeHaul>

@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000e9da-6135-8000-9bdc-011c48011c48_1312172</versionUuid>
+    <interface>
+        <name>LDS_UploadExcelRober</name>
+        <uuid>_a-0000e9da-6135-8000-9bdc-011c48011c48_1311981</uuid>
+        <description>prueba de recopilación de información de un Excel</description>
+        <parentUuid>5778bf9b-b623-4528-97d1-4c0cd0e75708</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>a!localVariables(
+  local!nombre,
+
+  local!excel: readexcelsheet(
+    excelDocument: ri!Excel,
+    sheetNumber: 0,
+    startRow: 0,
+    numberOfColumns: 0
+  ).result.values,
+  local!columnas: local!excel[1],
+  local!catalogo: a!map( idcatalogo: 1, nombre: "documentoPrueba" ),
+  local!numeroRegistros: count(local!columnas),
+  local!data: readexcelsheet(
+    excelDocument: ri!excel,
+    sheetNumber: 0,
+    startRow: 2,
+    numberOfColumns: 0
+  ).result.values,
+  local!ValoresCDT: #"SYSTEM_SYSRULES_forEach"(
+    items: local!data,
+    expression: a!localVariables(
+      local!valorData: fv!item,
+      #"SYSTEM_SYSRULES_forEach"(
+        items: local!columnas,
+        expression: 'type!{urn:com:appian:types:LDS}LDS_ValoresCatalogo'(
+          nombre: fv!item,
+          valor: local!valorData[fv!index]
+        )
+      )
+    )
+  ),
+  local!columnaCDT: #"SYSTEM_SYSRULES_forEach"(
+    items: local!columnas,
+    expression: 
+    'type!{urn:com:appian:types:LDS}LDS_ColumnasPex'(
+      nombreclave: local!nombre,
+      nombrecolumna: fv!item,
+      idCatalogo: local!catalogo.idcatalogo
+    )  
+  ),
+  #"SYSTEM_SYSRULES_formLayout_v1"(
+    label: "",
+    contents: {
+      #"SYSTEM_SYSRULES_sectionLayout_v1"(
+        contents: {
+          #"SYSTEM_SYSRULES_fileUploadField_v1"(
+            label: "Subir archivo",
+            labelPosition: "ABOVE",
+            target: #"_a-0000e9da-6135-8000-9bdc-011c48011c48_1310963",
+            value: ri!Excel,
+            saveInto: ri!Excel,
+            validations: {}
+          )
+        }
+      ),
+      #"SYSTEM_SYSRULES_textField"(
+        label: "Elige el nombre de tu Nueva Base de informacion?",
+        labelPosition: "ABOVE",
+        value: local!nombre,
+        saveInto: local!nombre,
+        refreshAfter: "UNFOCUS",
+        validations: {}
+      ),
+      #"SYSTEM_SYSRULES_textField"(
+        label: "Columnas",
+        labelPosition: "ABOVE",
+        value: #"SYSTEM_SYSRULES_forEach"(
+          items: local!columnas,
+          expression: concat(fv!index, ": ", fv!item, char(10))
+        ),
+        saveInto: {},
+        refreshAfter: "UNFOCUS",
+        validations: {}
+      ),
+      #"SYSTEM_SYSRULES_sectionLayout_v1"(
+        label: "Section",
+        contents: {
+          /*a!forEach(*/
+          /*items: local!ValoresCDT,*/
+          /*expression: a!paragraphField(value: fv!item)*/
+          /*)*/
+          #"SYSTEM_SYSRULES_gridField_v1"(
+            data: local!ValoresCDT,
+            columns: {
+              #"SYSTEM_SYSRULES_gridColumn"(
+                label: "valor",
+                value: fv!row.valor ),
+                #"SYSTEM_SYSRULES_gridColumn"(
+                  label: "nombre",
+                  value: fv!row.nombre )
+            }
+          )
+        }
+      )
+    },
+    buttons: #"SYSTEM_SYSRULES_ButtonLayout"(
+      primaryButtons: {
+        #"SYSTEM_SYSRULES_ButtonWidget"(
+          label: "Submit",
+          saveInto: { a!save(ri!columns, local!columnaCDT) },
+          submit: true,
+          style: "PRIMARY"
+        )
+      },
+      secondaryButtons: {
+        #"SYSTEM_SYSRULES_ButtonWidget"(
+          label: "Cancel",
+          value: true,
+          saveInto: ri!cancel,
+          submit: true,
+          style: "NORMAL",
+          validate: false
+        )
+      }
+    )
+  )
+)</definition>
+        <namedTypedValue>
+            <name>cancel</name>
+            <type>
+                <name>boolean</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>Excel</name>
+            <type>
+                <name>CollaborationDocument</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>columns</name>
+            <type>
+                <name>LDS_ColumnasPex?list</name>
+                <namespace>urn:com:appian:types:LDS</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+        <isCustom>false</isCustom>
+    </interface>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000e9da-6135-8000-9bdc-011c48011c48_1312172"/>
+    </history>
+</contentHaul>

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<dataStoreHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000ea4d-d74a-8000-9bde-011c48011c48_1322178</versionUuid>
+    <dataStore>
+        <uuid>_a-0000e9da-6135-8000-9bdc-011c48011c48_1310885</uuid>
+        <name>LDS DatosEntreLazados</name>
+        <description>se ocupara este data store para relacionar los datos de catalogos</description>
+        <dataSourceKey>jdbc/Appian</dataSourceKey>
+        <adaptingExplicitSqlNames>false</adaptingExplicitSqlNames>
+        <autoUpdateSchema>true</autoUpdateSchema>
+        <entities>
+            <entity>
+                <uuid>8a590a62-ec76-4f03-9c79-05cde6bb2370</uuid>
+                <name>LDS_Catalogos</name>
+                <type>{urn:com:appian:types:LDS}LDS_Catalogos</type>
+            </entity>
+            <entity>
+                <uuid>46811ae8-54e6-41e9-bf19-1a7098662454</uuid>
+                <name>LDS_Columnas</name>
+                <type>{urn:com:appian:types:LDS}LDS_ColumnasPex</type>
+            </entity>
+            <entity>
+                <uuid>44e55cc9-4899-4781-9ac8-01140519319d</uuid>
+                <name>LDS_ValoresCatalogo</name>
+                <type>{urn:com:appian:types:LDS}LDS_ValoresCatalogo</type>
+            </entity>
+            <entity>
+                <uuid>dc7d84e1-5f89-4436-9f20-9b27b70539e5</uuid>
+                <name>LDS_ColumnasPexRelacionado</name>
+                <type>{urn:com:appian:types:LDS}LDS_ColumnasPexRelacionado</type>
+            </entity>
+            <entity>
+                <uuid>2e67251c-e55a-416a-8884-e54f741508e9</uuid>
+                <name>LDS_ValoresCatalogoRelacionado</name>
+                <type>{urn:com:appian:types:LDS}LDS_ValoresCatalogoRelacionado</type>
+            </entity>
+            <entity>
+                <uuid>fe2459b7-072b-44aa-a517-04cc43bf0331</uuid>
+                <name>LDS_TablaValoresCatalogo</name>
+                <type>{urn:com:appian:types:LDS}LDS_TablaValoresCatalogo</type>
+            </entity>
+            <entity>
+                <uuid>5b23ba73-f017-40cf-976f-a6116a0cb96c</uuid>
+                <name>LDS_DatosCatalogo</name>
+                <type>{urn:com:appian:types:LDS}LDS_DatosCatalogo</type>
+            </entity>
+        </entities>
+    </dataStore>
+    <isPublished>true</isPublished>
+    <roleMap>
+        <role inherit="false" allowForAll="false" name="administrators">
+            <users/>
+            <groups>
+                <groupUuid>179978b4-25a6-4689-80bc-3a0f375b5095</groupUuid>
+            </groups>
+        </role>
+        <role inherit="false" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="readers">
+            <users/>
+            <groups>
+                <groupUuid>79060724-da23-4650-b537-1f6abdecfc5e</groupUuid>
+            </groups>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000ea4d-d74a-8000-9bde-011c48011c48_1322178"/>
+    </history>
+</dataStoreHaul>

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000ea4d-d74a-8000-9bde-011c48011c48_1317581</versionUuid>
+    <rule>
+        <name>LDS_validacion</name>
+        <uuid>_a-0000ea4d-d74a-8000-9bde-011c48011c48_1317570</uuid>
+        <description></description>
+        <parentUuid>5778bf9b-b623-4528-97d1-4c0cd0e75708</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>a!localVariables(
+  local!archivo: readexcelsheet(
+    excelDocument: ri!archivo,
+    sheetNumber: 0,
+    startRow: 0,
+    numberOfColumns: 0
+  ).result.values,
+  local!columnas: local!archivo[1],
+  
+  if(document(tointeger(ri!archivo), "extension") = "xlsx",
+  if(
+     a!isNullOrEmpty(local!archivo),
+     a!map(
+       archivo: "Archivo Vacío",
+       columna: null,
+       nombre: null
+     ),
+     
+     if( contains(local!columnas,null),
+     a!map(
+       archivo: null,
+       columna: "Columna Vacía",
+       nombre: null
+     )
+     )
+  ),
+  archivo: "No es xlsx",
+  columna: null,
+  nombre: null
+  ), 
+)</definition>
+        <namedTypedValue>
+            <name>archivo</name>
+            <type>
+                <name>CollaborationDocument</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>nombre</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <preferredEditor>legacy</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000ea4d-d74a-8000-9bde-011c48011c48_1317581"/>
+    </history>
+</contentHaul>

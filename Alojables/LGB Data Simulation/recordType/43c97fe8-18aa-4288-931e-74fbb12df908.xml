@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<recordTypeHaul xmlns:a="http://www.appian.com/ae/types/2009" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <versionUuid>31e3bf52-bd78-4a56-b618-b457f55f608a</versionUuid>
+  <recordType a:uuid="43c97fe8-18aa-4288-931e-74fbb12df908" name="LDS Record Columnas">
+    <a:pluralName>Record Columnases</a:pluralName>
+    <a:description>prueba de relacion de columnas</a:description>
+    <a:urlStub>QRKqzQ</a:urlStub>
+    <a:source xsi:type="a:RecordsReplica"/>
+    <a:listViewTemplateExpr>#"SYSTEM_SYSRULES_recordGridField"(
+  columns: {
+    #"SYSTEM_SYSRULES_gridColumn"(
+      label: "Id Catalogo",
+      sortField: #"urn:appian:record-field:v1:43c97fe8-18aa-4288-931e-74fbb12df908/49dd82d7-694d-4689-ab00-2dd359274aef",
+      value: fv!row[#"urn:appian:record-field:v1:43c97fe8-18aa-4288-931e-74fbb12df908/49dd82d7-694d-4689-ab00-2dd359274aef"],
+      align: "END"
+    ),
+    #"SYSTEM_SYSRULES_gridColumn"(
+      label: "Nombreclave",
+      sortField: #"urn:appian:record-field:v1:43c97fe8-18aa-4288-931e-74fbb12df908/5adc14a8-c92f-4e3b-b0d1-27a45901cbda",
+      value: #"SYSTEM_SYSRULES_linkField"(
+        links: {
+          #"SYSTEM_SYSRULES_recordLink"(
+            label: fv!row[#"urn:appian:record-field:v1:43c97fe8-18aa-4288-931e-74fbb12df908/5adc14a8-c92f-4e3b-b0d1-27a45901cbda"],
+            recordType: #"urn:appian:record-type:v1:43c97fe8-18aa-4288-931e-74fbb12df908",
+            identifier: fv!identifier
+          )
+        }
+      )
+    ),
+    #"SYSTEM_SYSRULES_gridColumn"(
+      label: "Tipoproceso",
+      sortField: #"urn:appian:record-field:v1:43c97fe8-18aa-4288-931e-74fbb12df908/7dcbe6b8-8f2d-41ba-8a54-b628fb556029",
+      value: fv!row[#"urn:appian:record-field:v1:43c97fe8-18aa-4288-931e-74fbb12df908/7dcbe6b8-8f2d-41ba-8a54-b628fb556029"]
+    ),
+    #"SYSTEM_SYSRULES_gridColumn"(
+      label: "Version",
+      sortField: #"urn:appian:record-field:v1:43c97fe8-18aa-4288-931e-74fbb12df908/4d7dd9c9-114e-4cbd-b75b-f64b3ec593b6",
+      value: fv!row[#"urn:appian:record-field:v1:43c97fe8-18aa-4288-931e-74fbb12df908/4d7dd9c9-114e-4cbd-b75b-f64b3ec593b6"],
+      align: "END"
+    )
+  },
+  pageSize: 50,
+  shadeAlternateRows: true
+)</a:listViewTemplateExpr>
+    <a:detailViewCfg>
+      <a:nameExpr>#"SYSTEM_SYSRULES_rtd_getDefaultSummaryViewName"()</a:nameExpr>
+      <a:uiExpr/>
+      <a:visibilityExpr>=true()</a:visibilityExpr>
+      <a:urlStub>summary</a:urlStub>
+      <a:headerExpr/>
+      <a:recordActionLaunchType>DIALOG</a:recordActionLaunchType>
+      <a:recordUiSecurityType>EXPRESSION</a:recordUiSecurityType>
+    </a:detailViewCfg>
+    <a:relatedActionCfg a:uuid="47939f1e-a0dc-4ba8-92ec-7dc6c1f0d719">
+      <a:target a:uuid="951a0d7d-5d8a-4050-b2ee-0c01977a8822" xsi:type="a:ProcessModel"/>
+      <a:contextExpr>{
+  record: rv!record,
+  cancel: false()
+}</a:contextExpr>
+      <a:visibilityExpr>=true()</a:visibilityExpr>
+      <a:iconId>f1f8</a:iconId>
+      <a:refId>refId-47939f1e-a0dc-4ba8-92ec-7dc6c1f0d719</a:refId>
+      <a:staticTitleString>Delete Record Columnas</a:staticTitleString>
+      <a:staticDescriptionString>Action to delete a Record Columnas</a:staticDescriptionString>
+      <a:referenceKey>deleteRecordColumnas</a:referenceKey>
+      <a:dialogSize>SMALL</a:dialogSize>
+      <a:showInRecordList>false</a:showInRecordList>
+      <a:recordUiSecurityType>EXPRESSION</a:recordUiSecurityType>
+    </a:relatedActionCfg>
+    <a:relatedActionCfg a:uuid="895b5249-5f60-4b0a-8ec4-2cdcf8e9452d">
+      <a:target a:uuid="66c12794-ea8e-429e-8f5f-0f8d0037f367" xsi:type="a:ProcessModel"/>
+      <a:contextExpr>{
+  record: rv!record,
+  cancel: false()
+}</a:contextExpr>
+      <a:visibilityExpr>=true()</a:visibilityExpr>
+      <a:iconId>f1f8</a:iconId>
+      <a:refId>refId-895b5249-5f60-4b0a-8ec4-2cdcf8e9452d</a:refId>
+      <a:staticTitleString>Delete Record Columnas</a:staticTitleString>
+      <a:staticDescriptionString>Action to delete a Record Columnas</a:staticDescriptionString>
+      <a:referenceKey>deleteRecordColumnas1</a:referenceKey>
+      <a:dialogSize>SMALL</a:dialogSize>
+      <a:showInRecordList>false</a:showInRecordList>
+      <a:recordUiSecurityType>EXPRESSION</a:recordUiSecurityType>
+    </a:relatedActionCfg>
+    <a:relatedActionCfg a:uuid="62b47e72-fc66-48f0-8c4b-300ca1f57a11">
+      <a:target a:uuid="5e68462c-e755-4277-b609-7d833da461e6" xsi:type="a:ProcessModel"/>
+      <a:contextExpr>{
+  record: #"ed8a0886-7715-4b66-980b-102d8b59a5c5"(id: rv!identifier),
+  cancel: false(),
+  isUpdate: true()
+}</a:contextExpr>
+      <a:visibilityExpr>=true()</a:visibilityExpr>
+      <a:iconId>f044</a:iconId>
+      <a:refId>refId-62b47e72-fc66-48f0-8c4b-300ca1f57a11</a:refId>
+      <a:staticTitleString>Update Record Columnas</a:staticTitleString>
+      <a:staticDescriptionString>Action to update a Record Columnas</a:staticDescriptionString>
+      <a:referenceKey>updateRecordColumnas</a:referenceKey>
+      <a:dialogSize>LARGE</a:dialogSize>
+      <a:showInRecordList>false</a:showInRecordList>
+      <a:recordUiSecurityType>EXPRESSION</a:recordUiSecurityType>
+    </a:relatedActionCfg>
+    <a:isSystem>false</a:isSystem>
+    <a:dataSrcExpr/>
+    <a:facetsListExpr/>
+    <a:titleExpr>rv!record[#"urn:appian:record-field:v1:43c97fe8-18aa-4288-931e-74fbb12df908/5adc14a8-c92f-4e3b-b0d1-27a45901cbda"]</a:titleExpr>
+    <a:defaultFiltersExpr/>
+    <a:layoutType>GRID</a:layoutType>
+    <a:security>16383</a:security>
+    <a:hideLatestNews>false</a:hideLatestNews>
+    <a:hideNewsView>false</a:hideNewsView>
+    <a:hideRelatedActionsView>false</a:hideRelatedActionsView>
+    <a:isExportable>true</a:isExportable>
+    <a:listViewSrcExpr/>
+    <a:recordViewSrcExpr/>
+    <a:recordListActionCfg a:uuid="7de042cb-feda-4d00-a986-a90904d02a16">
+      <a:staticTitle>New Record Columnas</a:staticTitle>
+      <a:staticDescription>Action to create a new Record Columnas</a:staticDescription>
+      <a:iconId>f067</a:iconId>
+      <a:target a:uuid="5e68462c-e755-4277-b609-7d833da461e6" xsi:type="a:ProcessModel"/>
+      <a:visibilityExpr>=true()</a:visibilityExpr>
+      <a:referenceKey>newRecordColumnas1</a:referenceKey>
+      <a:dialogSize>LARGE</a:dialogSize>
+      <a:showInRecordList>true</a:showInRecordList>
+      <a:recordUiSecurityType>EXPRESSION</a:recordUiSecurityType>
+    </a:recordListActionCfg>
+    <a:recordListActionCfg a:uuid="0bc7c573-083d-422a-8f3b-abf25570c5b8">
+      <a:staticTitle>New Record Columnas</a:staticTitle>
+      <a:staticDescription>Action to create a new Record Columnas</a:staticDescription>
+      <a:iconId>f067</a:iconId>
+      <a:target a:uuid="466558aa-c8ab-4de2-8866-f412a55e321b" xsi:type="a:ProcessModel"/>
+      <a:visibilityExpr>=true()</a:visibilityExpr>
+      <a:referenceKey>newRecordColumnas</a:referenceKey>
+      <a:dialogSize>LARGE</a:dialogSize>
+      <a:showInRecordList>true</a:showInRecordList>
+      <a:recordUiSecurityType>EXPRESSION</a:recordUiSecurityType>
+    </a:recordListActionCfg>
+    <a:recordRelationshipCfg>
+      <uuid>40aabeb9-5a2f-4a72-abbb-1045ba9cfdbb</uuid>
+      <relationshipName>ldsRecordColumnasCatalogos</relationshipName>
+      <targetRecordTypeUuid>7a15d005-8ff6-480b-982b-42128041e410</targetRecordTypeUuid>
+      <relationshipType>ONE_TO_MANY</relationshipType>
+      <relationshipData>{"sourceRecordTypeFieldUuid":"49dd82d7-694d-4689-ab00-2dd359274aef","targetRecordTypeFieldUuid":"895efe10-83ae-42ef-930c-579280aaccf2","relationshipOperator":"1","joinTableSourceField":"","joinTableTargetField":""}</relationshipData>
+      <updateBehavior>CASCADING</updateBehavior>
+    </a:recordRelationshipCfg>
+    <a:recordTypeSearchCfg>
+      <searchFieldsSrc>DEFAULT</searchFieldsSrc>
+      <placeholderSrc>DEFAULT</placeholderSrc>
+      <placeholder/>
+    </a:recordTypeSearchCfg>
+    <a:iconId/>
+    <a:listAutoRefreshInterval>0.0</a:listAutoRefreshInterval>
+    <a:sourceConfiguration>
+      <sourceUuid>Catalogos@jdbc/Appian</sourceUuid>
+      <sourceType>RDBMS_TABLE</sourceType>
+      <sourceSubType>NONE</sourceSubType>
+      <friendlyName>Catalogos</friendlyName>
+      <sourceFilterExpr/>
+      <field>
+        <uuid>49dd82d7-694d-4689-ab00-2dd359274aef</uuid>
+        <type>{http://www.appian.com/ae/types/2009}Integer</type>
+        <sourceFieldName>ID_CATALOGO</sourceFieldName>
+        <sourceFieldType>INTEGER</sourceFieldType>
+        <fieldName>idCatalogo</fieldName>
+        <isRecordId>true</isRecordId>
+        <isUnique>true</isUnique>
+        <isCustomField>false</isCustomField>
+        <customFieldExpr/>
+        <customFieldDefaultValueStr>null</customFieldDefaultValueStr>
+        <fieldCalculationType>NA</fieldCalculationType>
+        <fieldTemplateType>NA</fieldTemplateType>
+        <isRollingSyncSortField>false</isRollingSyncSortField>
+      </field>
+      <field>
+        <uuid>5adc14a8-c92f-4e3b-b0d1-27a45901cbda</uuid>
+        <type>{http://www.appian.com/ae/types/2009}Text</type>
+        <sourceFieldName>NombreClave</sourceFieldName>
+        <sourceFieldType>VARCHAR(255)</sourceFieldType>
+        <fieldName>nombreclave</fieldName>
+        <isRecordId>false</isRecordId>
+        <isUnique>false</isUnique>
+        <isCustomField>false</isCustomField>
+        <customFieldExpr/>
+        <customFieldDefaultValueStr>null</customFieldDefaultValueStr>
+        <fieldCalculationType>NA</fieldCalculationType>
+        <fieldTemplateType>NA</fieldTemplateType>
+        <isRollingSyncSortField>false</isRollingSyncSortField>
+      </field>
+      <field>
+        <uuid>7dcbe6b8-8f2d-41ba-8a54-b628fb556029</uuid>
+        <type>{http://www.appian.com/ae/types/2009}Text</type>
+        <sourceFieldName>tipoProceso</sourceFieldName>
+        <sourceFieldType>VARCHAR(255)</sourceFieldType>
+        <fieldName>tipoproceso</fieldName>
+        <isRecordId>false</isRecordId>
+        <isUnique>false</isUnique>
+        <isCustomField>false</isCustomField>
+        <customFieldExpr/>
+        <customFieldDefaultValueStr>null</customFieldDefaultValueStr>
+        <fieldCalculationType>NA</fieldCalculationType>
+        <fieldTemplateType>NA</fieldTemplateType>
+        <isRollingSyncSortField>false</isRollingSyncSortField>
+      </field>
+      <field>
+        <uuid>4d7dd9c9-114e-4cbd-b75b-f64b3ec593b6</uuid>
+        <type>{http://www.appian.com/ae/types/2009}Integer</type>
+        <sourceFieldName>version</sourceFieldName>
+        <sourceFieldType>INTEGER</sourceFieldType>
+        <fieldName>version</fieldName>
+        <isRecordId>false</isRecordId>
+        <isUnique>false</isUnique>
+        <isCustomField>false</isCustomField>
+        <customFieldExpr/>
+        <customFieldDefaultValueStr>null</customFieldDefaultValueStr>
+        <fieldCalculationType>NA</fieldCalculationType>
+        <fieldTemplateType>NA</fieldTemplateType>
+        <isRollingSyncSortField>false</isRollingSyncSortField>
+      </field>
+      <uuid>65004c06-4df4-4a9b-a273-3d3bf6338481</uuid>
+      <refreshSchedule>
+        <frequency>DAILY</frequency>
+        <value>{"hour":3,"minute":"00","amPM":"AM","timeZone":"America/Shiprock","version":"v1"}</value>
+        <activated>false</activated>
+      </refreshSchedule>
+      <skipFailureEnabled>true</skipFailureEnabled>
+      <recordIdGeneratorUuid/>
+    </a:sourceConfiguration>
+    <a:enabledFeatures>63</a:enabledFeatures>
+    <a:isVisibleInRecordTypeList>false</a:isVisibleInRecordTypeList>
+    <a:recordActionLaunchType>DIALOG</a:recordActionLaunchType>
+    <a:showSearchBox>true</a:showSearchBox>
+    <a:isVisibleInDataFabric>false</a:isVisibleInDataFabric>
+    <a:usesRollingSyncLimit>false</a:usesRollingSyncLimit>
+  </recordType>
+  <roleMap>
+    <role name="record_type_administrator">
+      <users/>
+      <groups>
+        <groupUuid>179978b4-25a6-4689-80bc-3a0f375b5095</groupUuid>
+      </groups>
+    </role>
+    <role name="record_type_viewer">
+      <users/>
+      <groups>
+        <groupUuid>79060724-da23-4650-b537-1f6abdecfc5e</groupUuid>
+      </groups>
+    </role>
+  </roleMap>
+  <history>
+    <historyInfo versionUuid="84a853cf-1ea8-466c-acc7-e0c4df51f34a"/>
+    <historyInfo versionUuid="13fe54b6-133f-456b-8074-3baf70a16edd"/>
+    <historyInfo versionUuid="2fb26fa5-cc6c-4d88-82ca-6ed7e139a74d"/>
+    <historyInfo versionUuid="ad6ca240-a7e2-4f35-b27f-24e29838690b"/>
+    <historyInfo versionUuid="0b7262a3-b573-4701-9d24-971151d61429"/>
+    <historyInfo versionUuid="89835a29-8569-43b3-a54f-f2bf00a0c6d2"/>
+    <historyInfo versionUuid="31e3bf52-bd78-4a56-b618-b457f55f608a"/>
+  </history>
+  <migrationVersion>1</migrationVersion>
+</recordTypeHaul>

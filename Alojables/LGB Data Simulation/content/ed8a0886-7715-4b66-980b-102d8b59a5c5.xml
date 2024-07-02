@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>ed8a0886-7715-4b66-980b-102d8b59a5c5</versionUuid>
+    <rule>
+        <name>LDS_GetRecordColumnasByIdCatalogo</name>
+        <uuid>ed8a0886-7715-4b66-980b-102d8b59a5c5</uuid>
+        <description>Rule to return a single Record Columnas for a given Id Catalogo</description>
+        <parentUuid>5778bf9b-b623-4528-97d1-4c0cd0e75708</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>index(
+  #"SYSTEM_SYSRULES_queryRecordType_v1"(
+    recordType: #"urn:appian:record-type:v1:43c97fe8-18aa-4288-931e-74fbb12df908",
+    pagingInfo: #"SYSTEM_SYSRULES_pagingInfo"(startIndex: 1, batchSize: 1),
+    filters: #"SYSTEM_SYSRULES_queryFilter"(
+      field: #"urn:appian:record-field:v1:43c97fe8-18aa-4288-931e-74fbb12df908/49dd82d7-694d-4689-ab00-2dd359274aef",
+      operator: "=",
+      value: ri!id
+    )
+  ).data,
+  1,
+  cast(
+    #"urn:appian:record-type:v1:43c97fe8-18aa-4288-931e-74fbb12df908",
+    null
+  )
+)</definition>
+        <namedTypedValue>
+            <name>id</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>legacy</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="ed8a0886-7715-4b66-980b-102d8b59a5c5"/>
+    </history>
+</contentHaul>

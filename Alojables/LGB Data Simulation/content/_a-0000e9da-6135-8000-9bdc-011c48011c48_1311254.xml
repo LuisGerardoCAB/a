@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000e9da-6135-8000-9bdc-011c48011c48_1311377</versionUuid>
+    <interface>
+        <name>LDS_DetalleBases</name>
+        <uuid>_a-0000e9da-6135-8000-9bdc-011c48011c48_1311254</uuid>
+        <description>mostraremos el detalle de las nuevas bases</description>
+        <parentUuid>5778bf9b-b623-4528-97d1-4c0cd0e75708</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>a!localVariables(
+  local!query: #"SYSTEM_SYSRULES_queryEntity_v2"(
+    entity: #"_a-0000e9da-6135-8000-9bdc-011c48011c48_1311291",
+    query: #"SYSTEM_SYSRULES_query"(
+      pagingInfo: #"SYSTEM_SYSRULES_pagingInfo"(
+        startIndex: 1,
+        batchSize: -1
+      )
+    )
+  ).data,
+  local!detalle,
+  
+  local!queryColumnas: #"SYSTEM_SYSRULES_queryEntity_v2"(
+    entity: #"_a-0000e9da-6135-8000-9bdc-011c48011c48_1310945",
+    query: #"SYSTEM_SYSRULES_query"(
+      filter: #"SYSTEM_SYSRULES_queryFilter"(
+        field: "idCatalogo",
+        operator: "=",
+        value: if(a!isNullOrEmpty(local!detalle),1,local!detalle)
+        
+      ),
+      pagingInfo: #"SYSTEM_SYSRULES_pagingInfo"(
+        startIndex: 1,
+        batchSize: -1
+      )
+    )
+  ).data,
+  local!queryColumnasValor: #"SYSTEM_SYSRULES_queryEntity_v2"(
+    entity: #"_a-0000e9da-6135-8000-9bdc-011c48011c48_1311285",
+    query: #"SYSTEM_SYSRULES_query"(
+      
+      filter: #"SYSTEM_SYSRULES_queryFilter"(
+        field: "idCatalogo",
+        operator: "=",
+        value: if(a!isNullOrEmpty(local!detalle),1,local!detalle)
+
+      ),
+      pagingInfo: #"SYSTEM_SYSRULES_pagingInfo"(
+        startIndex: 1,
+        batchSize: -1
+      )
+    )
+  ).data,
+  local!datos,
+{
+  #"SYSTEM_SYSRULES_gridField_v1"(
+    label: "Read-only Grid",
+    labelPosition: "ABOVE",
+    data: local!query,
+    columns: {
+      #"SYSTEM_SYSRULES_gridColumn"(
+        value:
+      #"SYSTEM_SYSRULES_linkField"(
+        label: "Link",
+        labelPosition: "ABOVE",
+        links: {
+          #"SYSTEM_SYSRULES_dynamicLink"(
+            label: index(fv!row, "nombreclave"),
+            saveInto: {a!save(local!detalle, index(fv!row, "idCatalogo"))}
+          )
+        }
+      ))
+    },
+    validations: {}
+  ),
+  #"SYSTEM_SYSRULES_linkField"(
+    label: "Link",
+    labelPosition: "ABOVE",
+    links: {
+      #"SYSTEM_SYSRULES_dynamicLink"(
+        label: "Dynamic Link",
+        saveInto: {}
+      )
+    }
+  ),
+  #"SYSTEM_SYSRULES_gridField_v1"(
+    label: "Read-only Grid",
+    labelPosition: "ABOVE",
+    data: local!queryColumnasValor,
+    columns: {
+     #"SYSTEM_SYSRULES_forEach"(items: local!queryColumnas,
+     expression: #"SYSTEM_SYSRULES_gridColumn"(
+        label: index(fv!item, "nombrecolumna"),
+        value:  {}))
+     
+      
+    },
+    validations: {}
+  )
+}
+
+)</definition>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+        <isCustom>false</isCustom>
+    </interface>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000e9da-6135-8000-9bdc-011c48011c48_1311377"/>
+    </history>
+</contentHaul>

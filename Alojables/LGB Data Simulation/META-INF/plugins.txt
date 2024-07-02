@@ -1,0 +1,16 @@
+com.appiansolutionengineering.encryption
+Encryption Functions
+1.0.0
+
+com.appiancorp.ps.exceltools
+Excel Tools
+2.6.0
+
+com.appiancorp.a2.process.runtime.activities.sftp
+SFTP Functions
+3.0.2
+
+com.appiancorp.plugins.filereader
+Text File Utilities
+2.0.0
+

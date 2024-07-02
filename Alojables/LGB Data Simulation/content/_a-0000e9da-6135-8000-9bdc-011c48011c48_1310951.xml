@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000e9da-6135-8000-9bdc-011c48011c48_1312093</versionUuid>
+    <interface>
+        <name>LDS_UploadExcel</name>
+        <uuid>_a-0000e9da-6135-8000-9bdc-011c48011c48_1310951</uuid>
+        <description>prueba de recopilación de información de un Excel</description>
+        <parentUuid>5778bf9b-b623-4528-97d1-4c0cd0e75708</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>a!localVariables(
+ 
+  local!nombre,
+  local!datos: excelreadcellsbyname(ri!Excel, {1}, {"A1"}),
+  local!columnas: excelreadcellsbyname(ri!Excel, {1}, {"A1"}),
+  local!columnasPrimerFila:readexcelsheet(
+    excelDocument: ri!excel,
+    sheetNumber: 0,
+    startRow: 1,
+    numberOfColumns:4
+  ).result.values[1],
+  local!numeroRegistros: count(local!columnasPrimerFila),
+  local!columnasUno: local!columnasPrimerFila[1],
+  local!informacion: readexcelsheet(
+    excelDocument: ri!excel,
+    sheetNumber: 0,
+    startRow: 2,
+    numberOfColumns:4
+  ).result.values,
+  local!cuatro: #"SYSTEM_SYSRULES_forEach"(items: local!informacion,
+  expression:'type!{urn:com:appian:types:LDS}LDS_ValoresCatalogo'(local!informacion[fv!index]) 
+  ),
+  local!infoCDT:#"_a-0000e9da-6135-8000-9bdc-011c48011c48_1312050"(idCatalogo: 10),
+  local!columnasNombres: #"SYSTEM_SYSRULES_forEach"(local!infoCDT, index(fv!item, "idColumna")),
+  local!usuarios: #"SYSTEM_SYSRULES_forEach"(local!infoCDT,index(fv!item, "valor")),
+  local!buscarUusuarios: index(local!columnasNombres, "nombreColumna"),
+  local!fin: wherecontains("Usuarios", local!buscarUusuarios),
+  local!querySimple:#"SYSTEM_SYSRULES_queryEntity_v2"(
+    entity: #"_a-0000e9da-6135-8000-9bdc-011c48011c48_1311285",
+    query: #"SYSTEM_SYSRULES_query"(
+      logicalExpression: #"SYSTEM_SYSRULES_queryLogicalExpression"(
+        operator: "AND",
+        filters: {
+          #"SYSTEM_SYSRULES_queryFilter"(
+            field: "idCatalogo",
+            operator: "=",
+            value:10
+          )
+        },
+        ignoreFiltersWithEmptyValues: true
+      ),
+      pagingInfo: #"SYSTEM_SYSRULES_pagingInfo"(
+        startIndex: 1,
+        batchSize: 50,
+        sort: #"SYSTEM_SYSRULES_sortInfo"(
+          field: "idColumna.idcolumna",
+          ascending: true
+        )
+      )
+    ),
+    fetchTotalCount: false
+  ).data,
+  local!cast: #"SYSTEM_SYSRULES_forEach"(items: local!columnasPrimerFila,
+  expression: 
+  insert(
+    ri!columns,
+    'type!{urn:com:appian:types:LDS}LDS_ColumnasPex'(
+      nombreclave:local!nombre,
+      nombrecolumna:fv!item
+      
+    ),
+    fv!index
+  )),
+  
+  #"SYSTEM_SYSRULES_formLayout_v1"(
+  label: "Form",
+  contents: {
+    #"SYSTEM_SYSRULES_sectionLayout_v1"(
+      contents: {
+        #"SYSTEM_SYSRULES_fileUploadField_v1"(
+          label: "File Upload",
+          labelPosition: "ABOVE",
+          target: #"_a-0000e9da-6135-8000-9bdc-011c48011c48_1310963",
+          value: ri!Excel,
+          saveInto: ri!Excel,
+          validations: {}
+        )
+      }
+    ),
+    #"SYSTEM_SYSRULES_textField"(
+      label: "Elige el nombre de tu Nueva Base de informacion?",
+      labelPosition: "ABOVE",
+      value:local!nombre,
+      saveInto: local!nombre,
+      refreshAfter: "UNFOCUS",
+      validations: {}
+    ),
+    #"SYSTEM_SYSRULES_textField"(
+      label: "Columnas",
+      labelPosition: "ABOVE",
+      value: #"SYSTEM_SYSRULES_forEach"(
+        items:local!columnasPrimerFila,
+        expression: concat(fv!index,": ", fv!item, char(10))
+        
+      ),
+      saveInto:{},
+      refreshAfter: "UNFOCUS",
+      validations: {}
+    ),
+    #"SYSTEM_SYSRULES_sectionLayout_v1"(
+      label: "Section",
+      contents: {}
+    ),
+    #"SYSTEM_SYSRULES_gridField_v1"(
+      label: "Read-only Grid",
+      labelPosition: "ABOVE",
+      data: local!infoCDT,
+      columns: {#"SYSTEM_SYSRULES_gridColumn"(label: "usuarios",
+      value: local!usuarios
+      
+      
+      
+      
+      
+      ),
+      #"SYSTEM_SYSRULES_gridColumn"(label: "password",
+      value: {})
+      },
+      validations: {}
+    ),
+    #"SYSTEM_SYSRULES_gridLayout"(
+      label: "Editable Grid",
+      labelPosition: "ABOVE",
+      headerCells: {
+        #"SYSTEM_SYSRULES_forEach"(local!columnasPrimerFila,
+        #"SYSTEM_SYSRULES_gridLayoutHeaderCell"(label: fv!item))
+      },
+      columnConfigs: {
+        #"SYSTEM_SYSRULES_forEach"(local!columnasPrimerFila,
+        #"SYSTEM_SYSRULES_gridLayoutColumnConfig"(
+          width: "DISTRIBUTE"
+        ))
+      },
+      rows: {
+        
+        #"SYSTEM_SYSRULES_gridRowLayout"(
+          contents: {
+            #"SYSTEM_SYSRULES_forEach"(local!columnasPrimerFila, #"SYSTEM_SYSRULES_textField"(value: index(local!infoCDT[fv!index],"valor")
+            
+            ))
+            
+          }
+        )
+      },
+      selectionSaveInto: {},
+      validations: {},
+      shadeAlternateRows: true
+    )
+  },
+  buttons: #"SYSTEM_SYSRULES_ButtonLayout"(
+    primaryButtons: {
+      #"SYSTEM_SYSRULES_ButtonWidget"(
+        label: "Submit",
+        saveInto: {a!save(ri!columns, local!cast)},
+        submit: true,
+        style: "PRIMARY"
+      )
+    },
+    secondaryButtons: {
+      #"SYSTEM_SYSRULES_ButtonWidget"(
+        label: "Cancel",
+        value: true,
+        saveInto: ri!cancel,
+        submit: true,
+        style: "NORMAL",
+        validate: false
+      )
+    }
+  )
+)
+)</definition>
+        <namedTypedValue>
+            <name>cancel</name>
+            <type>
+                <name>boolean</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>Excel</name>
+            <type>
+                <name>CollaborationDocument</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>columns</name>
+            <type>
+                <name>LDS_ColumnasPex?list</name>
+                <namespace>urn:com:appian:types:LDS</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+        <isCustom>false</isCustom>
+    </interface>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000e9da-6135-8000-9bdc-011c48011c48_1312093"/>
+    </history>
+</contentHaul>

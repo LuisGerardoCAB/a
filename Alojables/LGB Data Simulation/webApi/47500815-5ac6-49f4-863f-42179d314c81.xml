@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<webApiHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>49f8c38c-e193-4be5-8f15-e5803f1ad30c</versionUuid>
+    <webApi a:uuid="47500815-5ac6-49f4-863f-42179d314c81" name="LDS preuna de inicio de proceso">
+        <a:description></a:description>
+        <a:expression>#"SYSTEM_SYSRULES_startProcess"(
+  processModel: #"_a-0000e9da-6135-8000-9bdc-011c48011c48_1311965",
+  processParameters: #"SYSTEM_SYSRULES_fromJson_v1"(
+    http!request.body
+  ),
+  onSuccess: #"SYSTEM_SYSRULES_httpResponse_v1"(
+    statusCode: 200,
+    headers: {
+      #"SYSTEM_SYSRULES_httpHeader"(name: "Content-Type", value: "application/json")
+    },
+    body: #"SYSTEM_SYSRULES_toJson_v1"(
+      fv!processInfo
+    )
+  ),
+  onError: #"SYSTEM_SYSRULES_httpResponse_v1"(
+    statusCode: 500,
+    headers: {
+      #"SYSTEM_SYSRULES_httpHeader"(name: "Content-Type", value: "application/json")
+    },
+    body: #"SYSTEM_SYSRULES_toJson_v1"(
+      {
+        error: "There was an error starting the process"
+      }
+    )
+  )
+)</a:expression>
+        <a:urlAlias>add-cosiel-s</a:urlAlias>
+        <a:httpMethod>POST</a:httpMethod>
+        <a:system>false</a:system>
+        <a:requestBodyType>NONE</a:requestBodyType>
+        <a:loggingEnabled>false</a:loggingEnabled>
+    </webApi>
+    <roleMap>
+        <role name="web_api_administrator">
+            <users/>
+            <groups>
+                <groupUuid>179978b4-25a6-4689-80bc-3a0f375b5095</groupUuid>
+            </groups>
+        </role>
+        <role name="web_api_viewer">
+            <users/>
+            <groups>
+                <groupUuid>79060724-da23-4650-b537-1f6abdecfc5e</groupUuid>
+            </groups>
+        </role>
+    </roleMap>
+    <typedValue>
+        <type>
+            <name>WebApiRequest?list</name>
+            <namespace>http://www.appian.com/ae/types/2009</namespace>
+        </type>
+        <value>
+            <el>
+                <a:path/>
+                <a:headers>
+                    <a:name>Content-Type</a:name>
+                    <a:value>application/json</a:value>
+                </a:headers>
+                <a:body>{}</a:body>
+            </el>
+        </value>
+    </typedValue>
+    <history>
+        <historyInfo versionUuid="49f8c38c-e193-4be5-8f15-e5803f1ad30c"/>
+    </history>
+</webApiHaul>

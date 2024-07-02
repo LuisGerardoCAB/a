@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000e9da-6135-8000-9bdc-011c48011c48_1314035</versionUuid>
+    <interface>
+        <name>LDS_SimularCasoPex</name>
+        <uuid>_a-0000e9da-6135-8000-9bdc-011c48011c48_1314024</uuid>
+        <description></description>
+        <parentUuid>5778bf9b-b623-4528-97d1-4c0cd0e75708</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>a!localVariables(
+  local!val1,
+  local!val2,
+  local!val3,
+  local!listaColumna: if(
+    a!isNullOrEmpty(ri!idCatalogo),
+    {},
+    index(
+      #"_a-0000e9da-6135-8000-9bdc-011c48011c48_1312589"(ri!idCatalogo),
+      "nombrecolumna",
+      {}
+    )
+  ),
+  local!columnas: union(local!listaColumna, local!listaColumna),
+  local!valoresCatalogo: #"_a-0000e9da-6135-8000-9bdc-011c48011c48_1313501"(idCatalogo: ri!idCatalogo, nombre: "", ),
+  local!data: #"SYSTEM_SYSRULES_forEach"(
+    items: local!columnas,
+    expression: a!localVariables(
+      local!valor: #"_a-0000e9da-6135-8000-9bdc-011c48011c48_1313501"(
+        idCatalogo: ri!idCatalogo,
+        nombre: fv!item,
+        
+      ),
+      a!map(columna: fv!item, valor: local!valor)
+    )
+  ),
+  local!condicion1: #"SYSTEM_SYSRULES_forEach"(
+    items: index(local!data[1].valor, "valor", null),
+    expression:        
+        contains(
+          fv!item,
+          local!val1),
+          
+      ),
+  local!val2calculado: 
+  a!localVariables(
+    local!index1: wherecontains(  true, local!condicion1 ),
+  if(a!isNullOrEmpty( local!index1 ) ,  local!val2 ,local!data[2].valor[local!index1])  ,  
+  ).valor,
+  local!val3calculado: 
+  a!localVariables(
+    local!index1: wherecontains( true,local!condicion1),
+    if(a!isNullOrEmpty( local!index1 ) ,  local!val2 ,local!data[3].valor[local!index1])  ,  
+  ).valor,
+
+  
+  {
+    #"SYSTEM_SYSRULES_sectionLayout_v1"(
+      label: "",
+      contents: {
+        #"SYSTEM_SYSRULES_richTextDisplayField"(
+          value: #"SYSTEM_SYSRULES_richTextItem_v1"(
+            text: "PEX_0000065276",
+            size: "MEDIUM_PLUS",
+            style: "STRONG"
+          )
+        ),
+        #"SYSTEM_SYSRULES_richTextDisplayField"(
+          value: #"SYSTEM_SYSRULES_richTextItem_v1"(
+            text: "P0810 - Prueba Proceso",
+            size: "MEDIUM"
+          )
+        ),
+        #"SYSTEM_SYSRULES_richTextDisplayField"(
+          value: {
+            #"SYSTEM_SYSRULES_richTextItem_v1"(
+              text: "Tarea",
+              size: "MEDIUM",
+              style: "STRONG"
+            ),
+            #"SYSTEM_SYSRULES_richTextItem_v1"(
+              text: "                                   "
+            ),
+            #"SYSTEM_SYSRULES_richTextItem_v1"(
+              text: "Canal",
+              size: "MEDIUM",
+              style: "STRONG"
+            ),
+            #"SYSTEM_SYSRULES_richTextItem_v1"(
+              text: "                                   "
+            ),
+            #"SYSTEM_SYSRULES_richTextItem_v1"(
+              text: "Origen",
+              size: "MEDIUM",
+              style: "STRONG"
+            )
+          }
+        ),
+        #"SYSTEM_SYSRULES_richTextDisplayField"(
+          value: {
+            #"SYSTEM_SYSRULES_richTextItem_v1"(text: "Tarea 1", size: "MEDIUM"),
+            #"SYSTEM_SYSRULES_richTextItem_v1"(
+              text: "                                "
+            ),
+            #"SYSTEM_SYSRULES_richTextItem_v1"(text: "Solicitud", size: "MEDIUM"),
+            #"SYSTEM_SYSRULES_richTextItem_v1"(text: "                           "),
+            #"SYSTEM_SYSRULES_richTextItem_v1"(text: "Alta Manual", size: "MEDIUM")
+          }
+        )
+      }
+    ),
+    #"SYSTEM_SYSRULES_sectionLayout_v1"(
+      label: "Datos",
+      contents: {
+        #"SYSTEM_SYSRULES_columnsLayout"(
+          columns: {
+            #"SYSTEM_SYSRULES_columnLayout"(
+              contents: {
+                #"SYSTEM_SYSRULES_textField"(
+                  label: local!columnas[1],
+                  value: local!val1,
+                  saveInto: {
+                    local!val1,
+                    
+                  }
+                )
+              }
+            ),
+            #"SYSTEM_SYSRULES_columnLayout"(
+              contents: {
+                #"SYSTEM_SYSRULES_textField"(label: local!columnas[2], 
+                value: if( contains( local!condicion1, true), local!val2calculado , local!val2  ),
+                readOnly: true,
+                  
+                  
+                )
+              }
+            ),
+            #"SYSTEM_SYSRULES_columnLayout"(
+              contents: { #"SYSTEM_SYSRULES_textField"(label: local!columnas[3], 
+              value: if( contains( local!condicion1, true), local!val3calculado , local!val3  ),
+              readOnly: true,
+              ) }
+            )
+          }
+        )
+      }
+    )
+  }
+)</definition>
+        <namedTypedValue>
+            <name>idCatalogo</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+        <isCustom>false</isCustom>
+    </interface>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000e9da-6135-8000-9bdc-011c48011c48_1314035"/>
+    </history>
+</contentHaul>

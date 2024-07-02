@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000e9da-6135-8000-9bdc-011c48011c48_1311181</versionUuid>
+    <interface>
+        <name>LDS_CreateRecordColumnas</name>
+        <uuid>39ab294b-7b82-4227-89bc-3d4fda627b26</uuid>
+        <description>Form interface for creating new Record Columnases as an action</description>
+        <parentUuid>5778bf9b-b623-4528-97d1-4c0cd0e75708</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>#"SYSTEM_SYSRULES_formLayout_v1"(
+  label: "Create Record Columnas",
+  contents: {
+    #"SYSTEM_SYSRULES_columnsLayout"(
+      columns: {
+        #"SYSTEM_SYSRULES_columnLayout"(
+          contents: {
+            #"SYSTEM_SYSRULES_fileUploadField_v1"(
+              label: "File Upload",
+              labelPosition: "ABOVE",
+              target: #"_a-0000e9da-6135-8000-9bdc-011c48011c48_1310963",
+              value: ri!Excel,
+              saveInto: ri!Excel,
+              validations: {}
+            ),
+            #"SYSTEM_SYSRULES_textField"(
+              label: "Nombreclave",
+              labelPosition: "ABOVE",
+              required: true,
+              value: ri!record[#"urn:appian:record-field:v1:43c97fe8-18aa-4288-931e-74fbb12df908/5adc14a8-c92f-4e3b-b0d1-27a45901cbda"],
+              saveInto: ri!record[#"urn:appian:record-field:v1:43c97fe8-18aa-4288-931e-74fbb12df908/5adc14a8-c92f-4e3b-b0d1-27a45901cbda"],
+              characterLimit: 255
+            ),
+            #"SYSTEM_SYSRULES_integerField"(
+              label: "Version",
+              labelPosition: "ABOVE",
+              required: false,
+              value: ri!record[#"urn:appian:record-field:v1:43c97fe8-18aa-4288-931e-74fbb12df908/4d7dd9c9-114e-4cbd-b75b-f64b3ec593b6"],
+              saveInto: ri!record[#"urn:appian:record-field:v1:43c97fe8-18aa-4288-931e-74fbb12df908/4d7dd9c9-114e-4cbd-b75b-f64b3ec593b6"]
+            )
+          }
+        ),
+        #"SYSTEM_SYSRULES_columnLayout"(
+          contents: {
+            #"SYSTEM_SYSRULES_textField"(
+              label: "Tipoproceso",
+              labelPosition: "ABOVE",
+              required: false,
+              value: ri!record[#"urn:appian:record-field:v1:43c97fe8-18aa-4288-931e-74fbb12df908/7dcbe6b8-8f2d-41ba-8a54-b628fb556029"],
+              saveInto: ri!record[#"urn:appian:record-field:v1:43c97fe8-18aa-4288-931e-74fbb12df908/7dcbe6b8-8f2d-41ba-8a54-b628fb556029"],
+              characterLimit: 255
+            )
+          }
+        )
+      }
+    )
+  },
+  buttons: #"SYSTEM_SYSRULES_ButtonLayout"(
+    primaryButtons: {
+      #"SYSTEM_SYSRULES_ButtonWidget"(
+        label: "Create",
+        submit: true,
+        validate: true,
+        style: "PRIMARY"
+      )
+    },
+    secondaryButtons: {
+      #"SYSTEM_SYSRULES_ButtonWidget"(
+        label: "Cancel",
+        value: true,
+        saveInto: ri!cancel,
+        submit: true,
+        style: "NORMAL",
+        validate: false
+      )
+    }
+  )
+)</definition>
+        <namedTypedValue>
+            <name>record</name>
+            <type>
+                <name>43c97fe8-18aa-4288-931e-74fbb12df908</name>
+                <namespace>urn:com:appian:recordtype:datatype</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>cancel</name>
+            <type>
+                <name>boolean</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>Excel</name>
+            <type>
+                <name>CollaborationDocument</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+        <isCustom>false</isCustom>
+    </interface>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="46d18196-2bad-4317-b618-e944e27257b5"/>
+        <historyInfo versionUuid="_a-0000e9da-6135-8000-9bdc-011c48011c48_1311181"/>
+    </history>
+</contentHaul>
