@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9392583</versionUuid>
+    <constant>
+        <name>SCDO_OPCIONES_SEGMENTO</name>
+        <uuid>_a-0000e916-edcb-8000-e60c-01ef9001ef90_3243134</uuid>
+        <description>Muestra los segmentos que existen en el CDT Segmento</description>
+        <parentUuid>_a-0000e878-569a-8000-e5e4-01ef9001ef90_1932877</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <typedValue>
+            <type>
+                <name>Text?list</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+            <value>
+                <el>HD/SD RAL</el>
+                <el>BEI</el>
+                <el>SELECT</el>
+                <el>Patrimonial</el>
+                <el>CONTACT_AIR_SELECT</el>
+                <el>CONTACT_BEI</el>
+                <el>CONTACT ALTAIR</el>
+                <el>SGC</el>
+                <el>AREA CENTRAL</el>
+                <el>ASEGURADORA</el>
+                <el>ALTAIR PARTICULARES</el>
+                <el>CONNECT</el>
+                <el>FIDUCIARIO</el>
+            </value>
+        </typedValue>
+        <isEnvironmentSpecific>false</isEnvironmentSpecific>
+    </constant>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000e916-edcb-8000-e60c-01ef9001ef90_3243145"/>
+        <historyInfo versionUuid="_a-0000e968-30a1-8000-e639-01ef9001ef90_4303862"/>
+        <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9392583"/>
+    </history>
+</contentHaul>

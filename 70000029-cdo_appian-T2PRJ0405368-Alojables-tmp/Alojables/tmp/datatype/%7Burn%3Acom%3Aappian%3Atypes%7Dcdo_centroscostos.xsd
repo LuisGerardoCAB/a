@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="urn:com:appian:types"
+  xmlns:tns="urn:com:appian:types" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <xsd:complexType name="cdo_centroscostos">
+    <xsd:annotation>
+      <xsd:appinfo source="appian.jpa">@Table(name="CDO_MX_AUX_CENTROSCOSTOS")</xsd:appinfo>
+      <xsd:appinfo source="http://www.appian.com/ae/types/2009">
+        <ns2:Metadata xmlns:ns2="http://www.appian.com/ae/types/2009">
+          <ns2:versionUuid>0000eae2-9dba-8000-8710-014d98014d98</ns2:versionUuid>
+          <ns2:history>
+            <ns2:historyInfo versionUuid="0000e868-3c37-8000-4a35-014d98014d98"/>
+            <ns2:historyInfo versionUuid="0000ea06-693e-8000-1a6e-014d98014d98"/>
+            <ns2:historyInfo versionUuid="0000eae2-9dba-8000-8710-014d98014d98"/>
+          </ns2:history>
+        </ns2:Metadata>
+      </xsd:appinfo>
+      <xsd:documentation><![CDATA[Data Type correspondiente a la tabla CDO_MX_AUX_CENTROSCOSTOS]]></xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="idccostos" nillable="true" type="xsd:int">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Id @Column(name="IDCCOSTOS", nullable=false, unique=true, columnDefinition="NUMBER") @SequenceGenerator(name="CDO_CENTROSCOSTOS_SQ", sequenceName="CDO_CENTROSCOSTOS_SQ") @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="CDO_CENTROSCOSTOS_SQ")</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="cc" nillable="true" type="xsd:string">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Column(name="CC", columnDefinition="VARCHAR2(4)")</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="idsegmento" nillable="true" type="xsd:int">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Column(name="IDSEGMENTO", columnDefinition="NUMBER")</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="idregion" nillable="true" type="xsd:int">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Column(name="IDREGION", columnDefinition="NUMBER")</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="nombre" nillable="true" type="xsd:string">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Column(name="NOMBRE", columnDefinition="VARCHAR2(80)")</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="idzona" nillable="true" type="xsd:int">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Column(name="IDZONA", columnDefinition="NUMBER")</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:schema>

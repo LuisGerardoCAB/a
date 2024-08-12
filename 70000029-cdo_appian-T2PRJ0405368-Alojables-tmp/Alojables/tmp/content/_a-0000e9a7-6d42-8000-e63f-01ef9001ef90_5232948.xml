@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9392405</versionUuid>
+    <constant>
+        <name>SCDO_Proceso_Escribir_BD_DocumentosFisicos</name>
+        <uuid>_a-0000e9a7-6d42-8000-e63f-01ef9001ef90_5232948</uuid>
+        <description>Apunta al proceso Escribir BD DocumentosFisicos</description>
+        <parentUuid>_a-0000e982-d80b-8000-e63b-01ef9001ef90_4780406</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <typedValue>
+            <type>
+                <name>ProcessModel</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+            <value>0005e9ba-a3ec-8000-f238-014d98014d98</value>
+        </typedValue>
+        <isEnvironmentSpecific>false</isEnvironmentSpecific>
+    </constant>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000e9a7-6d42-8000-e63f-01ef9001ef90_5232952"/>
+        <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9392405"/>
+    </history>
+</contentHaul>

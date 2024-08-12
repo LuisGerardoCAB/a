@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000eb9b-4ec6-8000-e68b-01ef9001ef90_9644283</versionUuid>
+    <rule>
+        <name>SCDO_obtenerUsuariosNoAsignados</name>
+        <uuid>404a9f88-bd69-4083-a4f9-8c8b2a8fc4a6</uuid>
+        <description>Regla de expresión que devuelve todos los usuarios opics no asignados a un expediente</description>
+        <parentUuid>_a-0000e9a3-ab27-8000-e63d-01ef9001ef90_4829216</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>a!localVariables(
+  
+  local!idUsuarioopicsPermisosUsuarios: 
+  a!refreshVariable(
+ value: a!flatten(
+    index(#"SYSTEM_SYSRULES_queryEntity_v2"(
+      entity: #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2113419",
+      query: {
+        #"SYSTEM_SYSRULES_query"(
+          selection: {
+            #"SYSTEM_SYSRULES_querySelection"(
+              columns: {
+                #"SYSTEM_SYSRULES_queryColumn"(
+                  field: "idusuarioopics"
+                )
+              }
+            )
+          },
+          logicalexpression: #"SYSTEM_SYSRULES_queryLogicalExpression"(
+            operator: "AND",
+            filters: {
+              #"SYSTEM_SYSRULES_queryFilter"(
+                field: "idusuarioopics",
+                operator: "not null"
+              )
+            },
+            ignorefilterswithemptyvalues: true
+          ),
+          paginginfo: #"SYSTEM_SYSRULES_pagingInfo"(startIndex: 1, batchSize: -1, sort: #"SYSTEM_SYSRULES_sortInfo"(field: "idusuarioopics", ascending: true))
+        )
+      },
+      fetchtotalcount: true
+    ).data,"idusuarioopics",{}),
+  ),
+  refreshOnVarChange: ri!refreshCount,
+  ),
+  local!idusuariosRegistrados: 
+  a!refreshVariable(
+  value: a!flatten(
+    index(#"SYSTEM_SYSRULES_queryEntity_v2"(
+    entity: #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2114138",
+    query: 
+    #"SYSTEM_SYSRULES_query"(
+      selection: #"SYSTEM_SYSRULES_querySelection"(
+        columns: {
+          #"SYSTEM_SYSRULES_queryColumn"(
+            field: "idusuarioopics"
+          )
+        }
+      ),
+      logicalexpression: {
+        #"SYSTEM_SYSRULES_queryLogicalExpression"(
+          operator: "AND",
+          filters: {
+            #"SYSTEM_SYSRULES_queryFilter"(
+              field: "idusuarioopics",
+              operator: "not null"
+            ),
+            #"SYSTEM_SYSRULES_queryFilter"(
+              field: "idusuarioopics",
+              operator: "in",
+              value: local!idUsuarioopicsPermisosUsuarios
+            )
+          },
+          ignorefilterswithemptyvalues: true,
+        )
+      },
+      paginginfo: #"SYSTEM_SYSRULES_pagingInfo"(startIndex: 1, batchSize: -1, sort: #"SYSTEM_SYSRULES_sortInfo"(field: "idusuarioopics", ascending: true)),
+    ),
+    fetchtotalcount: true
+  ).data,"idusuarioopics",{})),
+  refreshOnVarChange: ri!refreshCount,
+  ),
+  local!idusuariosTotales: 
+  a!flatten(
+    index(#"SYSTEM_SYSRULES_queryEntity_v2"(
+    entity: #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2114138",
+    query: #"SYSTEM_SYSRULES_query"(
+      selection: #"SYSTEM_SYSRULES_querySelection"(
+        columns: #"SYSTEM_SYSRULES_queryColumn"(field: "idusuarioopics"),
+      ),
+      filter: #"SYSTEM_SYSRULES_queryFilter"(
+        field: "idusuarioopics",
+        operator: "not null"
+      ),
+      paginginfo: #"SYSTEM_SYSRULES_pagingInfo"(startIndex: 1, batchSize: -1, sort: #"SYSTEM_SYSRULES_sortInfo"(field: "idusuarioopics", ascending: true))
+    )
+  ).data,"idusuarioopics",{})),
+  local!idusuariosNoRegistrados: 
+  #"_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9534907"(
+    arreglo_1:local!idusuariosTotales,
+    arreglo_2:local!idusuariosRegistrados
+  ),
+  local!filtroPrincipal: {
+    #"SYSTEM_SYSRULES_queryFilter"(
+      field: "idusuarioopics",
+      operator: "in",
+      value: local!idusuariosNoRegistrados,
+      applywhen: a!isNotNullOrEmpty(local!idusuariosNoRegistrados)
+    ),
+    #"SYSTEM_SYSRULES_queryFilter"(
+      field: "usuarioopics",
+      operator: "includes",
+      value: ri!usuarioopics,
+      applywhen: a!isNotNullOrEmpty(ri!usuarioopics)
+    )
+  },
+  local!diferenceVacioUsuarioOpicsVacio: {
+    #"SYSTEM_SYSRULES_queryFilter"(
+      field: "idusuarioopics",
+      operator: "=",
+      value: 0,
+      applywhen: true()
+    )
+  },
+  /*if(and(a!isNotNullOrEmpty(local!idusuariosTotales),a!isNotNullOrEmpty(local!idusuariosRegistrados)),*/
+  /*difference(local!idusuariosTotales, local!idusuariosRegistrados),*/
+  /*if(a!isNotNullOrEmpty(local!idusuariosTotales),*/
+  /*local!idusuariosTotales,*/
+  /*local!idusuariosRegistrados*/
+  /*)*/
+  /*),*/
+  
+ 
+  #"SYSTEM_SYSRULES_queryEntity_v2"(
+    entity: #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2114138",
+    query: #"SYSTEM_SYSRULES_query"(
+      logicalexpression: {
+        #"SYSTEM_SYSRULES_queryLogicalExpression"(
+          operator: "AND",
+          filters: if(
+            and(
+              a!isNullOrEmpty(ri!usuarioopics),
+              a!isNullOrEmpty(local!idusuariosNoRegistrados)
+            ),
+            local!diferenceVacioUsuarioOpicsVacio,
+            local!filtroPrincipal
+          ),
+          ignorefilterswithemptyvalues: true,
+        )
+      },
+      paginginfo: #"SYSTEM_SYSRULES_pagingInfo"(startIndex: ri!startIndex, batchSize: ri!batchSize, sort: #"SYSTEM_SYSRULES_sortInfo"(field: "idusuarioopics", ascending: true)),
+    ),
+    fetchtotalcount: true
+  ),
+)</definition>
+        <namedTypedValue>
+            <name>startIndex</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>batchSize</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>usuarioopics</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>refreshCount</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>legacy</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000eb09-d442-8000-e687-01ef9001ef90_8790698"/>
+        <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9451867"/>
+        <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9493756"/>
+        <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9540226"/>
+        <historyInfo versionUuid="_a-0000eb9b-4ec6-8000-e68b-01ef9001ef90_9644283"/>
+    </history>
+</contentHaul>

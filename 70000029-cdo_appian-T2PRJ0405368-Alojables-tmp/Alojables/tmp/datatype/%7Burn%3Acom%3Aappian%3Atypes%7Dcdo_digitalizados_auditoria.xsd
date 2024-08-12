@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="urn:com:appian:types"
+  xmlns:tns="urn:com:appian:types" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <xsd:complexType name="cdo_digitalizados_auditoria">
+    <xsd:annotation>
+      <xsd:appinfo source="appian.jpa">@Table(name="CDO_MX_AUX_DIGITALIZADOS_AUDITORIA")</xsd:appinfo>
+      <xsd:appinfo source="http://www.appian.com/ae/types/2009">
+        <ns2:Metadata xmlns:ns2="http://www.appian.com/ae/types/2009">
+          <ns2:versionUuid>0000eae5-350c-8000-884f-014d98014d98</ns2:versionUuid>
+          <ns2:history>
+            <ns2:historyInfo versionUuid="0000e90d-5d78-8000-97d2-014d98014d98"/>
+            <ns2:historyInfo versionUuid="0000e9ed-40c2-8000-0e3e-014d98014d98"/>
+            <ns2:historyInfo versionUuid="0000eae5-350c-8000-884f-014d98014d98"/>
+          </ns2:history>
+        </ns2:Metadata>
+      </xsd:appinfo>
+      <xsd:documentation><![CDATA[Data Type Corresponidente a la tabla CDO_MX_AUX_DIGITALIZADOS_AUDITORIA]]></xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="iddigitalizadosAuditoria" nillable="true" type="xsd:int">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Id @Column(name="IDDIGITALIZADOS_AUDITORIA", nullable=false, unique=true, columnDefinition="NUMBER") @SequenceGenerator(name="CDO_DIGITALAUDITORIA_SQ", sequenceName="CDO_DIGITALAUDITORIA_SQ") @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="CDO_DIGITALAUDITORIA_SQ")</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="iddigitalizado" nillable="true" type="xsd:int">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Column(name="IDDIGITALIZADO", columnDefinition="NUMBER")</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="idreporte" nillable="true" type="xsd:int">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Column(name="IDREPORTE", columnDefinition="NUMBER")</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="contrato" nillable="true" type="xsd:string">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Column(name="CONTRATO", columnDefinition="VARCHAR2(12)")</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="iddocumento" nillable="true" type="xsd:int">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Column(name="IDDOCUMENTO", columnDefinition="NUMBER")</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="nombreimagen" nillable="true" type="xsd:string">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Column(name="NOMBREIMAGEN", columnDefinition="VARCHAR2(80)")</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="estado" nillable="true" type="xsd:string">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Column(name="ESTADO", columnDefinition="VARCHAR2(2)")</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="fechaacepto" nillable="true" type="xsd:string">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Column(name="FECHAACEPTO", columnDefinition="VARCHAR2(50)")</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="usuarioacepto" nillable="true" type="xsd:string">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Column(name="USUARIOACEPTO", columnDefinition="VARCHAR2(25)")</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="operacion" nillable="true" type="xsd:string">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Column(name="OPERACION", columnDefinition="VARCHAR2(10)")</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="dml" nillable="true" type="xsd:string">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Column(name="DML", columnDefinition="VARCHAR2(25)")</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="fchaDml" nillable="true" type="xsd:dateTime">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Column(name="FCHA_DML", columnDefinition="TIMESTAMP(6)")</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:schema>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="urn:com:appian:types"
+  xmlns:tns="urn:com:appian:types" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <xsd:complexType name="cdo_doctos_segmento">
+    <xsd:annotation>
+      <xsd:appinfo source="appian.jpa">@Table(name="CDO_MX_REL_DOCTOS_SEGMENTO")</xsd:appinfo>
+      <xsd:appinfo source="http://www.appian.com/ae/types/2009">
+        <ns2:Metadata xmlns:ns2="http://www.appian.com/ae/types/2009">
+          <ns2:versionUuid>0000eae5-3857-8000-885b-014d98014d98</ns2:versionUuid>
+          <ns2:history>
+            <ns2:historyInfo versionUuid="0000e868-454d-8000-4a4a-014d98014d98"/>
+            <ns2:historyInfo versionUuid="0000e9ff-654a-8000-166d-014d98014d98"/>
+            <ns2:historyInfo versionUuid="0000eae5-3857-8000-885b-014d98014d98"/>
+          </ns2:history>
+        </ns2:Metadata>
+      </xsd:appinfo>
+      <xsd:documentation><![CDATA[Data Type Corresponidente a la tabla CDO_MX_REL_DOCTOS_SEGMENTO]]></xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="iddoctosseg" nillable="true" type="xsd:int">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Id @Column(name="IDDOCTOSSEG", nullable=false, unique=true, columnDefinition="NUMBER") @SequenceGenerator(name="CDO_DOCTSSEGMENTO_SQ", sequenceName="CDO_DOCTSSEGMENTO_SQ") @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="CDO_DOCTSSEGMENTO_SQ")</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="idsegmento" nillable="true" type="xsd:int">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Column(name="IDSEGMENTO", columnDefinition="NUMBER")</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="iddocumento" nillable="true" type="xsd:int">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Column(name="IDDOCUMENTO", columnDefinition="NUMBER")</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="extra" nillable="true" type="xsd:string">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Column(name="EXTRA", columnDefinition="VARCHAR2(50)")</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:schema>

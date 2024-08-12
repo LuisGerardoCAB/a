@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="urn:com:appian:types"
+  xmlns:tns="urn:com:appian:types" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <xsd:complexType name="cdo_bitacorareversos">
+    <xsd:annotation>
+      <xsd:appinfo source="appian.jpa">@Table(name="CDO_MX_MAE_BITACORAREVERSOS")</xsd:appinfo>
+      <xsd:appinfo source="http://www.appian.com/ae/types/2009">
+        <ns2:Metadata xmlns:ns2="http://www.appian.com/ae/types/2009">
+          <ns2:versionUuid>0000eae5-3202-8000-8847-014d98014d98</ns2:versionUuid>
+          <ns2:history>
+            <ns2:historyInfo versionUuid="0000e868-3b2a-8000-4a2c-014d98014d98"/>
+            <ns2:historyInfo versionUuid="0000e9e0-0fae-8000-0770-014d98014d98"/>
+            <ns2:historyInfo versionUuid="0000eae5-3202-8000-8847-014d98014d98"/>
+          </ns2:history>
+        </ns2:Metadata>
+      </xsd:appinfo>
+      <xsd:documentation><![CDATA[Data Type correspondiente a la tabla CDO_MX_MAE_BITACORAREVERSOS]]></xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="idbitacora" nillable="true" type="xsd:int">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Id @Column(name="IDBITACORA", nullable=false, unique=true, columnDefinition="NUMBER") @SequenceGenerator(name="CDO_BITREVERSOS_SQ", sequenceName="CDO_BITREVERSOS_SQ") @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="CDO_BITREVERSOS_SQ")</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="usuarioaplico" nillable="true" type="xsd:string">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Column(name="USUARIOAPLICO", columnDefinition="VARCHAR2(10)")</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="tiporeverso" nillable="true" type="xsd:string">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Column(name="TIPOREVERSO", columnDefinition="VARCHAR2(4000)")</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="fechareverso" nillable="true" type="xsd:dateTime">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Column(name="FECHAREVERSO", columnDefinition="DATE")</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:schema>

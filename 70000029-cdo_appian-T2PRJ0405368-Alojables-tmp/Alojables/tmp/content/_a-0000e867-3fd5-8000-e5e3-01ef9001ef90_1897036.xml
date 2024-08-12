@@ -1,0 +1,721 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9396533</versionUuid>
+    <interface>
+        <name>SCDO_Reverso_Opera</name>
+        <uuid>_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1897036</uuid>
+        <description>Interface Reverso Operación y Doc Correspondiente a Panel de control</description>
+        <parentUuid>_a-0000e801-560f-8000-e5d9-01ef9001ef90_1707049</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>a!localVariables(
+  /*local!reverso:rule!SCDO_ReversoFiltroTipoReverso(seleccionColumnas: "tiporeverso").data,*/
+  local!movimiento: #"_a-0000e8d8-9b98-8000-e605-01ef9001ef90_2931698",
+  local!reporte: if(
+    and(
+      isnull(ri!operaciones),
+      isnull(ri!contrato)
+    ),
+    null,
+    #"_a-0000e8d8-9b98-8000-e605-01ef9001ef90_2933354"(
+      operacion: ri!operaciones,
+      contrato: ri!contrato,
+      excluirPendiente: true
+    )
+  ),
+  local!reporte_aprobado: if(
+    and(
+      isnull(ri!operaciones),
+      isnull(ri!contrato)
+    ),
+    null,
+    #"_a-0000e8d8-9b98-8000-e605-01ef9001ef90_2873730"(
+      operacion: ri!operaciones,
+      contrato: ri!contrato
+    )
+  ),
+  local!not_exists: and(
+    a!isNotNullOrEmpty(ri!contrato),
+    a!isNotNullOrEmpty(ri!operaciones),
+    a!isNullOrEmpty(local!reporte),
+    a!isNullOrEmpty(local!reporte_aprobado)
+  ),
+  local!reporteSeleccionado,
+  local!reporteAprobadoSeleccionado,
+  local!idsReporte,
+  local!idsReporteAprobado,
+  local!showInformationBanner: true,
+  /*correcto*/
+  local!flag: now(),
+  local!showWhen: a!refreshVariable(
+    value: now() &lt; local!flag,
+    refreshInterval: 0.5
+  ),
+  /*-----*/
+  /*error*/
+  local!flag_error: now(),
+  local!showWhen_error: a!refreshVariable(
+    value: now() &lt; local!flag_error,
+    /* especifique el intervalo después de cuántos minutos desea finalizar el examen */
+    refreshInterval: 0.5
+  ),
+  /*------*/
+  {
+    #"SYSTEM_SYSRULES_sectionLayout_v1"(
+      label: "",
+      contents: {
+        #"SYSTEM_SYSRULES_columnsLayout"(
+          columns: {
+            /*CORRECTO*/
+            #"SYSTEM_SYSRULES_columnLayout"(
+              contents: {
+                #"_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9394093"(
+                  showInformationBanner: local!showInformationBanner
+                )
+              },
+              showWhen: and(
+                local!showInformationBanner,
+                local!showWhen
+              )
+            ),
+            /*ERROR*/
+            #"SYSTEM_SYSRULES_columnLayout"(
+              contents: {
+                #"_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9394317"(
+                  showInformationBanner: local!showInformationBanner
+                )
+              },
+              showWhen: and(
+                local!showInformationBanner,
+                local!showWhen_error
+              )
+            ),
+
+          }
+        )
+      }
+    ),
+    #"SYSTEM_SYSRULES_richTextDisplayField"(
+      labelPosition: "COLLAPSED",
+      value: {
+        #"SYSTEM_SYSRULES_richTextItem_v1"(
+          text: {
+            "Ingresa el contrato y selecciona el movimiento en base al status deseado"
+          },
+          size: "MEDIUM"
+        )
+      }
+    ),
+    #"SYSTEM_SYSRULES_columnsLayout"(
+      columns: {
+        #"SYSTEM_SYSRULES_columnLayout"(
+          contents: {
+            #"SYSTEM_SYSRULES_textField"(
+              label: "Operación:",
+              labelPosition: "ADJACENT",
+              value: ri!operaciones,
+              saveInto: {
+                ri!operaciones,
+                a!save(
+                  ri!documentoseleccionado,
+                  if(
+                    and(
+                      a!isNullOrEmpty(ri!operaciones),
+                      a!isNullOrEmpty(ri!contrato)
+                    ),
+                    null,
+                    ri!documentoseleccionado
+                  )
+                ),
+                a!save(
+                  local!reporteAprobadoSeleccionado,
+                  if(
+                    and(
+                      a!isNullOrEmpty(ri!operaciones),
+                      a!isNullOrEmpty(ri!contrato)
+                    ),
+                    null,
+                    local!reporteAprobadoSeleccionado
+                  )
+                ),
+                a!save(
+                  local!idsReporteAprobado,
+                  if(
+                    and(
+                      a!isNullOrEmpty(ri!operaciones),
+                      a!isNullOrEmpty(ri!contrato)
+                    ),
+                    null,
+                    local!idsReporteAprobado
+                  )
+                ),
+                a!save(
+                  local!reporteSeleccionado,
+                  if(
+                    and(
+                      a!isNullOrEmpty(ri!operaciones),
+                      a!isNullOrEmpty(ri!contrato)
+                    ),
+                    null,
+                    local!reporteSeleccionado
+                  )
+                ),
+                a!save(
+                  local!idsReporte,
+                  if(
+                    and(
+                      a!isNullOrEmpty(ri!operaciones),
+                      a!isNullOrEmpty(ri!contrato)
+                    ),
+                    null,
+                    local!idsReporte
+                  )
+                )
+              },
+              refreshAfter: "KEYPRESS",
+              /*characterLimit: 8,*/
+              validations: {}
+            )
+          },
+          width: "AUTO"
+        ),
+        #"SYSTEM_SYSRULES_columnLayout"(
+          contents: {
+            #"SYSTEM_SYSRULES_textField"(
+              label: "Contrato:",
+              labelPosition: "ADJACENT",
+              value: ri!contrato,
+              saveInto: {
+                ri!contrato,
+                a!save(
+                  ri!documentoseleccionado,
+                  if(
+                    and(
+                      a!isNullOrEmpty(ri!operaciones),
+                      a!isNullOrEmpty(ri!contrato)
+                    ),
+                    null,
+                    ri!documentoseleccionado
+                  )
+                ),
+                a!save(
+                  local!reporteAprobadoSeleccionado,
+                  if(
+                    and(
+                      a!isNullOrEmpty(ri!operaciones),
+                      a!isNullOrEmpty(ri!contrato)
+                    ),
+                    null,
+                    local!reporteAprobadoSeleccionado
+                  )
+                ),
+                a!save(
+                  local!idsReporteAprobado,
+                  if(
+                    and(
+                      a!isNullOrEmpty(ri!operaciones),
+                      a!isNullOrEmpty(ri!contrato)
+                    ),
+                    null,
+                    local!idsReporteAprobado
+                  )
+                ),
+                a!save(
+                  local!reporteSeleccionado,
+                  if(
+                    and(
+                      a!isNullOrEmpty(ri!operaciones),
+                      a!isNullOrEmpty(ri!contrato)
+                    ),
+                    null,
+                    local!reporteSeleccionado
+                  )
+                ),
+                a!save(
+                  local!idsReporte,
+                  if(
+                    and(
+                      a!isNullOrEmpty(ri!operaciones),
+                      a!isNullOrEmpty(ri!contrato)
+                    ),
+                    null,
+                    local!idsReporte
+                  )
+                )
+              },
+              refreshAfter: "KEYPRESS",
+              characterLimit: 11,
+              validations: {}
+            )
+          },
+          width: "AUTO"
+        )
+      }
+    ),
+    #"SYSTEM_SYSRULES_columnsLayout"(
+      columns: {
+        #"SYSTEM_SYSRULES_columnLayout"(
+          contents: {
+            #"SYSTEM_SYSRULES_richTextDisplayField"(
+              label: "",
+              labelPosition: "COLLAPSED",
+              value: #"SYSTEM_SYSRULES_richTextItem_v1"(
+                text: concat(
+                  "Debe llenar los siguiente campos: ",
+                  char(10),
+                  if(
+                    isnull(ri!operaciones),
+                    concat("*Operacion", char(10)),
+                    {}
+                  ),
+                  if(
+                    isnull(ri!contrato),
+                    concat("*Contrato", char(10)),
+                    {}
+                  )
+                ),
+                showWhen: or(
+                  isnull(ri!contrato),
+                  isnull(ri!operaciones)
+                ),
+                color: "#ff0000",
+                style: "EMPHASIS"
+              ),
+              showWhen: or(
+                isnull(ri!contrato),
+                isnull(ri!operaciones)
+              )
+            )
+          }
+        )
+      }
+    ),
+    #"SYSTEM_SYSRULES_columnsLayout"(
+      columns: {
+        #"SYSTEM_SYSRULES_columnLayout"(
+          contents: {
+            #"SYSTEM_SYSRULES_gridField_v1"(
+              label: "Información del Reporte",
+              data: local!reporte,
+              columns: {
+                #"SYSTEM_SYSRULES_gridColumn"(
+                  label: "Operación",
+                  value: fv!row.operacion
+                ),
+                #"SYSTEM_SYSRULES_gridColumn"(label: "Contrato", value: fv!row.contrato),
+                #"SYSTEM_SYSRULES_gridColumn"(
+                  label: "Título",
+                  value: if(
+                    a!isNullOrEmpty(fv!row.titulo),
+                    "Sin Titulo",
+                    if(
+                      fv!row.titulo = """""",
+                      "Sin Titulo",
+                      fv!row.titulo
+                    )
+                  )
+                ),
+                #"SYSTEM_SYSRULES_gridColumn"(
+                  label: "Tipo Operación",
+                  value: if(
+                    fv!row.extra4 = "C",
+                    "Compra",
+                    if(fv!row.extra4 = "V", "Venta", "Sin Tipo")
+                  )
+                ),
+                #"SYSTEM_SYSRULES_gridColumn"(
+                  label: "Fecha Captura",
+                  /*value: fv!row.fechacaptura*/
+                  value: if(len(fv!row.fechacaptura)&gt;10,
+                  mid(fv!row.fechacaptura,1,10),
+                  fv!row.fechacaptura
+                  )
+                ),
+              
+                #"SYSTEM_SYSRULES_gridColumn"(
+                  label: "Monto",
+                  /*value: fv!row.monto*/
+                  value: if(
+                    isnull(fv!row.monto),
+                    "-",
+                    dollar(fv!row.monto, 2, 0)
+                  )
+                ),
+                #"SYSTEM_SYSRULES_gridColumn"(
+                  label: "Segmento",
+                  value: 
+                  if(a!isNullOrEmpty(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2152641"(usuarioOpic: fv!row.usuario).data),
+                  "-",
+                  #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2233353"(
+                    idSegmento: #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2152641"(usuarioOpic: fv!row.usuario).data[1].idsegmento
+                  ).data.segmento
+                  )
+
+                ),
+                #"SYSTEM_SYSRULES_gridColumn"(label: "Revisado", value: fv!row.revisado)
+              },
+              showWhen: and(
+                a!isNotNullOrEmpty(ri!operaciones),
+                a!isNotNullOrEmpty(ri!contrato),
+                a!isNotNullOrEmpty(local!reporte)
+              ),
+              selectable: true,
+              selectionValue: local!idsReporte,
+              selectionSaveInto: {
+                local!idsReporte,
+                a!save(
+                  local!reporteSeleccionado,
+                  fv!selectedRows
+                ),
+                a!save(ri!documentoseleccionado, null),
+                a!save(local!idsReporteAprobado, null),
+                a!save(local!reporteAprobadoSeleccionado, null)
+              },
+              selectionRequired: if(
+                and(
+                  a!isNullOrEmpty(local!reporteAprobadoSeleccionado),
+                  a!isNullOrEmpty(local!reporteSeleccionado)
+                ),
+                true,
+                false
+              ),
+              disableRowSelectionWhen: a!isNotNullOrEmpty(local!reporteAprobadoSeleccionado)
+            )
+          }
+        )
+      },
+      showWhen: or(
+        a!isNotNullOrEmpty(local!reporte),
+        a!isNotNullOrEmpty(local!reporte_aprobado)
+      )
+    ),
+    #"SYSTEM_SYSRULES_columnsLayout"(
+      columns: {
+        #"SYSTEM_SYSRULES_columnLayout"(
+          contents: {
+            #"SYSTEM_SYSRULES_gridField_v1"(
+              label: "Información del Reporte Aprobado",
+              data: local!reporte_aprobado,
+              columns: {
+                #"SYSTEM_SYSRULES_gridColumn"(
+                  label: "Operacion",
+                  value: fv!row.operacion
+                ),
+                #"SYSTEM_SYSRULES_gridColumn"(label: "Contrato", value: fv!row.contrato),
+                #"SYSTEM_SYSRULES_gridColumn"(
+                  label: "Titulo",
+                  value: if(
+                    a!isNullOrEmpty(fv!row.titulo),
+                    "Sin Titulo",
+                    if(
+                      fv!row.titulo = """""",
+                      "Sin Titulo",
+                      fv!row.titulo
+                    )
+                  )
+                ),
+                #"SYSTEM_SYSRULES_gridColumn"(
+                  label: "Tipo Operacion",
+                  value: if(
+                    fv!row.extra4 = "C",
+                    "Compra",
+                    if(fv!row.extra4 = "V", "Venta", "Sin Tipo")
+                  )
+                ),
+                #"SYSTEM_SYSRULES_gridColumn"(
+                  label: "Fecha Captura",
+                  /*value: fv!row.fechacaptura*/
+                  value: if(len(fv!row.fechacaptura)&gt;10,
+                  mid(fv!row.fechacaptura,1,10),
+                  fv!row.fechacaptura
+                  )
+                ),
+
+                #"SYSTEM_SYSRULES_gridColumn"(
+                  label: "Monto",
+                  /*value: fv!row.monto*/
+                  value: if(
+                    isnull(fv!row.monto),
+                    "-",
+                    dollar(fv!row.monto, 2, 0)
+                  )
+                ),
+                #"SYSTEM_SYSRULES_gridColumn"(
+                  label: "Segmento",
+                  value: 
+                  
+                  if(a!isNullOrEmpty(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2152641"(usuarioOpic: fv!row.usuario).data),
+                  "-",
+                  #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2233353"(
+                    idSegmento: #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2152641"(usuarioOpic: fv!row.usuario).data[1].idsegmento
+                  ).data.segmento
+                  )
+
+                ),
+                #"SYSTEM_SYSRULES_gridColumn"(label: "Revisado", value: fv!row.revisado)
+              },
+              showWhen: and(
+                a!isNotNullOrEmpty(ri!operaciones),
+                a!isNotNullOrEmpty(ri!contrato),
+                a!isNotNullOrEmpty(local!reporte_aprobado)
+              ),
+              selectable: true,
+              selectionValue: local!idsReporteAprobado,
+              selectionSaveInto: {
+                local!idsReporteAprobado,
+                a!save(
+                  local!reporteAprobadoSeleccionado,
+                  fv!selectedRows
+                ),
+                a!save(ri!documentoseleccionado, null),
+                a!save(local!idsReporte, null),
+                a!save(local!reporteSeleccionado, null)
+              },
+              selectionRequired: if(
+                and(
+                  a!isNullOrEmpty(local!reporteAprobadoSeleccionado),
+                  a!isNullOrEmpty(local!reporteSeleccionado)
+                ),
+                true,
+                false
+              )
+            )
+          }
+        )
+      }
+    ),
+    #"SYSTEM_SYSRULES_columnsLayout"(
+      columns: {
+        #"SYSTEM_SYSRULES_columnLayout"(
+          contents: {
+            #"SYSTEM_SYSRULES_dropdownField_v1"(
+              label: "Tipo de reverso",
+              labelPosition: "JUSTIFIED",
+              placeholder: "--- Seleccione el movimiento ---",
+              choiceLabels: if(
+                and(
+                  a!isNotNullOrEmpty(local!reporte),
+                  a!isNotNullOrEmpty(local!idsReporte)
+                ),
+                {
+                  if(
+                    local!reporte[1].revisado = "S",
+                    { local!movimiento[3] },
+                    if(
+                      local!reporte[1].revisado = "SI",
+                      { local!movimiento[4] },
+                      if(
+                        a!isNotNullOrEmpty(local!reporte_aprobado),
+                        {
+                          local!movimiento[1],
+                          local!movimiento[2]
+                        },
+                        {}
+                      )
+                    )
+                  )
+                },
+                if(
+                  a!isNotNullOrEmpty(local!reporte_aprobado),
+                  {
+                    local!movimiento[1],
+                    local!movimiento[2]
+                  },
+                  {}
+                )
+              ),
+              choiceValues: if(
+                and(
+                  a!isNotNullOrEmpty(local!reporte),
+                  a!isNotNullOrEmpty(local!idsReporte)
+                ),
+                if(
+                  local!reporte[1].revisado = "S",
+                  { 3 },
+                  if(
+                    local!reporte[1].revisado = "SI",
+                    { 4 },
+                    if(
+                      a!isNotNullOrEmpty(local!reporte_aprobado),
+                      { 1, 2 },
+                      {}
+                    )
+                  )
+                ),
+                if(
+                  a!isNotNullOrEmpty(local!reporte_aprobado),
+                  { 1, 2 },
+                  {}
+                )
+              ),
+              value: ri!documentoseleccionado,
+              saveInto: { ri!documentoseleccionado },
+              searchDisplay: "AUTO",
+              disabled: or(
+                isnull(ri!contrato),
+                isnull(ri!operaciones),
+                and(
+                  a!isNullOrEmpty(local!reporteAprobadoSeleccionado),
+                  a!isNullOrEmpty(local!reporteSeleccionado)
+                ),
+                local!not_exists
+              ),
+              validations: {}
+            )
+          }
+        ),
+        #"SYSTEM_SYSRULES_columnLayout"(
+          contents: {
+            #"SYSTEM_SYSRULES_richTextDisplayField"(
+              labelPosition: "COLLAPSED",
+              value: #"SYSTEM_SYSRULES_richTextItem_v1"(
+                text: "No existe una operacion con esos campos, por favor revise la información provista",
+                showWhen: local!not_exists,
+                color: "#ff0000",
+                style: "EMPHASIS"
+              )
+            )
+          }
+        )
+      }
+    ),
+    #"SYSTEM_SYSRULES_ButtonArrayLayout"(
+      buttons: {
+        #"SYSTEM_SYSRULES_ButtonWidget"(
+          label: "Aceptar",
+          saveInto: {
+            #"SYSTEM_SYSRULES_startProcess"(
+              processModel: #"_a-0000e93b-1de6-8000-e635-01ef9001ef90_3500459",
+              processParameters: {
+                camino: ri!documentoseleccionado,
+                /*CDT_REPORTES: local!reporteSeleccionado,*/
+                /*CDT_REPORTES_APROBADOS: local!reporteAprobadoSeleccionado*/
+                arreglo_reportes: local!reporteSeleccionado,
+                arreglo_reportes_aprobados: local!reporteAprobadoSeleccionado
+              },
+              onSuccess: {
+                a!save(local!showInformationBanner, true),
+                if(
+                  toboolean(fv!processInfo.pv.error) = false,
+                  {a!save(local!flag, addseconds(now(), 10)),
+                  a!save(ri!documentoseleccionado, null),
+                  a!save(ri!contrato, null),
+                  a!save(ri!operaciones, null),
+                  a!save(local!reporteAprobadoSeleccionado, null),
+                  a!save(local!idsReporteAprobado, null),
+                  a!save(local!reporteSeleccionado, null),
+                  a!save(local!idsReporte, null)
+                  
+                  },
+                  a!save(local!flag_error, addseconds(now(), 10))
+                )
+              }
+            ),
+            /*a!save(ri!documentoseleccionado, null),*/
+            /*a!save(ri!contrato, null),*/
+            /*a!save(ri!operaciones, null),*/
+            /*a!save(local!reporteAprobadoSeleccionado, null),*/
+            /*a!save(local!idsReporteAprobado, null),*/
+            /*a!save(local!reporteSeleccionado, null),*/
+            /*a!save(local!idsReporte, null)*/
+          },
+          style: "DESTRUCTIVE",
+          disabled: or(
+            isnull(ri!documentoseleccionado),
+            and(
+              a!isNullOrEmpty(local!reporte),
+              a!isNullOrEmpty(local!reporte_aprobado)
+            )
+          ),
+          /*confirmHeader: "Se realizará un movimiento al contrato " ,*/
+          confirmHeader: "Se realizará un movimiento al contrato " &amp; ri!contrato,
+          confirmMessage: "¿Continuar?"
+        )
+      },
+      align: "START"
+    )
+  }
+)</definition>
+        <namedTypedValue>
+            <name>documentoseleccionado</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>contrato</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>segmento</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>operaciones</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>titulo</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+        <isCustom>false</isCustom>
+    </interface>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000e94c-78eb-8000-e637-01ef9001ef90_3792811"/>
+        <historyInfo versionUuid="_a-0000ea3c-477e-8000-e648-01ef9001ef90_6934107"/>
+        <historyInfo versionUuid="_a-0000eb09-d442-8000-e687-01ef9001ef90_8782320"/>
+        <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9396533"/>
+    </history>
+</contentHaul>

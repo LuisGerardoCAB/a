@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="urn:com:appian:types"
+  xmlns:tns="urn:com:appian:types" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <xsd:complexType name="cdo_digitalizados_rechazados_auditoria">
+    <xsd:annotation>
+      <xsd:appinfo source="appian.jpa">@Table(name="CDO_MX_AUX_DIGITALIZADOS_RECHAZADOS_AUDITORIA")</xsd:appinfo>
+      <xsd:appinfo source="http://www.appian.com/ae/types/2009">
+        <ns2:Metadata xmlns:ns2="http://www.appian.com/ae/types/2009">
+          <ns2:versionUuid>0000eae5-363b-8000-8853-014d98014d98</ns2:versionUuid>
+          <ns2:history>
+            <ns2:historyInfo versionUuid="0000e868-5422-8000-4aa2-014d98014d98"/>
+            <ns2:historyInfo versionUuid="0000eae5-363b-8000-8853-014d98014d98"/>
+          </ns2:history>
+        </ns2:Metadata>
+      </xsd:appinfo>
+      <xsd:documentation><![CDATA[Data Type corresponidente a la tabla cdo_digitalizados_rechazados_auditoria]]></xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="idDigitalizadosRechazadosAuditoria"
+        nillable="true" type="xsd:int">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Id @Column(name="ID_DIGITALIZADOS_RECHAZADOS_AUDITORIA", nullable=false, unique=true, columnDefinition="NUMBER")</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="iddigitalizadorechazado" nillable="true" type="xsd:int">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Column(name="IDDIGITALIZADORECHAZADO", columnDefinition="NUMBER")</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="idreporte" nillable="true" type="xsd:int">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Column(name="IDREPORTE", columnDefinition="NUMBER")</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="contrato" nillable="true" type="xsd:string">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Column(name="CONTRATO", columnDefinition="VARCHAR2(12)")</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="iddocumento" nillable="true" type="xsd:int">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Column(name="IDDOCUMENTO", columnDefinition="NUMBER")</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="nombreimagen" nillable="true" type="xsd:string">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Column(name="NOMBREIMAGEN", columnDefinition="VARCHAR2(100)")</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="usuariorechazo" nillable="true" type="xsd:string">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Column(name="USUARIORECHAZO", columnDefinition="VARCHAR2(12)")</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="fecharechazo" nillable="true" type="xsd:string">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Column(name="FECHARECHAZO", columnDefinition="VARCHAR2(50)")</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="operacion" nillable="true" type="xsd:string">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Column(name="OPERACION", columnDefinition="VARCHAR2(10)")</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="dml" nillable="true" type="xsd:string">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Column(name="DML", columnDefinition="VARCHAR2(50)")</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="fchaDml" nillable="true" type="xsd:dateTime">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Column(name="FCHA_DML", columnDefinition="TIMESTAMP(6)")</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:schema>

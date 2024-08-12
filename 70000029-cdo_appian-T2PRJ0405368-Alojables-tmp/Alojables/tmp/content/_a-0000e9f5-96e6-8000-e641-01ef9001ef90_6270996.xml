@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9389867</versionUuid>
+    <interface>
+        <name>SCDO_cargaReversoOperaciones</name>
+        <uuid>_a-0000e9f5-96e6-8000-e641-01ef9001ef90_6270996</uuid>
+        <description>Interfaz general para la carga y el reverso de operacioes</description>
+        <parentUuid>_a-0000e801-560f-8000-e5d9-01ef9001ef90_1707049</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>a!localVariables(
+  
+  local!opcionSeleccionada: 1,
+  
+  {
+    #"_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1881575"(
+      opcionSeleccionada_any: local!opcionSeleccionada,
+      opciones_any: {
+        {
+          titulo: #"_a-0000e9f5-96e6-8000-e641-01ef9001ef90_6271097"[1],
+          icono: #"_a-0000e9f5-96e6-8000-e641-01ef9001ef90_6271199"[1],
+          perfiles: {#"_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1881741", #"_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1881746"},
+        },
+        {
+          titulo: #"_a-0000e9f5-96e6-8000-e641-01ef9001ef90_6271097"[2],
+          icono: #"_a-0000e9f5-96e6-8000-e641-01ef9001ef90_6271199"[2],
+          perfiles: {#"_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1881741", #"_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1881746"},
+        }
+      },
+      indiceSeleccionado_int: local!opcionSeleccionada,
+    ),
+    choose(
+      local!opcionSeleccionada,
+      #"_a-0000e9a7-6d42-8000-e63f-01ef9001ef90_5999843"(),
+      #"_a-0000e9f5-96e6-8000-e641-01ef9001ef90_6271402"()
+    )
+  }
+)</definition>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+        <isCustom>false</isCustom>
+    </interface>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000e9f5-96e6-8000-e641-01ef9001ef90_6271439"/>
+        <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9389867"/>
+    </history>
+</contentHaul>

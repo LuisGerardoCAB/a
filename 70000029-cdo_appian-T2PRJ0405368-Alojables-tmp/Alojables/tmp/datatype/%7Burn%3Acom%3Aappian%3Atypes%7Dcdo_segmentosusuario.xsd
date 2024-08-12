@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="urn:com:appian:types"
+  xmlns:tns="urn:com:appian:types" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <xsd:complexType name="cdo_segmentosusuario">
+    <xsd:annotation>
+      <xsd:appinfo source="appian.jpa">@Table(name="CDO_MX_REL_SEGMENTOSUSUARIO")</xsd:appinfo>
+      <xsd:appinfo source="http://www.appian.com/ae/types/2009">
+        <ns2:Metadata xmlns:ns2="http://www.appian.com/ae/types/2009">
+          <ns2:versionUuid>0000eb1b-8aa8-8000-91fc-014d98014d98</ns2:versionUuid>
+          <ns2:history>
+            <ns2:historyInfo versionUuid="0000e8c1-d34b-8000-71a7-014d98014d98"/>
+            <ns2:historyInfo versionUuid="0000e9b3-4b4c-8000-ef44-014d98014d98"/>
+            <ns2:historyInfo versionUuid="0000eb1b-8aa8-8000-91fc-014d98014d98"/>
+          </ns2:history>
+        </ns2:Metadata>
+      </xsd:appinfo>
+      <xsd:documentation><![CDATA[Data Type correspondiente a la tabla CDO_MX_REL_SEGMENTOSUSUARIO]]></xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="idsegusuario" nillable="true" type="xsd:int">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Id @Column(name="IDSEGUSUARIO", nullable=false, unique=true, columnDefinition="NUMBER") @SequenceGenerator(name="CDO_SEGMENTOSUSUARIO_SQ1", sequenceName="CDO_SEGMENTOSUSUARIO_SQ1") @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="CDO_SEGMENTOSUSUARIO_SQ1")</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="idadmon" nillable="true" type="xsd:int">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Column(name="IDADMON", columnDefinition="NUMBER")</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="idsegmento" nillable="true" type="xsd:int">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Column(name="IDSEGMENTO", columnDefinition="NUMBER")</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:schema>

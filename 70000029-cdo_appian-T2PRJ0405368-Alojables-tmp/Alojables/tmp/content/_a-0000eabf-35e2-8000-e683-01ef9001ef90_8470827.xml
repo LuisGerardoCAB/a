@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9386283</versionUuid>
+    <rule>
+        <name>SCDO_generarHoraUnix</name>
+        <uuid>_a-0000eabf-35e2-8000-e683-01ef9001ef90_8470827</uuid>
+        <description>Genera la hora actual en formato unix</description>
+        <parentUuid>_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1882376</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>with(
+  local!unixEpoch : fn!datetime(1970, 1, 1, 0,0,0,0),
+  local!intervalDiff: fn!now() - local!unixEpoch,
+  local!stringintervalDiff: fn!tostring(local!intervalDiff),
+  local!days: fn!tointeger(local!intervalDiff),
+  local!stringPartExcludingDays: fn!split(local!stringintervalDiff, "::")[2],
+  local!splitPartExcludingDays: fn!split(local!stringPartExcludingDays, ":"),
+  local!hours: fn!tointeger(local!splitPartExcludingDays[1]),
+  local!minutes: fn!tointeger(local!splitPartExcludingDays[2]),
+  local!seconds: fn!tointeger(local!splitPartExcludingDays[3]),
+  local!days*24*3600 + local!hours*3600 + local!minutes*60 + local!seconds
+)</definition>
+        <preferredEditor>legacy</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000eabf-35e2-8000-e683-01ef9001ef90_8470832"/>
+        <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9386283"/>
+    </history>
+</contentHaul>

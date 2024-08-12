@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="urn:com:appian:types:SCDO"
+  xmlns:tns="urn:com:appian:types:SCDO" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <xsd:include schemaLocation="%7Burn%3Acom%3Aappian%3Atypes%3ASCDO%7DSCDO_Contacto.xsd"/>
+  <xsd:include schemaLocation="%7Burn%3Acom%3Aappian%3Atypes%3ASCDO%7DSCDO_Extras.xsd"/>
+  <xsd:include schemaLocation="%7Burn%3Acom%3Aappian%3Atypes%3ASCDO%7DSCDO_Grupos.xsd"/>
+  <xsd:include schemaLocation="%7Burn%3Acom%3Aappian%3Atypes%3ASCDO%7DSCDO_Locacion.xsd"/>
+  <xsd:include schemaLocation="%7Burn%3Acom%3Aappian%3Atypes%3ASCDO%7DSCDO_Perfil.xsd"/>
+  <xsd:complexType name="SCDO_DatosUsuario">
+    <xsd:annotation>
+      <xsd:appinfo source="http://www.appian.com/ae/types/2009">
+        <ns2:Metadata xmlns:ns2="http://www.appian.com/ae/types/2009">
+          <ns2:versionUuid>0000ead0-1c01-8000-81ac-014d98014d98</ns2:versionUuid>
+          <ns2:history>
+            <ns2:historyInfo versionUuid="0000ead0-1c01-8000-81ac-014d98014d98"/>
+          </ns2:history>
+        </ns2:Metadata>
+      </xsd:appinfo>
+      <xsd:documentation><![CDATA[CDT para crear o modificar usuarios en appian]]></xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="profile" nillable="true" type="tns:SCDO_Perfil">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@ManyToOne(cascade=CascadeType.REFRESH)</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="contact" nillable="true" type="tns:SCDO_Contacto">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@ManyToOne(cascade=CascadeType.REFRESH)</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="location" nillable="true" type="tns:SCDO_Locacion">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@ManyToOne(cascade=CascadeType.REFRESH)</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="customFields" nillable="true" type="tns:SCDO_Extras">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@ManyToOne(cascade=CascadeType.REFRESH)</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="group" type="tns:SCDO_Grupos">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@OneToMany(cascade=CascadeType.ALL, indexed=false)</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:schema>

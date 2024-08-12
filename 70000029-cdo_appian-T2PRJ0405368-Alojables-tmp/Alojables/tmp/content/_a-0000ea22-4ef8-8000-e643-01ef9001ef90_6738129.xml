@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000eb9b-4ec6-8000-e68b-01ef9001ef90_9643619</versionUuid>
+    <rule>
+        <name>SCDO_obtenerUsuariosOpicsAsignados</name>
+        <uuid>_a-0000ea22-4ef8-8000-e643-01ef9001ef90_6738129</uuid>
+        <description>Regla de expresión que devuelve los usuarios opics asignados a un expediente</description>
+        <parentUuid>_a-0000e9a3-ab27-8000-e63d-01ef9001ef90_4829216</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>a!localVariables(
+  local!usuariosNoAsignados: a!refreshVariable(
+    value: a!flatten(
+      index(
+        #"404a9f88-bd69-4083-a4f9-8c8b2a8fc4a6"(startIndex: 1, batchSize: - 1).data,
+        "usuarioopics",
+        {}
+      )
+    ),
+    refreshOnVarChange: ri!refreshCount,
+    
+  ),
+  local!todosUsuariosOpics: a!refreshVariable(
+    value: a!flatten(
+      index(
+        #"SYSTEM_SYSRULES_queryEntity_v2"(
+          entity: #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2114138",
+          query: #"SYSTEM_SYSRULES_query"(
+            aggregation: #"SYSTEM_SYSRULES_queryAggregation"(
+              aggregationcolumns: #"SYSTEM_SYSRULES_queryAggregationColumn"(field: "usuarioopics", isgrouping: true, )
+            ),
+            paginginfo: #"SYSTEM_SYSRULES_pagingInfo"(
+              startIndex: 1,
+              batchSize: - 1,
+              sort: #"SYSTEM_SYSRULES_sortInfo"(field: "usuarioopics", ascending: true)
+            )
+          )
+        ).data,
+        "usuarioopics",
+        {}
+      )
+    ),
+    refreshOnVarChange: ri!refreshCount,
+    
+  ),
+  local!usuariosRegistrados: a!refreshVariable(
+    value: a!flatten(
+      #"_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9534907"(
+        arreglo_1: local!todosUsuariosOpics,
+        arreglo_2: local!usuariosNoAsignados
+      )/*if(and(a!isNotNullOrEmpty(local!todosUsuariosOpics),a!isNotNullOrEmpty(local!usuariosNoAsignados)),*/
+      /*difference(local!todosUsuariosOpics, local!usuariosNoAsignados),*/
+      /*if(a!isNotNullOrEmpty(local!todosUsuariosOpics),*/
+      /*local!todosUsuariosOpics,*/
+      /*local!usuariosNoAsignados*/
+      /*)*/
+      /*)*/
+      
+    ),
+    refreshOnVarChange: ri!refreshCount,
+    
+  ),
+  local!porSegmento: a!refreshVariable(
+    value: if(
+      a!isNullOrEmpty(ri!idsegmento),
+      null,
+      a!flatten(
+        index(
+          #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2152641"(
+            idSegmento: ri!idsegmento,
+            paginInfo: #"SYSTEM_SYSRULES_pagingInfo"(
+              startIndex: 1,
+              batchSize: - 1,
+              sort: #"SYSTEM_SYSRULES_sortInfo"(field: "usuarioopics", ascending: true)
+            )
+          ).data,
+          "usuarioopics",
+          {}
+        )
+      ),
+      
+    ),
+    refreshOnVarChange: ri!refreshCount,
+    
+  ),
+  local!usuariosPorSegmento: a!refreshVariable(
+    value: if(
+      a!isNullOrEmpty(local!porSegmento),
+      null,
+      fn!intersection(
+        local!usuariosRegistrados,
+        local!porSegmento
+      ),
+      
+    ),
+    refreshOnVarChange: ri!refreshCount,
+    
+  ),
+  local!filtroPrincipal: {
+    #"SYSTEM_SYSRULES_queryFilter"(
+      field: "usuarioopics",
+      operator: "in",
+      value: local!usuariosRegistrados,
+      applywhen: a!isNullOrEmpty(local!usuariosPorSegmento)
+    ),
+    #"SYSTEM_SYSRULES_queryFilter"(
+      field: "usuarioopics",
+      operator: "in",
+      value: local!usuariosPorSegmento,
+      applywhen: a!isNotNullOrEmpty(local!usuariosPorSegmento)
+    ),
+
+  },
+  local!filtroSiPorSegmentoVacio: {
+    #"SYSTEM_SYSRULES_queryFilter"(
+      field: "idusuarioopics",
+      operator: "=",
+      value: 0,
+      applywhen: true()
+    )
+  },
+  #"SYSTEM_SYSRULES_queryEntity_v2"(
+    entity: #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2114138",
+    query: #"SYSTEM_SYSRULES_query"(
+      logicalexpression: #"SYSTEM_SYSRULES_queryLogicalExpression"(
+        operator: "AND",
+        filters: if(
+          and(
+            a!isNotNullOrEmpty(ri!idsegmento),
+            a!isNullOrEmpty(local!porSegmento),
+          ),
+          local!filtroSiPorSegmentoVacio,
+          local!filtroPrincipal
+        ),
+        ignorefilterswithemptyvalues: true
+      ),
+      paginginfo: #"SYSTEM_SYSRULES_pagingInfo"(
+        startIndex: 1,
+        batchSize: - 1,
+        sort: #"SYSTEM_SYSRULES_sortInfo"(field: "usuarioopics", ascending: true)
+      )
+    )
+  ),
+  
+)</definition>
+        <namedTypedValue>
+            <name>idsegmento</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>refreshCount</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>legacy</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000ea22-4ef8-8000-e643-01ef9001ef90_6786661"/>
+        <historyInfo versionUuid="_a-0000eb09-d442-8000-e687-01ef9001ef90_8836768"/>
+        <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9385907"/>
+        <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9451702"/>
+        <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9493772"/>
+        <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9540131"/>
+        <historyInfo versionUuid="_a-0000eb9b-4ec6-8000-e68b-01ef9001ef90_9643619"/>
+    </history>
+</contentHaul>

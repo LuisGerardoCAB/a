@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="urn:com:appian:types"
+  xmlns:tns="urn:com:appian:types" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <xsd:complexType name="cdo_estructura_reportes_aprobados">
+    <xsd:annotation>
+      <xsd:appinfo source="appian.jpa">@Table(name="V_CDO_Aprobaciones")</xsd:appinfo>
+      <xsd:appinfo source="http://www.appian.com/ae/types/2009">
+        <ns2:Metadata xmlns:ns2="http://www.appian.com/ae/types/2009">
+          <ns2:versionUuid>0000e90f-3759-8000-98ee-014d98014d98</ns2:versionUuid>
+          <ns2:history>
+            <ns2:historyInfo versionUuid="0000e90f-3759-8000-98ee-014d98014d98"/>
+          </ns2:history>
+        </ns2:Metadata>
+      </xsd:appinfo>
+      <xsd:documentation><![CDATA[CDT que define la estructura del excel Reporte Operaciones]]></xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="idreporte" nillable="true" type="xsd:int">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Id @Column(name="idReporte", nullable=false, unique=true, columnDefinition="NUMBER")</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="mercado" nillable="true" type="xsd:string">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Column(name="Mercado", columnDefinition="VARCHAR2(60)")</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="operacion" nillable="true" type="xsd:string">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Column(name="Operacion", columnDefinition="VARCHAR2(10)")</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="contrato" nillable="true" type="xsd:string">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Column(name="Contrato", columnDefinition="VARCHAR2(12)")</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="nombre" nillable="true" type="xsd:string">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Column(name="Nombre", columnDefinition="VARCHAR2(100)")</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="emisora" nillable="true" type="xsd:string">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Column(name="Emisora", columnDefinition="VARCHAR2(30)")</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="monto" nillable="true" type="xsd:double">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Column(name="Monto", columnDefinition="FLOAT")</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="promotor" nillable="true" type="xsd:string">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Column(name="Promotor", columnDefinition="VARCHAR2(250)")</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="ccostos" nillable="true" type="xsd:string">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Column(name="CCostos", columnDefinition="VARCHAR2(16)")</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="region" nillable="true" type="xsd:string">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Column(name="Usuario", columnDefinition="VARCHAR2(16)")</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="usuario" nillable="true" type="xsd:string">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Column(name="Extra4", columnDefinition="VARCHAR2(80)")</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="segmento" nillable="true" type="xsd:string">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Column(length=30)</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="fechacaptura" nillable="true" type="xsd:string">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Column(name="Extra3", columnDefinition="VARCHAR2(80)")</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="horacaptura" nillable="true" type="xsd:string">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Column(name="Obligatorio", columnDefinition="VARCHAR2(2)")</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="bitacora" nillable="true" type="xsd:string">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Column(length=4000)</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="riesgo" nillable="true" type="xsd:int">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Column(name="Extra5", columnDefinition="VARCHAR2(80)")</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="revisado" nillable="true" type="xsd:string">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Column(name="Titulo", columnDefinition="VARCHAR2(18)")</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="usuarioreviso" nillable="true" type="xsd:string">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Column(length=16)</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="ccreviso" nillable="true" type="xsd:string">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Column(length=16)</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="ip" nillable="true" type="xsd:string">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Column(length=22)</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="fechareviso" nillable="true" type="xsd:string">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Column(length=50)</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="observaciones" nillable="true" type="xsd:string">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Column(length=10)</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="rechazo" nillable="true" type="xsd:string">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Column(length=80)</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="tinicial" nillable="true" type="xsd:string">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Column(length=80)</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="tfinal" nillable="true" type="xsd:string">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Column(length=80)</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="cv" nillable="true" type="xsd:string">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Column(length=80)</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="extra5" nillable="true" type="xsd:string">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Column(length=80)</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="obligatorio" nillable="true" type="xsd:string">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Column(length=2)</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="titulo" nillable="true" type="xsd:string">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Column(length=18)</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="usuarioaprobo" nillable="true" type="xsd:string">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Column(length=16)</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="fechaaprobacion" nillable="true" type="xsd:string">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Column(length=255)</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="ipaprobacion" nillable="true" type="xsd:string">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Column(length=20)</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="tipoaprobacion" nillable="true" type="xsd:string">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Column(length=255)</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="motivoeliminado" nillable="true" type="xsd:string">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Column(length=255)</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="estatus" nillable="true" type="xsd:string">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Column(length=255)</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:schema>

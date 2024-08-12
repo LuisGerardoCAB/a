@@ -1,0 +1,564 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9542131</versionUuid>
+    <interface>
+        <name>SCDO_Regiones</name>
+        <uuid>_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1906472</uuid>
+        <description>Interface para el modulo de Regiones</description>
+        <parentUuid>_a-0000e801-560f-8000-e5d9-01ef9001ef90_1707049</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>a!localVariables(
+  /*------------*/
+  local!showInformationBanner: true,
+  local!showInformationBanner_actualizar: true,
+  local!showInformationBanner_eliminar: true,
+  /*correcto*/
+  local!flag: now(),
+  local!showWhen: a!refreshVariable(
+    value: now() &lt; local!flag,
+    refreshInterval: 0.5
+  ),
+  /*-----*/
+  /*error*/
+  local!flag_error: now(),
+  local!showWhen_error: a!refreshVariable(
+    value: now() &lt; local!flag_error,
+    /* especifique el intervalo después de cuántos minutos desea finalizar el examen */
+    refreshInterval: 0.5
+  ),
+  /*------*/
+  /*correcto_actualizar*/
+  local!flag_actualizar: now(),
+  local!showWhen_actualizar: a!refreshVariable(
+    value: now() &lt; local!flag_actualizar,
+    refreshInterval: 0.5
+  ),
+  /*-----*/
+  /*error_actualizasr*/
+  local!flag_error_actualizar: now(),
+  local!showWhen_error_actualizar: a!refreshVariable(
+    value: now() &lt; local!flag_error_actualizar,
+    /* especifique el intervalo después de cuántos minutos desea finalizar el examen */
+    refreshInterval: 0.5
+  ),
+  /*------*/
+  /*correcto_eliminar*/
+  local!flag_eliminar: now(),
+  local!showWhen_eliminar: a!refreshVariable(
+    value: now() &lt; local!flag_eliminar,
+    refreshInterval: 0.5
+  ),
+  /*-----*/
+  /*error_elimianr*/
+  local!flag_error_eliminar: now(),
+  local!showWhen_error_eliminar: a!refreshVariable(
+    value: now() &lt; local!flag_error_eliminar,
+    /* especifique el intervalo después de cuántos minutos desea finalizar el examen */
+    refreshInterval: 0.5
+  ),
+  /*------*/
+  /*------------*/
+  local!refreshregion,
+  local!valortabla,
+  local!cdtregion: a!refreshVariable(
+    value: #"_a-0000e8d8-9b98-8000-e605-01ef9001ef90_2872186"(paginInfo: null).data,
+    refreshAlways: true,
+    refreshOnReferencedVarChange: local!refreshregion
+  ),
+  local!idregionSeleccionada,
+  local!regionSeleccionada,
+  local!regionUtilizada,
+  {
+    #"SYSTEM_SYSRULES_richTextDisplayField"(
+      labelPosition: "COLLAPSED",
+      value: {
+        #"SYSTEM_SYSRULES_richTextItem_v1"(
+          text: { "REGIONES" },
+          color: "#ff0000",
+          size: "MEDIUM_PLUS",
+          style: { "STRONG" }
+        )
+      },
+      align: "CENTER"
+    ),
+    #"SYSTEM_SYSRULES_richTextDisplayField"(
+      labelPosition: "COLLAPSED",
+      value: {
+        #"SYSTEM_SYSRULES_richTextItem_v1"(
+          text: {
+            "Para poder realizar altas bajas y modificaciones a la región "
+          },
+          size: "MEDIUM",
+          style: { "STRONG" }
+        )
+      }
+    ),
+    #"SYSTEM_SYSRULES_columnsLayout"(
+      columns: {
+        /*CORRECTO INSERTAR*/
+        #"SYSTEM_SYSRULES_columnLayout"(
+          contents: {
+            #"_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9394093"(
+              showInformationBanner: local!showInformationBanner
+            )
+          },
+          showWhen: and(
+            local!showInformationBanner,
+            local!showWhen
+          )
+        ),
+        /*ERROR INSERTAR*/
+        #"SYSTEM_SYSRULES_columnLayout"(
+          contents: {
+            #"_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9394317"(
+              showInformationBanner: local!showInformationBanner
+            )
+          },
+          showWhen: and(
+            local!showInformationBanner,
+            local!showWhen_error
+          )
+        ),
+        /*CORRECTO ACTUALIZAR*/
+        #"SYSTEM_SYSRULES_columnLayout"(
+          contents: {
+            #"_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9394093"(
+              showInformationBanner: local!showInformationBanner_actualizar
+            )
+          },
+          showWhen: and(
+            local!showInformationBanner_actualizar,
+            local!showWhen_actualizar
+          )
+        ),
+        /*ERROR ACTUALIZAR*/
+        #"SYSTEM_SYSRULES_columnLayout"(
+          contents: {
+            #"_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9394317"(
+              showInformationBanner: local!showInformationBanner_actualizar
+            )
+          },
+          showWhen: and(
+            local!showInformationBanner_actualizar,
+            local!showWhen_error_actualizar
+          )
+        ),
+        /*CORRECTO ELIMINAR*/
+        #"SYSTEM_SYSRULES_columnLayout"(
+          contents: {
+            #"_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9394093"(
+              showInformationBanner: local!showInformationBanner_eliminar
+            )
+          },
+          showWhen: and(
+            local!showInformationBanner_eliminar,
+            local!showWhen_eliminar
+          )
+        ),
+        /*ERROR ELIMINAR*/
+        #"SYSTEM_SYSRULES_columnLayout"(
+          contents: {
+            #"_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9394317"(
+              showInformationBanner: local!showInformationBanner_eliminar
+            )
+          },
+          showWhen: and(
+            local!showInformationBanner_eliminar,
+            local!showWhen_error_eliminar
+          )
+        ),
+
+      }
+    ),
+    #"SYSTEM_SYSRULES_columnsLayout"(
+      columns: {
+        #"SYSTEM_SYSRULES_columnLayout"(
+          contents: {
+            #"SYSTEM_SYSRULES_dropdownField_v1"(
+              label:"Seleccione la Región:",
+              labelPosition: "ADJACENT",
+              placeholder: "--- Seleccione la Región a Modificar ---",
+              choiceLabels: index(local!cdtregion, "region", {}),
+              choiceValues: index(local!cdtregion, "idregion", {}),
+              value: local!idregionSeleccionada,
+              saveInto: {
+                local!idregionSeleccionada,
+                a!save(
+                  local!regionSeleccionada,
+                  if(
+                    a!isNullOrEmpty(local!idregionSeleccionada),
+                    null,
+                    #"_a-0000e8d8-9b98-8000-e605-01ef9001ef90_2872186"(idregion: local!idregionSeleccionada).data
+                  )
+                ),
+                a!save(
+                  local!regionUtilizada,
+                  if(
+                    a!isNotNullOrEmpty(local!idregionSeleccionada),
+                    #"_a-0000e8c4-62ba-8000-e603-01ef9001ef90_2682345"(idregion: local!idregionSeleccionada).data,
+                    null
+                  )
+                ),
+                a!save(
+                  ri!region,
+                  if(
+                    a!isNotNullOrEmpty(ri!modificar),
+                    if(
+                      a!isNotNullOrEmpty(local!idregionSeleccionada),
+                      #"_a-0000e8d8-9b98-8000-e605-01ef9001ef90_2872186"(idregion: local!idregionSeleccionada).data[1].region,
+                      null
+                    ),
+                    null
+                  )
+                ),
+                a!save(
+                  ri!modificar,
+                  if(
+                    a!isNullOrEmpty(local!idregionSeleccionada),
+                    null,
+                    ri!modificar
+                  )
+                )
+              },
+              searchDisplay: "AUTO",
+              validations: {}
+            )
+          }
+        ),
+        #"SYSTEM_SYSRULES_columnLayout"(
+          contents: {
+            #"SYSTEM_SYSRULES_checkboxField"(
+              label: "",
+              labelPosition: "ABOVE",
+              choiceLabels: { "Modificar Datos" },
+              choiceValues: { 1 },
+              value: ri!modificar,
+              saveInto: {
+                ri!modificar,
+                a!save(
+                  ri!region,
+                  if(
+                    a!isNullOrEmpty(ri!modificar),
+                    null,
+                    local!regionSeleccionada.region
+                  )
+                ),
+                a!save(
+                  local!regionSeleccionada,
+                  if(
+                    a!isNullOrEmpty(ri!modificar),
+                    null,
+                    local!regionSeleccionada
+                  )
+                ),
+
+              },
+              required: false,
+              disabled: if(
+                a!isNullOrEmpty(local!regionSeleccionada),
+                true,
+                false
+              ),
+              validations: {}
+            )
+          }
+        ),
+        #"SYSTEM_SYSRULES_columnLayout"(contents: {})
+      }
+    ),
+    #"SYSTEM_SYSRULES_columnsLayout"(
+      columns: {
+        #"SYSTEM_SYSRULES_columnLayout"(
+          contents: {
+            #"SYSTEM_SYSRULES_textField"(
+              label: "Región:",
+              labelPosition: "ADJACENT",
+              value: ri!region,
+              saveInto: ri!region,
+              refreshAfter: "KEYPRESS",
+              validations: {},
+              disabled: if(
+                a!isNullOrEmpty(local!idregionSeleccionada),
+                false,
+                if(
+                  a!isNullOrEmpty(ri!modificar),
+                  true,
+                  false
+                )
+              )
+            )
+          }
+        ),
+        #"SYSTEM_SYSRULES_columnLayout"(
+          contents: {
+            #"SYSTEM_SYSRULES_ButtonArrayLayout"(
+              buttons: {
+                #"SYSTEM_SYSRULES_ButtonWidget"(
+                  label: "Nueva Región",
+                  loadingIndicator: true,
+                  saveInto: {
+                    #"SYSTEM_SYSRULES_startProcess"(
+                      processModel: #"_a-0000e94c-78eb-8000-e637-01ef9001ef90_3803651",
+                      processParameters: {
+                        idregion: local!idregionSeleccionada,
+                        valortabla: local!valortabla,
+                        region: ri!region
+                      },
+                      onSuccess: {
+                        a!save(local!showInformationBanner, true),
+                        if(
+                          toboolean(fv!processInfo.pv.error) = false,
+                          {a!save(local!flag, addseconds(now(), 10)),
+                          a!save(local!regionSeleccionada, null),
+                          a!save(local!idregionSeleccionada, null),
+                          a!save(ri!modificar, null),
+                          a!save(ri!region, null)
+                          },
+                          {
+
+                          a!save(local!flag_error, addseconds(now(), 10)),
+                          a!save(local!regionSeleccionada, null),
+                          a!save(local!idregionSeleccionada, null),
+                          a!save(ri!modificar, null),
+                          a!save(ri!region, null)
+                          
+                          }
+                        ),
+                       
+                      },
+                     
+                    ),
+
+                  },
+                  style: "DESTRUCTIVE",
+                  disabled: if(
+                    and(isnull(ri!region), isnull(ri!modificar)),
+                    true,
+                    if(
+                      a!isNotNullOrEmpty(ri!modificar),
+                      true,
+                      false
+                    )
+                  ),
+                  confirmHeader: "Se creará la nueva región " &amp; ri!region,
+                  confirmMessage: "¿Continuar?"
+                )
+              },
+              align: "START"
+            )
+          }
+        ),
+        #"SYSTEM_SYSRULES_columnLayout"(contents: {})
+      }
+    ),
+    #"SYSTEM_SYSRULES_richTextDisplayField"(
+      value: #"SYSTEM_SYSRULES_richTextItem_v1"(
+        text: "* La región no puede ser eliminada, está siendo utilizada",
+        color: "NEGATIVE"
+      ),
+      showWhen: a!isNotNullOrEmpty(local!regionUtilizada)
+    ),
+    #"SYSTEM_SYSRULES_ButtonArrayLayout"(
+      buttons: {
+        #"SYSTEM_SYSRULES_ButtonWidget"(
+          label: "Guardar Cambios",
+          loadingIndicator: true,
+          saveInto: {
+            #"SYSTEM_SYSRULES_startProcess"(
+              processModel: #"_a-0000e94c-78eb-8000-e637-01ef9001ef90_3802697",
+              processParameters: {
+                idregion: local!idregionSeleccionada,
+                region: ri!region
+              },
+              onSuccess: {
+                a!save(
+                  local!showInformationBanner_actualizar,
+                  true
+                ),
+                if(
+                  toboolean(fv!processInfo.pv.error) = false,
+                  {a!save(
+                    local!flag_actualizar,
+                    addseconds(now(), 10)
+                  ),
+                  a!save(local!regionSeleccionada, null),
+                  a!save(local!idregionSeleccionada, null),
+                  a!save(ri!modificar, null),
+                  a!save(ri!region, null)
+                  },
+                  {
+                  a!save(
+                    local!flag_error_actualizar,
+                    addseconds(now(), 10)
+                  ),
+                  a!save(local!regionSeleccionada, null),
+                  a!save(local!idregionSeleccionada, null),
+                  a!save(ri!modificar, null),
+                  a!save(ri!region, null)
+                  }
+                ),
+                
+              },
+             
+            ),
+
+          },
+          style: "DESTRUCTIVE",
+          tooltip: if(
+            a!isNotNullOrEmpty(ri!modificar),
+            if(
+              ri!region = local!regionSeleccionada.region,
+              "La Región tiene que ser distinta para poder modificar",
+              ""
+            ),
+            ""
+          ),
+          disabled: if(
+            and(
+              a!isNotNullOrEmpty(ri!modificar),
+              or(
+                ri!region = local!regionSeleccionada.region,
+                a!isNullOrEmpty(ri!region)
+              )
+            ),
+            true,
+            /*false*/
+            if(
+              /*and(*/
+                a!isNullOrEmpty(ri!modificar),
+                /*a!isNullOrEmpty(ri!region)*/
+              /*)*/
+              /*,*/
+              true,
+              false
+            )
+          ),
+          confirmHeader: "Se modificará la región " &amp; ri!region,
+          confirmMessage: "¿Continuar?"
+        ),
+        #"SYSTEM_SYSRULES_ButtonWidget"(
+          label: "Eliminar",
+          loadingIndicator: true,
+          saveInto: #"SYSTEM_SYSRULES_startProcess"(
+            processModel: #"_a-0000e94c-78eb-8000-e637-01ef9001ef90_3802749",
+            processParameters: { idregional: local!idregionSeleccionada },
+            onSuccess: {
+              a!save(
+                local!showInformationBanner_eliminar,
+                true
+              ),
+              if(
+                toboolean(fv!processInfo.pv.error) = false,
+                { a!save(
+                  local!flag_eliminar,
+                  addseconds(now(), 10)
+                ),
+                a!save(local!regionSeleccionada, null),
+                a!save(local!idregionSeleccionada, null),
+                a!save(ri!modificar, null),
+                a!save(ri!region, null)
+                },
+                {
+                a!save(
+                  local!flag_error_eliminar,
+                  addseconds(now(), 10)
+                ),
+                a!save(local!regionSeleccionada, null),
+                a!save(local!idregionSeleccionada, null),
+                a!save(ri!modificar, null),
+                a!save(ri!region, null)
+                }
+              ),
+              
+            },
+           
+          ),
+          style: "DESTRUCTIVE",
+          disabled: if(
+            and(
+              isnull(ri!modificar),
+              a!isNullOrEmpty(local!regionUtilizada)
+            ),
+            true,
+            if(
+              and(
+                or(
+                  ri!modificar = 1,
+                  a!isNullOrEmpty(ri!modificar)
+                ),
+                a!isNotNullOrEmpty(local!regionUtilizada)
+              ),
+              true,
+              false
+            )
+          ),
+          confirmHeader: "Se eliminará la región ",
+          confirmMessage: "¿Continuar?"
+        )
+      },
+      align: "START"
+    )
+  }
+)</definition>
+        <namedTypedValue>
+            <name>region</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>modificar</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+        <isCustom>false</isCustom>
+    </interface>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000e94c-78eb-8000-e637-01ef9001ef90_3804317"/>
+        <historyInfo versionUuid="_a-0000e9f5-96e6-8000-e641-01ef9001ef90_6281952"/>
+        <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9389926"/>
+        <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9470315"/>
+        <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9508756"/>
+        <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9542131"/>
+    </history>
+</contentHaul>

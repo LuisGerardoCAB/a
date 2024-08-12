@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9386726</versionUuid>
+    <rule>
+        <name>SCDO_OBTENER_USUARIOS_OPICS_DE_EJECUTIVO</name>
+        <uuid>_a-0000eae4-5659-8000-e685-01ef9001ef90_8678775</uuid>
+        <description></description>
+        <parentUuid>_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1882376</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>a!localVariables(
+  local!expediente:#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2114113"(expediente:ri!usuario_opics).data[1],
+  
+  local!permisos:#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2113426"(idExpediente:local!expediente.idexpediente).data,
+  
+  local!usuarios_opics:
+  if(a!isNotNullOrEmpty(local!permisos),
+  /*reject(*/
+    /*fn!isnull,*/
+    /*a!flatten(*/
+      /*a!forEach(*/
+        /*items: local!permisos,*/
+        /*expression:{ rule!SCDO_getUsuariosOPByFilters(idUsuarioOpic: fv!item.idusuarioopics).data[1]*/
+        /*}*/
+      /*)*/
+    /*),*/
+  /*),*/
+  #"SYSTEM_SYSRULES_forEach"(
+    items: local!permisos,
+    expression:{ 
+      'type!{urn:com:appian:types}cdo_usuariosopics'(
+        extra2: #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2152641"(idUsuarioOpic: fv!item.idusuarioopics).data[1].extra2,
+
+        extra1: #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2152641"(idUsuarioOpic: fv!item.idusuarioopics).data[1].extra1,
+
+        idsegmento: #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2152641"(idUsuarioOpic: fv!item.idusuarioopics).data[1].idsegmento,
+
+        usuarioopics: #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2152641"(idUsuarioOpic: fv!item.idusuarioopics).data[1].usuarioopics,
+
+        idusuarioopics: #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2152641"(idUsuarioOpic: fv!item.idusuarioopics).data[1].idusuarioopics,
+      )
+     
+    }
+  ),
+
+  null),
+  
+  local!usuarios_opics
+)</definition>
+        <namedTypedValue>
+            <name>usuario_opics</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <preferredEditor>legacy</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000eae4-5659-8000-e685-01ef9001ef90_8679235"/>
+        <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9386726"/>
+    </history>
+</contentHaul>

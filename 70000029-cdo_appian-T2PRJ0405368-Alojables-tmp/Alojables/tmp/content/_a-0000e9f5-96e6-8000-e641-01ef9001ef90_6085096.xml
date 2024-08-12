@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9451579</versionUuid>
+    <rule>
+        <name>SCDO_getRiesgoByFilters</name>
+        <uuid>_a-0000e9f5-96e6-8000-e641-01ef9001ef90_6085096</uuid>
+        <description>Regla de expresión para obtener los datos de los riesgos dado un filtro</description>
+        <parentUuid>_a-0000e9f5-96e6-8000-e641-01ef9001ef90_6085066</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>#"SYSTEM_SYSRULES_queryEntity_v2"(
+  entity: #"_a-0000e9f5-96e6-8000-e641-01ef9001ef90_6085126",
+  query: #"SYSTEM_SYSRULES_query"(
+    logicalExpression: #"SYSTEM_SYSRULES_queryLogicalExpression"(
+      operator: "AND",
+      filters: {
+        #"SYSTEM_SYSRULES_queryFilter"(
+          field: "idriesgo",
+          operator: "=",
+          value: ri!idriesgo
+        ),
+        #"SYSTEM_SYSRULES_queryFilter"(
+          field: "riesgo",
+          operator: "=",
+          value: ri!riesgo
+        ),
+        #"SYSTEM_SYSRULES_queryFilter"(
+          field: "porcentaje",
+          operator: "=",
+          value: ri!porcentaje
+        )
+      },
+      ignoreFiltersWithEmptyValues: true
+    ),
+    pagingInfo: #"SYSTEM_SYSRULES_pagingInfo"(
+      startIndex: 1,
+      batchSize: -1
+    )
+  ),
+  fetchTotalCount: false
+)</definition>
+        <namedTypedValue>
+            <name>idriesgo</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>riesgo</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>porcentaje</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>legacy</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000e9f5-96e6-8000-e641-01ef9001ef90_6085193"/>
+        <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9386036"/>
+        <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9451579"/>
+    </history>
+</contentHaul>

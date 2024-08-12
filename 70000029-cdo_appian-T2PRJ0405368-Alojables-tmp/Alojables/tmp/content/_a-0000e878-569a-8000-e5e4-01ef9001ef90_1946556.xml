@@ -1,0 +1,977 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9500082</versionUuid>
+    <interface>
+        <name>SCDO_Catalogo_Documentos</name>
+        <uuid>_a-0000e878-569a-8000-e5e4-01ef9001ef90_1946556</uuid>
+        <description>Interface que pertenece al modulo de documentos </description>
+        <parentUuid>_a-0000e801-560f-8000-e5d9-01ef9001ef90_1707049</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>a!localVariables(
+  /*------------*/
+  local!showInformationBanner: true,
+  local!showInformationBanner_actualizar: true,
+  local!showInformationBanner_eliminar: true,
+  /*correcto*/
+  local!flag: now(),
+  local!showWhen: a!refreshVariable(
+    value: now() &lt; local!flag,
+    refreshInterval: 0.5
+  ),
+  /*-----*/
+  /*error*/
+  local!flag_error: now(),
+  local!showWhen_error: a!refreshVariable(
+    value: now() &lt; local!flag_error,
+    /* especifique el intervalo después de cuántos minutos desea finalizar el examen */
+    refreshInterval: 0.5
+  ),
+  /*------*/
+  /*correcto_actualizar*/
+  local!flag_actualizar: now(),
+  local!showWhen_actualizar: a!refreshVariable(
+    value: now() &lt; local!flag_actualizar,
+    refreshInterval: 0.5
+  ),
+  /*-----*/
+  /*error_actualizasr*/
+  local!flag_error_actualizar: now(),
+  local!showWhen_error_actualizar: a!refreshVariable(
+    value: now() &lt; local!flag_error_actualizar,
+    /* especifique el intervalo después de cuántos minutos desea finalizar el examen */
+    refreshInterval: 0.5
+  ),
+  /*------*/
+  /*correcto_eliminar*/
+  local!flag_eliminar: now(),
+  local!showWhen_eliminar: a!refreshVariable(
+    value: now() &lt; local!flag_eliminar,
+    refreshInterval: 0.5
+  ),
+  /*-----*/
+  /*error_elimianr*/
+  local!flag_error_eliminar: now(),
+  local!showWhen_error_eliminar: a!refreshVariable(
+    value: now() &lt; local!flag_error_eliminar,
+    /* especifique el intervalo después de cuántos minutos desea finalizar el examen */
+    refreshInterval: 0.5
+  ),
+  /*------*/
+  /*------------*/
+  local!documento,
+  local!bUser,
+  local!editGrid: { - 1, 0 },
+  local!bUserT,
+  local!startIndex: 1,
+  local!batchSize: 10,
+  local!catalogoSeleccionado,
+  local!eliminar: false,
+  local!catalogo_cdt: #"SYSTEM_SYSRULES_queryEntity_v2"(
+    entity: #"_a-0000e8d8-9b98-8000-e605-01ef9001ef90_2694251",
+    query: #"SYSTEM_SYSRULES_query"(
+      logicalExpression: #"SYSTEM_SYSRULES_queryLogicalExpression"(
+        operator: "AND",
+        filters: {
+          #"SYSTEM_SYSRULES_queryFilter"(
+            field: "documento",
+            operator: "includes",
+            value: local!bUser,
+            applywhen: a!isNotNullOrEmpty(local!bUser),
+
+          )
+        },
+        ignoreFiltersWithEmptyValues: true
+      ),
+      pagingInfo: #"SYSTEM_SYSRULES_pagingInfo"(
+        startIndex: local!startIndex,
+        batchSize: local!batchSize,
+        sort: #"SYSTEM_SYSRULES_sortInfo"(field: "iddocumento", ascending: true, )
+      )
+    ),
+    fetchTotalCount: true
+  ),
+  {
+    #"SYSTEM_SYSRULES_boxLayout"(
+      label: "Crear Nuevo Catálgo de Documento",
+      contents: {
+        #"SYSTEM_SYSRULES_columnsLayout"(
+          columns: {
+            #"SYSTEM_SYSRULES_columnLayout"(
+              contents: {
+                #"SYSTEM_SYSRULES_textField"(
+                  label: "Documento:",
+                  labelPosition: "ABOVE",
+                  value:local!documento,
+                  saveInto:local!documento,
+                  refreshAfter: "KEYPRESS",
+                  validations: {}
+                )
+              }
+            ),
+            #"SYSTEM_SYSRULES_columnLayout"(
+              contents: {
+                #"SYSTEM_SYSRULES_dropdownField_v1"(
+                  label: "Tipo:",
+                  labelPosition: "ABOVE",
+                  placeholder: "-- Seleccione el tipo de Documento --",
+                  choiceLabels: #"_a-0000e94c-78eb-8000-e637-01ef9001ef90_4046409",
+                  choiceValues: #"_a-0000e94c-78eb-8000-e637-01ef9001ef90_4046409",
+                  value: ri!tipo,
+                  saveInto: ri!tipo,
+                  searchDisplay: "AUTO",
+                  validations: {}
+                )
+              }
+            ),
+            #"SYSTEM_SYSRULES_columnLayout"(
+              contents: {
+                #"SYSTEM_SYSRULES_paragraphField"(
+                  label: "Descripción:",
+                  labelPosition: "ABOVE",
+                  value: ri!descripcion,
+                  saveInto: ri!descripcion,
+                  refreshAfter: "KEYPRESS",
+                  validations: {}
+                )
+              }
+            ),
+            #"SYSTEM_SYSRULES_columnLayout"(
+              contents: {
+                #"SYSTEM_SYSRULES_ButtonArrayLayout"(
+                  buttons: {
+                    #"SYSTEM_SYSRULES_ButtonWidget"(
+                      label: "GUARDAR",
+                      loadingIndicator: true,
+                      saveInto: {
+                        #"SYSTEM_SYSRULES_startProcess"(
+                          processModel: #"_a-0000e94c-78eb-8000-e637-01ef9001ef90_4046487",
+                          processParameters: {
+                            documentaa: ri!tipo,
+                            documento:local!documento,
+                            descripcion: ri!descripcion,
+                            /*iddocumento: null,*/
+
+                          },
+                          onSuccess: {
+                            a!save(local!showInformationBanner, true),
+                            if(
+                              toboolean(fv!processInfo.pv.error) = false,
+                              {
+                                a!save(local!flag, addseconds(now(), 10)),
+                                a!save(ri!tipo, null),
+                                a!save(local!documento, null),
+                                a!save(ri!descripcion, null),
+                                a!save(
+                                  local!catalogo_cdt,
+                                  #"SYSTEM_SYSRULES_queryEntity_v2"(
+                                    entity: #"_a-0000e8d8-9b98-8000-e605-01ef9001ef90_2694251",
+                                    query: #"SYSTEM_SYSRULES_query"(
+                                      logicalExpression: #"SYSTEM_SYSRULES_queryLogicalExpression"(
+                                        operator: "AND",
+                                        filters: {
+                                          #"SYSTEM_SYSRULES_queryFilter"(
+                                            field: "documento",
+                                            operator: "includes",
+                                            value: local!bUser,
+                                            applywhen: a!isNotNullOrEmpty(local!bUser),
+
+                                          )
+                                        },
+                                        ignoreFiltersWithEmptyValues: true
+                                      ),
+                                      pagingInfo: #"SYSTEM_SYSRULES_pagingInfo"(
+                                        startIndex: local!startIndex,
+                                        batchSize: local!batchSize,
+                                        sort: #"SYSTEM_SYSRULES_sortInfo"(field: "iddocumento", ascending: true, )
+                                      )
+                                    ),
+                                    fetchTotalCount: true
+                                  ),
+
+                                )
+                              },
+                              {
+                                a!save(local!flag_error, addseconds(now(), 10), ),
+                                a!save(ri!tipo, null),
+                                a!save(local!documento, null),
+                                a!save(ri!descripcion, null)
+                              }
+                            ),
+                            /*-*/
+
+                          },
+                          onError: {}
+                        ),
+
+                      },
+                      style: "DESTRUCTIVE",
+                      confirmHeader: "Se creará el documento " &amp;local!documento,
+                      confirmMessage: "¿Continuar?",
+                      size: "SMALL",
+                      icon: "plus",
+                      disabled: if(
+                        or(
+                          isnull(local!documento),
+                          isnull(ri!tipo),
+                          isnull(ri!descripcion)
+                        ),
+                        true,
+                        false
+                      )
+                    )
+                  },
+                  align: "START",
+                  marginAbove: "EVEN_MORE"
+                )
+              }
+            )
+          },
+
+        ),
+
+      }
+    ),
+    #"SYSTEM_SYSRULES_sectionLayout_v1"(
+      label: "",
+      contents: {
+        #"SYSTEM_SYSRULES_columnsLayout"(
+          columns: {
+            /*CORRECTO*/
+            #"SYSTEM_SYSRULES_columnLayout"(
+              contents: {
+                #"_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9394093"(
+                  showInformationBanner: local!showInformationBanner
+                )
+              },
+              showWhen: and(
+                local!showInformationBanner,
+                local!showWhen
+              )
+            ),
+            /*ERROR*/
+            #"SYSTEM_SYSRULES_columnLayout"(
+              contents: {
+                #"_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9394317"(
+                  showInformationBanner: local!showInformationBanner
+                )
+              },
+              showWhen: and(
+                local!showInformationBanner,
+                local!showWhen_error
+              )
+            ),
+
+          }
+        )
+      }
+    ),
+    #"SYSTEM_SYSRULES_sectionLayout_v1"(
+      label: "",
+      contents: {
+        #"SYSTEM_SYSRULES_columnsLayout"(
+          columns: {
+            /*CORRECTO ACTUALIZAR*/
+            #"SYSTEM_SYSRULES_columnLayout"(
+              contents: {
+                #"_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9394093"(
+                  showInformationBanner: local!showInformationBanner_actualizar
+                )
+              },
+              showWhen: and(
+                local!showInformationBanner_actualizar,
+                local!showWhen_actualizar
+              )
+            ),
+            /*ERROR ACTUALIZAR*/
+            #"SYSTEM_SYSRULES_columnLayout"(
+              contents: {
+                #"_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9394317"(
+                  showInformationBanner: local!showInformationBanner_actualizar
+                )
+              },
+              showWhen: and(
+                local!showInformationBanner_actualizar,
+                local!showWhen_error_actualizar
+              )
+            ),
+            /*CORRECTO ELIMINAR*/
+            #"SYSTEM_SYSRULES_columnLayout"(
+              contents: {
+                #"_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9394093"(
+                  showInformationBanner: local!showInformationBanner_eliminar
+                )
+              },
+              showWhen: and(
+                local!showInformationBanner_eliminar,
+                local!showWhen_eliminar
+              )
+            ),
+            /*ERROR ELIMINAR*/
+            #"SYSTEM_SYSRULES_columnLayout"(
+              contents: {
+                #"_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9394317"(
+                  showInformationBanner: local!showInformationBanner_eliminar
+                )
+              },
+              showWhen: and(
+                local!showInformationBanner_eliminar,
+                local!showWhen_error_eliminar
+              )
+            ),
+
+          }
+        )
+      }
+    ),
+    #"SYSTEM_SYSRULES_columnsLayout"(
+      columns: {
+        #"SYSTEM_SYSRULES_columnLayout"(contents: {}),
+        #"SYSTEM_SYSRULES_columnLayout"(
+          contents: {
+            #"SYSTEM_SYSRULES_cardLayout"(
+              contents: {
+                #"SYSTEM_SYSRULES_richTextDisplayField"(
+                  value: {
+                    #"SYSTEM_SYSRULES_richTextItem_v1"(
+                      text: concat(
+                        "¿Está seguro de que desea eliminar",
+                        char(10),
+                        " El catálogo de Documento",
+                        local!catalogoSeleccionado.documento,
+                        char(10),
+                        "La acción es irrevocable"
+                      ),
+                      color: "NEGATIVE"
+                    )
+                  },
+                  align: "CENTER"
+                ),
+                #"SYSTEM_SYSRULES_ButtonLayout"(
+                  primaryButtons: {
+                    #"SYSTEM_SYSRULES_ButtonWidget"(
+                      label: "Eliminar",
+                      icon: "times",
+                      tooltip: "Eliminar definitivamente",
+                      saveInto: {
+                        #"SYSTEM_SYSRULES_startProcess"(
+                          processModel: #"_a-0000e982-d80b-8000-e63b-01ef9001ef90_4741497",
+                          processParameters: {
+                            catalogodocumentos: local!catalogoSeleccionado,
+                            delete: true
+                          },
+                          onSuccess: {
+                            a!save(
+                              local!showInformationBanner_eliminar,
+                              true
+                            ),
+                            if(
+                              toboolean(fv!processInfo.pv.error) = false,
+                              {
+                                a!save(
+                                  local!flag_eliminar,
+                                  addseconds(now(), 10)
+                                ),
+                                a!save(ri!documento,null),
+                                a!save(local!catalogoSeleccionado, null),
+                                a!save(
+                                  local!catalogo_cdt,
+                                  #"SYSTEM_SYSRULES_queryEntity_v2"(
+                                    entity: #"_a-0000e8d8-9b98-8000-e605-01ef9001ef90_2694251",
+                                    query: #"SYSTEM_SYSRULES_query"(
+                                      logicalExpression: #"SYSTEM_SYSRULES_queryLogicalExpression"(
+                                        operator: "AND",
+                                        filters: {
+                                          #"SYSTEM_SYSRULES_queryFilter"(
+                                            field: "documento",
+                                            operator: "includes",
+                                            value: local!bUser,
+                                            applywhen: a!isNotNullOrEmpty(local!bUser),
+
+                                          )
+                                        },
+                                        ignoreFiltersWithEmptyValues: true
+                                      ),
+                                      pagingInfo: #"SYSTEM_SYSRULES_pagingInfo"(
+                                        startIndex: local!startIndex,
+                                        batchSize: local!batchSize,
+                                        sort: #"SYSTEM_SYSRULES_sortInfo"(field: "iddocumento", ascending: true, )
+                                      )
+                                    ),
+                                    fetchTotalCount: true
+                                  ),
+
+                                )
+                              },
+                              a!save(
+                                local!flag_error_eliminar,
+                                addseconds(now(), 10)
+                              )
+                            ),
+                            a!save(local!eliminar, false),
+
+                          }
+                        ),
+
+                      },
+                      size: "SMALL",
+                      width: "MINIMIZE",
+                      style: "DESTRUCTIVE",
+                      loadingIndicator: true,
+
+                    )
+                  },
+                  secondaryButtons: {
+                    #"SYSTEM_SYSRULES_ButtonWidget"(
+                      label: "cancelar",
+                      loadingIndicator: true,
+                      icon: "times",
+                      tooltip: "Cancelar",
+                      saveInto: {
+                        a!save(local!eliminar, false),
+                        a!save(local!catalogoSeleccionado, null)
+                      },
+                      size: "SMALL",
+                      width: "MINIMIZE",
+                      style: "SECONDARY"
+                    )
+                  }
+                ),
+
+              },
+              showWhen: local!eliminar,
+              style: "WARN",
+              shape: "SEMI_ROUNDED",
+              padding: "EVEN_LESS",
+              marginAbove: "EVEN_LESS",
+              showBorder: false
+            )
+          }
+        )
+      }
+    ),
+    #"SYSTEM_SYSRULES_columnsLayout"(
+      columns: {
+        #"SYSTEM_SYSRULES_columnLayout"(
+          contents: {
+            #"SYSTEM_SYSRULES_textField"(
+              label: "Por Documento:",
+              labelPosition: "ADJACENT",
+              value: local!bUserT,
+              saveInto: {
+                local!bUserT,
+                a!save(local!editGrid, { - 1, 0 })
+              },
+              refreshAfter: "UNFOCUS",
+              validations: {}
+            )
+          },
+          width: "MEDIUM"
+        ),
+        #"SYSTEM_SYSRULES_columnLayout"(
+          contents: {
+            #"SYSTEM_SYSRULES_ButtonArrayLayout"(
+              buttons: {
+                #"SYSTEM_SYSRULES_ButtonWidget"(
+                  label: "Buscar",
+                  style: "NORMAL",
+                  loadingIndicator: true,
+                  saveInto: {
+                    a!save(local!bUser, local!bUserT),
+                    a!save(
+                      local!catalogo_cdt,
+                      #"SYSTEM_SYSRULES_queryEntity_v2"(
+                        entity: #"_a-0000e8d8-9b98-8000-e605-01ef9001ef90_2694251",
+                        query: #"SYSTEM_SYSRULES_query"(
+                          logicalExpression: #"SYSTEM_SYSRULES_queryLogicalExpression"(
+                            operator: "AND",
+                            filters: {
+                              #"SYSTEM_SYSRULES_queryFilter"(
+                                field: "documento",
+                                operator: "includes",
+                                value: local!bUser,
+                                applywhen: a!isNotNullOrEmpty(local!bUser),
+
+                              )
+                            },
+                            ignoreFiltersWithEmptyValues: true
+                          ),
+                          pagingInfo: #"SYSTEM_SYSRULES_pagingInfo"(
+                            startIndex: local!startIndex,
+                            batchSize: local!batchSize,
+                            sort: #"SYSTEM_SYSRULES_sortInfo"(field: "iddocumento", ascending: true, )
+                          )
+                        ),
+                        fetchTotalCount: true
+                      ),
+
+                    ),
+                    a!save(local!startIndex,1),
+                    a!save(
+                      local!batchSize,
+                      if(
+                        local!catalogo_cdt.totalCount &gt; 10,
+                        10,
+                        local!catalogo_cdt.totalCount
+                      )
+                    ),
+
+                  },
+                  size: "SMALL",
+                  icon: "search",
+
+                )
+              },
+              align: "START"
+            )
+          }
+        )
+      }
+    ),
+    #"SYSTEM_SYSRULES_columnsLayout"(
+      columns: {
+        #"SYSTEM_SYSRULES_columnLayout"(
+          contents: {
+            #"SYSTEM_SYSRULES_gridLayout"(
+              label: "",
+              labelPosition: "ABOVE",
+              headerCells: {
+                #"SYSTEM_SYSRULES_gridLayoutHeaderCell"(label: "Identidicador", align: "CENTER"),
+                #"SYSTEM_SYSRULES_gridLayoutHeaderCell"(label: "Documento", align: "CENTER"),
+                #"SYSTEM_SYSRULES_gridLayoutHeaderCell"(label: "Tipo", align: "CENTER"),
+                #"SYSTEM_SYSRULES_gridLayoutHeaderCell"(label: "Descripción", align: "CENTER"),
+                #"SYSTEM_SYSRULES_gridLayoutHeaderCell"(label: "Orden", align: "CENTER"),
+                #"SYSTEM_SYSRULES_gridLayoutHeaderCell"(label: "Disponible", align: "CENTER"),
+                #"SYSTEM_SYSRULES_gridLayoutHeaderCell"(label: "Acciones", align: "CENTER"),
+
+              },
+              columnConfigs: {
+                #"SYSTEM_SYSRULES_gridLayoutColumnConfig"(),
+                #"SYSTEM_SYSRULES_gridLayoutColumnConfig"(weight: 3),
+                #"SYSTEM_SYSRULES_gridLayoutColumnConfig"(),
+                #"SYSTEM_SYSRULES_gridLayoutColumnConfig"(weight: 3),
+                #"SYSTEM_SYSRULES_gridLayoutColumnConfig"(),
+
+              },
+              rows: #"SYSTEM_SYSRULES_forEach"(
+                items: local!catalogo_cdt.data,
+                expression: {
+                  #"SYSTEM_SYSRULES_gridRowLayout"(
+                    contents: {
+                      #"SYSTEM_SYSRULES_textField"(
+                        value: fv!item.iddocumento,
+                        readOnly: true,
+                        align: "CENTER"
+                      ),
+                      #"SYSTEM_SYSRULES_textField"(
+                        value: fv!item.documento,
+                        refreshAfter: "KEYPRESS",
+                        saveInto: { a!save(fv!item.documento, (save!value)) },
+                        readOnly: if(
+                          and(
+                            local!editGrid[1] = fv!index,
+                            local!editGrid[2] = 1
+                          ),
+                          false,
+                          true
+                        ),
+                        align: "CENTER"
+                      ),
+                      #"SYSTEM_SYSRULES_dropdownField_v1"(
+                        value: fv!item.documentaa,
+                        placeholder: "Sin Tipo",
+                        choiceLabels: { #"_a-0000e94c-78eb-8000-e637-01ef9001ef90_4046409" },
+                        choiceValues: { #"_a-0000e94c-78eb-8000-e637-01ef9001ef90_4046409" },
+                        saveInto: {
+                          a!save(fv!item.documentaa, (save!value))
+                        },
+                        disabled: if(
+                          and(
+                            local!editGrid[1] = fv!index,
+                            local!editGrid[2] = 1
+                          ),
+                          false,
+                          true
+                        ),
+
+                      ),
+                      #"SYSTEM_SYSRULES_textField"(
+                        value: fv!item.descripcion,
+                        refreshAfter: "KEYPRESS",
+                        saveInto: {
+                          a!save(fv!item.descripcion, (save!value))
+                        },
+                        readOnly: if(
+                          and(
+                            local!editGrid[1] = fv!index,
+                            local!editGrid[2] = 1
+                          ),
+                          false,
+                          true
+                        ),
+                        align: "CENTER"
+                      ),
+                      #"SYSTEM_SYSRULES_textField"(
+                        value: fv!item.orden,
+                        refreshAfter: "KEYPRESS",
+                        saveInto: { a!save(fv!item.orden, (save!value)) },
+                        readOnly: if(
+                          and(
+                            local!editGrid[1] = fv!index,
+                            local!editGrid[2] = 1
+                          ),
+                          false,
+                          true
+                        ),
+                        align: "CENTER"
+                      ),
+                      #"SYSTEM_SYSRULES_textField"(
+                        refreshAfter: "KEYPRESS",
+                        value: if(
+                          a!isNullOrEmpty(
+                            #"_a-0000e94c-78eb-8000-e637-01ef9001ef90_4046270"(iddocumento: fv!item.iddocumento).data
+                          ),
+                          "",
+                          #"_a-0000e94c-78eb-8000-e637-01ef9001ef90_4046270"(iddocumento: fv!item.iddocumento).data[1].extra
+                        ),
+                        saveInto: {},
+                        align: "CENTER",
+                        readOnly:
+                          true
+                        ,
+                    
+
+                      ),
+                      #"SYSTEM_SYSRULES_richTextDisplayField"(
+                        value: {
+                          #"SYSTEM_SYSRULES_richTextIcon"(
+                            icon: "pencil-square-o",
+                            caption: "Editar",
+                            link: #"SYSTEM_SYSRULES_dynamicLink"(
+                              saveInto: {
+                                a!save(local!editGrid, { fv!index, 1 }),
+                                a!save(local!catalogoSeleccionado, fv!item),
+
+                              }
+                            ),
+                            linkStyle: "STANDALONE",
+                            showWhen: if(
+                              and(
+                                local!editGrid[1] = - 1,
+                                local!editGrid[2] = 0
+                              ),
+                              true,
+                              if(
+                                and(
+                                  local!editGrid[1] = fv!index,
+                                  local!editGrid[2] = 1
+                                ),
+                                false,
+                                if(
+                                  and(
+                                    local!editGrid[1] &lt;&gt; fv!index,
+                                    local!editGrid[2] = 1
+                                  ),
+                                  false,
+                                  true
+                                )
+                              )
+                            ),
+                            color: "#0032E6"
+                          ),
+                          #"SYSTEM_SYSRULES_richTextIcon"(
+                            icon: "pencil-square-o",
+                            caption: "Descartar cambios",
+                            link: #"SYSTEM_SYSRULES_dynamicLink"(
+                              saveInto: {
+                                a!save(local!editGrid, { - 1, 0 }),
+                                a!save(
+                                  local!catalogo_cdt,
+                                  #"SYSTEM_SYSRULES_queryEntity_v2"(
+                                    entity: #"_a-0000e8d8-9b98-8000-e605-01ef9001ef90_2694251",
+                                    query: #"SYSTEM_SYSRULES_query"(
+                                      logicalExpression: #"SYSTEM_SYSRULES_queryLogicalExpression"(
+                                        operator: "AND",
+                                        filters: {
+                                          #"SYSTEM_SYSRULES_queryFilter"(
+                                            field: "documento",
+                                            operator: "includes",
+                                            value: local!bUser,
+
+                                          )
+                                        },
+                                        ignoreFiltersWithEmptyValues: true
+                                      ),
+                                      pagingInfo: #"SYSTEM_SYSRULES_pagingInfo"(
+                                        startIndex: local!startIndex,
+                                        batchSize: local!batchSize,
+                                        sort: #"SYSTEM_SYSRULES_sortInfo"(field: "iddocumento", ascending: true, )
+                                      )
+                                    ),
+                                    fetchTotalCount: true
+                                  ),
+
+                                )
+                              }
+                            ),
+                            linkStyle: "STANDALONE",
+                            showWhen: if(
+                              and(
+                                local!editGrid[1] = fv!index,
+                                local!editGrid[2] = 1
+                              ),
+                              true,
+                              false
+                            ),
+                            color: "#222222"
+                          ),
+                          #"SYSTEM_SYSRULES_richTextIcon"(
+                            icon: "file-invoice",
+                            caption: "Actualizar",
+                            link: #"SYSTEM_SYSRULES_dynamicLink"(
+                              saveInto: {
+                                #"SYSTEM_SYSRULES_startProcess"(
+                                  processModel: #"_a-0000e982-d80b-8000-e63b-01ef9001ef90_4741497",
+                                  processParameters: {
+                                    catalogodocumentos: fv!item,
+                                    delete: false
+                                  },
+                                  onSuccess: {
+                                    a!save(
+                                      local!showInformationBanner_actualizar,
+                                      true
+                                    ),
+                                    if(
+                                      toboolean(fv!processInfo.pv.error) = false,
+                                      {
+                                        a!save(
+                                          local!flag_actualizar,
+                                          addseconds(now(), 10)
+                                        ),
+                                        a!save(local!editGrid, { - 1, 0 }),
+                                        a!save(local!bUserT, null),
+
+                                      },
+                                      a!save(
+                                        local!flag_error_actualizar,
+                                        addseconds(now(), 10)
+                                      )
+                                    ),
+
+                                  }
+                                )
+                              }
+                            ),
+                            linkStyle: "STANDALONE",
+                            showWhen: if(
+                              and(
+                                local!editGrid[1] = fv!index,
+                                local!editGrid[2] = 1,
+                                local!catalogoSeleccionado &lt;&gt; fv!item
+                              ),
+                              true,
+                              false
+                            ),
+                            color: "#1F8926"
+                          ),
+                          #"SYSTEM_SYSRULES_richTextIcon"(
+                            icon: "times",
+                            caption: "Eliminar",
+                            link: #"SYSTEM_SYSRULES_dynamicLink"(
+                              saveInto: {
+                                a!save(local!eliminar, true),
+                                a!save(local!catalogoSeleccionado, fv!item)
+                              }
+                            ),
+                            showWhen: if(
+                              and(
+                                local!editGrid[1] = - 1,
+                                local!editGrid[2] = 0
+                              ),
+                              true,
+                              if(local!editGrid[1] &lt;&gt; fv!index, false, true)
+                            ),
+                            linkStyle: "STANDALONE",
+                            color: "#EC0000"
+                          )
+                        },
+                        align: "CENTER"
+                      )
+                    }
+                  )
+                }
+              ),
+              selectionSaveInto: {},
+              validations: {},
+              shadeAlternateRows: true
+            ),
+            #"SYSTEM_SYSRULES_richTextDisplayField"(
+              labelPosition: "COLLAPSED",
+              value: {
+                #"SYSTEM_SYSRULES_richTextIcon"(
+                  icon: "angle-double-left",
+                  link: #"SYSTEM_SYSRULES_dynamicLink"(
+                    saveInto: {
+                      a!save(local!startIndex, 1),
+                      a!save(local!batchSize, 10)
+                    },
+                    showWhen: not(local!startIndex = 1)
+                  ),
+                  linkStyle: "STANDALONE",
+                  size: "MEDIUM_PLUS"
+                ),
+                #"SYSTEM_SYSRULES_richTextIcon"(
+                  icon: "angle-left",
+                  link: #"SYSTEM_SYSRULES_dynamicLink"(
+                    saveInto: {
+                      a!save(
+                        local!startIndex,
+                        tointeger(local!startIndex - 10)
+                      ),
+
+                    },
+                    showWhen: not(local!startIndex = 1)
+                  ),
+                  linkStyle: "STANDALONE",
+                  size: "MEDIUM_PLUS"
+                ),
+                #"SYSTEM_SYSRULES_richTextItem_v1"(
+                  text: {
+                    #"SYSTEM_SYSRULES_richTextItem_v1"(
+                      text: {
+                        local!startIndex &amp; " - " &amp; if(
+                          (local!startIndex + local!batchSize - 1) &gt; local!catalogo_cdt.totalCount,
+                          local!catalogo_cdt.totalCount,
+                          local!startIndex + local!batchSize - 1
+                        ),
+
+                      },
+                      style: { "STRONG" }
+                    ),
+                    " de " &amp; local!catalogo_cdt.totalCount
+                  },
+                  size: "STANDARD"
+                ),
+                #"SYSTEM_SYSRULES_richTextIcon"(
+                  icon: "angle-right",
+                  link: #"SYSTEM_SYSRULES_dynamicLink"(
+                    saveInto: {
+                      a!save(
+                        local!startIndex,
+                        tointeger(local!startIndex + 10)
+                      ),
+
+                    },
+                    showWhen: not(
+                      local!batchSize = local!catalogo_cdt.totalCount
+                    )
+                  ),
+                  linkStyle: "STANDALONE",
+                  size: "MEDIUM_PLUS"
+                ),
+                #"SYSTEM_SYSRULES_richTextIcon"(
+                  icon: "angle-double-right",
+                  link: #"SYSTEM_SYSRULES_dynamicLink"(
+                    saveInto: {
+                      a!save(
+                        local!startIndex,
+                        tointeger(
+                          local!catalogo_cdt.totalCount - tointeger(right(local!catalogo_cdt.totalCount)) + 1
+                        )
+                      ),
+
+                    },
+                    showWhen: not(
+                      local!batchSize = local!catalogo_cdt.totalCount
+                    )
+                  ),
+                  linkStyle: "STANDALONE",
+                  size: "MEDIUM_PLUS"
+                )
+              },
+              align: "RIGHT"
+            )
+          }
+        )
+      }
+    )
+  }
+)</definition>
+        <namedTypedValue>
+            <name>documento</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>tipo</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>descripcion</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>category</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+        <isCustom>false</isCustom>
+    </interface>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000e8b2-d897-8000-e5f1-01ef9001ef90_2379440"/>
+        <historyInfo versionUuid="_a-0000e9f5-96e6-8000-e641-01ef9001ef90_6287356"/>
+        <historyInfo versionUuid="_a-0000eb09-d442-8000-e687-01ef9001ef90_8815618"/>
+        <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9394933"/>
+        <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9450454"/>
+        <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9500082"/>
+    </history>
+</contentHaul>

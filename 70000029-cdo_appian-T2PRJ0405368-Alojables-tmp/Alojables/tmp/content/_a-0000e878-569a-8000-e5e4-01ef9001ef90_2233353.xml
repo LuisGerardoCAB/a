@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9505768</versionUuid>
+    <rule>
+        <name>SCDO_getSegmentoByFilters</name>
+        <uuid>_a-0000e878-569a-8000-e5e4-01ef9001ef90_2233353</uuid>
+        <description>Regresa la información de los segmentos por filtros para SCDO.</description>
+        <parentUuid>_a-0000e9a3-ab27-8000-e63d-01ef9001ef90_4831415</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>#"_a-0000e8b9-0989-8000-e5fd-01ef9001ef90_2420859"(
+  dataStoreEntity_dt: #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2233345",
+  queryFilter_any: {
+    #"SYSTEM_SYSRULES_queryFilter"(
+      field: "idsegmento",
+      operator: "=",
+      value: ri!idSegmento
+    ),
+    #"SYSTEM_SYSRULES_queryFilter"(
+      field: "segmento",
+      operator: "=",
+      value: ri!segmento
+    )
+  },
+ 
+  pagingInfo_pi: if(
+    not(isnull(ri!paginInfo)),
+    ri!paginInfo,
+    #"SYSTEM_SYSRULES_pagingInfo"(
+      startIndex: 1,
+      batchSize: 50,
+      sort: #"SYSTEM_SYSRULES_sortInfo"(field: "segmento", ascending: true())
+    )
+  ),
+  selectionColumn_txt: ri!seleccionColumnas,
+  /*pagingInfo_pi: ri!paginInfo,*/
+  ignoreFiltersWithEmptyValues_bool: true,
+  fetchTotalCount_bool: true
+)</definition>
+        <namedTypedValue>
+            <name>idSegmento</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>segmento</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>paginInfo</name>
+            <type>
+                <name>PagingInfo</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>seleccionColumnas</name>
+            <type>
+                <name>Text?list</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>legacy</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000e916-edcb-8000-e60c-01ef9001ef90_3196096"/>
+        <historyInfo versionUuid="_a-0000e9a7-6d42-8000-e63f-01ef9001ef90_4873786"/>
+        <historyInfo versionUuid="_a-0000eb09-d442-8000-e687-01ef9001ef90_8837692"/>
+        <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9386880"/>
+        <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9505768"/>
+    </history>
+</contentHaul>

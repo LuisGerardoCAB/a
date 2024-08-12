@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9388514</versionUuid>
+    <interface>
+        <name>SCDO_Grid_Modificaciones_Registro_Arribo</name>
+        <uuid>_a-0000e9a7-6d42-8000-e63f-01ef9001ef90_5233281</uuid>
+        <description>Pantalla que muestra todas las modificaciones que se realicen en la pantalla Registro Arribo</description>
+        <parentUuid>_a-0000e801-560f-8000-e5d9-01ef9001ef90_1707049</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>#"SYSTEM_SYSRULES_sectionLayout_v1"(
+  contents: {
+    #"SYSTEM_SYSRULES_gridField_v1"(
+      label: "",
+      labelPosition: "ABOVE",
+      emptyGridMessage: "No existen datos",
+      data: ri!listadoModificacionesList_cdt,
+      columns: {
+        #"SYSTEM_SYSRULES_gridColumn"(
+          label: "Campo",
+          value: fv!row.campo,
+
+          align: "CENTER"
+        ),
+        #"SYSTEM_SYSRULES_gridColumn"(
+          label: "Número de Secuencia",
+          value: fv!row.numerosecuencia,
+          align: "CENTER"
+        ),
+        #"SYSTEM_SYSRULES_gridColumn"(
+          label: "Valor Previo",
+          value:  fv!row.valorprevio,
+          align: "CENTER"
+        ),
+        #"SYSTEM_SYSRULES_gridColumn"(
+          label: "Valor Nuevo",
+          value: fv!row.valornuevo,
+          align: "CENTER"
+        ),
+        #"SYSTEM_SYSRULES_gridColumn"(
+          label: "Fecha y Hora",
+          value: fv!row.fechaYHora,
+          align: "CENTER"
+        ),
+        #"SYSTEM_SYSRULES_gridColumn"(
+          label: "Usuario",
+          value: fv!row.usuario,
+          align: "CENTER"
+        )
+      },
+    )
+    
+    
+  }
+
+)</definition>
+        <namedTypedValue>
+            <name>listadoModificacionesList_cdt</name>
+            <type>
+                <name>cdo_modificaciones_r?list</name>
+                <namespace>urn:com:appian:types</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+        <isCustom>false</isCustom>
+    </interface>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <typedValue>
+        <type>
+            <name>RuleTestConfig?list</name>
+            <namespace>http://www.appian.com/ae/types/2009</namespace>
+        </type>
+        <value>
+            <el>
+                <a:name/>
+                <a:ruleInputTestConfigs>
+                    <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="a:Expression"> #"_a-0000e9a7-6d42-8000-e63f-01ef9001ef90_5247960"(
+   idTabla_txt: #"_a-0000e9a7-6d42-8000-e63f-01ef9001ef90_5247914"
+ ).data,</a:value>
+                    <a:nameRef>listadoModificacionesList_cdt</a:nameRef>
+                    <a:id>1</a:id>
+                </a:ruleInputTestConfigs>
+                <a:assertions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+            </el>
+        </value>
+    </typedValue>
+    <history>
+        <historyInfo versionUuid="_a-0000e9a7-6d42-8000-e63f-01ef9001ef90_5889555"/>
+        <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9388514"/>
+    </history>
+</contentHaul>

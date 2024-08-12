@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000ebe7-98ae-8000-e699-01ef9001ef90_9924428</versionUuid>
+    <constant>
+        <name>SCDO_ENTIDAD_PENDIENTER</name>
+        <uuid>_a-0000e8c4-62ba-8000-e603-01ef9001ef90_2510382</uuid>
+        <description>Constante que apunta a v_cdo_pendienterev</description>
+        <parentUuid>_a-0000e878-569a-8000-e5e4-01ef9001ef90_1932877</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <typedValue>
+            <type>
+                <name>DataStoreEntity</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+            <value a:id="727bef21-179b-4119-87d7-4ca45686b73f@_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1836197"/>
+        </typedValue>
+        <isEnvironmentSpecific>false</isEnvironmentSpecific>
+    </constant>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000e8c4-62ba-8000-e603-01ef9001ef90_2510386"/>
+        <historyInfo versionUuid="_a-0000ea2e-319c-8000-e644-01ef9001ef90_6851514"/>
+        <historyInfo versionUuid="_a-0000ea6a-8274-8000-e661-01ef9001ef90_7641871"/>
+        <historyInfo versionUuid="_a-0000eb09-d442-8000-e687-01ef9001ef90_8897146"/>
+        <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9393372"/>
+        <historyInfo versionUuid="_a-0000ebe7-98ae-8000-e699-01ef9001ef90_9924428"/>
+    </history>
+</contentHaul>

@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9386989</versionUuid>
+    <rule>
+        <name>SCDO_validarReqAprovUsu</name>
+        <uuid>_a-0000eabf-35e2-8000-e683-01ef9001ef90_8471165</uuid>
+        <description></description>
+        <parentUuid>_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1882376</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>reject(
+  fn!isnull,
+  {
+    if(
+      a!isNullOrEmpty(
+        index(
+          ri!requestBody,
+          "profile",
+          "username",
+          {}
+        )
+      ),
+      "El campo profile.username es requerido.",
+      if(
+        len(
+          index(
+            ri!requestBody,
+            "profile",
+            "username",
+            {}
+          )
+        ) &gt; 10,
+        "El campo profile.username no puede exceder los 10 caracteres.",
+        null
+      )
+    ),
+    if(
+      a!isNullOrEmpty(
+        index(
+          ri!requestBody,
+          "profile",
+          "firstName",
+          {}
+        )
+      ),
+      "El campo profile.firstName es requerido.",
+      null
+    ),
+    if(
+      a!isNullOrEmpty(
+        index(
+          ri!requestBody,
+          "profile",
+          "lastName",
+          {}
+        )
+      ),
+      "El campo profile.lastName es requerido.",
+      null
+    ),
+    if(
+      and(
+        a!isNotNullOrEmpty(
+          index(
+            ri!requestBody,
+            "profile",
+            "firstName",
+            {}
+          )
+        ),
+        a!isNotNullOrEmpty(
+          index(
+            ri!requestBody,
+            "profile",
+            "lastName",
+            {}
+          )
+        ),
+        len(
+          concat(
+            index(
+              ri!requestBody,
+              "profile",
+              "firstName",
+              {}
+            ),
+            " ",
+            index(
+              ri!requestBody,
+              "profile",
+              "lastName",
+              {}
+            )
+          )
+        ) &gt; 60
+      ),
+      "La combinación ""profile.firstName profile.lastName"" no puede exceder los 60 caracteres.",
+      null
+    ),
+    if(
+      a!isNullOrEmpty(
+        index(
+          ri!requestBody,
+          "contact",
+          "email",
+          {}
+        )
+      ),
+      "El campo contact.email es requerido.",
+      if(
+        len(
+          index(
+            ri!requestBody,
+            "contact",
+            "email",
+            {}
+          )
+        ) &gt; 60,
+        "El campo contact.email no puede exceder los 60 caracteres.",
+        null
+      )
+    ),
+    if(
+      and(
+        a!isNotNullOrEmpty(
+          index(
+            ri!requestBody,
+            "contact",
+            "officePhone",
+            {}
+          )
+        ),
+        len(
+          tostring(
+            index(
+              ri!requestBody,
+              "contact",
+              "officePhone",
+              {}
+            )
+          )
+        ) &gt; 60
+      ),
+      "El campo contact.officePhone no puede exceder los 60 caracteres.",
+      null
+    ),
+    if(
+      and(
+        a!isNotNullOrEmpty(
+          index(
+            ri!requestBody,
+            "customFields",
+            "customField1",
+            {}
+          )
+        ),
+        len(
+          tostring(
+            index(
+              ri!requestBody,
+              "customFields",
+              "customField1",
+              {}
+            )
+          )
+        ) &gt; 5
+      ),
+      "El campo customFields.customField1 no puede exceder los 5 caracteres.",
+      null
+    ),
+    if(
+      and(
+        a!isNotNullOrEmpty(
+          index(
+            ri!requestBody,
+            "customFields",
+            "customField2",
+            {}
+          )
+        ),
+        len(
+          tostring(
+            index(
+              ri!requestBody,
+              "customFields",
+              "customField2",
+              {}
+            )
+          )
+        ) &gt; 5
+      ),
+      "El campo customFields.customField2 no puede exceder los 5 caracteres.",
+      null
+    )
+  }
+)</definition>
+        <namedTypedValue>
+            <name>requestBody</name>
+            <type>
+                <name>Variant</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>legacy</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <typedValue>
+        <type>
+            <name>RuleTestConfig?list</name>
+            <namespace>http://www.appian.com/ae/types/2009</namespace>
+        </type>
+        <value>
+            <el>
+                <a:name>Usuario Administrador en ambos aplicativos</a:name>
+                <a:ruleInputTestConfigs>
+                    <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="a:Expression">{
+  "profile":
+  {
+    "username" :"testUserM1",
+    "firstName" : "Test User",
+    "lastName"	:"Monitor 1"
+  },
+  "contact":
+  {
+    "email" :"testusermonitor1@empresaexterna.com.mx",
+    "officePhone" :"+34566565656565"
+  },
+  "customFields":
+  {
+    "customField1":"12345", /*Utilizado para la extension*/
+    "customField2":"54321" /*Utilizado para el Cc*/
+  },
+  "group": {
+    {
+      "nameGroup":"SMC Perfil ADMINISTRADOR"
+    },
+    {
+      "nameGroup":"SMC Perfil ADMINISTRADOR SEGUIMIENTO"
+    }
+  }
+}</a:value>
+                    <a:nameRef>requestBody</a:nameRef>
+                    <a:id>1</a:id>
+                </a:ruleInputTestConfigs>
+                <a:assertions>
+                    <a:expectedOutput>
+                        <a:type a:uuid="{http://www.appian.com/ae/types/2009}Variant"/>
+                        <a:runtimeType a:uuid="{http://www.appian.com/ae/types/2009}Variant"/>
+                        <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="a:Expression">{}</a:value>
+                    </a:expectedOutput>
+                </a:assertions>
+            </el>
+        </value>
+    </typedValue>
+    <history>
+        <historyInfo versionUuid="_a-0000eabf-35e2-8000-e683-01ef9001ef90_8471171"/>
+        <historyInfo versionUuid="_a-0000eae4-5659-8000-e685-01ef9001ef90_8622344"/>
+        <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9386989"/>
+    </history>
+</contentHaul>

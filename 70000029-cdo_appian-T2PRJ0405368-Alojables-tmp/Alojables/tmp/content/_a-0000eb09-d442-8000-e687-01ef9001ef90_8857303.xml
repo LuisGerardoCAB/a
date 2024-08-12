@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9386642</versionUuid>
+    <rule>
+        <name>SCDO_ALGUN_PENDIENTE</name>
+        <uuid>_a-0000eb09-d442-8000-e687-01ef9001ef90_8857303</uuid>
+        <description>Regla de exprsión para saber si todos los documentos están en estado pendiente</description>
+        <parentUuid>_a-0000e9a3-ab27-8000-e63d-01ef9001ef90_4829216</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>a!localVariables(
+  local!recorrer: if(
+    a!isNotNullOrEmpty(ri!digitalizados),
+    #"SYSTEM_SYSRULES_forEach"(
+      items: ri!digitalizados,
+      expression: if(fv!item.estado = "P", true, null)
+    ),
+    null
+  ),
+  local!respuesta: reject(
+    fn!isnull,
+    a!flatten(
+      local!recorrer
+      
+    )
+  
+  ),
+  if(a!isNullOrEmpty(local!respuesta),false,local!respuesta[1]) ,
+)</definition>
+        <namedTypedValue>
+            <name>digitalizados</name>
+            <type>
+                <name>cdo_digitalizados</name>
+                <namespace>urn:com:appian:types</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>legacy</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000eb09-d442-8000-e687-01ef9001ef90_8857689"/>
+        <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9386642"/>
+    </history>
+</contentHaul>

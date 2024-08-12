@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9385659</versionUuid>
+    <rule>
+        <name>SCDO_llenarDigitalizadosODocumentacionAuditoria</name>
+        <uuid>_a-0000e9a7-6d42-8000-e63f-01ef9001ef90_5932205</uuid>
+        <description>Regla de expresión que permite guardar reportes de auditoria dado una lista de reportes, ya sean aprobados o reportes en general</description>
+        <parentUuid>_a-0000e9a3-ab27-8000-e63d-01ef9001ef90_4829216</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>a!localVariables(
+  
+  local!digitalizadosDocumentacionAuditoria: #"SYSTEM_SYSRULES_forEach"(
+    items: if(a!isNullOrEmpty(ri!digitalizado), ri!documentacion, ri!digitalizado),
+    expression: {
+      if(
+        a!isNullOrEmpty(ri!documentacion),
+        'type!{urn:com:appian:types}cdo_digitalizados_auditoria'(
+          iddigitalizado: fv!item.iddigitalizado,
+          idreporte: fv!item.idreporte,
+          contrato: fv!item.contrato,
+          iddocumento: fv!item.iddocumento,
+          nombreimagen: fv!item.nombreimagen,
+          estado: fv!item.estado,
+          fechaacepto: fv!item.fechaacepto,
+          usuarioacepto: fv!item.usuarioacepto,
+          operacion: fv!item.operacion,
+          dml: "INSERT",
+          fchaDml: now(),
+        ),
+        'type!{urn:com:appian:types}cdo_documentacion_auditoria'(
+          iddocumentacion: fv!item.iddocumentacion,
+          contrato: fv!item.contrato,
+          nomdocumento: fv!item.nomdocumento,
+          iddocumento: fv!item.iddocumento,
+          tipo: fv!item.tipo,
+          fechacarga: fv!item.fechacarga,
+          usuariocargo: fv!item.usuariocargo,
+          cc: fv!item.cc,
+          estado: fv!item.estado,
+          usuarioacepto: fv!item.usuarioacepto,
+          fechaacepto: fv!item.fechaacepto,
+          observacion: fv!item.observacion,
+          dml: fv!item.dml,
+          fhcDml: fv!item.fhcDml
+        )
+      )
+      
+    }
+  ),
+  local!digitalizadosDocumentacionAuditoria
+)</definition>
+        <namedTypedValue>
+            <name>digitalizado</name>
+            <type>
+                <name>cdo_digitalizados?list</name>
+                <namespace>urn:com:appian:types</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>documentacion</name>
+            <type>
+                <name>cdo_documentacion_auditoria?list</name>
+                <namespace>urn:com:appian:types</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>legacy</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000e9a7-6d42-8000-e63f-01ef9001ef90_5941247"/>
+        <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9385659"/>
+    </history>
+</contentHaul>

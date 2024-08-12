@@ -1,0 +1,620 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9542386</versionUuid>
+    <interface>
+        <name>SCDO_Alta_Sucursales</name>
+        <uuid>_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1899264</uuid>
+        <description>Interfaz alta de sucursales que pertenece a modulo Centro de Costos  </description>
+        <parentUuid>_a-0000e801-560f-8000-e5d9-01ef9001ef90_1707049</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>a!localVariables(
+  /*------------*/
+  local!showInformationBanner: true,
+  local!showInformationBanner_actualizar: true,
+  local!showInformationBanner_eliminar: true,
+  /*correcto*/
+  local!flag: now(),
+  local!showWhen: a!refreshVariable(
+    value: now() &lt; local!flag,
+    refreshInterval: 0.5
+  ),
+  /*-----*/
+  /*error*/
+  local!flag_error: now(),
+  local!showWhen_error: a!refreshVariable(
+    value: now() &lt; local!flag_error,
+    /* especifique el intervalo después de cuántos minutos desea finalizar el examen */
+    refreshInterval: 0.5
+  ),
+  /*------*/
+  /*correcto_actualizar*/
+  local!flag_actualizar: now(),
+  local!showWhen_actualizar: a!refreshVariable(
+    value: now() &lt; local!flag_actualizar,
+    refreshInterval: 0.5
+  ),
+  /*-----*/
+  /*error_actualizasr*/
+  local!flag_error_actualizar: now(),
+  local!showWhen_error_actualizar: a!refreshVariable(
+    value: now() &lt; local!flag_error_actualizar,
+    /* especifique el intervalo después de cuántos minutos desea finalizar el examen */
+    refreshInterval: 0.5
+  ),
+  /*------*/
+  /*correcto_eliminar*/
+  local!flag_eliminar: now(),
+  local!showWhen_eliminar: a!refreshVariable(
+    value: now() &lt; local!flag_eliminar,
+    refreshInterval: 0.5
+  ),
+  /*-----*/
+  /*error_elimianr*/
+  local!flag_error_eliminar: now(),
+  local!showWhen_error_eliminar: a!refreshVariable(
+    value: now() &lt; local!flag_error_eliminar,
+    /* especifique el intervalo después de cuántos minutos desea finalizar el examen */
+    refreshInterval: 0.5
+  ),
+  /*------*/
+  /*------------*/
+  local!refreshCount: 0,
+  local!centrosCostos: a!refreshVariable(
+    value: #"_a-0000e8c4-62ba-8000-e603-01ef9001ef90_2682345"(idccostos: null, paginInfo: #"SYSTEM_SYSRULES_pagingInfo"(startIndex: 1, batchSize: -1, sort: #"SYSTEM_SYSRULES_sortInfo"(field: "idccostos", ascending: true))).data,
+    /*refreshAlways: true,*/
+    refreshOnVarChange: local!refreshCount,
+    refreshOnReferencedVarChange: true
+  ),
+  local!idccostoseleccionado,
+  local!centroSeleccionado,
+  local!segmentos: #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2233353"(idSegmento: null).data,
+  local!regiones: #"_a-0000e8d8-9b98-8000-e605-01ef9001ef90_2872186"(idregion: null).data,
+  local!ccostos,
+  local!nombre,
+  local!segmento,
+  local!region,
+  local!modificar,
+  local!sePuedeEliminarCentro: if(
+    a!isNullOrEmpty(local!centroSeleccionado),
+    false,
+    if(
+      a!isNullOrEmpty(#"_a-0000e8d8-9b98-8000-e605-01ef9001ef90_2933354"(ccostos: local!centroSeleccionado.cc)),
+      false,
+      if(
+        length(#"_a-0000e8d8-9b98-8000-e605-01ef9001ef90_2933354"(ccostos: local!centroSeleccionado.cc)) &gt; 0,
+        true,
+        false
+      )
+    )
+  ),
+  /*local!centroAModificarUtilizado: if(*/
+    /*and(isnull(local!idccostoseleccionado), isnull(local!modificar)),*/
+    /*false,*/
+    /*if(*/
+      /*a!isNullOrEmpty(rule!SCDO_getReportesByFilter(ccostos: local!centroSeleccionado.cc)),*/
+      /*false,*/
+      /*if(*/
+        /*a!isNullOrEmpty(rule!SCDO_getReportesByFilter(ccostos: local!ccostos)),*/
+        /*false,*/
+        /*true*/
+      /*)*/
+    /*)*/
+  /*),*/
+  local!centroNuevoUtilizado: if(
+    and(isnull(local!idccostoseleccionado), isnull(local!modificar)),
+    if(
+      a!isNullOrEmpty(#"_a-0000e8c4-62ba-8000-e603-01ef9001ef90_2682345"(cc: local!ccostos).data),
+      false,
+      true
+    ),
+    false
+  ),
+  {
+    
+    #"SYSTEM_SYSRULES_richTextDisplayField"(
+      labelPosition: "COLLAPSED",
+      value: {
+        #"SYSTEM_SYSRULES_richTextItem_v1"(
+          text: {
+            "Para poder realizar altas, bajas y modificaciones a Centro de Costos "
+          },
+          size: "MEDIUM",
+          style: { "STRONG" }
+        )
+      }
+    ),
+    #"SYSTEM_SYSRULES_columnsLayout"(
+      columns: {
+        /*CORRECTO INSERTAR*/
+        #"SYSTEM_SYSRULES_columnLayout"(
+          contents: {
+            #"_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9394093"(
+              showInformationBanner: local!showInformationBanner
+            )
+          },
+          showWhen: and(
+            local!showInformationBanner,
+            local!showWhen
+          )
+        ),
+        /*ERROR INSERTAR*/
+        #"SYSTEM_SYSRULES_columnLayout"(
+          contents: {
+            #"_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9394317"(
+              showInformationBanner: local!showInformationBanner
+            )
+          },
+          showWhen: and(
+            local!showInformationBanner,
+            local!showWhen_error
+          )
+        ),
+        /*CORRECTO ACTUALIZAR*/
+        #"SYSTEM_SYSRULES_columnLayout"(
+          contents: {
+            #"_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9394093"(
+              showInformationBanner: local!showInformationBanner_actualizar
+            )
+          },
+          showWhen: and(
+            local!showInformationBanner_actualizar,
+            local!showWhen_actualizar
+          )
+        ),
+        /*ERROR ACTUALIZAR*/
+        #"SYSTEM_SYSRULES_columnLayout"(
+          contents: {
+            #"_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9394317"(
+              showInformationBanner: local!showInformationBanner_actualizar
+            )
+          },
+          showWhen: and(
+            local!showInformationBanner_actualizar,
+            local!showWhen_error_actualizar
+          )
+        ),
+        /*CORRECTO ELIMINAR*/
+        #"SYSTEM_SYSRULES_columnLayout"(
+          contents: {
+            #"_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9394093"(
+              showInformationBanner: local!showInformationBanner_eliminar
+            )
+          },
+          showWhen: and(
+            local!showInformationBanner_eliminar,
+            local!showWhen_eliminar
+          )
+        ),
+        /*ERROR ELIMINAR*/
+        #"SYSTEM_SYSRULES_columnLayout"(
+          contents: {
+            #"_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9394317"(
+              showInformationBanner: local!showInformationBanner_eliminar
+            )
+          },
+          showWhen: and(
+            local!showInformationBanner_eliminar,
+            local!showWhen_error_eliminar
+          )
+        ),
+
+      }
+    ),
+    #"SYSTEM_SYSRULES_columnsLayout"(
+      columns: {
+        #"SYSTEM_SYSRULES_columnLayout"(
+          contents: {
+            #"SYSTEM_SYSRULES_ButtonArrayLayout"(
+              buttons: {
+                #"SYSTEM_SYSRULES_ButtonWidget"(
+                  icon: "refresh",
+                  tooltip: "Actualizar Centros",
+                  saveInto: a!save(local!refreshCount, local!refreshCount +1),
+                  size: "SMALL",
+                  style: "SECONDARY"
+                )
+              },
+              align: "END"
+            )  
+          },
+          width: "EXTRA_NARROW"
+        ),
+        #"SYSTEM_SYSRULES_columnLayout"(
+          contents: {
+            #"SYSTEM_SYSRULES_dropdownField_v1"(
+              label: "Selecciona el Centro",
+              labelPosition: "ADJACENT",
+              placeholder: "--- Seleccione el Centro de Costos a Modificar ---",
+              choiceLabels: index(local!centrosCostos,"cc",{}),
+              choiceValues: index(local!centrosCostos,"idccostos",{}),
+              value: local!idccostoseleccionado,
+              saveInto: {
+                local!idccostoseleccionado,
+                a!save(local!centroSeleccionado, if(a!isNullOrEmpty(local!idccostoseleccionado), null(), #"_a-0000e8c4-62ba-8000-e603-01ef9001ef90_2682345"(idccostos: local!idccostoseleccionado).data[1])),
+                a!save(local!ccostos, if(a!isNullOrEmpty(local!centroSeleccionado), null, local!centroSeleccionado.cc)),
+                a!save(local!nombre, if(a!isNullOrEmpty(local!centroSeleccionado), null, local!centroSeleccionado.nombre)),
+                a!save(local!segmento, if(a!isNullOrEmpty(local!centroSeleccionado), null, local!centroSeleccionado.idsegmento)),
+                a!save(local!region, if(a!isNullOrEmpty(local!centroSeleccionado), null, local!centroSeleccionado.idregion)),
+                a!save(local!modificar, if(a!isNullOrEmpty(local!idccostoseleccionado), null, local!modificar))
+              },
+              searchDisplay: "AUTO",
+              validations: {}
+            )
+          },
+          width: "MEDIUM_PLUS"
+        ),
+        #"SYSTEM_SYSRULES_columnLayout"(
+          contents: {
+            #"SYSTEM_SYSRULES_checkboxField"(
+              label: "",
+              labelPosition: "ABOVE",
+              choiceLabels: { "Modificar Centro de Costo" },
+              choiceValues: { 1 },
+              value: local!modificar,
+              saveInto: {
+                local!modificar
+              },
+              disabled: a!isNullOrEmpty(local!idccostoseleccionado),
+              validations: {}
+            )
+          }
+        )
+      }
+    ),
+    #"SYSTEM_SYSRULES_columnsLayout"(
+      columns: {
+        #"SYSTEM_SYSRULES_columnLayout"(
+          contents: {
+            #"SYSTEM_SYSRULES_boxLayout"(
+              label: "Datos del Centro de Costo",
+              contents: {
+                #"SYSTEM_SYSRULES_columnsLayout"(
+                  columns: {
+                    #"SYSTEM_SYSRULES_columnLayout"(
+                      contents: {
+                        #"SYSTEM_SYSRULES_richTextDisplayField"(
+                          value: {
+                            #"SYSTEM_SYSRULES_richTextItem_v1"(
+                              text: "Complete todos los campos para Crear o Modificar un Centro de Costo",
+                              style: "STRONG"
+                            )
+                          }
+                        ),
+                        #"SYSTEM_SYSRULES_textField"(
+                          label: "Ccostos",
+                          labelPosition: "ADJACENT",
+                          value: local!ccostos,
+                          saveInto: local!ccostos,
+                          refreshAfter: "KEYPRESS",
+                          characterLimit: 4,
+                          showCharacterCount: true,
+                          /*disabled: if(*/
+                            /*a!isNullOrEmpty(local!idccostoseleccionado),*/
+                            /*false,*/
+                            /*if(*/
+                              /*a!isNullOrEmpty(local!modificar),*/
+                              /*true,*/
+                              /*false*/
+/*                            */
+                            /*)*/
+                          /*),*/
+                          disabled: if(a!isNotNullOrEmpty(local!modificar), true, if(and(a!isNullOrEmpty(local!modificar), a!isNotNullOrEmpty(local!idccostoseleccionado)), true, false)),
+                          validations: {
+                            if(
+                              a!isNullOrEmpty(local!idccostoseleccionado),
+                              if(
+                                a!isNullOrEmpty(#"_a-0000e8c4-62ba-8000-e603-01ef9001ef90_2682345"(cc: local!ccostos).data),
+                                {},
+                                "Ya existe este código de centro de costos en la base de datos"
+                              ),
+                              if(
+                                local!ccostos = local!centroSeleccionado.cc,
+                                {},
+                                if(
+                                  a!isNullOrEmpty(#"_a-0000e8c4-62ba-8000-e603-01ef9001ef90_2682345"(cc: local!ccostos).data),
+                                  {},
+                                  "Ya existe este código de centro de costos en la base de datos"
+                                )
+                              )
+                            )
+                          },
+                          validationGroup: "crear"
+                        ),
+                        #"SYSTEM_SYSRULES_textField"(
+                          label: "Nombre",
+                          labelPosition: "ADJACENT",
+                          value: local!nombre,
+                          saveInto: local!nombre,
+                          refreshAfter: "KEYPRESS",
+                          disabled: if(
+                            a!isNullOrEmpty(local!idccostoseleccionado),
+                            false,
+                            if(
+                              a!isNullOrEmpty(local!modificar),
+                              true,
+                              false
+                            )
+                          ),
+                          validations: {}
+                        ),
+                        #"SYSTEM_SYSRULES_dropdownField_v1"(
+                          label: "Segmento",
+                          labelPosition: "ADJACENT",
+                          placeholder: "--- Seleccione el Segmento ---",
+                          choiceLabels: index(local!segmentos,"segmento",{}),
+                          choiceValues: index(local!segmentos,"idsegmento",{}),
+                          value: local!segmento,
+                          saveInto: local!segmento,
+                          searchDisplay: "AUTO",
+                          disabled: if(
+                            a!isNullOrEmpty(local!idccostoseleccionado),
+                            false,
+                            if(
+                              a!isNullOrEmpty(local!modificar),
+                              true,
+                              false
+                            )
+                          ),
+                          validations: {}
+                        ),
+                        #"SYSTEM_SYSRULES_dropdownField_v1"(
+                          label: "Región",
+                          labelPosition: "ADJACENT",
+                          placeholder: "--- Seleccione la Región ---",
+                          choiceLabels: index(local!regiones,"region",{}),
+                          choiceValues: index(local!regiones,"idregion",{}),
+                          value: local!region,
+                          saveInto: local!region,
+                          searchDisplay: "AUTO",
+                          disabled: if(
+                            a!isNullOrEmpty(local!idccostoseleccionado),
+                            false,
+                            if(
+                              a!isNullOrEmpty(local!modificar),
+                              true,
+                              false
+                            )
+                          ),
+                          validations: {}
+                        )
+                      },
+                      width: "MEDIUM"
+                    ),
+                    #"SYSTEM_SYSRULES_columnLayout"(
+                      contents: {
+                        #"SYSTEM_SYSRULES_ButtonArrayLayout"(
+                          buttons: {
+                            #"SYSTEM_SYSRULES_ButtonWidget"(
+                              label: "CREAR NUEVO CENTRO DE COSTO",
+                              loadingIndicator: true,
+                              saveInto: {
+                                #"SYSTEM_SYSRULES_startProcess"(
+                                  processModel: #"_a-0000e93b-1de6-8000-e635-01ef9001ef90_3540744",
+                                  processParameters: {
+                                    /*idCentroCostos: null,*/
+                                    ccostos: local!ccostos,
+                                    nombre: local!nombre,
+                                    segmento: local!segmento,
+                                    region: local!region
+                                  },
+                                  onSuccess: {
+                                    a!save(local!showInformationBanner, true),
+                                    if(
+                                      toboolean(fv!processInfo.pv.error) = false,
+                                      {a!save(local!flag, addseconds(now(), 10)),
+                                      a!save(local!ccostos, null),
+                                      a!save(local!nombre, null),
+                                      a!save(local!region, null),
+                                      a!save(local!segmento, null),
+                                      a!save(local!refreshCount, local!refreshCount +1)
+                                      },
+                                      a!save(local!flag_error, addseconds(now(), 10))
+                                    ),
+                                   
+                                  }
+                                )
+                              },
+                              style: "DESTRUCTIVE",
+                              disabled: or(a!isNotNullOrEmpty(local!idccostoseleccionado), isnull(local!ccostos), isnull(local!nombre), isnull(local!segmento), isnull(local!region), local!centroNuevoUtilizado = true),
+                              validationGroup: "crear",
+                              confirmHeader: "Se creará el nuevo Centro de Costos " &amp; local!ccostos,
+                              confirmMessage: "¿Continuar?",
+                              confirmButtonLabel: "Crear",
+                              cancelButtonLabel: "No Crear"
+                            )
+                          },
+                          align: "START",
+                          marginAbove: "EVEN_MORE"
+                        )
+                      }, 
+                      width: "NARROW_PLUS"
+                    )
+                  }
+                ),
+                #"SYSTEM_SYSRULES_richTextDisplayField"(
+                  value: {
+                    #"SYSTEM_SYSRULES_richTextItem_v1"(
+                      text: concat("El Centro de Costo está siendo utilizado, si se elimina los reportes ", char(10), "que tienen este centro de costo no serán visualizados"),
+                      color: "NEGATIVE",
+                      style: "STRONG"
+                    )
+                  },
+                  showWhen: and(local!sePuedeEliminarCentro)
+                ),
+                #"SYSTEM_SYSRULES_ButtonArrayLayout"(
+                  buttons: {
+                    #"SYSTEM_SYSRULES_ButtonWidget"(
+                      label: "Guardar Cambios ",
+                      saveInto: {
+                        #"SYSTEM_SYSRULES_startProcess"(
+                          processModel: #"_a-0000e928-a819-8000-e60e-01ef9001ef90_3293829",
+                          processParameters: {
+                            idCentroCostos: local!centroSeleccionado.idccostos,
+                            ccostos: local!ccostos,
+                            nombre: local!nombre,
+                            segmento: local!segmento,
+                            region: local!region,
+                            centroViejo: local!centroSeleccionado.cc,
+                          },
+                          
+                          onSuccess: {
+                            a!save(
+                              local!showInformationBanner_actualizar,
+                              true
+                            ),
+                            if(
+                              toboolean(fv!processInfo.pv.error) = false,
+                              {a!save(
+                                local!flag_actualizar,
+                                addseconds(now(), 10)
+                              ),
+                              a!save(local!modificar, null),
+                              a!save(local!nombre, null),
+                              a!save(local!centroSeleccionado, null),
+                              a!save(local!idccostoseleccionado, null),
+                              a!save(local!ccostos, null),
+                              a!save(local!segmento, null),
+                              a!save(local!region, null),
+                              a!save(local!refreshCount, local!refreshCount +1)
+                              },
+                              a!save(
+                                local!flag_error_actualizar,
+                                addseconds(now(), 10)
+                              )
+                            ),
+                           
+                          }
+                        )
+
+                      },
+                      style: "DESTRUCTIVE",
+                      disabled:if(
+                        a!isNullOrEmpty(local!idccostoseleccionado),
+                        true,
+                        if(
+                          a!isNullOrEmpty(local!modificar),
+                          true,
+                          if(
+                            or( a!isNullOrEmpty(local!nombre), a!isNullOrEmpty(local!segmento), a!isNullOrEmpty(local!region), a!isNullOrEmpty(local!centroSeleccionado.nombre),a!isNullOrEmpty(local!centroSeleccionado.idsegmento),a!isNullOrEmpty(local!centroSeleccionado.idregion)),
+                            true, 
+                            and(tointeger(local!centroSeleccionado.idsegmento) = local!segmento, tointeger(local!centroSeleccionado.idregion) = local!region, tostring(local!centroSeleccionado.nombre) = local!nombre)
+                          )
+                        )
+                      ),
+                      loadingIndicator: true,
+                      confirmHeader: if(
+                        a!isNullOrEmpty(local!centroSeleccionado),
+                        "Se Agregará el nuevo Centro de Costos " &amp; local!centroSeleccionado.cc,
+                        "Al modificar el centro de costo "&amp; local!centroSeleccionado.cc&amp;" se cambiara en todos los reportes." 
+                      ),
+                      confirmMessage: "¿Continuar?"
+                    ),
+                    #"SYSTEM_SYSRULES_ButtonWidget"(
+                      label: "Eliminar",
+                      saveInto: #"SYSTEM_SYSRULES_startProcess"(
+                        processModel: #"_a-0000e928-a819-8000-e60e-01ef9001ef90_3303296",
+                        processParameters: { 
+                          idcc: local!centroSeleccionado.idccostos },
+                          onSuccess: {
+                            a!save(
+                              local!showInformationBanner_eliminar,
+                              true
+                            ),
+                            if(
+                              toboolean(fv!processInfo.pv.error) = false,
+                              { a!save(
+                                local!flag_eliminar,
+                                addseconds(now(), 10)
+                              ),
+                              a!save(local!modificar, null),
+                              a!save(local!nombre, null),
+                              a!save(local!centroSeleccionado, null),
+                              a!save(local!idccostoseleccionado, null),
+                              a!save(local!ccostos, null),
+                              a!save(local!segmento, null),
+                              a!save(local!region, null),
+                              a!save(local!refreshCount, local!refreshCount +1)
+                              },
+                              a!save(
+                                local!flag_error_eliminar,
+                                addseconds(now(), 10)
+                              )
+                            ),
+                            
+                          }
+                      ),
+                      style: "DESTRUCTIVE",
+                      loadingIndicator: true,
+                      disabled: if(
+                        a!isNullOrEmpty(local!modificar),
+                        true,
+                        false
+                      ),
+                      confirmHeader: "Se eliminará el centro de costo",
+                      confirmMessage: "¿Continuar?"
+                    )
+                  },
+                  align: "START"
+                )
+              }
+            )
+          },
+          width: "WIDE"
+        ),
+        #"SYSTEM_SYSRULES_columnLayout"(
+          
+        )
+      }
+    )
+    
+    
+  }
+)</definition>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+        <isCustom>false</isCustom>
+    </interface>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000e94c-78eb-8000-e637-01ef9001ef90_3804273"/>
+        <historyInfo versionUuid="_a-0000ea3c-477e-8000-e648-01ef9001ef90_6985025"/>
+        <historyInfo versionUuid="_a-0000eabf-35e2-8000-e683-01ef9001ef90_8451020"/>
+        <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9387488"/>
+        <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9470928"/>
+        <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9508486"/>
+        <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9542386"/>
+    </history>
+</contentHaul>

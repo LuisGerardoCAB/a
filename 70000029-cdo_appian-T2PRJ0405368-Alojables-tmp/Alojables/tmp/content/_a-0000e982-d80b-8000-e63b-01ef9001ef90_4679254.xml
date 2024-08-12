@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9386046</versionUuid>
+    <rule>
+        <name>SCDO_get_imagenes_pendientes</name>
+        <uuid>_a-0000e982-d80b-8000-e63b-01ef9001ef90_4679254</uuid>
+        <description>Regla que consulta todos los datos del CDT cdo_imagenes_pedientes</description>
+        <parentUuid>_a-0000e9a3-ab27-8000-e63d-01ef9001ef90_4835948</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>#"_a-0000e8b9-0989-8000-e5fd-01ef9001ef90_2420859"(
+  dataStoreEntity_dt: #"_a-0000e982-d80b-8000-e63b-01ef9001ef90_4679248",
+  queryFilter_any: {
+    #"SYSTEM_SYSRULES_queryFilter"(
+      field: "idimagen",
+      operator: "=",
+      value: ri!idimagen,
+      applyWhen: isnull(ri!idimagen) &lt;&gt; true
+    ),
+    #"SYSTEM_SYSRULES_queryFilter"(
+      field: "contrato",
+      operator: "=",
+      value: ri!contrato,
+      applyWhen: isnull(ri!contrato) &lt;&gt; true
+    ),
+    #"SYSTEM_SYSRULES_queryFilter"(
+      field: "deal",
+      operator: "=",
+      value: ri!deal,
+      applyWhen: isnull(ri!deal) &lt;&gt; true
+    ),
+    #"SYSTEM_SYSRULES_queryFilter"(
+      field: "iddocumento",
+      operator: "=",
+      value: ri!iddocumento,
+      applyWhen: isnull(ri!iddocumento) &lt;&gt; true
+    ),
+    #"SYSTEM_SYSRULES_queryFilter"(
+      field: "tipo",
+      operator: "=",
+      value: ri!tipo,
+      applyWhen: isnull(ri!tipo) &lt;&gt; true
+    ),
+    #"SYSTEM_SYSRULES_queryFilter"(
+      field: "nombreimagenobs",
+      operator: "=",
+      value: ri!nombreimagenobs,
+      applyWhen: isnull(ri!nombreimagenobs) &lt;&gt; true
+    ),
+    #"SYSTEM_SYSRULES_queryFilter"(
+      field: "cc",
+      operator: "=",
+      value: ri!cc,
+      applyWhen: isnull(ri!cc) &lt;&gt; true
+    ),
+    #"SYSTEM_SYSRULES_queryFilter"(
+      field: "usuario",
+      operator: "=",
+      value: ri!usuario,
+      applyWhen: isnull(ri!usuario) &lt;&gt; true
+    ),
+    #"SYSTEM_SYSRULES_queryFilter"(
+      field: "ip",
+      operator: "=",
+      value: ri!ip,
+      applyWhen: isnull(ri!ip) &lt;&gt; true
+    ),
+    #"SYSTEM_SYSRULES_queryFilter"(
+      field: "fechacaptura",
+      operator: "=",
+      value: ri!fechacaptura,
+      applyWhen: isnull(ri!fechacaptura) &lt;&gt; true
+    ),
+  },
+  pagingInfo_pi: if(
+    not(isnull(ri!paginInfo)),
+    ri!paginInfo,
+    #"SYSTEM_SYSRULES_pagingInfo"(
+      startIndex: 1,
+      batchSize: 50,
+      sort: #"SYSTEM_SYSRULES_sortInfo"(field: "idimagen", ascending: false)
+    )
+  ),
+
+  selectionColumn_txt: ri!seleccionColumnas,   
+  /*pagingInfo_pi: ri!paginInfo,*/
+  ignoreFiltersWithEmptyValues_bool:true,
+  fetchTotalCount_bool: true
+)</definition>
+        <namedTypedValue>
+            <name>idimagen</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>contrato</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>deal</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>iddocumento</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>tipo</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>nombreimagenobs</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>cc</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>usuario</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>ip</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>fechacaptura</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>seleccionColumnas</name>
+            <type>
+                <name>Text?list</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>paginInfo</name>
+            <type>
+                <name>PagingInfo</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>legacy</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000e9a3-ab27-8000-e63d-01ef9001ef90_4836138"/>
+        <historyInfo versionUuid="_a-0000eaa5-8248-8000-e681-01ef9001ef90_8335119"/>
+        <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9386046"/>
+    </history>
+</contentHaul>

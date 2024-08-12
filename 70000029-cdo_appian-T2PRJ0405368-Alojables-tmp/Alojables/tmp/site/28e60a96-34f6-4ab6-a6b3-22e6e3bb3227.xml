@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<siteHaul xmlns:a="http://www.appian.com/ae/types/2009" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <versionUuid>0624cc34-6f18-417b-8fa6-c66a93666c55</versionUuid>
+  <site a:uuid="28e60a96-34f6-4ab6-a6b3-22e6e3bb3227" name="SCDO Control Datos Opics">
+    <description>Sitio Control Datos Opics</description>
+    <urlStub>scdo-control-datos-opics</urlStub>
+    <page a:uuid="c4bde5cb-9891-3253-9e27-86833a8c88fb">
+      <staticName>Area Central</staticName>
+      <urlStub>area-central</urlStub>
+      <uiObject a:uuid="_a-0000e801-560f-8000-e5d9-01ef9001ef90_1713686" xsi:type="a:ContentFreeformRule"/>
+      <iconId>f00c</iconId>
+      <visibilityExpr>
+and(
+ a!isNotNullOrEmpty(
+   #"_a-0000eae4-5659-8000-e685-01ef9001ef90_8619011"(usuario: loggedInUser())),
+
+or(#"_a-0000eae4-5659-8000-e685-01ef9001ef90_8619011"(usuario: loggedInUser()).tipo="admon",
+#"_a-0000eae4-5659-8000-e685-01ef9001ef90_8619011"(usuario: loggedInUser()).tipo="revisor"))</visibilityExpr>
+      <pageWidth>WIDE</pageWidth>
+      <areUrlParamsEncrypted>true</areUrlParamsEncrypted>
+    </page>
+    <page a:uuid="0c2a9ace-1b58-32c8-ac5e-77c88df89273">
+      <staticName>Ejecutivo</staticName>
+      <urlStub>ejecutivo</urlStub>
+      <uiObject a:uuid="0002e9b3-18fc-8000-eec1-014d98014d98" xsi:type="a:ProcessModel"/>
+      <iconId>f013</iconId>
+      <visibilityExpr>
+a!isNotNullOrEmpty(#"_a-0000e982-d80b-8000-e63b-01ef9001ef90_4746848"(usuario: loggedInUser()))</visibilityExpr>
+      <pageWidth>WIDE</pageWidth>
+      <areUrlParamsEncrypted>true</areUrlParamsEncrypted>
+    </page>
+    <page a:uuid="a181dc31-a89e-3b56-a21e-57a2a5cae33c">
+      <staticName>Supervisor</staticName>
+      <urlStub>supervisor</urlStub>
+      <uiObject a:uuid="_a-0000e801-560f-8000-e5d9-01ef9001ef90_1723457" xsi:type="a:ContentFreeformRule"/>
+      <iconId>f007</iconId>
+      <visibilityExpr>
+a!isNotNullOrEmpty(#"_a-0000e982-d80b-8000-e63b-01ef9001ef90_4746760"(usuario: loggedInUser()))</visibilityExpr>
+      <pageWidth>WIDE</pageWidth>
+      <areUrlParamsEncrypted>true</areUrlParamsEncrypted>
+    </page>
+    <visibility>268435456</visibility>
+    <headerBackgroundColorExpr>#"_a-0000e8b1-e12b-8000-e5eb-01ef9001ef90_2371901"</headerBackgroundColorExpr>
+    <selectedTabBackgroundColorExpr>#"_a-0000e8b1-e12b-8000-e5eb-01ef9001ef90_2371955"</selectedTabBackgroundColorExpr>
+    <accentColorExpr>#"_a-0000e8b1-e12b-8000-e5eb-01ef9001ef90_2371955"</accentColorExpr>
+    <logoExpr>#"_a-0000e8b1-e12b-8000-e5eb-01ef9001ef90_2371728"</logoExpr>
+    <faviconExpr>#"_a-0000e8b1-e12b-8000-e5eb-01ef9001ef90_2371764"</faviconExpr>
+    <showName>false</showName>
+    <tempoLinkVisibility>HIDDEN</tempoLinkVisibility>
+    <showRecordNews>false</showRecordNews>
+    <tasksInSitesVisibility>HIDDEN</tasksInSitesVisibility>
+    <buttonShape>SQUARED</buttonShape>
+    <loadingBarColorExpr>#"_a-0000e8b1-e12b-8000-e5eb-01ef9001ef90_2371955"</loadingBarColorExpr>
+    <navigationBarStyle>STYLE1</navigationBarStyle>
+    <inputShape>SQUARED</inputShape>
+    <isSystem>false</isSystem>
+    <displayName>SCDO Control Datos Opics</displayName>
+    <isStaticDisplayName>true</isStaticDisplayName>
+    <nameExprIsEvaluable>true</nameExprIsEvaluable>
+    <primaryNavLayoutType>TOPBAR</primaryNavLayoutType>
+  </site>
+  <roleMap>
+    <role name="site_administrator">
+      <users/>
+      <groups>
+        <groupUuid>_e-0000e801-560f-8000-e5d6-011e94011e94_5700</groupUuid>
+        <groupUuid>_e-0000e801-560f-8000-e5d6-011e94011e94_5698</groupUuid>
+      </groups>
+    </role>
+    <role name="site_viewer">
+      <users/>
+      <groups>
+        <groupUuid>_e-0000e867-3fd5-8000-e5e0-011e94011e94_5795</groupUuid>
+      </groups>
+    </role>
+  </roleMap>
+  <history>
+    <historyInfo versionUuid="534cd861-507a-4439-a420-bb13c46c2fdf"/>
+    <historyInfo versionUuid="b82899cf-e1ba-434b-8873-adec1fdcb7a9"/>
+    <historyInfo versionUuid="f947459a-aedf-4112-8a2d-7dfcddd11960"/>
+    <historyInfo versionUuid="e32dd7aa-6d5f-4225-93ac-c95483fc86a0"/>
+    <historyInfo versionUuid="616854bf-e423-489f-8d11-f56a1b0336f8"/>
+    <historyInfo versionUuid="0624cc34-6f18-417b-8fa6-c66a93666c55"/>
+  </history>
+</siteHaul>

@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9505162</versionUuid>
+    <interface>
+        <name>SCDO_CorrecionDatosO</name>
+        <uuid>_a-0000e9a7-6d42-8000-e63f-01ef9001ef90_5084957</uuid>
+        <description>Corregir Datos de las Operaciones </description>
+        <parentUuid>_a-0000e801-560f-8000-e5d9-01ef9001ef90_1707049</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>a!localVariables(
+  local!refrescar:0,
+  local!operacion,
+  /*local!operacionesReportes: {},*/
+  /*local!operacionesReportesAprobados: {},*/
+ 
+  local!usuarios: a!refreshVariable(
+   value: #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2152641"(usuarioOpic: null()).data,
+   /*refreshAlways: true,*/
+   refreshOnVarChange:local!refrescar
+  ),
+  
+
+  local!usuarios_buscar: a!refreshVariable(
+  
+  value:index(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2152641"(usuarioOpic: null()).data,"usuarioopics",{}),
+  /*refreshAlways: true,*/
+  refreshOnVarChange:local!refrescar
+  ),
+  local!noHayResultados,
+  local!centroCostos:a!refreshVariable(
+  
+  value:#"_a-0000e94c-78eb-8000-e637-01ef9001ef90_3874604"(idccostos: null).data,
+  /*refreshAlways: true,*/
+  refreshOnVarChange:local!refrescar
+  ),
+  local!centroCostos_buscar: a!refreshVariable(
+  value:index(#"_a-0000e94c-78eb-8000-e637-01ef9001ef90_3874604"(idccostos: null).data,"cc",{}),
+  /*refreshAlways: true,*/
+  refreshOnVarChange:local!refrescar
+),
+  
+  local!operacionesReportes: a!refreshVariable(
+    value:#"_a-0000eb09-d442-8000-e687-01ef9001ef90_8842299"(
+      operacion: local!operacion,
+      usuarios: local!usuarios_buscar,
+      ccostos: local!centroCostos_buscar
+    ),
+    /*refreshAlways: true,*/
+    refreshOnVarChange:local!refrescar
+  ),
+  local!operacionesReportesAprobados: a!refreshVariable(
+    value: #"_a-0000eb09-d442-8000-e687-01ef9001ef90_8843476"(
+      operacion: local!operacion,
+      usuarios: local!usuarios_buscar,
+      ccostos: local!centroCostos_buscar
+    ),
+    /*refreshAlways: true,*/
+    refreshOnVarChange:local!refrescar
+  ),
+  {
+    #"SYSTEM_SYSRULES_richTextDisplayField"(
+      labelPosition: "COLLAPSED",
+      value: {
+        #"SYSTEM_SYSRULES_richTextItem_v1"(
+          text: { "Corrección de Operaciones" },
+          color: "#ff0000",
+          size: "MEDIUM_PLUS"
+        )
+      },
+      align: "CENTER"
+    ),
+    #"SYSTEM_SYSRULES_richTextDisplayField"(
+      value: {
+        #"SYSTEM_SYSRULES_richTextItem_v1"(
+          text: "Escriba una operación para corregirla",
+          style: "STRONG",
+          size: "SMALL",
+          color: ""
+        )
+      }
+    ),
+    #"SYSTEM_SYSRULES_sectionLayout_v1"(
+      contents: {
+        #"SYSTEM_SYSRULES_columnsLayout"(
+          columns: {
+            #"SYSTEM_SYSRULES_columnLayout"(contents: {}),
+
+            #"SYSTEM_SYSRULES_columnLayout"(
+              contents: {
+                #"SYSTEM_SYSRULES_textField"(
+                  label: "Operación",
+                  labelPosition: "JUSTIFIED",
+                  value: local!operacion,
+                  saveInto: local!operacion,
+                  refreshAfter: "UNFOCUS",
+                  validations: {}
+                )
+              }
+            ),
+            #"SYSTEM_SYSRULES_columnLayout"(
+              contents: {
+                #"SYSTEM_SYSRULES_ButtonArrayLayout"(
+                  buttons: {
+                    #"SYSTEM_SYSRULES_ButtonWidget"(
+                      label: "Buscar",
+                      loadingIndicator: true,
+                      saveInto: {
+                       
+                        a!save(local!refrescar,local!refrescar+1),
+                        a!save(
+                          local!noHayResultados,
+                          if(
+                            or(a!isNullOrEmpty(local!operacion),
+                            and(
+                              a!isNullOrEmpty(local!operacionesReportes),
+                              a!isNullOrEmpty(local!operacionesReportesAprobados)
+                            )),
+                            "Sin resultados para esta operación",
+                            null()
+                          )
+                        )
+                      },
+                      style: "DESTRUCTIVE"
+                    ),
+                    #"SYSTEM_SYSRULES_ButtonWidget"(
+                      label: "Limpiar",
+                      loadingIndicator: true,
+                      style: "SECONDARY",
+                      saveInto: {
+                        
+                        a!save(local!operacion, null),
+                        a!save(local!refrescar,local!refrescar+1),
+
+                      }
+                    )
+                  },
+                  align: "START"
+                ),
+                #"SYSTEM_SYSRULES_richTextDisplayField"(
+                  value: {
+                    #"SYSTEM_SYSRULES_richTextItem_v1"(
+                      text: local!noHayResultados,
+                      showWhen: not(isnull(local!noHayResultados)),
+                      color: "NEGATIVE",
+                      size: "SMALL"
+                    )
+                  }
+                )
+              }
+            )
+          }
+        ),
+      }
+    ),
+   
+    #"SYSTEM_SYSRULES_richTextDisplayField"(
+      value: {
+        #"SYSTEM_SYSRULES_richTextItem_v1"(
+          text: "Sin resultados para mostrar",
+          color: "NEGATIVE"
+        )
+      },
+      showWhen: {
+        if(
+          and(
+            a!isNotNullOrEmpty(local!operacionesReportes),
+            a!isNotNullOrEmpty(local!operacionesReportesAprobados)
+          ),
+          false,
+          if(
+            or(
+              a!isNotNullOrEmpty(local!operacionesReportes),
+              a!isNotNullOrEmpty(local!operacionesReportesAprobados)
+            ),
+            false,
+            true
+          )
+        )
+      }
+    ),
+    #"SYSTEM_SYSRULES_sectionLayout_v1"(
+      contents: {
+        #"SYSTEM_SYSRULES_columnsLayout"(
+          columns: {
+            #"SYSTEM_SYSRULES_columnLayout"(contents: {
+              #"_a-0000e9a7-6d42-8000-e63f-01ef9001ef90_5589289"(
+                operacionesReportes: local!operacionesReportes,
+                operacion: local!operacion,
+                usuariosopics: local!usuarios,
+                centroCostos: local!centroCostos
+              ),
+            },
+            showWhen: and(a!isNotNullOrEmpty(local!operacionesReportes),a!isNotNullOrEmpty(local!operacion))
+            ),
+         
+            }
+            )
+      }
+    ),
+    #"SYSTEM_SYSRULES_sectionLayout_v1"(
+      contents: {
+        #"SYSTEM_SYSRULES_columnsLayout"(
+          columns: {
+            #"SYSTEM_SYSRULES_columnLayout"(contents: {
+              #"_a-0000e9a7-6d42-8000-e63f-01ef9001ef90_5598123"(
+                operacionesReportesAprobados: local!operacionesReportesAprobados,
+                operacion: local!operacion,
+                usuariosopics: local!usuarios,
+                centroCostos: local!centroCostos
+              )
+            },
+            showWhen: and(a!isNotNullOrEmpty(local!operacionesReportesAprobados),a!isNotNullOrEmpty(local!operacion))
+
+            ),
+          })
+        
+      }
+    )
+    /*if(and(a!isNotNullOrEmpty(local!operacionesReportes),a!isNotNullOrEmpty(local!operacion)),*/
+        /*En este apartado se muestra los resultados de los reportes dada la operacion*/
+    /*rule!SCDO_CorreccionDatosReportesPorOperacion(*/
+      /*operacionesReportes: local!operacionesReportes,*/
+      /*operacion: local!operacion,*/
+      /*usuariosopics: local!usuarios,*/
+      /*centroCostos: local!centroCostos*/
+    /*),""*/
+    /*),*/
+    /*if(and(a!isNotNullOrEmpty(local!operacionesReportesAprobados),a!isNotNullOrEmpty(local!operacion)),*/
+        /*En este apartado se muestra los resultados de los reportes aprobados dada la operacion */
+    /*rule!SCDO_CorreccionDatosReportesAprobadosPorOperacion(*/
+      /*operacionesReportesAprobados: local!operacionesReportesAprobados,*/
+      /*operacion: local!operacion,*/
+      /*usuariosopics: local!usuarios,*/
+      /*centroCostos: local!centroCostos*/
+    /*),""*/
+    /*)*/
+   
+  }
+)</definition>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+        <isCustom>false</isCustom>
+    </interface>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000e9a7-6d42-8000-e63f-01ef9001ef90_5844612"/>
+        <historyInfo versionUuid="_a-0000eb09-d442-8000-e687-01ef9001ef90_8850027"/>
+        <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9390069"/>
+        <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9505162"/>
+    </history>
+</contentHaul>

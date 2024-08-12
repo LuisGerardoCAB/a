@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9385702</versionUuid>
+    <rule>
+        <name>SCDO_VALIDAR_IGUAL_FECHA</name>
+        <uuid>_a-0000eaa5-8248-8000-e681-01ef9001ef90_8189024</uuid>
+        <description>Regla que valida si el txt de carga de operaciones tiene la misma fecha</description>
+        <parentUuid>_a-0000e9a3-ab27-8000-e63d-01ef9001ef90_4829216</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>a!localVariables(
+  /*local!datos:split(ri!texto[1], "|"),*/
+
+  /*local!fecha: (index(local!datos, 10, null)),*/
+  local!fechas:#"SYSTEM_SYSRULES_forEach"(
+    items: ri!texto, 
+    expression: {
+      a!localVariables(
+        local!datosFila: split(fv!item, "|"),
+        local!fecha1: (index(local!datosFila, 10, null)),
+        if(and(/*local!fecha=local!fecha1,*/#"_a-0000eaa5-8248-8000-e681-01ef9001ef90_8190744"(texto:local!fecha1)=false,len(local!fecha1)=10),
+        local!fecha1,
+        null)
+
+      )
+
+    } 
+  ),
+
+  /*local!correcto1:if(a!isNotNullOrEmpty(a!flatten(reject(fn!isnull, local!correcto))),false,true),*/
+  /*local!correcto1*/
+  count(a!flatten(reject(fn!isnull, local!fechas)))=ri!total_lineas
+  
+
+)</definition>
+        <namedTypedValue>
+            <name>texto</name>
+            <type>
+                <name>Text?list</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>total_lineas</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>legacy</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000eaa5-8248-8000-e681-01ef9001ef90_8301070"/>
+        <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9385702"/>
+    </history>
+</contentHaul>

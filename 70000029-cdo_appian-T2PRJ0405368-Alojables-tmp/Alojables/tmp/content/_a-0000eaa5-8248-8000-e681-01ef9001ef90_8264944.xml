@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9386952</versionUuid>
+    <rule>
+        <name>SCDO_ACTUALIZAR_DOCUMENTACION_RECHAZADA_ID_DOC_1</name>
+        <uuid>_a-0000eaa5-8248-8000-e681-01ef9001ef90_8264944</uuid>
+        <description>Regla de expresión para actualizar documentación con id de documento 1 a la hora de hacer el reverso de rechazar</description>
+        <parentUuid>_a-0000e9a3-ab27-8000-e63d-01ef9001ef90_4829216</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>a!localVariables(
+  local!datos: if(a!isNotNullOrEmpty(ri!lista),ri!lista,null),
+  
+  
+  
+  local!devolver:  if(a!isNotNullOrEmpty(local!datos),
+ #"SYSTEM_SYSRULES_forEach"(
+   items: local!datos,
+    expression: 'type!{urn:com:appian:types}scdo_documentacion'(
+      iddocumentacion: fv!item.iddocumentacion,
+      nomdocumento:ri!nomdocumento,
+      /*document(ri!documento,"name")ri!nomdocumento*/
+      /*concat(*/
+        /*ri!contrato,*/
+        /*"_",*/
+        /*ri!usuario,*/
+        /*"_idDocumento_1",*/
+        /*"_",*/
+        /*text(now(), "yyyy-MM-dd hh:mm:ss")*/
+      /*),*/
+      /*concat(ri!contrato,"_",ri!usuario,"_",text(now(), "yyyy-MM-dd hh:mm:ss")),*/
+      iddocumento: 1,
+      fechacarga:text(now(), "yyyy-MM-dd hh:mm:ss"),
+      usuariocargo:ri!usuario,
+      cc: if(a!isNotNullOrEmpty(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2152641"(usuarioOpic :ri!usuario).data),
+      tostring(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2152641"(usuarioOpic :ri!usuario).data.idsegmento),null),
+      estado:"P",
+      contrato:ri!contrato, 
+      tipo:"CONT",
+      usuarioacepto:fv!item.usuarioacepto,
+      fechaacepto:fv!item.fechaacepto,
+      observacion:fv!item.observacion,
+      br:fv!item.br,
+      opendate:fv!item.opendate,
+      cost:fv!item.cost,
+
+     trad:fv!item.trad, 
+     castdsc:fv!item.castdsc, 
+     profile:fv!item.profile,
+     max:fv!item.max, 
+     canal:fv!item.canal, 
+     cliente:fv!item.cliente, 
+     br2:fv!item.br2, 
+     buc:fv!item.buc, 
+     pb:fv!item.pb, 
+     folio:fv!item.folio, 
+     conveniencia:fv!item.conveniencia, 
+     sucursal:fv!item.sucursal, 
+     trader:fv!item.trader, 
+     amib:fv!item.amib
+
+     
+
+    )
+  ),
+  null
+  ),
+  local!devolver
+  
+  
+)</definition>
+        <namedTypedValue>
+            <name>documento</name>
+            <type>
+                <name>CollaborationDocument</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>usuario</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>contrato</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>lista</name>
+            <type>
+                <name>scdo_documentacion?list</name>
+                <namespace>urn:com:appian:types</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>nomdocumento</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <preferredEditor>legacy</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000eaa5-8248-8000-e681-01ef9001ef90_8275540"/>
+        <historyInfo versionUuid="_a-0000eabf-35e2-8000-e683-01ef9001ef90_8427080"/>
+        <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9386952"/>
+    </history>
+</contentHaul>

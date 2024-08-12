@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9392622</versionUuid>
+    <constant>
+        <name>SCDO_PROCESO_REPORTE_OPERACIONES</name>
+        <uuid>_a-0000e916-edcb-8000-e60c-01ef9001ef90_3167085</uuid>
+        <description>Apunta al proceso de descarga del excel de Reporte de Operaciones</description>
+        <parentUuid>_a-0000e878-569a-8000-e5e4-01ef9001ef90_1932877</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <typedValue>
+            <type>
+                <name>ProcessModel</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+            <value>0006ea7d-b147-8000-61e6-014d98014d98</value>
+        </typedValue>
+        <isEnvironmentSpecific>false</isEnvironmentSpecific>
+    </constant>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000e916-edcb-8000-e60c-01ef9001ef90_3167089"/>
+        <historyInfo versionUuid="_a-0000e968-30a1-8000-e639-01ef9001ef90_4303833"/>
+        <historyInfo versionUuid="_a-0000ea7b-6ff1-8000-e67d-01ef9001ef90_7832842"/>
+        <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9392622"/>
+    </history>
+</contentHaul>

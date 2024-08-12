@@ -1,0 +1,16 @@
+[
+  {
+    "objectUuid": "0002e945-8b52-8000-b557-014d98014d98",
+    "designGuidanceKey": "sysrule.designGuidance.processModel.alertSettingsNotCustomized",
+    "dismissed": true,
+    "instanceCount": 1,
+    "objectTypeName": "{http://www.appian.com/ae/types/2009}ProcessModel"
+  },
+  {
+    "objectUuid": "0002e945-8b52-8000-b557-014d98014d98",
+    "designGuidanceKey": "sysrule.designGuidance.processModel.displayNameNotDynamic",
+    "dismissed": true,
+    "instanceCount": 1,
+    "objectTypeName": "{http://www.appian.com/ae/types/2009}ProcessModel"
+  }
+]

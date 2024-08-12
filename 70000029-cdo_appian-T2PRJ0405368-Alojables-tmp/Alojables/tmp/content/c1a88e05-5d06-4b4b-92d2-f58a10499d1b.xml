@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000e9f5-96e6-8000-e641-01ef9001ef90_6643602</versionUuid>
+    <rule>
+        <name>SCDO_obtenerIdDadoTexto</name>
+        <uuid>c1a88e05-5d06-4b4b-92d2-f58a10499d1b</uuid>
+        <description>Regla de expresión que devuelve el id de un documento</description>
+        <parentUuid>_a-0000e9a3-ab27-8000-e63d-01ef9001ef90_4829216</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>a!localVariables(
+  local!numeros: {"1","2","3","4","5","6","7","8","9","0"},
+  local!obtenerNumeros: tointeger(fn!joinarray(a!flatten(
+    reject(fn!isnull, #"SYSTEM_SYSRULES_forEach"(
+      items: enumerate(len(ri!document)),
+      expression: if(contains(local!numeros,ri!document[fv!index]), tointeger(ri!document[fv!index]), null)    
+    ),
+    )
+  ),
+  ),
+  ),
+  local!obtenerNumeros
+)</definition>
+        <namedTypedValue>
+            <name>document</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <preferredEditor>legacy</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000e9f5-96e6-8000-e641-01ef9001ef90_6643602"/>
+    </history>
+</contentHaul>

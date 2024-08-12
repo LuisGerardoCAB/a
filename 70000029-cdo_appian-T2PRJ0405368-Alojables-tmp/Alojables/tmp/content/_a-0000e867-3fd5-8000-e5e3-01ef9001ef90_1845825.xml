@@ -1,0 +1,579 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000eb9b-4ec6-8000-e68b-01ef9001ef90_9634569</versionUuid>
+    <interface>
+        <name>SCDO_ROperaciones</name>
+        <uuid>_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1845825</uuid>
+        <description>Interfaz correspondiente a el reporte de Operaciones</description>
+        <parentUuid>_a-0000e801-560f-8000-e5d9-01ef9001ef90_1707049</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>a!localVariables(
+  local!startIndex: 1,
+  local!batchsize: 10,
+  local!fechal,
+  local!documento,
+  local!tipoReporte,
+  local!fechaalDividida,
+  
+  local!fecha,
+  local!fechaDividida,
+ 
+  local!reportesEncontrados: 
+  if(
+    /*and(*/
+      or(
+        a!isNotNullOrEmpty(local!fechal),
+        a!isNotNullOrEmpty(local!fecha)
+      ),
+      /*a!isNotNullOrEmpty(local!tipoReporte)*/
+    /*),*/
+    /*#Datos:Grid*/
+    #"SYSTEM_SYSRULES_queryEntity_v2"(
+      entity: /*cons!SCDO_V_CDO_OPERACIONES_REPORTES_3,*/
+      if(
+        a!isNullOrEmpty(local!tipoReporte),
+        #"_a-0000ea7b-6ff1-8000-e67d-01ef9001ef90_8043357",
+        choose(
+          local!tipoReporte,
+          #"_a-0000ea7b-6ff1-8000-e67d-01ef9001ef90_8043357",
+          #"_a-0000ea7b-6ff1-8000-e67d-01ef9001ef90_8043582",
+          #"_a-0000ea7b-6ff1-8000-e67d-01ef9001ef90_8043564"
+        )
+      ),
+      query: #"SYSTEM_SYSRULES_query"(
+        logicalexpression: #"SYSTEM_SYSRULES_queryLogicalExpression"(
+          operator: "AND",
+          filters: {
+            #"SYSTEM_SYSRULES_queryFilter"(
+              field: "fechacaptura",
+              operator: "=",
+              value: if(
+                and(
+                  a!isNotNullOrEmpty(local!fechaDividida),
+                  length(local!fechaDividida) &gt; 2
+                ),
+                date(tointeger(local!fechaDividida[3]),tointeger(local!fechaDividida[2]),tointeger(local!fechaDividida[1])),
+             
+                null
+              ),
+              applywhen: and(
+                a!isNullOrEmpty(local!fechal),
+                a!isNotNullOrEmpty(local!fecha)
+              )
+            ),
+            #"SYSTEM_SYSRULES_queryFilter"(
+              field: "fechacaptura",
+              operator: "&lt;=",
+              value: if(
+                and(
+                  a!isNotNullOrEmpty(local!fechaalDividida),
+                  length(local!fechaalDividida) &gt; 2
+                ),
+                date(tointeger(local!fechaalDividida[3]),tointeger(local!fechaalDividida[2]),tointeger(local!fechaalDividida[1])),
+                
+                null
+              ),
+              applywhen: and(
+                a!isNotNullOrEmpty(local!fechal),
+                isnull(local!fecha)
+              )
+            ),
+            if(
+              and(
+                a!isNotNullOrEmpty(local!fechal),
+                a!isNotNullOrEmpty(local!fecha)
+              ),
+              if(
+                (local!fecha) &lt; (local!fechal),
+                {
+                  #"SYSTEM_SYSRULES_queryFilter"(
+                    field: "fechacaptura",
+                    operator: "&lt;=",
+                    value: if(
+                      and(
+                        a!isNotNullOrEmpty(local!fechaalDividida),
+                        a!isNotNullOrEmpty(local!fechaDividida),
+                        (local!fecha) &lt; (local!fechal),
+                        length(local!fechaalDividida) &gt; 2
+                      ),
+                      date(tointeger(local!fechaalDividida[3]),tointeger(local!fechaalDividida[2]),tointeger(local!fechaalDividida[1])),
+                      
+                      null
+                    )
+                  ),
+                  #"SYSTEM_SYSRULES_queryFilter"(
+                    field: "fechacaptura",
+                    operator: "&gt;=",
+                    value: if(
+                      and(
+                        a!isNotNullOrEmpty(local!fechaDividida),
+                        a!isNotNullOrEmpty(local!fechaalDividida),
+                        (local!fecha) &lt; (local!fechal),
+                        length(local!fechaDividida) &gt; 2
+                      ),
+                      date(tointeger(local!fechaDividida[3]),tointeger(local!fechaDividida[2]),tointeger(local!fechaDividida[1])),
+                      
+                      null
+                    )
+                  )
+                },
+                if(
+                  (local!fecha) = (local!fechal),
+                  {
+                    #"SYSTEM_SYSRULES_queryFilter"(
+                      field: "fechacaptura",
+                      operator: "=",
+                      value: if(
+                        and(
+                          a!isNotNullOrEmpty(local!fechaDividida),
+                          length(local!fechaDividida) &gt; 2
+                        ),
+                        date(tointeger(local!fechaDividida[3]),tointeger(local!fechaDividida[2]),tointeger(local!fechaDividida[1])),
+                        
+                        null
+                      )
+                    )
+                  },
+                  {
+                    #"SYSTEM_SYSRULES_queryFilter"(
+                      field: "fechacaptura",
+                      operator: "&gt;=",
+                      value: if(
+                        and(
+                          a!isNotNullOrEmpty(local!fechaDividida),
+                          a!isNotNullOrEmpty(local!fechaalDividida),
+                          (local!fecha) &gt; (local!fechal),
+                          length(local!fechaDividida) &gt; 2
+                        ),
+                        null,
+                        null
+                      )
+                    )
+                  }
+                )
+              ),
+              {}
+            ),
+
+          }
+
+        ),
+        paginginfo: #"SYSTEM_SYSRULES_pagingInfo"(
+          startIndex: local!startIndex,
+          batchSize: local!batchsize,
+          sort: #"SYSTEM_SYSRULES_sortInfo"(field: "fechacaptura", ascending: true)
+        )
+      ),
+      fetchtotalcount: true
+
+    ),
+    null
+  )
+  ,
+  {
+    #"_a-0000e93b-1de6-8000-e635-01ef9001ef90_3451059"(
+      fechaInicio: local!fecha,
+      fechaFin: local!fechal,
+      documento: local!documento,
+      tipoReporte: local!tipoReporte,
+      fechaDividida: local!fechaDividida,
+      fechaalDividida: local!fechaalDividida
+
+    ),
+    if(
+      and(
+        a!isNullOrEmpty(local!fecha),
+        a!isNullOrEmpty(local!fechal),
+        a!isNullOrEmpty(local!reportesEncontrados)
+      ),
+      {},
+      if(
+        a!isNullOrEmpty(local!reportesEncontrados.data),
+        {},
+        #"_a-0000e8d8-9b98-8000-e605-01ef9001ef90_3004185"(
+          documento_doc: local!documento,
+          fechaDividida: local!fechaDividida,
+          fechaalDividida: local!fechaalDividida,
+          tipoReporte: a!defaultValue(
+            value: local!tipoReporte,
+            default: 1
+          ),
+          fecha: local!fecha,
+          fechal: local!fechal
+        )
+
+      )
+    ),
+    #"SYSTEM_SYSRULES_columnsLayout"(
+      columns: {
+        #"SYSTEM_SYSRULES_columnLayout"(
+          contents: {
+            #"SYSTEM_SYSRULES_gridField_v1"(
+              label: if(
+                a!isNullOrEmpty(local!tipoReporte),
+                "Reportes encontrados:",
+                if(
+                  local!tipoReporte = 1,
+                  "Reportes encontrados:",
+                  if(
+                    local!tipoReporte = 2,
+                    "Reportes Aprobados encontrados:",
+                    "Reportes Eliminados encontrados:"
+                  )
+                )
+              ),
+              emptyGridMessage: {
+                if(
+                  and(
+                    a!isNullOrEmpty(local!fechal),
+                    a!isNullOrEmpty(local!fecha)
+                  ),
+                  "Seleccione una fecha de inicio o de fin y el tipo para buscar los reportes",
+                  "No se han encontrado reportes en la fecha indicada"
+                )
+              },
+              data: if(
+                a!isNullOrEmpty(local!reportesEncontrados.data),
+                null,
+                local!reportesEncontrados.data
+              ),
+              columns: {
+                #"SYSTEM_SYSRULES_gridColumn"(
+                  label: "ID",
+                  value: fv!row.idreporte,
+                  align: "CENTER",
+                  width: "NARROW"
+                ),
+                #"SYSTEM_SYSRULES_gridColumn"(
+                  label: "Mercado",
+                  value: fv!row.mercado,
+                  align: "CENTER"
+                ),
+                #"SYSTEM_SYSRULES_gridColumn"(
+                  label: "Operación",
+                  value: fv!row.operacion,
+                  align: "CENTER"
+                ),
+                #"SYSTEM_SYSRULES_gridColumn"(
+                  label: "Contrato",
+                  value: fv!row.contrato,
+                  align: "CENTER"
+                ),
+                #"SYSTEM_SYSRULES_gridColumn"(
+                  label: "Nombre",
+                  value: fv!row.nombre,
+                  align: "CENTER"
+                ),
+                #"SYSTEM_SYSRULES_gridColumn"(
+                  label: "Emisora",
+                  value: fv!row.emisora,
+                  align: "CENTER"
+                ),
+                #"SYSTEM_SYSRULES_gridColumn"(
+                  label: "Monto",
+                  value: dollar(fv!row.monto),
+                  align: "CENTER"
+
+                ),
+                #"SYSTEM_SYSRULES_gridColumn"(
+                  label: "Promotor",
+                  value: fv!row.promotor,
+                  align: "CENTER"
+                ),
+                #"SYSTEM_SYSRULES_gridColumn"(
+                  label: "CCostos",
+                  value: fv!row.ccostos,
+                  align: "CENTER"
+                ),
+                #"SYSTEM_SYSRULES_gridColumn"(
+                  label: "Región",
+                  value: fv!row.region,
+                  align: "CENTER"
+                ),
+                #"SYSTEM_SYSRULES_gridColumn"(
+                  label: "Usuario",
+                  value: fv!row.usuario,
+                  align: "CENTER"
+                ),
+                #"SYSTEM_SYSRULES_gridColumn"(
+                  label: "Segmento",
+                  value: fv!row.segmento,
+                  align: "CENTER"
+                ),
+                #"SYSTEM_SYSRULES_gridColumn"(
+                  label: "FechaCaptura",
+                  value: /*fv!row.fechacaptura*/
+                  text(date(year(fv!row.fechacaptura),month(fv!row.fechacaptura),day(fv!row.fechacaptura)),"dd/mm/yyyy"),
+                  align: "CENTER"
+                ),
+                #"SYSTEM_SYSRULES_gridColumn"(
+                  label: "HoraCaptura",
+                  value: fv!row.horacaptura,
+
+                  align: "CENTER"
+                ),
+                #"SYSTEM_SYSRULES_gridColumn"(
+                  label: "Bitacora",
+                  value: fv!row.bitacora,
+                  align: "CENTER"
+                ),
+                #"SYSTEM_SYSRULES_gridColumn"(
+                  label: "Riesgo",
+                  value: fv!row.riesgo,
+                  align: "CENTER"
+                ),
+                #"SYSTEM_SYSRULES_gridColumn"(
+                  label: "Revisado",
+                  value: fv!row.revisado,
+                  align: "CENTER"
+                ),
+                #"SYSTEM_SYSRULES_gridColumn"(
+                  label: "UsuarioReviso",
+                  value: fv!row.usuarioreviso,
+                  align: "CENTER"
+                ),
+                #"SYSTEM_SYSRULES_gridColumn"(
+                  label: "CcReviso",
+                  value: fv!row.ccreviso,
+                  align: "CENTER"
+                ),
+                #"SYSTEM_SYSRULES_gridColumn"(
+                  label: "Ip",
+                  value: fv!row.ip,
+                  align: "CENTER"
+                ),
+                #"SYSTEM_SYSRULES_gridColumn"(
+                  label: "FechaReviso",
+                  value: fv!row.fechareviso,
+                  align: "CENTER"
+                ),
+                #"SYSTEM_SYSRULES_gridColumn"(
+                  label: "Observaciones",
+                  value: fv!row.observaciones,
+                  align: "CENTER"
+                ),
+                #"SYSTEM_SYSRULES_gridColumn"(
+                  label: "Rechazo",
+                  value: fv!row.rechazo,
+                  align: "CENTER"
+                ),
+                #"SYSTEM_SYSRULES_gridColumn"(
+                  label: "T. inicial",
+                  value: fv!row.tInicial,
+                  align: "CENTER"
+                ),
+                #"SYSTEM_SYSRULES_gridColumn"(
+                  label: "T. Final",
+                  value: fv!row.tFinal,
+                  align: "CENTER"
+                ),
+                #"SYSTEM_SYSRULES_gridColumn"(
+                  label: "C-V",
+                  value: fv!row.cV,
+                  align: "CENTER"
+                ),
+                #"SYSTEM_SYSRULES_gridColumn"(
+                  label: "Extra5",
+                  value: fv!row.extra5,
+                  align: "CENTER"
+                ),
+                #"SYSTEM_SYSRULES_gridColumn"(
+                  label: "Obligatorio",
+                  value: fv!row.obligatorio,
+                  align: "CENTER"
+                ),
+                #"SYSTEM_SYSRULES_gridColumn"(
+                  label: "Título",
+                  value: fv!row.titulo,
+                  align: "CENTER"
+                ),
+                #"SYSTEM_SYSRULES_gridColumn"(
+                  label: "UsuarioAprobo",
+                  value: fv!row.usuarioaprobo,
+                  align: "CENTER"
+                ),
+                #"SYSTEM_SYSRULES_gridColumn"(
+                  label: "FechaAprobación",
+                  value: fv!row.fechaaprobacion,
+                  align: "CENTER"
+                ),
+                #"SYSTEM_SYSRULES_gridColumn"(
+                  label: "IpAprobación",
+                  value: fv!row.ipaprobacion,
+                  align: "CENTER"
+                ),
+                #"SYSTEM_SYSRULES_gridColumn"(
+                  label: "TipoAprobación",
+                  value: fv!row.tipoAprobacion,
+                  align: "CENTER"
+                ),
+                #"SYSTEM_SYSRULES_gridColumn"(
+                  label: "Motivo Eliminado",
+                  value: fv!row.motivoEliminado,
+                  align: "CENTER"
+                ),
+                #"SYSTEM_SYSRULES_gridColumn"(
+                  label: "ESTATUS",
+                  value: fv!row.estatus,
+                  align: "CENTER"
+                )
+
+              },
+              pagingSaveInto: fv!pagingInfo
+
+            )
+          }
+        )
+      }
+    ),
+    if(
+      a!isNullOrEmpty(local!reportesEncontrados),
+      {},
+      #"SYSTEM_SYSRULES_richTextDisplayField"(
+        labelPosition: "COLLAPSED",
+        value: {
+          #"SYSTEM_SYSRULES_richTextIcon"(
+            icon: "angle-double-left",
+            link: #"SYSTEM_SYSRULES_dynamicLink"(
+              saveInto: {
+                a!save(local!startIndex, 1),
+                a!save(local!batchSize, 10)
+              },
+              showWhen: not(local!startIndex = 1)
+            ),
+            linkStyle: "STANDALONE",
+            size: "MEDIUM_PLUS"
+          ),
+          #"SYSTEM_SYSRULES_richTextIcon"(
+            icon: "angle-left",
+            link: #"SYSTEM_SYSRULES_dynamicLink"(
+              saveInto: {
+                a!save(
+                  local!startIndex,
+                  tointeger(local!startIndex - 10)
+                )
+
+              },
+              showWhen: not(local!startIndex = 1)
+            ),
+            linkStyle: "STANDALONE",
+            size: "MEDIUM_PLUS"
+          ),
+          #"SYSTEM_SYSRULES_richTextItem_v1"(
+            text: {
+              #"SYSTEM_SYSRULES_richTextItem_v1"(
+                text: {
+                  if(
+                    a!isNullOrEmpty(local!reportesEncontrados),
+                    0,
+                    if(
+                      a!isNullOrEmpty(local!reportesEncontrados.data),
+                      0,
+                      local!startIndex
+                    )
+                  ) &amp; " - " &amp; if(
+                    (local!startIndex + local!batchSize - 1) &gt; local!reportesEncontrados.totalCount,
+                    local!reportesEncontrados.totalCount,
+                    local!startIndex + local!batchSize - 1
+                  )
+
+                },
+                style: { "STRONG" }
+              ),
+              " de " &amp; local!reportesEncontrados.totalCount
+            },
+            size: "STANDARD"
+          ),
+          #"SYSTEM_SYSRULES_richTextIcon"(
+            icon: "angle-right",
+            link: #"SYSTEM_SYSRULES_dynamicLink"(
+              saveInto: {
+                a!save(
+                  local!startIndex,
+                  tointeger(local!startIndex + 10)
+                )
+
+              },
+              showWhen: not(
+                local!startIndex + 9 &gt;= local!reportesEncontrados.totalCount
+              )
+            ),
+            linkStyle: "STANDALONE",
+            size: "MEDIUM_PLUS"
+          ),
+          #"SYSTEM_SYSRULES_richTextIcon"(
+            icon: "angle-double-right",
+            link: #"SYSTEM_SYSRULES_dynamicLink"(
+              saveInto: {
+                a!save(
+                  local!startIndex,
+                  tointeger(local!reportesEncontrados.totalCount) - 9
+                )
+
+              },
+              showWhen: not(
+                local!startIndex + 9 &gt;= local!reportesEncontrados.totalCount
+              )
+            ),
+            linkStyle: "STANDALONE",
+            size: "MEDIUM_PLUS"
+          )
+        },
+        align: "RIGHT"
+      )
+
+    )
+  }
+)</definition>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+        <isCustom>false</isCustom>
+    </interface>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000e93b-1de6-8000-e635-01ef9001ef90_3568196"/>
+        <historyInfo versionUuid="_a-0000ea52-e6d5-8000-e654-01ef9001ef90_7502931"/>
+        <historyInfo versionUuid="_a-0000ea52-e6d5-8000-e654-01ef9001ef90_7544984"/>
+        <historyInfo versionUuid="_a-0000ea7b-6ff1-8000-e67d-01ef9001ef90_8066377"/>
+        <historyInfo versionUuid="_a-0000eae4-5659-8000-e685-01ef9001ef90_8672424"/>
+        <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9157064"/>
+        <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9389482"/>
+        <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9450583"/>
+        <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9499936"/>
+        <historyInfo versionUuid="_a-0000eb9b-4ec6-8000-e68b-01ef9001ef90_9632512"/>
+        <historyInfo versionUuid="_a-0000eb9b-4ec6-8000-e68b-01ef9001ef90_9634569"/>
+    </history>
+</contentHaul>

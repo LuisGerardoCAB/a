@@ -1,0 +1,392 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9527101</versionUuid>
+    <interface>
+        <name>SCDO_Sucursales_Pendientes</name>
+        <uuid>_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1898923</uuid>
+        <description>Interface Correspondiente al modulo Centro de costos</description>
+        <parentUuid>_a-0000e801-560f-8000-e5d9-01ef9001ef90_1707049</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>a!localVariables(
+  local!eliminar: false,
+  local!editGrid: -1,
+
+  local!segmento: #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2233353"(idSegmento: null).data,
+  local!region: #"_a-0000e8d8-9b98-8000-e605-01ef9001ef90_2872186"(idregion: null).data,
+  local!ccosto,
+  local!ccostoBuscar,
+  local!refreshCount: 0,
+  local!centrocostoNoregistrados: 
+  a!refreshVariable(
+  value:#"_a-0000e9f5-96e6-8000-e641-01ef9001ef90_6351963"(ccosto: local!ccostoBuscar, refreshCount: local!refreshCount),
+
+  refreshOnVarChange: local!refreshCount,
+  /*refreshOnReferencedVarChange:  true,*/
+  ),
+  local!motivo,
+  local!centroSeleccionado,
+  {
+
+    #"SYSTEM_SYSRULES_richTextDisplayField"(
+      labelPosition: "COLLAPSED",
+      value: {
+        #"SYSTEM_SYSRULES_richTextItem_v1"(
+          text: {
+            "Realizar un Análisis de Operaciones de Centros de Costos"
+          },
+         
+          size: "MEDIUM"
+        ),
+     
+      }
+    ),
+    #"SYSTEM_SYSRULES_columnsLayout"(
+      columns: {
+        #"SYSTEM_SYSRULES_columnLayout"(
+          contents: {}
+        ),
+        #"SYSTEM_SYSRULES_columnLayout"(
+          contents: {
+            #"SYSTEM_SYSRULES_cardLayout"(
+              contents: {
+                #"SYSTEM_SYSRULES_richTextDisplayField"(
+                  value: {
+                    #"SYSTEM_SYSRULES_richTextItem_v1"(
+                      text: concat("¿Está seguro de que desea eliminar", char(10),"el Centro de Costo N0. ", local!centroSeleccionado.cc, char(10), "Los reportes que contienen este", char(10), "Centro de Costo serán eliminadas también",),
+                      color: "NEGATIVE"
+                    )
+                  },
+                  align: "CENTER"
+                ),
+                #"SYSTEM_SYSRULES_paragraphField"(
+                  label: "Motivo:",
+                  labelPosition: "ABOVE",
+                  value: local!motivo,
+                  saveInto: local!motivo,
+                  height: "SHORT",
+                ),
+                #"SYSTEM_SYSRULES_richTextDisplayField"(
+                  align: "RIGHT",
+                  value: #"SYSTEM_SYSRULES_richTextItem_v1"(
+                    text: "Para eliminar necesita llenar el campo del motivo de la Eliminación",
+                    color: "NEGATIVE",
+                    size: "SMALL"
+                  )
+                ),
+                #"SYSTEM_SYSRULES_ButtonLayout"(
+                  primaryButtons: {
+                    #"SYSTEM_SYSRULES_ButtonWidget"(
+                      label: "Eliminar",
+                      icon: "times",
+                      tooltip: "Eliminar",
+                      disabled: if(a!isNullOrEmpty(local!motivo), true, false),
+                      saveInto: {                   
+                        #"SYSTEM_SYSRULES_startProcess"(
+                          processModel: #"_a-0000e982-d80b-8000-e63b-01ef9001ef90_4737218",
+                          processParameters: { 
+                          centrocosto: local!centroSeleccionado,
+                          delete: true,
+                          motivo: local!motivo,
+                        },
+                        onSuccess: {
+                          a!save(local!eliminar, false),
+                          a!save(local!centroSeleccionado, null),
+                          a!save(local!refreshCount, local!refreshCount + 1),
+                          a!save(local!centrocostoNoregistrados, #"_a-0000e9f5-96e6-8000-e641-01ef9001ef90_6351963"(ccosto: local!ccostoBuscar),),
+                          a!save(local!motivo, null),
+                        }
+                        ),
+                      },
+                      size: "SMALL",
+                      width: "MINIMIZE",
+                      style: "DESTRUCTIVE",
+                      loadingIndicator: true,
+                    )
+                  },
+                  secondaryButtons: {
+                    #"SYSTEM_SYSRULES_ButtonWidget"(
+                      label: "cancelar",
+                      icon: "times",
+                      tooltip: "Cancelar",
+                      saveInto: {
+                        a!save(local!eliminar, false),
+                        a!save(local!centroSeleccionado, null),
+                        a!save(local!motivo, null),
+                      },
+                      size: "SMALL",
+                      width: "MINIMIZE",
+                      style: "SECONDARY"
+                    )
+                  }
+                ),
+              },
+              showWhen: local!eliminar,
+              style: "WARN",
+              shape: "SEMI_ROUNDED",
+              padding: "EVEN_LESS",
+              marginAbove: "EVEN_LESS",
+              showBorder: false
+            )
+          }
+        )
+      }
+    ),
+    #"SYSTEM_SYSRULES_columnsLayout"(
+      columns: {
+        #"SYSTEM_SYSRULES_columnLayout"(
+          contents: {
+            #"SYSTEM_SYSRULES_textField"(
+              label: "Buscar CCostos:",
+              labelPosition: "ADJACENT",
+              value: local!ccosto,
+              saveInto: local!ccosto,
+              /*disabled: a!isNullOrEmpty(local!centrocostoNoregistrados),*/
+              /*placeholder: if(a!isNullOrEmpty(local!centrocostoNoregistrados), "Nada para buscar", "")*/
+            )
+          }
+        ),
+        #"SYSTEM_SYSRULES_columnLayout"(
+          contents: {
+            #"SYSTEM_SYSRULES_ButtonArrayLayout"(
+              align: "START",
+              buttons: {
+                #"SYSTEM_SYSRULES_ButtonWidget"(
+                  label: "Buscar",
+                  icon: "search",
+                  size: "SMALL",
+                  style: "PRIMARY",
+                  loadingIndicator: true,
+                  /*disabled: a!isNullOrEmpty(local!centrocostoNoregistrados),*/
+                  saveInto: {
+                    a!save(local!ccostoBuscar, local!ccosto),
+                  }
+                )
+              }
+            )
+          }
+        )
+      }
+    ),
+    {
+      #"SYSTEM_SYSRULES_boxLayout"(
+        label: "Listado de Centros de Costos no Registrados",
+        contents: {
+          #"SYSTEM_SYSRULES_cardLayout"(
+            height: if(
+                a!isNullOrEmpty(local!centrocostoNoregistrados),
+              "MEDIUM",
+              "TALL_PLUS"
+            ),
+            contents: {
+              #"SYSTEM_SYSRULES_ButtonArrayLayout"(
+                buttons: {
+                  #"SYSTEM_SYSRULES_ButtonWidget"(
+                    icon: "refresh",
+                    style: "SECONDARY",
+                    size: "SMALL",
+                    saveInto: a!save(local!refreshCount, local!refreshCount +1),
+                    loadingIndicator: true,
+                  )  
+                },
+                align: "START"
+              ),
+              #"SYSTEM_SYSRULES_gridLayout"(
+                label: "",
+                labelPosition: "COLLAPSED",
+                headerCells: {
+                  #"SYSTEM_SYSRULES_gridLayoutHeaderCell"(label: "Centro de Costo",align: "CENTER"),
+                  #"SYSTEM_SYSRULES_gridLayoutHeaderCell"(label: "Nombre", align: "CENTER"),
+                  #"SYSTEM_SYSRULES_gridLayoutHeaderCell"(label: "Segmento", align: "CENTER"),
+                  #"SYSTEM_SYSRULES_gridLayoutHeaderCell"(label: "Región", align: "CENTER"),
+                  #"SYSTEM_SYSRULES_gridLayoutHeaderCell"(label: "Acciones", align: "CENTER")
+
+                },
+                columnConfigs: {
+                  #"SYSTEM_SYSRULES_gridLayoutColumnConfig"(),
+                  #"SYSTEM_SYSRULES_gridLayoutColumnConfig"(weight: 2)
+
+                },
+                rows: #"SYSTEM_SYSRULES_forEach"(
+                  items: local!centrocostoNoregistrados,
+                  expression: {
+                    #"SYSTEM_SYSRULES_gridRowLayout"(
+                      contents: {
+                        #"SYSTEM_SYSRULES_textField"(
+                          value: fv!item.cc,
+                          readOnly: true,
+                          align: "CENTER"
+                        ),
+                        #"SYSTEM_SYSRULES_textField"(
+                          value: fv!item.nombre, 
+                          saveInto: {
+                            a!save(
+                              fv!item.nombre,(save!value)
+                            )
+                          },
+                          readOnly: not(local!editGrid = fv!index),
+                          align: "CENTER"),
+
+                          #"SYSTEM_SYSRULES_dropdownField_v1"(
+                            placeholder: "Seleccione el segmento",
+                            choiceLabels: { index(local!segmento,"segmento",{}) },
+                            choiceValues: { index(local!segmento,"idsegmento",{}) },
+                            value: fv!item.idsegmento,
+                            saveInto: fv!item.idsegmento,
+                            searchDisplay: "AUTO",
+                            disabled: not(local!editGrid = fv!index)
+
+                          ),
+                          #"SYSTEM_SYSRULES_dropdownField_v1"(
+                            placeholder: "Seleccione la region",
+                            choiceLabels: { index(local!region,"region",{}) },
+                            choiceValues: { index(local!region,"idregion") },
+                            value: fv!item.idregion,
+                            saveInto: fv!item.idregion,
+                            disabled: not(local!editGrid = fv!index)
+                          ),
+                          #"SYSTEM_SYSRULES_richTextDisplayField"(
+                            value: {
+
+                              #"SYSTEM_SYSRULES_richTextIcon"(
+                                icon: "pencil-square-o",
+                                caption: "Editar Centro de Costo",
+                                link: #"SYSTEM_SYSRULES_dynamicLink"(
+                                  saveInto: { 
+                                    a!save(local!editGrid, fv!index),
+                                    a!save(local!centroSeleccionado, fv!item)
+                                  }
+                                ),
+                                linkStyle: "STANDALONE",
+                                showWhen: if(local!editGrid = -1, true, if(local!editGrid = fv!index, false, if(local!editGrid &lt;&gt; fv!index, false, true))),
+                                color: "#0032E6"
+                              ),
+                              #"SYSTEM_SYSRULES_richTextIcon"(
+                                icon: "pencil-square-o",
+                                caption: "Descartar Cambios",
+                                link: #"SYSTEM_SYSRULES_dynamicLink"(
+                                  saveInto: { 
+                                    a!save(local!editGrid, -1),
+                                    a!save(local!centrocostoNoregistrados[fv!index], local!centroSeleccionado)
+                                  }),
+                                  linkStyle: "STANDALONE",
+                                  showWhen: local!editGrid = fv!index,
+                                  color: "#222222"
+                              ),
+                              #"SYSTEM_SYSRULES_richTextIcon"(
+                                icon: "file-invoice",
+                                caption: "Guardar Centro de Costo",
+                                link: #"SYSTEM_SYSRULES_dynamicLink"(
+                                  saveInto: {
+                                    #"SYSTEM_SYSRULES_startProcess"(
+                                      processModel: #"_a-0000e982-d80b-8000-e63b-01ef9001ef90_4737218",
+                                      processParameters: { 
+                                        centrocosto: 'type!{urn:com:appian:types}cdo_centroscostos'(cc: fv!item.cc, idsegmento: fv!item.idsegmento, idregion: fv!item.idregion, nombre: fv!item.nombre), 
+                                        delete: false 
+                                      },
+                                      onSuccess: {
+                                        a!save(local!editGrid,-1),
+                                        a!save(local!refreshCount, local!refreshCount +1),
+                                        a!save(local!centroSeleccionado, null)
+                                      }
+                                    )
+                                  }
+                                ),
+                                linkStyle: "STANDALONE",
+                                showWhen: and(local!editGrid = fv!index, and(a!isNotNullOrEmpty(fv!item.nombre), a!isNotNullOrEmpty(fv!item.idsegmento), a!isNotNullOrEmpty(fv!item.idregion))),  
+                                color: "#1F8926"
+                              ),
+                              #"SYSTEM_SYSRULES_richTextIcon"(
+                                icon: "times",
+                                caption: "Eliminar Centro de Costo",
+                                link: #"SYSTEM_SYSRULES_dynamicLink"(
+                                  saveInto: {
+                                    a!save(local!eliminar,true),
+                                    a!save(local!centroSeleccionado, 'type!{urn:com:appian:types}cdo_centroscostos'(cc: fv!item.cc, idsegmento: fv!item.idsegmento, idregion: fv!item.idregion, nombre: fv!item.nombre))
+                                  }
+                                ),
+                                showWhen: if(local!editGrid = -1, true, if(local!editGrid &lt;&gt; fv!index, false, true)),
+                                linkStyle: "STANDALONE",
+                                color: "#EC0000"
+                              )
+                            },
+                            align: "CENTER"
+                          )
+                      }
+                    )
+
+                  }
+
+                ),
+                selectionSaveInto: {},
+                selectable: false,
+                validations: {},
+                shadeAlternateRows: true
+              ),
+            }
+          )
+          
+        }
+      ),
+    },
+/*Para que es esto si no se muestra en ningun momento en la interfaz?????*/
+    /*rule!SCDO_Detalles_Sucursales_Pendientes(*/
+      /*centroSeleccionado: local!centroSeleccionado,*/
+      /*mostrarPantallaDetalle: local!mostrarPantallaDetalle,*/
+      /*paginInfo_pi: local!paginInfo,*/
+      /*centrocosto_cdt: local!centrocosto_cdt,*/
+      /*SCDO_Indice_Pagina: local!SCDO_Indice_Pagina */
+    /*)*/
+    
+  }
+  
+  
+  
+  
+)</definition>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+        <isCustom>false</isCustom>
+    </interface>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000e94c-78eb-8000-e637-01ef9001ef90_3804429"/>
+        <historyInfo versionUuid="_a-0000ea2e-319c-8000-e644-01ef9001ef90_6793235"/>
+        <historyInfo versionUuid="_a-0000eb09-d442-8000-e687-01ef9001ef90_9098594"/>
+        <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9391653"/>
+        <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9470112"/>
+        <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9527101"/>
+    </history>
+</contentHaul>

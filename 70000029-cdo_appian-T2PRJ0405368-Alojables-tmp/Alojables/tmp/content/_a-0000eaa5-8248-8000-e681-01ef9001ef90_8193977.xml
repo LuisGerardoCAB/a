@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9386667</versionUuid>
+    <rule>
+        <name>SCDO_VALIDAR_HORA</name>
+        <uuid>_a-0000eaa5-8248-8000-e681-01ef9001ef90_8193977</uuid>
+        <description>Regla que valida si el txt de carga de operaciones tiene correcta la hora</description>
+        <parentUuid>_a-0000e9a3-ab27-8000-e63d-01ef9001ef90_4829216</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>a!localVariables(
+  
+  local!horas:#"SYSTEM_SYSRULES_forEach"(
+    items: ri!texto, 
+    expression: {
+      a!localVariables(
+        local!datosFila: split(fv!item, "|"),
+        local!hora: (index(local!datosFila, 11, null)),
+       
+          if(a!isNotNullOrEmpty(local!hora),
+          if( and(#"_a-0000eaa5-8248-8000-e681-01ef9001ef90_8193964"(texto:local!hora)=false,len(local!hora)=8),
+          true,
+          false),
+          true
+
+          )
+          
+      )
+
+    } 
+  ),
+
+  /*local!correcto1:if(a!isNotNullOrEmpty(a!flatten(reject(fn!isnull, local!correcto))),false,true),*/
+  /*local!correcto1*/
+  a!isNullOrEmpty(wherecontains(false, toboolean(local!horas)))
+  
+  
+
+)</definition>
+        <namedTypedValue>
+            <name>texto</name>
+            <type>
+                <name>Text?list</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>legacy</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000eaa5-8248-8000-e681-01ef9001ef90_8194004"/>
+        <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9386667"/>
+    </history>
+</contentHaul>

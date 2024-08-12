@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9504530</versionUuid>
+    <rule>
+        <name>SCDO_getPermisosUByFilters</name>
+        <uuid>_a-0000e878-569a-8000-e5e4-01ef9001ef90_2113426</uuid>
+        <description>Regresa la información de los permisos de usuarios por filtros para SCDO.</description>
+        <parentUuid>_a-0000e9a3-ab27-8000-e63d-01ef9001ef90_4836209</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>#"_a-0000e8b9-0989-8000-e5fd-01ef9001ef90_2420859"(
+  dataStoreEntity_dt: #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2113419",
+  queryFilter_any: {
+    #"SYSTEM_SYSRULES_queryFilter"(
+      field: "idacceso",
+      operator: "=",
+      value: ri!idAcceso,
+      applyWhen: isnull(ri!idAcceso) &lt;&gt; true
+    ),
+    #"SYSTEM_SYSRULES_queryFilter"(
+      field: "idexpediente",
+      operator: "=",
+      value: ri!idExpediente,
+      applyWhen: isnull(ri!idExpediente) &lt;&gt; true
+    ),
+    #"SYSTEM_SYSRULES_queryFilter"(
+      field: "idusuarioopics",
+      operator: "=",
+      value: ri!idusuarioopics,
+      applyWhen: isnull(ri!idusuarioopics) &lt;&gt; true
+    ),
+    #"SYSTEM_SYSRULES_queryFilter"(
+      field: "tipoacceso",
+      operator: "=",
+      value: ri!tipoAcceso,
+      applyWhen: isnull(ri!tipoAcceso) &lt;&gt; true
+    ),
+    #"SYSTEM_SYSRULES_queryFilter"(
+      field: "extra1",
+      operator: "=",
+      value: ri!Extra1,
+      applyWhen: isnull(ri!Extra1) &lt;&gt; true
+    ),
+
+  },
+  selectionColumn_txt: ri!seleccionColumnasList_txt,   
+  pagingInfo_pi: ri!paginInfo_pi,
+  ignoreFiltersWithEmptyValues_bool:true,
+  fetchTotalCount_bool: true()
+)
+
+
+
+
+
+
+</definition>
+        <namedTypedValue>
+            <name>idAcceso</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>idExpediente</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>idusuarioopics</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>fechaAltaAcceso</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>tipoAcceso</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>Extra1</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>seleccionColumnasList_txt</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>paginInfo_pi</name>
+            <type>
+                <name>PagingInfo</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>legacy</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000e8c4-62ba-8000-e603-01ef9001ef90_2650403"/>
+        <historyInfo versionUuid="_a-0000e9a3-ab27-8000-e63d-01ef9001ef90_4836235"/>
+        <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9386735"/>
+        <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9504530"/>
+    </history>
+</contentHaul>

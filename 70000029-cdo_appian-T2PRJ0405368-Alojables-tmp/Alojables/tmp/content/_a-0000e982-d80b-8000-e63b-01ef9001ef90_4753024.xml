@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9386715</versionUuid>
+    <rule>
+        <name>SCDO_ActualizarDocumentacion</name>
+        <uuid>_a-0000e982-d80b-8000-e63b-01ef9001ef90_4753024</uuid>
+        <description>Regla para obtener datos actualizados de documentacion</description>
+        <parentUuid>_a-0000e982-d80b-8000-e63b-01ef9001ef90_4815880</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>a!localVariables(
+  cast('type!{urn:com:appian:types}scdo_documentacion',
+    {
+      iddocumentacion:ri!documentacion.iddocumentacion,
+      contrato:ri!documentacion.contrato,
+      nomdocumento:if(ri!documentacion.castdsc="VIGENTE","No Disponible.png","Sin Imagen.png"),
+      iddocumento:ri!documentacion.iddocumento,
+      tipo:ri!documentacion.tipo,
+      fechacarga:"",
+      usuariocargo:"",
+      cc:"",
+      estado:if(ri!documentacion.castdsc="VIGENTE","A","P"),
+      usuarioacepto:ri!documentacion.usuarioacepto,
+      fechaacepto:"",
+      observacion:ri!documentacion.observacion,
+      br:ri!documentacion.br,
+      opendate:ri!documentacion.opendate,
+      cost:ri!documentacion.cost,
+      trad:ri!documentacion.trad,
+      castdsc:ri!documentacion.castdsc,
+      profile:ri!documentacion.profile,
+      max:ri!documentacion.max,
+      canal:ri!documentacion.canal,
+      cliente:ri!documentacion.cliente,
+      br2:ri!documentacion.br2,
+      buc:ri!documentacion.buc,
+      pb:ri!documentacion.pb,
+      folio:ri!documentacion.folio,
+      conveniencia:ri!documentacion.conveniencia,
+      sucursal:ri!documentacion.sucursal,
+      trader:ri!documentacion.trader,
+      amib:ri!documentacion.amib
+    })
+)</definition>
+        <namedTypedValue>
+            <name>documentacion</name>
+            <type>
+                <name>scdo_documentacion</name>
+                <namespace>urn:com:appian:types</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>legacy</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000e982-d80b-8000-e63b-01ef9001ef90_4815969"/>
+        <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9386715"/>
+    </history>
+</contentHaul>

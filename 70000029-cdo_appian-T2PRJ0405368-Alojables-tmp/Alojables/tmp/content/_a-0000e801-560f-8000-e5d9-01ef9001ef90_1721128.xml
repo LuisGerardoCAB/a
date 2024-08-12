@@ -1,0 +1,382 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9510102</versionUuid>
+    <interface>
+        <name>SCDO_RegistroADF</name>
+        <uuid>_a-0000e801-560f-8000-e5d9-01ef9001ef90_1721128</uuid>
+        <description>Ventana ADF, formulario  cuando se registra un arribo</description>
+        <parentUuid>_a-0000e801-560f-8000-e5d9-01ef9001ef90_1707049</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>a!localVariables(
+  local!username_ususario: user(loggedInUser(),"username"),
+  local!id_ususario: user(loggedInUser(),"username"),
+  local!documentos_adf:#"_a-0000e968-30a1-8000-e639-01ef9001ef90_4493570"(adf:"1"),
+  /*if(a!isNotNullOrEmpty(rule!SCDO_getAdministradoresByFilters(usuario: local!username_ususario).data),
+  rule!SCDO_getAdministradoresByFilters(usuario: local!username_ususario).data[1].idadmon,
+  null
+  ),*/
+  local!auxiliar,
+  local!doc_fisicos,
+  local!documentoArriboSeleccionado:if(a!isNotNullOrEmpty(local!documentos_adf),local!documentos_adf.iddocumento[1],null),
+  local!numContrato,
+  local!numADF,
+  local!documento,
+  local!documentoModificaciones,
+  local!cartel_error:false,
+  local!cartel_ok:false,
+  
+  
+  
+  local!Historial: a!refreshVariable(
+    value: #"_a-0000e9a7-6d42-8000-e63f-01ef9001ef90_5247960"(
+      idTabla_txt: #"_a-0000e9a7-6d42-8000-e63f-01ef9001ef90_5247914",
+      paginInfo_pi: #"SYSTEM_SYSRULES_pagingInfo"(
+        startIndex: 1, 
+        batchSize: -1, 
+        sort: #"SYSTEM_SYSRULES_sortInfo"(
+          field: "fechaYHora"
+        )
+      )
+  ).data, 
+  refreshAlways: true
+  ),
+  
+  
+  
+  
+  
+  {
+    #"SYSTEM_SYSRULES_richTextDisplayField"(
+      label: "Rich Text",
+      labelPosition: "COLLAPSED",
+      value: {
+        #"SYSTEM_SYSRULES_richTextHeader"(
+          text: {
+            "Selecciona el documento arribado y a continuación teclea el número de ADF recibido"
+          }
+        )
+      }
+    ),
+    if(a!isNotNullOrEmpty(local!documentoArriboSeleccionado),
+    #"SYSTEM_SYSRULES_radioButtonField"(
+      label: "",
+      labelPosition: "ABOVE",
+      choiceLabels: {index(local!documentos_adf,"documento",{})},
+      choiceValues: {index(local!documentos_adf,"iddocumento",{})},
+      value: { local!documentoArriboSeleccionado },
+      saveInto: { local!documentoArriboSeleccionado },
+      choiceLayout: "STACKED",
+      validations: {
+      }
+    ),""
+    ),
+   
+    #"SYSTEM_SYSRULES_columnsLayout"(
+      columns: {
+        #"SYSTEM_SYSRULES_columnLayout"(
+          contents: {
+            #"SYSTEM_SYSRULES_textField"(
+              label: "Número de Contrato",
+              labelPosition: "ABOVE",
+              value: local!numContrato,
+              saveInto: {
+                local!numContrato,
+                /*a!save(*/
+                  /*local!numContrato,*/
+                  /*if(*/
+                    /*a!isNotNullOrEmpty(local!numContrato),*/
+                    /*rule!SCDO_QUITAR_LETRAS(texto:local!numContrato),*/
+                    /*null*/
+/**/
+                  /*)*/
+                /*),*/
+                a!save(
+                  {local!cartel_error,local!cartel_ok},
+                  false
+                )
+
+              },
+              refreshAfter: "KEYPRESS",
+              characterLimit: 11,
+              validations: {
+                if(
+                  len(local!numContrato) &gt; 11,
+                  "El contrato debe tener 11 o menos caracteres",
+                  ""
+                )
+              }
+            ),
+            #"SYSTEM_SYSRULES_textField"(
+              label: "Número de ADF",
+              labelPosition: "ABOVE",
+              value: local!numADF,
+              saveInto: {
+                local!numADF,
+                /*a!save(*/
+                  /*local!numADF,*/
+                  /*if(*/
+                    /*a!isNotNullOrEmpty(local!numADF),*/
+                    /*rule!SCDO_QUITAR_LETRAS(texto:local!numADF),*/
+                    /*null*/
+/**/
+                  /*)*/
+                /*),*/
+                a!save(
+                  {local!cartel_error,local!cartel_ok},
+                  false
+                )
+
+              },
+              refreshAfter: "KEYPRESS",
+              characterLimit: 8,
+              validations: {
+                if(
+                  len(local!numADF) &lt; 8,
+                  "El número de ADF debe tener 8 caracteres",
+                  ""
+                )
+              }
+            )
+          },
+          width: "NARROW_PLUS"
+        ),
+        #"SYSTEM_SYSRULES_columnLayout"()
+      }
+    ),
+    
+    #"SYSTEM_SYSRULES_ButtonArrayLayout"(
+      buttons: {
+        #"SYSTEM_SYSRULES_ButtonWidget"(
+          label: "Guardar",
+          saveInto: {
+            a!save(
+              local!auxiliar,
+              if(a!isNotNullOrEmpty(#"_a-0000e8b2-d897-8000-e5f1-01ef9001ef90_2372887"(contrato:local!numContrato,iddocumento:local!documentoArriboSeleccionado).data),
+              #"_a-0000e8b2-d897-8000-e5f1-01ef9001ef90_2372887"(contrato:local!numContrato,iddocumento:local!documentoArriboSeleccionado).data,
+              null)
+
+            ),
+            a!save(
+              local!cartel_error,
+              if(a!isNotNullOrEmpty(local!auxiliar),
+              false,true)
+              
+            ),
+            a!save(
+              local!doc_fisicos,
+              if(a!isNotNullOrEmpty(local!auxiliar),
+              #"_a-0000e982-d80b-8000-e63b-01ef9001ef90_4749073"(iddocumento:local!documentoArriboSeleccionado,estatus:1,contrato:local!numContrato),
+              null
+              )
+
+            ),
+            a!save(
+              local!doc_fisicos,
+              if(a!isNotNullOrEmpty(local!auxiliar),
+              #"_a-0000eaa5-8248-8000-e681-01ef9001ef90_8209518"(doc_fisicos: local!doc_fisicos,username_usuario: local!username_ususario),
+              null
+              )
+
+            ),
+            if(a!isNotNullOrEmpty(local!auxiliar),
+            #"SYSTEM_SYSRULES_startProcess"(
+              processModel: #"_a-0000eaa5-8248-8000-e681-01ef9001ef90_8210135",
+              processParameters: {
+                contrato: local!numContrato,
+                documentos_fisicos:local!doc_fisicos,
+                id_documento: local!documentoArriboSeleccionado,
+                id_usuario:local!id_ususario,
+                num_adf: local!numADF,
+               
+              },
+              onSuccess: {
+                a!save(
+                  local!cartel_ok,
+                  true
+                )
+              }
+              
+              /*processModel: cons!SCDO_PROCESO_REGISTRO_ADF,*/
+              /*processParameters: {*/
+                /*iddocumento: local!documentoArriboSeleccionado,*/
+                /*numADF: local!numADF,*/
+                /*numContrato: local!numContrato*/
+              /*}*/
+            ),
+            ""
+            ),
+         
+            a!save(local!documentoArriboSeleccionado, 9),
+            a!save(local!numContrato, null),
+            a!save(local!numADF, null)
+          },
+          style: "DESTRUCTIVE",
+          disabled:or(a!isNullOrEmpty(local!documentoArriboSeleccionado)=true,a!isNullOrEmpty(local!numContrato)=true,a!isNullOrEmpty(local!numADF)=true),
+          confirmHeader: "Se realizará un cambio al documento seleccionado",
+          confirmMessage: "¿Desea continuar?"
+          
+        )
+      },
+      align: "START"
+    ),
+   
+    #"SYSTEM_SYSRULES_columnsLayout"(
+      columns: {        
+        #"SYSTEM_SYSRULES_columnLayout"(
+          contents: {
+            #"SYSTEM_SYSRULES_ButtonArrayLayout"(
+              buttons: {
+                #"SYSTEM_SYSRULES_ButtonWidget"(
+                  label: "",
+                  icon: "times",
+                  saveInto: {
+                    a!save(
+                      local!cartel_ok,
+                      false
+                    )
+                  },
+                  style: "NORMAL"
+                )
+              },
+              align: "START"
+            ),
+            #"SYSTEM_SYSRULES_richTextDisplayField"(
+              labelPosition: "COLLAPSED",
+              value: {
+                #"SYSTEM_SYSRULES_richTextItem_v1"(
+                  text: {
+                    #"SYSTEM_SYSRULES_richTextIcon"(
+                      icon: "check"
+                    ),
+                    " Opereción Satisfactoria"
+                  },
+                  color: "POSITIVE",
+                  size: "MEDIUM_PLUS"
+                )
+              }
+              
+            )
+          }
+        )
+      },
+      showWhen:local!cartel_ok=true
+    ),
+    #"SYSTEM_SYSRULES_columnsLayout"(
+      columns: {
+        #"SYSTEM_SYSRULES_columnLayout"(
+          contents: {
+            #"SYSTEM_SYSRULES_ButtonArrayLayout"(
+              buttons: {
+                #"SYSTEM_SYSRULES_ButtonWidget"(
+                  label: "",
+                  icon: "times",
+                  saveInto: {
+                    a!save(
+                      local!cartel_error,
+                      false
+                    )
+                  },
+                  style: "NORMAL"
+                )
+              },
+              align: "START"
+            ),
+            #"SYSTEM_SYSRULES_richTextDisplayField"(
+              labelPosition: "COLLAPSED",
+              value: {
+                #"SYSTEM_SYSRULES_richTextItem_v1"(
+                  text: {
+                    "No existe el número de contrato en la base de CDO. Por favor, valida si es el contrato correcto!"
+                  },
+                  color: "NEGATIVE",
+                  size: "MEDIUM_PLUS",
+                  style: {
+                    "STRONG"
+                  }
+                )
+              }
+              
+            )
+          }
+        )
+      },
+      showWhen:local!cartel_error=true
+    ),
+    /*a!buttonArrayLayout(*/
+      /*buttons: {*/
+        /*a!buttonWidget(label: "Descargar", style: "DESTRUCTIVE")*/
+      /*},*/
+      /*align: "START"*/
+    /*),*/
+    #"_a-0000e982-d80b-8000-e63b-01ef9001ef90_4795568"(
+      documento_doc :local!documento
+     
+    ),
+  
+    #"_a-0000e9a7-6d42-8000-e63f-01ef9001ef90_5193968"(),
+    
+    #"SYSTEM_SYSRULES_sectionLayout_v1"(
+      label: "Histórico de Modificaciones",
+      labelColor: #"_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9405225",
+      contents: {
+        #"_a-0000e9a7-6d42-8000-e63f-01ef9001ef90_5889917"(showWhen_bool: null, documentoModificaciones: local!documentoModificaciones),
+        #"_a-0000e9a7-6d42-8000-e63f-01ef9001ef90_5233281"(listadoModificacionesList_cdt: local!Historial)
+      },
+      isCollapsible: true,
+      marginAbove: "MORE"
+    )
+  
+  
+  
+  
+  }
+)</definition>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+        <isCustom>false</isCustom>
+    </interface>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000e916-edcb-8000-e60c-01ef9001ef90_3199244"/>
+        <historyInfo versionUuid="_a-0000e9a7-6d42-8000-e63f-01ef9001ef90_5890227"/>
+        <historyInfo versionUuid="_a-0000ea52-e6d5-8000-e654-01ef9001ef90_7548430"/>
+        <historyInfo versionUuid="_a-0000eaa5-8248-8000-e681-01ef9001ef90_8342102"/>
+        <historyInfo versionUuid="_a-0000eabf-35e2-8000-e683-01ef9001ef90_8414425"/>
+        <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9390415"/>
+        <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9405440"/>
+        <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9510102"/>
+    </history>
+</contentHaul>

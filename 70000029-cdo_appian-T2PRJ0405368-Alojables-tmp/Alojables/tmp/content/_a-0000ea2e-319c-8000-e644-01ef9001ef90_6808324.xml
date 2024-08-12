@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9386104</versionUuid>
+    <rule>
+        <name>SCDO_crearReporteAuditoriaDadoReporte</name>
+        <uuid>_a-0000ea2e-319c-8000-e644-01ef9001ef90_6808324</uuid>
+        <description>Regla de expresión para crear un reporte auditoria dado reporte eliminado o reporte aprobado para el modelo de proceso de flujoAreaCentral</description>
+        <parentUuid>_a-0000e9a3-ab27-8000-e63d-01ef9001ef90_4829216</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>if(
+  a!isNullOrEmpty(ri!reporte),
+  'type!{urn:com:appian:types}cdo_reportes_auditoria'(idreporte: ri!reporteAprobado.idreporte,mercado: ri!reporteAprobado.mercado,operacion: ri!reporteAprobado.operacion,contrato: ri!reporteAprobado.contrato, nombre: ri!reporteAprobado.nombre, emisora: ri!reporteAprobado.emisora, monto: ri!reporteAprobado.monto, promotor: ri!reporteAprobado.promotor, ccostos: ri!reporteAprobado.ccostos, usuario: ri!reporteAprobado.usuario, fechacaptura: ri!reporteAprobado.fechacaptura, horacaptura: ri!reporteAprobado.horacaptura, bitacora: ri!reporteAprobado.bitacora, revisado: ri!reporteAprobado.revisado, usuarioreviso: ri!reporteAprobado.usuarioreviso, ccreviso: ri!reporteAprobado.ccreviso, ip: ri!reporteAprobado.ip, fechareviso: ri!reporteAprobado.fechareviso, observaciones: ri!reporteAprobado.observaciones, extra1: ri!reporteAprobado.extra1, extra2: ri!reporteAprobado.extra2, extra3: ri!reporteAprobado.extra3, extra4: ri!reporteAprobado.extra4, extra5: ri!reporteAprobado.extra5, obligatorio: ri!reporteAprobado.obligatorio, titulo: ri!reporteAprobado.titulo, dml: "CREATE", fchaDml: now()),
+  'type!{urn:com:appian:types}cdo_reportes_auditoria'(idreporte: ri!reporte.idreporte,mercado: ri!reporte.mercado,operacion: ri!reporte.operacion,contrato: ri!reporte.contrato, nombre: ri!reporte.nombre, emisora: ri!reporte.emisora, monto: ri!reporte.monto, promotor: ri!reporte.promotor, ccostos: ri!reporte.ccostos, usuario: ri!reporte.usuario, fechacaptura: ri!reporte.fechacaptura, horacaptura: ri!reporte.horacaptura, bitacora: ri!reporte.bitacora, revisado: ri!reporte.revisado, usuarioreviso: ri!reporte.usuarioreviso, ccreviso: ri!reporte.ccreviso, ip: ri!reporte.ip, fechareviso: ri!reporte.fechareviso, observaciones: ri!reporte.observaciones, extra1: ri!reporte.extra1, extra2: ri!reporte.extra2, extra3: ri!reporte.extra3, extra4: ri!reporte.extra4, extra5: ri!reporte.extra5, obligatorio: ri!reporte.obligatorio, titulo: ri!reporte.titulo, dml: "DELETE", fchaDml: now()),
+)</definition>
+        <namedTypedValue>
+            <name>reporte</name>
+            <type>
+                <name>cdo_reportes</name>
+                <namespace>urn:com:appian:types</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>reporteAprobado</name>
+            <type>
+                <name>cdo_reportes_aprobados</name>
+                <namespace>urn:com:appian:types</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>legacy</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000ea2e-319c-8000-e644-01ef9001ef90_6808350"/>
+        <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9386104"/>
+    </history>
+</contentHaul>

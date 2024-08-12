@@ -1,0 +1,600 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000eb9b-4ec6-8000-e68b-01ef9001ef90_9644370</versionUuid>
+    <interface>
+        <name>SCDO_TRASPASOO</name>
+        <uuid>_a-0000e9a7-6d42-8000-e63f-01ef9001ef90_5218117</uuid>
+        <description>Interfaz permite el traspaso de operaciones entre usuarios</description>
+        <parentUuid>_a-0000e801-560f-8000-e5d9-01ef9001ef90_1707049</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>a!localVariables(
+  local!showInformationBanner_actualizar: true,
+  /*correcto_actualizar*/
+  local!flag_actualizar: now(),
+  local!showWhen_actualizar: a!refreshVariable(
+    value: now() &lt; local!flag_actualizar,
+    refreshInterval: 0.5
+  ),
+  /*-----*/
+  /*error_actualizasr*/
+  local!flag_error_actualizar: now(),
+  local!showWhen_error_actualizar: a!refreshVariable(
+    value: now() &lt; local!flag_error_actualizar,
+    /* especifique el intervalo después de cuántos minutos desea finalizar el examen */
+    refreshInterval: 0.5
+  ),
+  /*------*/
+  local!operacionT,
+  local!operacion,
+  local!porTipo,
+  local!porUsuario,
+  local!porSegmento,
+  local!refreshCount: 0,
+  local!usuariosRegistrados: a!refreshVariable(
+    value: #"_a-0000ea22-4ef8-8000-e643-01ef9001ef90_6738129"(idsegmento: local!porSegmento),
+    /*refreshAlways: true,*/
+    refreshOnVarChange: local!refreshCount,
+    /*refreshOnReferencedVarChange: true*/
+
+  ),
+  local!segmentos: a!refreshVariable(
+    value: #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2233353"(idSegmento: null),
+    /*refreshAlways: true,*/
+    refreshOnVarChange: local!refreshCount,
+    refreshOnReferencedVarChange: true
+  ),
+  local!mostrarTraspaso: false,
+  local!reporteSeleccionado,
+  {
+    if(
+      local!mostrarTraspaso = false,
+      {
+        #"SYSTEM_SYSRULES_richTextDisplayField"(
+          labelPosition: "COLLAPSED",
+          value: {
+            #"SYSTEM_SYSRULES_richTextItem_v1"(
+              text: { "Traspaso de Operación" },
+              size: "MEDIUM_PLUS"
+            )
+          },
+          align: "CENTER"
+        ),
+        #"SYSTEM_SYSRULES_columnsLayout"(
+          columns: {
+            #"SYSTEM_SYSRULES_columnLayout"(
+              contents: {
+                #"SYSTEM_SYSRULES_textField"(
+                  label: "Buscar:",
+                  labelPosition: "ADJACENT",
+                  value: local!operacionT,
+                  saveInto: local!operacionT,
+                  refreshAfter: "KEYPRESS",
+                  validations: {}
+                )
+              }
+            ),
+            #"SYSTEM_SYSRULES_columnLayout"(
+              contents: {
+                #"SYSTEM_SYSRULES_ButtonArrayLayout"(
+                  buttons: {
+                    #"SYSTEM_SYSRULES_ButtonWidget"(
+                      label: "Buscar",
+                      icon: "search",
+                      saveInto: {
+                        a!save(local!operacion, local!operacionT),
+                        a!save(
+                          local!refreshCount,
+                          local!refreshCount + 1
+                        )
+                      },
+                      size: "SMALL",
+                      style: "DESTRUCTIVE",
+                      loadingIndicator: true
+                    )
+                  },
+                  align: "START"
+                )
+              },
+              width: "EXTRA_NARROW"
+            ),
+            #"SYSTEM_SYSRULES_columnLayout"(
+              contents: {
+                #"SYSTEM_SYSRULES_dropdownField_v1"(
+                  label: "Por Tipo Reporte",
+                  labelPosition: "ADJACENT",
+                  placeholder: "--- Seleccione el Tipo de Reporte ---",
+                  choiceLabels: {
+                    "Contratos Pendientes",
+                    "Pendiente Por Revisar",
+                    "No Documental Llamada"
+                  },
+                  choiceValues: { "N", "S", "SI" },
+                  value: local!porTipo,
+                  saveInto: local!porTipo
+                )
+              }
+            ),
+            #"SYSTEM_SYSRULES_columnLayout"(
+              contents: {
+                #"SYSTEM_SYSRULES_dropdownField_v1"(
+                  label: "Por Usuario",
+                  labelPosition: "ADJACENT",
+                  placeholder: "--- Seleccione el Usuario ---",
+                  choiceLabels: {
+                    index(local!usuariosRegistrados.data,"usuarioopics",{})
+                  },
+                  choiceValues: {
+                    index(local!usuariosRegistrados.data,"idusuarioopics",{})
+                  },
+                  value: local!porUsuario,
+                  saveInto: {
+                    local!porUsuario,
+                    a!save(
+                      local!porSegmento,
+                      if(
+                        a!isNotNullOrEmpty(local!porUsuario),
+                        
+                        if(a!isNotNullOrEmpty(
+                          #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2233353"(
+                            idSegmento: if(a!isNotNullOrEmpty(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2152641"(usuarioOpic: local!porUsuario).data),
+                            #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2152641"(usuarioOpic:local!porUsuario).data[1].idsegmento,0
+                            )
+                          ).data),
+
+                          #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2233353"(
+                            idSegmento: if(a!isNotNullOrEmpty(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2152641"(usuarioOpic: local!porUsuario).data),
+                            #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2152641"(usuarioOpic: local!porUsuario).data[1].idsegmento,0
+                            )
+                          ).data[1].segmento,
+                          null
+                        ),
+                        null,
+
+                      )
+                      
+                      /*if(a!isNotNullOrEmpty(local!porUsuario),*/
+                      /*rule!SCDO_getSegmentoByFilters(*/
+                        /*idSegmento: rule!SCDO_getUsuariosOPByFilters(idUsuarioOpic : local!porUsuario).data[1].idsegmento*/
+                      /*).data[1].idsegmento ,*/
+                      /*null*/
+                      /*)*/
+                     
+                    )
+                  }
+                )
+              }
+            ),
+            #"SYSTEM_SYSRULES_columnLayout"(
+              contents: {
+                #"SYSTEM_SYSRULES_dropdownField_v1"(
+                  disabled: a!isNotNullOrEmpty(local!porUsuario),
+                  label: "Por Segmento",
+                  labelPosition: "ADJACENT",
+                  placeholder: "--- Seleccione el Segmento ---",
+                  choiceLabels: a!flatten(
+                    { index(local!segmentos.data,"segmento",{}) }
+                  ),
+                  choiceValues: a!flatten(
+                    { index(local!segmentos.data,"idsegmento",{}) }
+                  ),
+                  value: local!porSegmento,
+                  saveInto: {
+                    local!porSegmento,
+                    /*a!save(local!porUsuario,null),*/
+                    a!save(
+                      local!refreshCount,
+                      local!refreshCount + 1
+                    )
+                  }
+                )
+              }
+            )
+          }
+        ),
+        #"SYSTEM_SYSRULES_columnsLayout"(
+          columns: {
+            /*CORRECTO ACTUALIZAR*/
+            #"SYSTEM_SYSRULES_columnLayout"(
+              contents: {
+                #"_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9394093"(
+                  showInformationBanner: local!showInformationBanner_actualizar
+                )
+              },
+              showWhen: and(
+                local!showInformationBanner_actualizar,
+                local!showWhen_actualizar
+              )
+            ),
+            /*ERROR ACTUALIZAR*/
+            #"SYSTEM_SYSRULES_columnLayout"(
+              contents: {
+                #"_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9394317"(
+                  showInformationBanner: local!showInformationBanner_actualizar
+                )
+              },
+              showWhen: and(
+                local!showInformationBanner_actualizar,
+                local!showWhen_error_actualizar
+              )
+            ),
+
+          }
+        ),
+        #"SYSTEM_SYSRULES_columnsLayout"(
+          columns: {
+            #"SYSTEM_SYSRULES_columnLayout"(
+              contents: {
+                #"SYSTEM_SYSRULES_ButtonArrayLayout"(
+                  buttons: #"SYSTEM_SYSRULES_ButtonWidget"(
+                    icon: "refresh",
+                    tooltip: "Actualizar tabla",
+                    saveInto: a!save(
+                      local!refreshCount,
+                      local!refreshCount + 1
+                    ),
+                    size: "SMALL",
+                    style: "SECONDARY"
+                  ),
+                  align: "START"
+                )
+              }
+            )
+          }
+        ),
+        #"SYSTEM_SYSRULES_gridField_v1"(
+          label: "Información de la operación",
+          labelPosition: "ABOVE",
+          data: #"SYSTEM_SYSRULES_queryEntity_v2"(
+            entity: #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_1932909",
+            query: #"SYSTEM_SYSRULES_query"(
+              logicalexpression: #"SYSTEM_SYSRULES_queryLogicalExpression"(
+                operator: "AND",
+                logicalexpressions: #"SYSTEM_SYSRULES_queryLogicalExpression"(
+                  operator: "OR",
+                  filters: {
+                    #"SYSTEM_SYSRULES_queryFilter"(
+                      field: "operacion",
+                      operator: "=",
+                      value: local!operacion
+                    ),
+                    #"SYSTEM_SYSRULES_queryFilter"(
+                      field: "contrato",
+                      operator: "=",
+                      value: local!operacion
+                    ),
+                    #"SYSTEM_SYSRULES_queryFilter"(
+                      field: "promotor",
+                      operator: "=",
+                      value: local!operacion
+                    ),
+                    #"SYSTEM_SYSRULES_queryFilter"(
+                      field: "operacion",
+                      operator: "=",
+                      value: local!operacion
+                    ),
+                    #"SYSTEM_SYSRULES_queryFilter"(
+                      field: "usuario",
+                      operator: "includes",
+                      value: local!operacion
+                    ),
+                    #"SYSTEM_SYSRULES_queryFilter"(
+                      field: "emisora",
+                      operator: "includes",
+                      value: local!operacion
+                    ),
+                    #"SYSTEM_SYSRULES_queryFilter"(
+                      field: "usuario",
+                      operator: "=",
+                      value: tostring(
+                        index(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2152641"(idUsuarioOpic: local!porUsuario).data,"usuarioopics",null)
+                      ),
+                      applywhen: a!isNotNullOrEmpty(local!porUsuario)
+                    )
+                  },
+                  ignorefilterswithemptyvalues: true
+                ),
+                filters: if(
+                  a!isNotNullOrEmpty(
+                    index(local!usuariosRegistrados, "data", null)
+                  ),
+                  /*Filtro principal*/
+                  {
+                    #"SYSTEM_SYSRULES_queryFilter"(
+                      field: "revisado",
+                      operator: "=",
+                      value: local!porTipo
+                    ),
+                    #"SYSTEM_SYSRULES_queryFilter"(
+                      field: "usuario",
+                      operator: "in",
+                      value: a!flatten(
+                        index(local!usuariosRegistrados.data,"usuarioopics",{})
+                      ),
+                      applywhen: and(
+                        a!isNotNullOrEmpty(local!usuariosRegistrados.data),
+                        a!isNullOrEmpty(local!porUsuario)
+                      )
+                    )
+                  },
+                  /*Filtro cuando no hay usuarios registrados*/
+                  {
+                    #"SYSTEM_SYSRULES_queryFilter"(
+                      field: "idreporte",
+                      operator: "=",
+                      value: 0
+                    )
+                  }
+                ),
+                ignoreFiltersWithEmptyValues: true
+              ),
+              pagingInfo: fv!pagingInfo
+            ),
+            fetchTotalCount: true
+          ),
+          columns: {
+            #"SYSTEM_SYSRULES_gridColumn"(
+              label: "Acción",
+              value: #"SYSTEM_SYSRULES_richTextDisplayField"(
+                labelPosition: "COLLAPSED",
+                value: #"SYSTEM_SYSRULES_richTextIcon"(
+                  icon: "user-edit",
+                  caption: "Asignar a otro usuario",
+                  link: #"SYSTEM_SYSRULES_dynamicLink"(
+                    saveInto: {
+                      a!save(local!mostrarTraspaso, true),
+                      a!save(local!reporteSeleccionado, fv!row)
+                    }
+                  ),
+                  linkStyle: "STANDALONE"
+                )
+              ),
+              align: "CENTER"
+            ),
+            #"SYSTEM_SYSRULES_gridColumn"(
+              label: "R",
+              value: #"SYSTEM_SYSRULES_richTextDisplayField"(
+                value: {
+                  choose(
+                    fv!row.riesgo,
+                    #"SYSTEM_SYSRULES_richTextIcon"(
+                      icon: "arrow-circle-down-alt",
+                      caption: " Risgo Bajo",
+                      color: "#1F8926"
+                    ),
+                    #"SYSTEM_SYSRULES_richTextIcon"(
+                      icon: "minus-circle",
+                      caption: " Riesgo Medio ",
+                      color: "#FFCC33"
+                    ),
+                    #"SYSTEM_SYSRULES_richTextIcon"(
+                      icon: "arrow-circle-up-alt",
+                      caption: " Riesgo Alto ",
+                      color: "#EC0000"
+                    )
+                  ),
+                  " ",
+                  if(
+                    fv!row.obligatorio = "*",
+                    #"SYSTEM_SYSRULES_richTextIcon"(icon: "check-square-o"),
+                    #"SYSTEM_SYSRULES_richTextIcon"(icon: "square-o")
+                  )
+                }
+              )
+            ),
+            #"SYSTEM_SYSRULES_gridColumn"(
+              label: "Segmento",
+              sortField: "segmento",
+              value: if(
+                isnull(fv!row.usuario),
+                "NO",
+                if(a!isNotNullOrEmpty(
+                  #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2233353"(
+                    idSegmento: if(a!isNotNullOrEmpty(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2152641"(usuarioOpic: fv!row.usuario).data),
+                    #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2152641"(usuarioOpic: fv!row.usuario).data[1].idsegmento,0
+                    )
+                  ).data),
+                
+                #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2233353"(
+                  idSegmento: if(a!isNotNullOrEmpty(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2152641"(usuarioOpic: fv!row.usuario).data),
+                  #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2152641"(usuarioOpic: fv!row.usuario).data[1].idsegmento,0
+                  )
+                ).data[1].segmento,
+                null
+                )
+                
+              )
+            ),
+            #"SYSTEM_SYSRULES_gridColumn"(
+              label: "Promotor",
+              sortField: "promotor",
+              value: fv!row.promotor
+            ),
+            #"SYSTEM_SYSRULES_gridColumn"(
+              label: "Usuario",
+              sortField: "usuario",
+              value: fv!row.usuario
+            ),
+            #"SYSTEM_SYSRULES_gridColumn"(
+              label: "Nombre de Usuario",
+              sortField: "nombreusuario",
+              value: if(
+                a!isNullOrEmpty(
+                  #"4abb2c14-ac25-4b4a-a0f6-a11f52071c0b"(usuarioopics: fv!row.usuario).data
+                ),
+                if(
+                  a!isNullOrEmpty(
+                    #"_a-0000e982-d80b-8000-e63b-01ef9001ef90_4617772"(usuario: fv!row.usuario).data
+                  ),
+                  if(a!isNotNullOrEmpty(#"_a-0000e8b3-d748-8000-e5f3-01ef9001ef90_2402181"(usuario: fv!row.usuario).data),
+                  inex(#"_a-0000e8b3-d748-8000-e5f3-01ef9001ef90_2402181"(usuario: fv!row.usuario).data[1],"nombre",null),
+                  null
+                  ),
+
+                  index(#"_a-0000e982-d80b-8000-e63b-01ef9001ef90_4617772"(usuario: fv!row.usuario).data[1],"nombre",null)
+                ),
+                index(#"4abb2c14-ac25-4b4a-a0f6-a11f52071c0b"(usuarioopics: fv!row.usuario).data[1],"nombre",null)
+              )
+            ),
+            #"SYSTEM_SYSRULES_gridColumn"(
+              label: "Contrato",
+              sortField: "contrato",
+              value: fv!row.contrato
+            ),
+            #"SYSTEM_SYSRULES_gridColumn"(
+              label: "Nombre del cliente",
+              sortField: "nombre",
+              value: fv!row.nombre
+            ),
+            #"SYSTEM_SYSRULES_gridColumn"(
+              label: "Operacion",
+              sortField: "operacion",
+              value: fv!row.operacion
+            ),
+            #"SYSTEM_SYSRULES_gridColumn"(
+              label: "Region",
+              sortField: "region",
+              value: if(
+                isnull(fv!row.ccostos),
+                "NO",
+                if(a!isNotNullOrEmpty(
+                  #"_a-0000e8d8-9b98-8000-e605-01ef9001ef90_2872186"(
+                    idregion: if(a!isNotNullOrEmpty(#"_a-0000e8c4-62ba-8000-e603-01ef9001ef90_2682345"(cc: fv!row.ccostos).data),
+                    #"_a-0000e8c4-62ba-8000-e603-01ef9001ef90_2682345"(cc: fv!row.ccostos).data[1].idregion,0)
+                  ).data
+                ),
+                #"_a-0000e8d8-9b98-8000-e605-01ef9001ef90_2872186"(
+                  idregion: if(a!isNotNullOrEmpty(#"_a-0000e8c4-62ba-8000-e603-01ef9001ef90_2682345"(cc: fv!row.ccostos).data),
+                  #"_a-0000e8c4-62ba-8000-e603-01ef9001ef90_2682345"(cc: fv!row.ccostos).data[1].idregion,0)
+                ).data[1].region,
+                null
+                )
+               
+              )
+            ),
+            #"SYSTEM_SYSRULES_gridColumn"(
+              label: "Mercado",
+              sortField: "mercado",
+              value: fv!row.mercado
+            ),
+            #"SYSTEM_SYSRULES_gridColumn"(
+              label: "Emisora",
+              sortField: "emisora",
+              value: fv!row.emisora
+            ),
+            #"SYSTEM_SYSRULES_gridColumn"(
+              label: "Monto",
+              sortField: "monto2",
+              value: if(
+                isnull(fv!row.monto2),
+                fv!row.monto2,
+                fixed(fv!row.monto2, 2)
+              ),
+              align: "END"
+            ),
+            #"SYSTEM_SYSRULES_gridColumn"(
+              label: "Fechacaptura",
+              sortField: "fechacaptura",
+              value: fv!row.fechacaptura
+            ),
+            #"SYSTEM_SYSRULES_gridColumn"(
+              label: "Rechazo",
+              sortField: "rechazo",
+              value: fv!row.rechazo
+            ),
+            #"SYSTEM_SYSRULES_gridColumn"(
+              label: "Cc",
+              sortField: "cc",
+              value: fv!row.cc
+            ),
+            #"SYSTEM_SYSRULES_gridColumn"(
+              label: "CV",
+              sortField: "extra4",
+              value: fv!row.extra4
+            ),
+            #"SYSTEM_SYSRULES_gridColumn"(
+              label: "Titulo",
+              sortField: "titulo",
+              value: fv!row.titulo
+            )
+          },
+          initialSorts: #"SYSTEM_SYSRULES_sortInfo"(field: "idreporte", ascending: false),
+          secondarySorts: {
+            #"SYSTEM_SYSRULES_sortInfo"(field: "obligatorio", ascending: true),
+            #"SYSTEM_SYSRULES_sortInfo"(field: "fechacaptura", ascending: false)
+          },
+          pagingSaveInto: fv!pagingInfo,
+          selectable: false,
+          selectionStyle: "CHECKBOX",
+          validations: {},
+          refreshAlways: true,
+          refreshOnReferencedVarChange: true,
+          refreshOnVarChange: local!refreshCount
+        )
+      },
+      {
+        #"_a-0000e9a7-6d42-8000-e63f-01ef9001ef90_5248696"(
+          mostrarTraspaso: local!mostrarTraspaso,
+          reporte: local!reporteSeleccionado,
+          refreshCount: local!refreshCount,
+          showInformationBanner_actualizar: local!showInformationBanner_actualizar,
+          flag_actualizar: local!flag_actualizar,
+          flag_error_actualizar: local!flag_error_actualizar,
+          operacionT: local!operacionT,
+          operacion: local!operacion,
+          porTipo: local!porTipo,
+          porSegmento: local!porSegmento,
+          porUsuario: local!porUsuario
+        )
+      }
+    )
+  }
+)</definition>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+        <isCustom>false</isCustom>
+    </interface>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000ea37-8f9d-8000-e646-01ef9001ef90_6877932"/>
+        <historyInfo versionUuid="_a-0000eaa5-8248-8000-e681-01ef9001ef90_8203802"/>
+        <historyInfo versionUuid="_a-0000eb09-d442-8000-e687-01ef9001ef90_8837763"/>
+        <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9396691"/>
+        <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9449654"/>
+        <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9465977"/>
+        <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9498412"/>
+        <historyInfo versionUuid="_a-0000eb9b-4ec6-8000-e68b-01ef9001ef90_9644370"/>
+    </history>
+</contentHaul>

@@ -1,0 +1,420 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9387507</versionUuid>
+    <interface>
+        <name>SCDO_EliminarReportes_detallesTXT</name>
+        <uuid>_a-0000e9f5-96e6-8000-e641-01ef9001ef90_6272652</uuid>
+        <description>Información de detalles de un archivo TXT</description>
+        <parentUuid>_a-0000e801-560f-8000-e5d9-01ef9001ef90_1707049</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>a!localVariables(
+  local!total_despues_de_eliminar:#"_a-0000eaa5-8248-8000-e681-01ef9001ef90_8334555"(),
+  local!llamadas: length(
+    reject(
+      fn!isnull,
+      #"SYSTEM_SYSRULES_forEach"(
+        items: ri!reportes,
+        expression: if(fv!item.revisado = "SI", true, null)
+      )
+    )
+  ),
+  local!xDoc: length(
+    reject(
+      fn!isnull,
+      #"SYSTEM_SYSRULES_forEach"(
+        items: ri!reportes,
+        expression: if(or(fv!item.revisado = "S",fv!item.revisado = "N"), true, null)
+      )
+    )
+  ),
+  local!riesgoAlto: length(
+    reject(
+      fn!isnull,
+      #"SYSTEM_SYSRULES_forEach"(
+        items: ri!reportes,
+        expression: if(tointeger(fv!item.riesgo) = 3, true, null)
+      )
+    )
+  ),
+  local!riesgoMedio: length(
+    reject(
+      fn!isnull,
+      #"SYSTEM_SYSRULES_forEach"(
+        items: ri!reportes,
+        expression: if(tointeger(fv!item.riesgo) = 2, true, null)
+      )
+    )
+  ),
+  local!riesgoBajo: length(
+    reject(
+      fn!isnull,
+      #"SYSTEM_SYSRULES_forEach"(
+        items: ri!reportes,
+        expression: if(tointeger(fv!item.riesgo) = 1, true, null)
+      )
+    )
+  ),
+  local!usuariosNuevos: length(
+    reject(
+      fn!isnull,
+      #"SYSTEM_SYSRULES_forEach"(
+        items: ri!reportes,
+        expression: if(
+          #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2152641"(usuarioOpic: fv!item.usuario).totalCount = 0,
+          true,
+          null
+        )
+      )
+    )
+  ),
+  {
+    #"SYSTEM_SYSRULES_columnsLayout"(
+      columns: {
+        #"SYSTEM_SYSRULES_columnLayout"(),
+        #"SYSTEM_SYSRULES_columnLayout"(
+          contents: {
+            #"SYSTEM_SYSRULES_richTextDisplayField"(
+              labelPosition: "COLLAPSED",
+              value: {
+                #"SYSTEM_SYSRULES_richTextItem_v1"(
+                  text: { "Reverso de la Carga de Operaciones" },
+                  color: "#ff0000",
+                  size: "MEDIUM_PLUS",
+                  style: { "STRONG" }
+                )
+              },
+              align: "CENTER"
+            ),
+            #"SYSTEM_SYSRULES_boxLayout"(
+              label: "Resultados del Reveros de la Carga Masiva de Operaciones",
+              contents: {
+                #"SYSTEM_SYSRULES_cardLayout"(
+                  contents: {
+                    #"SYSTEM_SYSRULES_sideBySideLayout"(
+                      items: {
+                        #"SYSTEM_SYSRULES_sideBySideItem"(
+                          item: #"SYSTEM_SYSRULES_richTextDisplayField"(
+                            labelPosition: "COLLAPSED",
+                            value: {
+                              #"SYSTEM_SYSRULES_richTextIcon"(
+                                icon: "check-circle",
+                                color: "NEGATIVE",
+                                size: "MEDIUM"
+                              )
+                            }
+                          ),
+                          width: "MINIMIZE"
+                        ),
+                        #"SYSTEM_SYSRULES_sideBySideItem"(
+                          item: #"SYSTEM_SYSRULES_richTextDisplayField"(
+                            labelPosition: "COLLAPSED",
+                            value: {
+                              #"SYSTEM_SYSRULES_richTextItem_v1"(
+                                text: { "DETALLE DEL ARCHIVO CARGADO." },
+                                style: { "STRONG", "UNDERLINE" }
+                              ),
+                              /*char(10),*/
+                              /*"Llamadas: ",*/
+                              /*a!richTextItem(*/
+                                /*text: if(*/
+                                  /*a!isNullOrEmpty(ri!totalCount),*/
+                                  /*0,*/
+                                  /*local!llamadas*/
+                                /*),*/
+                                /*style: { "STRONG" }*/
+                              /*),*/
+                              /*char(10),*/
+                              /*"Con Documentación: ",*/
+                              /*a!richTextItem(*/
+                                /*text: if(*/
+                                  /*a!isNullOrEmpty(ri!totalCount),*/
+                                  /*0,*/
+                                  /*local!xDoc*/
+                                /*),*/
+                                /*style: { "STRONG" }*/
+                              /*),*/
+                              char(10),
+                              "Total antes de eliminar: ",
+                              #"SYSTEM_SYSRULES_richTextItem_v1"(
+                                text: if(
+                                  a!isNullOrEmpty(ri!total_antes_de_eliminar),
+                                  0,
+                                  (ri!total_antes_de_eliminar)
+                                ),
+                                style: { "STRONG" }
+                              ),
+                              char(10),
+                              "Total de Procesados: ",
+                              #"SYSTEM_SYSRULES_richTextItem_v1"(
+                                text: if(
+                                  a!isNullOrEmpty(ri!totalCount),
+                                  0,
+                                  /*if(*/
+                                    /*ri!totalCount &lt; length(ri!reportes),*/
+                                    /*length(ri!reportes),*/
+                                    /*ri!totalCount*/
+                                  /*)*/
+                                  ri!totalCount
+                                ),
+                                style: { "STRONG" }
+                              ),
+                              char(10),
+                              "Total actual: ",
+                              #"SYSTEM_SYSRULES_richTextItem_v1"(
+                                text: if(
+                                  a!isNullOrEmpty(local!total_despues_de_eliminar),
+                                  0,
+                                  local!total_despues_de_eliminar
+                                ),
+                                style: { "STRONG" }
+                              ),
+                              char(10),
+                              "Total correctos: ",
+                              #"SYSTEM_SYSRULES_richTextItem_v1"(
+                                text: if(
+                                  and(a!isNullOrEmpty(local!total_despues_de_eliminar),a!isNullOrEmpty(ri!total_antes_de_eliminar)),
+                                  0,
+                                  ri!total_antes_de_eliminar -local!total_despues_de_eliminar
+                                ),
+                                style: { "STRONG" }
+                              ),
+                              char(10),
+                              "Erróneos: ",
+                              #"SYSTEM_SYSRULES_richTextItem_v1"(
+                                text: (local!total_despues_de_eliminar+ri!totalCount)-(ri!total_antes_de_eliminar),
+                                style: { "STRONG" }
+                              ),
+                            
+                              /*char(10),*/
+                              /*"Riesgo Alto: ",*/
+                              /*a!richTextItem(*/
+                                /*text: if(*/
+                                  /*a!isNullOrEmpty(ri!totalCount),*/
+                                  /*0,*/
+                                  /*local!riesgoAlto*/
+                                /*),*/
+                                /*style: { "STRONG" }*/
+                              /*),*/
+                              /*char(10),*/
+                              /*"Riesgo Medio: ",*/
+                              /*a!richTextItem(*/
+                                /*text: if(*/
+                                  /*a!isNullOrEmpty(ri!totalCount),*/
+                                  /*0,*/
+                                  /*local!riesgoMedio*/
+                                /*),*/
+                                /*style: { "STRONG" }*/
+                              /*),*/
+                              /*char(10),*/
+                              /*"Riesgo Bajo: ",*/
+                              /*a!richTextItem(*/
+                                /*text: if(*/
+                                  /*a!isNullOrEmpty(ri!totalCount),*/
+                                  /*0,*/
+                                  /*local!riesgoBajo*/
+                                /*),*/
+                                /*style: { "STRONG" }*/
+                              /*),*/
+                              /*char(10),*/
+                              /*"Usuarios Opics Nuevos Detectados: ",*/
+                              /*a!richTextItem(*/
+                                /*text: if(*/
+                                  /*a!isNullOrEmpty(ri!totalCount),*/
+                                  /*0,*/
+                                  /*local!usuariosNuevos*/
+                                /*),*/
+                                /*style: { "STRONG" }*/
+                              /*),*/
+                              /*char(10)*/
+                            }
+                          )
+                        )
+                      },
+                      alignVertical: "MIDDLE",
+                      spacing: "STANDARD"
+                    ),
+                    /*a!gridField(*/
+                    /*label: "Detalles de las operaciones a las cuáles se le agregó el documento: ",*/
+                    /*labelPosition: "ABOVE",*/
+                    /*emptyGridMessage: "No se encontraron reportes en el archivo subido, pruebe con otro",*/
+                    /*data: ri!reportes,*/
+                    /*pagingSaveInto: local!pagingInfo,*/
+                    /*columns: {*/
+                    /*a!gridColumn(label: "Mercado", value: fv!row.mercado),*/
+                    /*a!gridColumn(*/
+                    /*label: "Operación",*/
+                    /*value: fv!row.operacion*/
+                    /*),*/
+                    /*a!gridColumn(label: "Contrato", value: fv!row.contrato),*/
+                    /*a!gridColumn(label: "Nombre", value: fv!row.nombre),*/
+                    /*a!gridColumn(label: "Emisora", value: fv!row.emisora),*/
+                    /*a!gridColumn(label: "Monto", value: fv!row.monto),*/
+                    /*a!gridColumn(label: "Promotor", value: fv!row.promotor),*/
+                    /*a!gridColumn(label: "ccostos", value: fv!row.ccostos),*/
+                    /*a!gridColumn(label: "Usuario", value: fv!row.usuario),*/
+                    /*a!gridColumn(*/
+                    /*label: "F.Captura",*/
+                    /*value: fv!row.fechacaptura*/
+                    /*),*/
+                    /*a!gridColumn(*/
+                    /*label: "H.Captura",*/
+                    /*value: fv!row.horacaptura*/
+                    /*),*/
+                    /*a!gridColumn(label: "Bitacora", value: fv!row.bitacora),*/
+                    /*a!gridColumn(label: "Riesgo", value: fv!row.riesgo),*/
+                    /*a!gridColumn(label: "Revisado", value: fv!row.revisado),*/
+                    /*a!gridColumn(label: "extra4", value: fv!row.extra4),*/
+                    /*a!gridColumn(*/
+                    /*label: "Obligatorio",*/
+                    /*value: fv!row.obligatorio*/
+                    /*),*/
+                    /*a!gridColumn(label: "Titulo", value: fv!row.titulo)*/
+                    /*},*/
+                    /*showWhen: a!isNotNullOrEmpty(ri!reportes)*/
+                    /*),*/
+                    /*a!gridField(*/
+                    /*label: "Detalles de las operaciones aprobadas a las cuáles se le agregó el documento: ",*/
+                    /*labelPosition: "ABOVE",*/
+                    /*emptyGridMessage: "No se encontraron reportes en el archivo subido, pruebe con otro",*/
+                    /*data: ri!reportesAprobados,*/
+                    /*pagingSaveInto: local!pagingInfo,*/
+                    /*columns: {*/
+                    /*a!gridColumn(label: "Mercado", value: fv!row.mercado),*/
+                    /*a!gridColumn(*/
+                    /*label: "Operación",*/
+                    /*value: fv!row.operacion*/
+                    /*),*/
+                    /*a!gridColumn(label: "Contrato", value: fv!row.contrato),*/
+                    /*a!gridColumn(label: "Nombre", value: fv!row.nombre),*/
+                    /*a!gridColumn(label: "Emisora", value: fv!row.emisora),*/
+                    /*a!gridColumn(label: "Monto", value: fv!row.monto),*/
+                    /*a!gridColumn(label: "Promotor", value: fv!row.promotor),*/
+                    /*a!gridColumn(label: "ccostos", value: fv!row.ccostos),*/
+                    /*a!gridColumn(label: "Usuario", value: fv!row.usuario),*/
+                    /*a!gridColumn(*/
+                    /*label: "F.Captura",*/
+                    /*value: fv!row.fechacaptura*/
+                    /*),*/
+                    /*a!gridColumn(*/
+                    /*label: "H.Captura",*/
+                    /*value: fv!row.horacaptura*/
+                    /*),*/
+                    /*a!gridColumn(label: "Bitacora", value: fv!row.bitacora),*/
+                    /*a!gridColumn(label: "Riesgo", value: fv!row.riesgo),*/
+                    /*a!gridColumn(label: "Revisado", value: fv!row.revisado),*/
+                    /*a!gridColumn(label: "extra4", value: fv!row.extra4),*/
+                    /*a!gridColumn(*/
+                    /*label: "Obligatorio",*/
+                    /*value: fv!row.obligatorio*/
+                    /*),*/
+                    /*a!gridColumn(label: "Titulo", value: fv!row.titulo)*/
+                    /*},*/
+                    /*showWhen: a!isNotNullOrEmpty(ri!reportesAprobados)*/
+                    /*),*/
+                    #"SYSTEM_SYSRULES_ButtonArrayLayout"(
+                      buttons: {
+                        #"SYSTEM_SYSRULES_ButtonWidget"(
+                          label: "ACEPTAR ",
+                          icon: "check",
+                          saveInto: {
+                            /*a!save(ri!OKEY,true*/
+                            /*),*/
+
+                          },
+                          submit: true,
+                          style: "PRIMARY",
+                          validationGroup: "Archivo_no_valido"
+                        )
+                      },
+                      align: "CENTER"
+                    )
+
+                  },
+                  style: "STANDARD"/*showWhen:if(and(a!isNullOrEmpty(local!folder),a!isNullOrEmpty(local!TXTcount)),*/
+                  /*{},*/
+                  /*true)*/,
+                  /*style: cons!SCDO_COLOR_ROJO_SANTANDER,*/
+                  marginBelow: "STANDARD",
+                  showBorder: false
+
+                )
+
+              },
+              style: #"_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1882453",
+              marginBelow: "STANDARD"
+
+            )
+
+          },
+          width: "WIDE"
+        ),
+        #"SYSTEM_SYSRULES_columnLayout"()
+      }
+    )
+  }
+)</definition>
+        <namedTypedValue>
+            <name>totalCount</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>reportes</name>
+            <type>
+                <name>cdo_reportes?list</name>
+                <namespace>urn:com:appian:types</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>total_antes_de_eliminar</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+        <isCustom>false</isCustom>
+    </interface>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000ea3c-477e-8000-e648-01ef9001ef90_6923396"/>
+        <historyInfo versionUuid="_a-0000eaa5-8248-8000-e681-01ef9001ef90_8335416"/>
+        <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9387507"/>
+    </history>
+</contentHaul>

@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9451526</versionUuid>
+    <rule>
+        <name>SCDO_obtenerDocumentacionContratoParaExcel</name>
+        <uuid>_a-0000ea2e-319c-8000-e644-01ef9001ef90_6815530</uuid>
+        <description>Regla de expresion para obtener la documentacion por contrato para exportar</description>
+        <parentUuid>_a-0000e9a3-ab27-8000-e63d-01ef9001ef90_4829216</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>a!flatten(#"SYSTEM_SYSRULES_queryEntity_v2"(
+  entity: #"_a-0000e982-d80b-8000-e63b-01ef9001ef90_4743848",
+  query: #"SYSTEM_SYSRULES_query"(
+    selection: #"SYSTEM_SYSRULES_querySelection"(
+      columns: {
+        #"SYSTEM_SYSRULES_queryColumn"(
+          field: "iddocumentacion",
+        ),
+        
+      }
+    ),
+    logicalExpression: #"SYSTEM_SYSRULES_queryLogicalExpression"(
+      operator: "AND",
+      filters: {
+        #"SYSTEM_SYSRULES_queryFilter"(
+          field: "fechacarga",
+          operator: "includes",
+          value: if(
+            and(
+              a!isNotNullOrEmpty(ri!FechaDividida),
+              length(ri!FechaDividida) &gt; 2
+            ),
+            concat(
+              ri!FechaDividida[1],
+              "/",
+              ri!FechaDividida[2],
+              "/",
+              ri!FechaDividida[3]
+            ),
+            null
+          ),
+          applywhen: and(
+            a!isNullOrEmpty(ri!Fechal),
+            a!isNotNullOrEmpty(ri!fecha)
+          )
+        ),
+        #"SYSTEM_SYSRULES_queryFilter"(
+          field: "fechacarga",
+          operator: "&lt;=",
+          value: if(
+            and(
+              a!isNotNullOrEmpty(ri!FechaalDividida),
+              length(ri!FechaalDividida) &gt; 2
+            ),
+            concat(
+              ri!FechaalDividida[1],
+              "/",
+              ri!FechaalDividida[2],
+              "/",
+              ri!FechaalDividida[3],
+              " 00:00:00"
+            ),
+            null
+          ),
+          applywhen: and(
+            a!isNotNullOrEmpty(ri!Fechal),
+            isnull(ri!fecha)
+          )
+        ),
+        if(
+          and(a!isNotNullOrEmpty(ri!Fechal), a!isNotNullOrEmpty(ri!Fecha)),
+          if(
+            todate(ri!Fecha) &lt; todate(ri!Fechal),
+            {
+              #"SYSTEM_SYSRULES_queryFilter"(
+                field: "fechacarga",
+                operator: "&lt;=",
+                value: if(and(a!isNotNullOrEmpty(ri!FechaalDividida), a!isNotNullOrEmpty(ri!FechaDividida), todate(ri!fecha) &lt; todate(ri!Fechal),length(ri!FechaalDividida) &gt; 2), concat(ri!FechaalDividida[1],"/", ri!FechaalDividida[2], "/", ri!FechaalDividida[3]), null)
+              ),
+              #"SYSTEM_SYSRULES_queryFilter"(
+                field: "fechacarga",
+                operator: "&gt;=",
+                value: if(and(a!isNotNullOrEmpty(ri!FechaDividida), a!isNotNullOrEmpty(ri!FechaalDividida), todate(ri!Fecha) &lt; todate(ri!Fechal),length(ri!FechaDividida) &gt; 2), concat(ri!FechaDividida[1],"/", ri!FechaDividida[2], "/", ri!FechaDividida[3]), null)
+              )
+            },
+            if(
+              todate(ri!Fecha) = todate(ri!Fechal),
+              {
+                #"SYSTEM_SYSRULES_queryFilter"(
+                  field: "fechacarga",
+                  operator: "includes",
+                  value: if(and(a!isNotNullOrEmpty(ri!FechaDividida), length(ri!FechaDividida) &gt; 2), concat(ri!FechaDividida[1],"/", ri!FechaDividida[2], "/", ri!FechaDividida[3]), null)
+                )
+              },
+              {
+                #"SYSTEM_SYSRULES_queryFilter"(
+                  field: "fechacarga",
+                  operator: "&gt;=",
+                  value: if(and(a!isNotNullOrEmpty(ri!FechaDividida), a!isNotNullOrEmpty(ri!FechaalDividida), todate(ri!fecha) &gt; todate(ri!Fechal),length(ri!FechaDividida) &gt; 2), "nada", null)
+                )
+              }
+            )
+          ),
+          {}
+        ),
+        #"SYSTEM_SYSRULES_queryFilter"(
+          field: "contrato",
+          operator: "=",
+          value: ri!contrato
+        ),
+        #"SYSTEM_SYSRULES_queryFilter"(
+          field: "iddocumento",
+          operator: "=",
+          value: ri!iddocumento
+        ),
+        #"SYSTEM_SYSRULES_queryFilter"(
+          field: "cc",
+          operator: "=",
+          value: ri!ccostos
+        ),
+        #"SYSTEM_SYSRULES_queryFilter"(
+          field: "castdsc",
+          operator: "=",
+          value: ri!estadocc
+        ),
+        #"SYSTEM_SYSRULES_queryFilter"(
+          field: "estado",
+          operator: "=",
+          value: ri!estado
+        )
+      },
+      ignoreFiltersWithEmptyValues: true
+    ),
+    pagingInfo: #"SYSTEM_SYSRULES_pagingInfo"(startIndex: 1, batchSize: -1)
+  ),
+  fetchTotalCount: true
+).data.iddocumentacion)</definition>
+        <namedTypedValue>
+            <name>fecha</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>Fechal</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>FechaalDividida</name>
+            <type>
+                <name>Text?list</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>FechaDividida</name>
+            <type>
+                <name>Text?list</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>contrato</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>iddocumento</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>ccostos</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>estadocc</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>estado</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <preferredEditor>legacy</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000ea2e-319c-8000-e644-01ef9001ef90_6817959"/>
+        <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9386282"/>
+        <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9451526"/>
+    </history>
+</contentHaul>

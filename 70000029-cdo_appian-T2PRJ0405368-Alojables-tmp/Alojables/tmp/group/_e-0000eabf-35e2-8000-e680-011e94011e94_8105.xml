@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<groupHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_e-0000eabf-35e2-8000-e680-011e94011e94_8109</versionUuid>
+    <group>
+        <name>SCDO SAML</name>
+        <securityMap>SECURITYMAP_TEAM</securityMap>
+        <uuid>_e-0000eabf-35e2-8000-e680-011e94011e94_8105</uuid>
+        <groupTypeUuid>SYSTEM_GROUP_TYPE_CUSTOM</groupTypeUuid>
+        <parentUuid>_e-0000e867-3fd5-8000-e5e0-011e94011e94_5795</parentUuid>
+        <description></description>
+        <delegatedCreation>false</delegatedCreation>
+        <memberPolicy>MEMBERPOLICY_CLOSED</memberPolicy>
+        <viewingPolicy>VIEWINGPOLICY_LOW</viewingPolicy>
+        <attributes/>
+    </group>
+    <members>
+        <users/>
+        <groups>
+            <groupUuid>_e-0000e982-d80b-8000-e638-011e94011e94_7321</groupUuid>
+            <groupUuid>_e-0000e982-d80b-8000-e638-011e94011e94_7299</groupUuid>
+            <groupUuid>_e-0000e982-d80b-8000-e638-011e94011e94_7323</groupUuid>
+            <groupUuid>_e-0000e982-d80b-8000-e638-011e94011e94_7301</groupUuid>
+            <groupUuid>_e-0000e982-d80b-8000-e638-011e94011e94_7311</groupUuid>
+            <groupUuid>_e-0000e982-d80b-8000-e638-011e94011e94_7303</groupUuid>
+            <groupUuid>_e-0000e982-d80b-8000-e638-011e94011e94_7313</groupUuid>
+            <groupUuid>_e-0000e982-d80b-8000-e638-011e94011e94_7305</groupUuid>
+            <groupUuid>_e-0000e982-d80b-8000-e638-011e94011e94_7315</groupUuid>
+            <groupUuid>_e-0000e982-d80b-8000-e638-011e94011e94_7307</groupUuid>
+            <groupUuid>_e-0000e982-d80b-8000-e638-011e94011e94_7317</groupUuid>
+            <groupUuid>_e-0000e982-d80b-8000-e638-011e94011e94_7309</groupUuid>
+            <groupUuid>_e-0000e982-d80b-8000-e638-011e94011e94_7319</groupUuid>
+            <groupUuid>_e-0000eabf-35e2-8000-e680-011e94011e94_8194</groupUuid>
+        </groups>
+    </members>
+    <admins>
+        <users/>
+        <groups/>
+    </admins>
+    <ruleSet/>
+    <history>
+        <historyInfo versionUuid="_e-0000eabf-35e2-8000-e680-011e94011e94_8109"/>
+    </history>
+</groupHaul>

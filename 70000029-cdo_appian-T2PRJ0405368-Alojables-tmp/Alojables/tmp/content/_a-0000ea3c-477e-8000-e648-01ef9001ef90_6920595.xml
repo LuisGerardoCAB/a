@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9540256</versionUuid>
+    <rule>
+        <name>SCDO_llenarReportesDadoListadoTextoParaReverso</name>
+        <uuid>_a-0000ea3c-477e-8000-e648-01ef9001ef90_6920595</uuid>
+        <description>Regla de expresión que devuelve los reportes dado un listado de tipo texto para el modelo de proceso de reverso de operaciones</description>
+        <parentUuid>_a-0000e9a3-ab27-8000-e63d-01ef9001ef90_4829216</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>a!localVariables(
+  /*local!reportes:a!forEach(*/
+    /*items: ri!datosArchivoList_txt, */
+    /*expression: {*/
+      /*a!localVariables(*/
+        /*local!datosFila: split(fv!item, "|"),*/
+        /*local!mercado: index(local!datosFila,1, null),*/
+        /*local!operacion: index(local!datosFila,2, null),*/
+        /*local!contrato: index(local!datosFila, 3, null),*/
+        /*local!nombre: index(local!datosFila, 4, null),*/
+        /*local!emisora: index(local!datosFila, 5, null),*/
+        /*local!monto: todecimal(index(local!datosFila, 6, 0)),*/
+        /*local!promotor: index(local!datosFila, 7, null),*/
+        /*local!ccostos: index(local!datosFila, 8, null),*/
+        /*local!usuario: index(local!datosFila, 9, null),*/
+        /*local!fechacaptura: index(local!datosFila, 10, null),*/
+        /*local!horacaptura: index(local!datosFila, 11, null),*/
+        /*local!bitacora: index(local!datosFila, 12, null),*/
+        /*local!riesgo: tointeger(index(local!datosFila, 13, 0)),*/
+        /*local!extra1: index(local!datosFila, 14, null),*/
+        /*local!extra4: index(local!datosFila, 15, null),*/
+        /*local!obligatorio: index(local!datosFila, 16, null),*/
+        /*local!titulo: index(local!datosFila, 17, null),*/
+        /*if(*/
+          /*or(a!isNullOrEmpty(local!operacion), a!isNullOrEmpty(local!contrato)),*/
+          /*null,*/
+          /*'type!{urn:com:appian:types}cdo_reportes'(*/
+            /*mercado: local!mercado,*/
+            /*operacion: local!operacion,*/
+            /*contrato: local!contrato,*/
+            /*nombre: local!nombre,*/
+            /*emisora: local!emisora,*/
+            /*monto: local!monto,*/
+            /*promotor: local!promotor,*/
+            /*ccostos: local!ccostos,*/
+            /*usuario: local!usuario,*/
+            /*fechacaptura: if(a!isNullOrEmpty(local!fechacaptura), null, text(todate(local!fechacaptura), "yyyy-mm-dd 00:00:00")),*/
+            /*horacaptura: local!horacaptura,*/
+            /*bitacora: local!bitacora,*/
+            /*riesgo: local!riesgo,*/
+            /*extra1: local!extra1,*/
+            /*extra4: local!extra4,*/
+            /*obligatorio: local!obligatorio,*/
+            /*titulo: local!titulo,*/
+            /*revisado: null()*/
+          /*)*/
+/*         */
+        /*)*/
+/*        */
+      /*)*/
+    /*} */
+  /*),*/
+  local!datosFila_rep_1: split(ri!datosArchivoList_txt[1], "|"),
+  local!reporte_1:
+  'type!{urn:com:appian:types}cdo_reportes'(
+ 
+    operacion: index(local!datosFila_rep_1,2, null),
+    contrato: index(local!datosFila_rep_1, 3, null),
+  
+    /*fechacaptura: if(a!isNullOrEmpty(index(local!datosFila_rep_1, 10, null)), null, text(todate(index(local!datosFila_rep_1, 10, null)), "yyyy-mm-dd 00:00:00")),*/
+    fechacaptura: if(a!isNullOrEmpty(index(local!datosFila_rep_1, 10, null)), null, text(date(tointeger(mid(index(local!datosFila_rep_1,10),7, 4)),tointeger(mid(index(local!datosFila_rep_1,10), 4, 2)),tointeger(mid(index(local!datosFila_rep_1,10), 1, 2))), "yyyy-MM-dd 00:00:00")),
+ 
+  ),
+  local!datosFila_rep_2: split(ri!datosArchivoList_txt[ri!totalCount], "|"),
+  local!reporte_2:
+  'type!{urn:com:appian:types}cdo_reportes'(
+
+    operacion: index(local!datosFila_rep_2,2, null),
+    contrato: index(local!datosFila_rep_2, 3, null),
+
+    /*fechacaptura: if(a!isNullOrEmpty(index(local!datosFila_rep_2, 10, null)), null, text(todate(index(local!datosFila_rep_2, 10, null)), "yyyy-mm-dd 00:00:00")),*/
+    fechacaptura: if(a!isNullOrEmpty(index(local!datosFila_rep_2, 10, null)), null, text(date(tointeger(mid(index(local!datosFila_rep_2,10),7, 4)),tointeger(mid(index(local!datosFila_rep_2,10), 4, 2)),tointeger(mid(index(local!datosFila_rep_2,10), 1, 2))), "yyyy-MM-dd 00:00:00")),
+
+  ),
+  local!devolver: reject(fn!isnull,
+  #"_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9533439"(arreglo_1:local!reporte_1,arreglo_2:local!reporte_2)
+  /*union(local!reporte_1,local!reporte_2)*/
+  
+  ),
+  local!devolver,
+  /*local!devolver: reject(fn!isnull, local!reportes),*/
+  /*local!devolver,*/
+)</definition>
+        <namedTypedValue>
+            <name>datosArchivoList_txt</name>
+            <type>
+                <name>Text?list</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>totalCount</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>legacy</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000ea3c-477e-8000-e648-01ef9001ef90_6920607"/>
+        <historyInfo versionUuid="_a-0000eaa5-8248-8000-e681-01ef9001ef90_8334452"/>
+        <historyInfo versionUuid="_a-0000eae4-5659-8000-e685-01ef9001ef90_8664918"/>
+        <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9385962"/>
+        <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9540256"/>
+    </history>
+</contentHaul>

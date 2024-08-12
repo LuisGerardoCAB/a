@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9451500</versionUuid>
+    <rule>
+        <name>SCDO_NoReportesSinCC</name>
+        <uuid>_a-0000ea22-4ef8-8000-e643-01ef9001ef90_6703025</uuid>
+        <description>Regla de expresión que devuelve truesi no existen reportes sin centro de costo y false en caso contrario</description>
+        <parentUuid>_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1882376</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>a!localVariables(
+  local!centrosNoBD: a!flatten(
+    #"SYSTEM_SYSRULES_queryEntity_v2"(
+      entity: #"_a-0000e9f5-96e6-8000-e641-01ef9001ef90_6396770",
+      query: #"SYSTEM_SYSRULES_query"(
+        paginginfo: #"SYSTEM_SYSRULES_pagingInfo"(
+          startIndex: 1,
+          batchSize: -1,
+        ),
+      )
+    ),
+  ),
+  local!centrosNoBD.totalCount = 0,
+)</definition>
+        <preferredEditor>legacy</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000ea22-4ef8-8000-e643-01ef9001ef90_6760596"/>
+        <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9386304"/>
+        <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9451500"/>
+    </history>
+</contentHaul>

@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000ebb9-a974-8000-e690-01ef9001ef90_9659467</versionUuid>
+    <rule>
+        <name>SCDO_MakeDynamicProcessName</name>
+        <uuid>_a-0000ebb9-a974-8000-e690-01ef9001ef90_9658800</uuid>
+        <description>Makes the dynamic name of a Process from the Name and a Map who takes the keys as names to display with the values in the dynamic name.</description>
+        <parentUuid>_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1882376</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>a!localVariables(
+  local!keys: a!keys(ri!data_map),
+  concat(
+    a!flatten({
+      a!defaultValue(
+        ri!processName_txt,
+        "SCDO Process Without Name"
+      ),
+      if(
+        or(
+          length(local!keys) = 0,
+          all(
+            a!isNullOrEmpty(_),
+            index(ri!data_map, local!keys, null)
+          )
+        ),
+        "",
+        a!flatten(
+          {
+            " ",
+            #"SYSTEM_SYSRULES_forEach"(
+              items: local!keys,
+              expression: a!localVariables(
+                local!item: index(ri!data_map, fv!item, ""),
+                if(
+                  /*Check if item is blank*/
+                  or(local!item="",isnull(local!item)),
+                  "",
+                  if(
+                    fv!isLast,
+                    fv!item &amp; ": " &amp; local!item,
+                    fv!item &amp; ": " &amp; local!item &amp; " "
+                  )
+                )
+              )
+            )
+          }
+        )
+      )
+    })
+  )
+)</definition>
+        <namedTypedValue>
+            <name>processName_txt</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>data_map</name>
+            <type>
+                <name>Map</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>legacy</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <typedValue>
+        <type>
+            <name>RuleTestConfig?list</name>
+            <namespace>http://www.appian.com/ae/types/2009</namespace>
+        </type>
+        <value>
+            <el>
+                <a:name>Happy Path</a:name>
+                <a:ruleInputTestConfigs>
+                    <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string">CDO Reject Fixed Document Inverse Process</a:value>
+                    <a:nameRef>processName_txt</a:nameRef>
+                    <a:id>1</a:id>
+                </a:ruleInputTestConfigs>
+                <a:ruleInputTestConfigs>
+                    <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="a:Expression">a!map(
+  happyPath_txt: "Hello World!"
+)</a:value>
+                    <a:nameRef>data_map</a:nameRef>
+                    <a:id>2</a:id>
+                </a:ruleInputTestConfigs>
+                <a:assertions>
+                    <a:expectedOutput>
+                        <a:type a:uuid="{http://www.appian.com/ae/types/2009}Text"/>
+                        <a:runtimeType a:uuid="{http://www.appian.com/ae/types/2009}Text"/>
+                        <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string">CDO Reject Fixed Document Inverse Process happyPath_txt: Hello World!</a:value>
+                    </a:expectedOutput>
+                </a:assertions>
+            </el>
+            <el>
+                <a:name>Error</a:name>
+                <a:ruleInputTestConfigs>
+                    <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                    <a:nameRef>processName_txt</a:nameRef>
+                    <a:id>1</a:id>
+                </a:ruleInputTestConfigs>
+                <a:ruleInputTestConfigs>
+                    <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="a:Expression">null</a:value>
+                    <a:nameRef>data_map</a:nameRef>
+                    <a:id>2</a:id>
+                </a:ruleInputTestConfigs>
+                <a:assertions>
+                    <a:expectedOutput>
+                        <a:type a:uuid="{http://www.appian.com/ae/types/2009}Text"/>
+                        <a:runtimeType a:uuid="{http://www.appian.com/ae/types/2009}Text"/>
+                        <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string">SCDO Process Without Name</a:value>
+                    </a:expectedOutput>
+                </a:assertions>
+            </el>
+        </value>
+    </typedValue>
+    <history>
+        <historyInfo versionUuid="_a-0000ebb9-a974-8000-e690-01ef9001ef90_9659467"/>
+    </history>
+</contentHaul>

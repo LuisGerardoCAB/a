@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9451433</versionUuid>
+    <rule>
+        <name>SCDO_obtenerDigitalizadosPendienteYAprobadaPorContratoOperacion</name>
+        <uuid>_a-0000e9f5-96e6-8000-e641-01ef9001ef90_6495671</uuid>
+        <description>Regla de expresión que devuelve los documentos digitalizados dado un contrato y una operación</description>
+        <parentUuid>_a-0000e982-d80b-8000-e63b-01ef9001ef90_4815880</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>a!localVariables(
+  local!data: #"SYSTEM_SYSRULES_queryEntity_v2"(
+    entity: #"_a-0000e916-edcb-8000-e60c-01ef9001ef90_3117600",
+    query: #"SYSTEM_SYSRULES_query"(
+      logicalExpression: #"SYSTEM_SYSRULES_queryLogicalExpression"(
+        operator: "AND",
+        filters: {
+          #"SYSTEM_SYSRULES_queryFilter"(
+            field: "contrato",
+            operator: "=",
+            value: ri!contrato
+          ),
+          #"SYSTEM_SYSRULES_queryFilter"(
+            field: "estado",
+            operator: "in",
+            value: {
+              "P", "A"
+            }
+          ),
+          #"SYSTEM_SYSRULES_queryFilter"(
+            field: "operacion",
+            operator: "=",
+            value: ri!operacion
+          ),
+          #"SYSTEM_SYSRULES_queryFilter"(
+            field: "idreporte",
+            operator: "=",
+            value: ri!idreporte,
+            applyWhen: isnull(ri!idreporte) &lt;&gt; true
+          ),
+        },
+        ignoreFiltersWithEmptyValues: true
+      ),
+      pagingInfo: #"SYSTEM_SYSRULES_pagingInfo"(
+        startIndex: 1,
+        batchSize: 50
+      )
+    ),
+    fetchTotalCount: false
+  ).data,
+  local!data
+)</definition>
+        <namedTypedValue>
+            <name>contrato</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>operacion</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>idReporte</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>legacy</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000e9f5-96e6-8000-e641-01ef9001ef90_6495745"/>
+        <historyInfo versionUuid="_a-0000eb09-d442-8000-e687-01ef9001ef90_8818378"/>
+        <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9386409"/>
+        <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9451433"/>
+    </history>
+</contentHaul>

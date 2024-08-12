@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9388794</versionUuid>
+    <interface>
+        <name>SCDO_TXT_ERROR_FECHAS_EXISTEN</name>
+        <uuid>_a-0000eaa5-8248-8000-e681-01ef9001ef90_8301075</uuid>
+        <description>Regla de interfaz para mostrar al usuario el error que hubo al cargar el txt.</description>
+        <parentUuid>_a-0000e801-560f-8000-e5d9-01ef9001ef90_1707049</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>a!localVariables(
+  
+  
+  {
+    #"SYSTEM_SYSRULES_columnsLayout"(
+      columns: {
+        #"SYSTEM_SYSRULES_columnLayout"(
+
+        ),
+        #"SYSTEM_SYSRULES_columnLayout"(
+          contents: {
+            #"SYSTEM_SYSRULES_cardLayout"(
+              height: "AUTO",
+              style: "ERROR",
+              padding: "LESS",
+              shape: "ROUNDED",
+              contents: {
+                #"SYSTEM_SYSRULES_richTextDisplayField"(
+                  align: "CENTER",
+                  value: {
+                    #"SYSTEM_SYSRULES_richTextItem_v1"(
+                      text: "ERROR",
+                      color: "NEGATIVE",
+                      size: "LARGE",
+                      style: "STRONG"
+                    ),
+                  }
+                ),
+                #"SYSTEM_SYSRULES_richTextDisplayField"(
+                  align: "CENTER",
+                  value: {
+                    #"SYSTEM_SYSRULES_richTextItem_v1"(/*Ya existen Operaciones cargadas para la fecha $FechaOperaciones. Indica el problema al administrador"*/
+                      text: /*concat("Exiten fechas en el .txt que ya se encuentran en la base de datos.", char(10), */
+                      concat("Ya existen Operaciones cargadas para las fechas: " &amp; ri!lista_fechas &amp; " . Indica el problema al administrador"),
+                     
+                      /*),*/
+                      style: "STRONG",
+                      size: "STANDARD"
+                    )
+                  }
+                ),
+                #"SYSTEM_SYSRULES_richTextDisplayField"(
+                  align: "CENTER",
+                  value: {
+                    #"SYSTEM_SYSRULES_richTextItem_v1"(
+                      text: "Descargue y verifique su .txt aqui",
+                      link: {
+                        #"SYSTEM_SYSRULES_documentDownloadLink"(
+                          document: ri!documentoSubido
+                        )
+                      }
+                    )
+                  }
+                ),
+                #"SYSTEM_SYSRULES_ButtonArrayLayout"(
+                  align: "CENTER",
+                  buttons: {
+                    #"SYSTEM_SYSRULES_ButtonWidget"(
+                      label: "CErrar",
+                      style: "SECONDARY",
+                      value: false,
+                      submit: true
+                    )
+                  }
+                )
+              }
+            )
+          }
+        ),
+        #"SYSTEM_SYSRULES_columnLayout"(
+
+        )
+      }
+    ),
+  }
+  
+)</definition>
+        <namedTypedValue>
+            <name>documentoSubido</name>
+            <type>
+                <name>CollaborationDocument</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>lista_fechas</name>
+            <type>
+                <name>Text?list</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+        <isCustom>false</isCustom>
+    </interface>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000eaa5-8248-8000-e681-01ef9001ef90_8301227"/>
+        <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9388794"/>
+    </history>
+</contentHaul>

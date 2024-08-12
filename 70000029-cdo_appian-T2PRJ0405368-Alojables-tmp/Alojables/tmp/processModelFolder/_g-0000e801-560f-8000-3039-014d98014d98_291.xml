@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<processModelFolderHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_g-0000eb53-0a0e-8000-a10b-014d98014d98_662</versionUuid>
+    <processModelFolder>
+        <name>SCDO Models</name>
+        <uuid>_g-0000e801-560f-8000-3039-014d98014d98_291</uuid>
+        <description>Carpeta correspondiente a los modelados del aplicativo CDO</description>
+    </processModelFolder>
+    <roleMap>
+        <role name="ADMIN_OWNER">
+            <users/>
+            <groups>
+                <groupUuid>_e-0000e801-560f-8000-e5d6-011e94011e94_5700</groupUuid>
+                <groupUuid>_e-0000e801-560f-8000-e5d6-011e94011e94_5698</groupUuid>
+            </groups>
+        </role>
+        <role name="EDITOR">
+            <users/>
+            <groups/>
+        </role>
+        <role name="EXPLICIT_NONMEMBER">
+            <users/>
+            <groups/>
+        </role>
+        <role name="VIEWER">
+            <users/>
+            <groups>
+                <groupUuid>_e-0000e867-3fd5-8000-e5e0-011e94011e94_5795</groupUuid>
+            </groups>
+        </role>
+        <role name="MANAGER">
+            <users/>
+            <groups/>
+        </role>
+        <role name="INITIATOR">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_g-0000e801-560f-8000-3039-014d98014d98_294"/>
+        <historyInfo versionUuid="_g-0000eb53-0a0e-8000-a10b-014d98014d98_662"/>
+    </history>
+</processModelFolderHaul>

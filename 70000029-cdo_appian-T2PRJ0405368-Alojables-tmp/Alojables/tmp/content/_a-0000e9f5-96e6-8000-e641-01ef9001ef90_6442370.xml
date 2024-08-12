@@ -1,0 +1,477 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9505543</versionUuid>
+    <interface>
+        <name>SDO_Detalle_Reportes_Aprobados</name>
+        <uuid>_a-0000e9f5-96e6-8000-e641-01ef9001ef90_6442370</uuid>
+        <description>Informacion del reporte seleccionado en la tabla contenida en SCDO_Supervisor</description>
+        <parentUuid>_a-0000e801-560f-8000-e5d9-01ef9001ef90_1707049</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>a!localVariables(
+  local!mostrarDocumentos:false,
+  local!documentacion,
+  local!digitalizado,
+  local!digitalizados_rechazados,
+  
+  {
+    if(and(a!isNullOrEmpty(ri!reporte),a!isNullOrEmpty(ri!revisado)),
+
+    {
+      #"SYSTEM_SYSRULES_columnsLayout"(
+        columns: {
+          #"SYSTEM_SYSRULES_columnLayout"(
+            contents: {}
+          ),
+          #"SYSTEM_SYSRULES_columnLayout"(
+            contents: {}
+          ),
+          #"SYSTEM_SYSRULES_columnLayout"(
+            contents: {}
+          )
+        }
+      ),#"SYSTEM_SYSRULES_textField"(
+        label: "Sin valores asociados para mostrar",
+        labelPosition: "ADJACENT",
+
+        readOnly: true
+      ),
+      #"SYSTEM_SYSRULES_ButtonArrayLayout"(
+        buttons: {
+          #"SYSTEM_SYSRULES_ButtonWidget"(
+            icon: "times",
+            tooltip: "Ocultar detalles de operacion",
+            saveInto: { 
+              a!save(ri!mostrarGrid, true),
+              a!save(local!digitalizados_rechazados,null),
+              a!save(local!digitalizado, null),
+              a!save(local!documentacion, null),
+            },
+            style: "DESTRUCTIVE"
+          )
+        })
+
+    },
+
+    {
+      if(
+        and(not(ri!mostrarGrid),ri!rev),
+        #"SYSTEM_SYSRULES_columnsLayout"(
+          columns: {
+            #"SYSTEM_SYSRULES_columnLayout"(),
+            #"SYSTEM_SYSRULES_columnLayout"(
+              contents: {
+                #"SYSTEM_SYSRULES_boxLayout"(
+                  label: "Información del Reporte Aprobado",
+                  contents: {
+                    #"SYSTEM_SYSRULES_columnsLayout"(
+                      columns: {
+                        #"SYSTEM_SYSRULES_columnLayout"(
+                          contents: {
+                            if(
+                              local!mostrarDocumentos = false,
+                              {
+                                #"SYSTEM_SYSRULES_textField"(
+                                  label: "Mercado: ",
+                                  labelPosition: "ADJACENT",
+                                  value: if(a!isNullOrEmpty(ri!revisado.mercado), "NO", ri!revisado.mercado),
+                                  readOnly: true
+                                ),
+                                #"SYSTEM_SYSRULES_textField"(
+                                  label: "Contrato: ",
+                                  labelPosition: "ADJACENT",
+                                  value: if(a!isNullOrEmpty(ri!revisado.contrato), "NO", ri!revisado.contrato),
+                                  readOnly: true
+                                ),
+                                #"SYSTEM_SYSRULES_textField"(
+                                  label: "Emisora: ",
+                                  labelPosition: "ADJACENT",
+                                  value: if(a!isNullOrEmpty(ri!revisado.emisora), "NO", ri!revisado.emisora),
+                                  readOnly: true
+                                ),
+                                #"SYSTEM_SYSRULES_textField"(
+                                  label: "Promotor: ",
+                                  labelPosition: "ADJACENT",
+                                  value: if(a!isNullOrEmpty(ri!revisado.promotor), "NO", ri!revisado.promotor),
+                                  readOnly: true
+                                ),
+                                #"SYSTEM_SYSRULES_textField"(
+                                  label: "Usuario: ",
+                                  labelPosition: "ADJACENT",
+                                  value: if(a!isNullOrEmpty(ri!revisado.usuario), "NO", ri!revisado.usuario),
+                                  readOnly: true
+                                ),
+                                #"SYSTEM_SYSRULES_textField"(
+                                  label: "Fecha Captura:",
+                                  labelPosition: "ADJACENT",
+                                  value: if(a!isNullOrEmpty(ri!revisado.fechacaptura), "NO", ri!revisado.fechacaptura),
+                                  readOnly: true
+                                ),
+                                #"SYSTEM_SYSRULES_textField"(
+                                  label: "Hora Captura:",
+                                  labelPosition: "ADJACENT",
+                                  value: if(a!isNullOrEmpty(ri!revisado.horacaptura), "NO", ri!revisado.horacaptura),
+                                  readOnly: true
+                                ),
+                                #"SYSTEM_SYSRULES_integerField"(
+                                  label: "Riesgo: ",
+                                  labelPosition: "ADJACENT",
+                                  value: if(a!isNullOrEmpty(ri!revisado.riesgo), "NO", ri!revisado.riesgo),
+                                  readOnly: true
+                                ),
+                                #"SYSTEM_SYSRULES_textField"(
+                                  label: "Usuarioreviso: ",
+                                  labelPosition: "ADJACENT",
+                                  /*value: if(a!isNullOrEmpty(ri!revisado.usuario), "NO", ri!revisado.usuario),*/
+                                  value: if(
+                                    a!isNullOrEmpty(ri!revisado.usuario),
+                                    "NO",
+                                    if(
+                                      a!isNullOrEmpty(
+                                        #"4abb2c14-ac25-4b4a-a0f6-a11f52071c0b"(usuarioopics: (ri!revisado.usuario)).data
+                                      ),
+                                      "NO",
+                                      #"4abb2c14-ac25-4b4a-a0f6-a11f52071c0b"(usuarioopics: (ri!revisado.usuario)).data[1].nombre
+                                    )
+                                  ),
+                                  readOnly: true
+                                ),
+                                #"SYSTEM_SYSRULES_textField"(
+                                  label: "Ip: ",
+                                  labelPosition: "ADJACENT",
+                                  value: if(a!isNullOrEmpty(ri!revisado.ip), "NO", ri!revisado.ip),
+                                  readOnly: true
+                                ),
+                                #"SYSTEM_SYSRULES_textField"(
+                                  label: "Observaciones: ",
+                                  labelPosition: "ADJACENT",
+                                  value:if(a!isNullOrEmpty(ri!revisado.observaciones), "NO", ri!revisado.observaciones),
+                                  readOnly: true
+                                ),
+                                #"SYSTEM_SYSRULES_textField"(
+                                  label: "Extra2: ",
+                                  labelPosition: "ADJACENT",
+                                  value: if(a!isNullOrEmpty(ri!revisado.extra2), "NO", ri!revisado.extra2),
+                                  readOnly: true
+                                ),
+                                #"SYSTEM_SYSRULES_textField"(
+                                  label: "Compra/Venta: ",
+                                  labelPosition: "ADJACENT",
+                                  value: if(a!isNullOrEmpty(ri!revisado.extra4), "NO", if(ri!revisado.extra4 = "C", "Compra", "Venta")),
+                                  readOnly: true
+                                ),
+                                #"SYSTEM_SYSRULES_textField"(
+                                  label: "Obligatorio: ",
+                                  labelPosition: "ADJACENT",
+                                  value: if(a!isNullOrEmpty(ri!revisado.obligatorio), "No es Obligatorio", if(ri!revisado.obligatorio = "*", "Es Obligatorio", "No es Obligatorio")),
+                                  readOnly: true
+                                )
+                              },
+                              {
+                                #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2076687"(
+                                  
+                                  digitalizados_rechazados:local!digitalizados_rechazados,
+                                  documentacion: local!documentacion,
+                                  reporte: ri!reporte,
+                                  reporteAprobado: ri!revisado,
+                                  
+                                  digitalizados: local!digitalizado,
+                                  soloDocumentos: true
+                                )
+                              }
+                            ),
+                        
+                          }
+                        ),
+                        #"SYSTEM_SYSRULES_columnLayout"(
+                          contents: {
+                            #"SYSTEM_SYSRULES_ButtonArrayLayout"(
+                              buttons: {
+                                #"SYSTEM_SYSRULES_ButtonWidget"(
+                                  icon: "times",
+                                  tooltip: "Ocultar detalles de operacion",
+                                  size: "SMALL",
+                                  saveInto: { 
+                                    a!save(ri!mostrarGrid, true),
+                                    a!save(local!mostrarDocumentos, false),
+                                    a!save(ri!reporte, null),
+                                    a!save(ri!revisado, null)
+                                  },
+                                  style: "DESTRUCTIVE"
+                                ),
+                              },
+                              align: "END"
+                            ),
+                          },
+                          width: "EXTRA_NARROW"
+                        )
+                      }
+                    ),
+
+                  },
+                  showWhen: and(not(ri!mostrarGrid),ri!rev),
+                ),
+              },
+              width: if(local!mostrarDocumentos = true, "WIDE_PLUS", "WIDE")
+            ),
+            #"SYSTEM_SYSRULES_columnLayout"()
+          },
+          showWhen: and(not(ri!mostrarGrid),ri!rev),
+        ),
+        #"SYSTEM_SYSRULES_columnsLayout"(
+          columns: {
+            #"SYSTEM_SYSRULES_columnLayout"(),
+            #"SYSTEM_SYSRULES_columnLayout"(
+              contents: {
+                #"SYSTEM_SYSRULES_boxLayout"(
+                  label: "Información del reporte",
+                  contents: {
+                    #"SYSTEM_SYSRULES_columnsLayout"(
+                      columns: {
+                        #"SYSTEM_SYSRULES_columnLayout"(
+                          contents: {
+                            if(
+                              local!mostrarDocumentos = false,
+                              {
+                                #"SYSTEM_SYSRULES_textField"(
+                                  label: "Operación: ",
+                                  labelPosition: "ADJACENT",
+                                  value: if(a!isNullOrEmpty(ri!reporte.operacion), "NO", ri!reporte.operacion),
+                                  readOnly: true
+                                ),
+                                #"SYSTEM_SYSRULES_textField"(
+                                  label: "Nombre: ",
+                                  labelPosition: "ADJACENT",
+                                  value: if(a!isNullOrEmpty(ri!reporte.nombre), "NO", ri!reporte.nombre),
+                                  readOnly: true
+                                ),
+                                #"SYSTEM_SYSRULES_floatingPointField"(
+                                  label: "Monto: ",
+                                  labelPosition: "ADJACENT",
+                                  value: if(a!isNullOrEmpty(ri!reporte.monto), "NO", ri!reporte.monto),
+                                  readOnly: true
+                                ),
+                                #"SYSTEM_SYSRULES_textField"(
+                                  label: "Ccostos: ",
+                                  labelPosition: "ADJACENT",
+                                  value: if(a!isNullOrEmpty(ri!reporte.ccostos), "NO", if(a!isNullOrEmpty(#"_a-0000e8c4-62ba-8000-e603-01ef9001ef90_2682345"(cc: ri!reporte.ccostos).data), "El Centro de Costo no está registrado", #"_a-0000e8c4-62ba-8000-e603-01ef9001ef90_2682345"(cc: ri!reporte.ccostos).data[1].nombre)),
+                                  readOnly: true
+                                ),
+                                #"SYSTEM_SYSRULES_textField"(
+                                  label: "Fecha de Captura: ",
+                                  labelPosition: "ADJACENT",
+                                  value: if(a!isNullOrEmpty(ri!reporte.fechacaptura), "NO", ri!reporte.fechacaptura),
+                                  readOnly: true
+                                ),
+                                #"SYSTEM_SYSRULES_textField"(
+                                  label: "Bitacora: ",
+                                  labelPosition: "ADJACENT",
+                                  value:if(a!isNullOrEmpty(ri!reporte.bitacora), "NO", ri!reporte.bitacora),
+                                  readOnly: true
+                                ),
+                                #"SYSTEM_SYSRULES_textField"(
+                                  label: "Revisado: ",
+                                  labelPosition: "ADJACENT",
+                                  value: if(a!isNullOrEmpty(ri!reporte.revisado), "NO", ri!reporte.revisado),
+                                  readOnly: true
+                                ),
+                                #"SYSTEM_SYSRULES_textField"(
+                                  label: "Ccreviso: ",
+                                  labelPosition: "ADJACENT",
+                                  value: if(a!isNullOrEmpty(ri!reporte.ccreviso), "NO", ri!reporte.ccreviso),
+                                  readOnly: true
+                                ),
+                                #"SYSTEM_SYSRULES_textField"(
+                                  label: "Fecha Reviso: ",
+                                  labelPosition: "ADJACENT",
+                                  value: if(a!isNullOrEmpty(ri!reporte.fechareviso), "NO", ri!reporte.fechareviso),
+                                  readOnly: true
+                                ),
+                                #"SYSTEM_SYSRULES_textField"(
+                                  label: "Observaciones: ",
+                                  labelPosition: "ADJACENT",
+                                  value: if(a!isNullOrEmpty(ri!reporte.observaciones), "NO", ri!reporte.observaciones),
+                                  readOnly: true
+                                )
+                              },
+                              {
+                                #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2076687"(
+                                  /*cancel: local!cancel,*/
+                                  documentacion: local!documentacion,
+                                  reporte: ri!reporte,
+                                  reporteAprobado: ri!revisado,
+                                  /*rechazar: local!rechazar,*/
+                                  digitalizados: local!digitalizado,
+                                  digitalizados_rechazados:local!digitalizados_rechazados,
+                                  soloDocumentos: true
+                                )
+                              }
+                            ),
+                            #"SYSTEM_SYSRULES_ButtonArrayLayout"(
+                              buttons: {
+                                #"SYSTEM_SYSRULES_ButtonWidget"(
+                                  label: if(local!mostrarDocumentos = false, "Ver Documentacion", "Cerrar Documentacion"),
+                                  icon: "file",
+                                  tooltip: "Ver Documentos del Reporte",
+                                  size: "SMALL",
+                                  style: "PRIMARY",
+                                  value: local!mostrarDocumentos,
+                                  saveInto: {
+                                    a!save(local!mostrarDocumentos, if(local!mostrarDocumentos = false, true, false)),
+                                    a!save(local!digitalizado, #"_a-0000e9f5-96e6-8000-e641-01ef9001ef90_6495671"(contrato: ri!reporte.contrato, operacion: ri!reporte.operacion)),
+                                    a!save(local!documentacion, #"_a-0000e982-d80b-8000-e63b-01ef9001ef90_4771668"(contrato: ri!reporte.contrato)),
+                                    a!save(local!digitalizados_rechazados,#"_a-0000e982-d80b-8000-e63b-01ef9001ef90_4776405"(contrato: ri!reporte.contrato, operacion: ri!reporte.operacion))
+                                 
+                                  },
+                                )
+                              },
+                              align: "CENTER"
+                            )
+                          }
+                        ),
+                        #"SYSTEM_SYSRULES_columnLayout"(
+                          contents: {
+                            #"SYSTEM_SYSRULES_ButtonArrayLayout"(
+                              buttons: {
+                                #"SYSTEM_SYSRULES_ButtonWidget"(
+                                  icon: "times",
+                                  tooltip: "Ocultar detalles de operacion",
+                                  size: "SMALL",
+                                  saveInto: { 
+                                    a!save(ri!mostrarGrid, true),
+                                    a!save(ri!reporte, null),
+                                    a!save(ri!revisado, null),
+                                    a!save(local!mostrarDocumentos, false)
+                                  },
+                                  style: "DESTRUCTIVE"
+                                ),
+                              },
+                              align: "END"
+                            ),
+                          },
+                          width: "EXTRA_NARROW"
+                        )
+                      }
+                    )
+
+                  }
+                ),        
+              },
+              showWhen: and(not(ri!mostrarGrid),not(ri!rev)),
+              width: if(local!mostrarDocumentos = true, "WIDE_PLUS", "WIDE")
+            ),
+            #"SYSTEM_SYSRULES_columnLayout"()
+          }
+        )
+       
+
+      ),
+    })
+  }
+)</definition>
+        <namedTypedValue>
+            <name>mostrarGrid</name>
+            <type>
+                <name>boolean</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>rev</name>
+            <type>
+                <name>boolean</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>revisado</name>
+            <type>
+                <name>cdo_reportes_aprobados</name>
+                <namespace>urn:com:appian:types</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>reporte</name>
+            <type>
+                <name>cdo_reportes</name>
+                <namespace>urn:com:appian:types</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+        <isCustom>false</isCustom>
+    </interface>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <typedValue>
+        <type>
+            <name>RuleTestConfig?list</name>
+            <namespace>http://www.appian.com/ae/types/2009</namespace>
+        </type>
+        <value>
+            <el>
+                <a:name/>
+                <a:ruleInputTestConfigs>
+                    <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:boolean">false</a:value>
+                    <a:nameRef>mostrarGrid</a:nameRef>
+                    <a:id>1</a:id>
+                </a:ruleInputTestConfigs>
+                <a:ruleInputTestConfigs>
+                    <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="xsd:boolean"/>
+                    <a:nameRef>rev</a:nameRef>
+                    <a:id>2</a:id>
+                </a:ruleInputTestConfigs>
+                <a:ruleInputTestConfigs>
+                    <a:value xmlns:n1="urn:com:appian:types" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="n1:cdo_reportes_aprobados"/>
+                    <a:nameRef>revisado</a:nameRef>
+                    <a:id>3</a:id>
+                </a:ruleInputTestConfigs>
+                <a:ruleInputTestConfigs>
+                    <a:value xmlns:n1="urn:com:appian:types" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="n1:cdo_reportes"/>
+                    <a:nameRef>reporte</a:nameRef>
+                    <a:id>4</a:id>
+                </a:ruleInputTestConfigs>
+                <a:assertions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+            </el>
+        </value>
+    </typedValue>
+    <history>
+        <historyInfo versionUuid="_a-0000ea22-4ef8-8000-e643-01ef9001ef90_6719525"/>
+        <historyInfo versionUuid="_a-0000ea72-eaf6-8000-e67b-01ef9001ef90_7749631"/>
+        <historyInfo versionUuid="_a-0000eabf-35e2-8000-e683-01ef9001ef90_8391975"/>
+        <historyInfo versionUuid="_a-0000eb09-d442-8000-e687-01ef9001ef90_8861187"/>
+        <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9390479"/>
+        <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9505543"/>
+    </history>
+</contentHaul>

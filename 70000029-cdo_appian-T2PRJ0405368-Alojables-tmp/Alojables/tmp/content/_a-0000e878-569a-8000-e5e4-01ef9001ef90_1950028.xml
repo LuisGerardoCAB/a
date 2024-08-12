@@ -1,0 +1,340 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9505908</versionUuid>
+    <interface>
+        <name>SCDO_Sincronizar_Oper</name>
+        <uuid>_a-0000e878-569a-8000-e5e4-01ef9001ef90_1950028</uuid>
+        <description>Interface correspondiente al modulo Operaciones</description>
+        <parentUuid>_a-0000e801-560f-8000-e5d9-01ef9001ef90_1707049</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>a!localVariables(
+  local!sincronizadas,
+  local!sinc: false,
+  local!totalSinc: if(
+    a!isNullOrEmpty(local!sincronizadas),
+    0,
+    length(local!sincronizadas)
+  ),
+  local!bUserT,
+  local!bUser,
+  local!startIndex: 1,
+  local!batchSize: 10,
+  local!imagenes_pendientes_cdt: #"SYSTEM_SYSRULES_queryEntity_v2"(
+    entity: #"_a-0000e982-d80b-8000-e63b-01ef9001ef90_4679248",
+    query: #"SYSTEM_SYSRULES_query"(
+      logicalExpression: #"SYSTEM_SYSRULES_queryLogicalExpression"(
+        operator: "AND",
+        filters: {
+          #"SYSTEM_SYSRULES_queryFilter"(
+            field: "contrato ",
+            operator: "=",
+            value: local!bUser
+          )
+        },
+        ignoreFiltersWithEmptyValues: true
+      ),
+      pagingInfo: #"SYSTEM_SYSRULES_pagingInfo"(startIndex: 1, batchSize: 10)
+    ),
+    fetchTotalCount: true
+  ),
+  
+  {
+    #"SYSTEM_SYSRULES_sideBySideLayout"(
+      items: {
+        #"SYSTEM_SYSRULES_sideBySideItem"(
+          item: #"SYSTEM_SYSRULES_richTextDisplayField"(
+            labelPosition: "ABOVE",
+            value: {
+              #"SYSTEM_SYSRULES_richTextItem_v1"(
+                text: {
+                  "Para validar las operaciones cargadas por los ejecutivos y no han sido revisadas en las operaciones cargadas da click"
+                },
+                size: "MEDIUM"
+              )
+            }
+          ),
+          width: "MINIMIZE"
+        ),
+        #"SYSTEM_SYSRULES_sideBySideItem"(
+          item: #"SYSTEM_SYSRULES_ButtonArrayLayout"(
+            buttons: {
+              #"SYSTEM_SYSRULES_ButtonWidget"(
+                label: "Aquí",
+                style: "LINK",
+                saveInto: {
+                  #"SYSTEM_SYSRULES_startProcess"(
+                    processModel: #"_a-0000e9f5-96e6-8000-e641-01ef9001ef90_6431734",
+                    processParameters: {
+                      imagenes_pendientes: local!imagenes_pendientes_cdt.data
+                    },
+                    onSuccess: a!save(
+                      local!sincronizadas,
+                      fv!processInfo.pv.imagenes_sincronizadas
+                    )
+                  ),
+                  a!save(local!sinc, true)
+                },
+
+              )
+            },
+            align: "START"
+          )
+        )
+      }
+    ),
+    #"SYSTEM_SYSRULES_richTextDisplayField"(
+      labelPosition: "COLLAPSED",
+      value: {
+        #"SYSTEM_SYSRULES_richTextItem_v1"(
+          text: {
+            concat(
+              "Total de Operaciones antes de proceso: ",
+              local!imagenes_pendientes_cdt.totalCount
+            )
+          },
+          size: "MEDIUM"
+        ),
+        char(10),
+        #"SYSTEM_SYSRULES_richTextItem_v1"(
+          text: {
+            concat(
+              "Operaciones sincronizadas: ",
+              local!totalSinc
+            )
+          },
+          size: "MEDIUM"
+        )
+      }
+    ),
+    #"SYSTEM_SYSRULES_columnsLayout"(
+      columns: {
+        #"SYSTEM_SYSRULES_columnLayout"(contents: {}),
+        #"SYSTEM_SYSRULES_columnLayout"(contents: {}),
+        #"SYSTEM_SYSRULES_columnLayout"(contents: {}),
+        #"SYSTEM_SYSRULES_columnLayout"(
+          contents: {
+            #"SYSTEM_SYSRULES_textField"(
+              label: "Buscar",
+              labelPosition: "ABOVE",
+              value: local!bUserT,
+              saveInto: local!bUserT,
+              refreshAfter: "UNFOCUS",
+              validations: {}
+            )
+          }
+        ),
+        #"SYSTEM_SYSRULES_columnLayout"(
+          contents: {
+            #"SYSTEM_SYSRULES_ButtonArrayLayout"(
+              buttons: {
+                #"SYSTEM_SYSRULES_ButtonWidget"(
+                  label: "Buscar",
+                  loadingIndicator: true,
+                  saveInto: { a!save(local!bUser, local!bUserT) },
+                  style: "DESTRUCTIVE"
+                )
+              },
+              align: "START"
+            )
+          }
+        )
+      },
+      showWhen: local!sinc
+    ),
+    #"SYSTEM_SYSRULES_gridLayout"(
+      label: "",
+      labelPosition: "ABOVE",
+      headerCells: {
+        #"SYSTEM_SYSRULES_gridLayoutHeaderCell"(label: "Operación"),
+        #"SYSTEM_SYSRULES_gridLayoutHeaderCell"(label: "Contrato"),
+        #"SYSTEM_SYSRULES_gridLayoutHeaderCell"(label: "F.Carga"),
+        #"SYSTEM_SYSRULES_gridLayoutHeaderCell"(label: "Tipo"),
+        #"SYSTEM_SYSRULES_gridLayoutHeaderCell"(label: "Documento")
+      },
+      columnConfigs: {},
+      rows: {
+        {
+          if(
+            a!isNotNullOrEmpty(local!sincronizadas),
+            #"SYSTEM_SYSRULES_forEach"(
+              items: local!sincronizadas,
+              expression: #"SYSTEM_SYSRULES_gridRowLayout"(
+                contents: {
+                  #"SYSTEM_SYSRULES_textField"(
+                    value: fv!item.deal,
+                    readOnly: true,
+                    align: "CENTER"
+                  ),
+                  #"SYSTEM_SYSRULES_textField"(
+                    value: fv!item.contrato,
+                    readOnly: true,
+                    align: "CENTER"
+                  ),
+                  #"SYSTEM_SYSRULES_textField"(
+                    value: fv!item.fechacaptura,
+                    readOnly: true,
+                    align: "CENTER"
+                  ),
+                  #"SYSTEM_SYSRULES_textField"(
+                    value: fv!item.tipo,
+                    readOnly: true,
+                    align: "CENTER"
+                  ),
+                  #"SYSTEM_SYSRULES_textField"(
+                    value: if(
+                      a!isNotNullOrEmpty(
+                        #"_a-0000e968-30a1-8000-e639-01ef9001ef90_4493570"(iddocumento: fv!item.iddocumento)
+                      ),
+                      #"_a-0000e968-30a1-8000-e639-01ef9001ef90_4493570"(iddocumento: fv!item.iddocumento)[1].documento,
+                      ""
+                    ),
+                    readOnly: true
+                  )
+                }
+              )
+            ),
+            {}
+          )
+        }
+      },
+      selectionSaveInto: {},
+      validations: {},
+      shadeAlternateRows: true,
+      showWhen: local!sinc
+    ),
+    #"SYSTEM_SYSRULES_richTextDisplayField"(
+      labelPosition: "COLLAPSED",
+      value: {
+        #"SYSTEM_SYSRULES_richTextIcon"(
+          icon: "angle-double-left",
+          link: #"SYSTEM_SYSRULES_dynamicLink"(
+            saveInto: {
+              a!save(local!startIndex, 1),
+              /*a!save(local!batchSize, 10)*/
+
+            },
+            showWhen: not(local!startIndex = 1)
+          ),
+          linkStyle: "STANDALONE",
+          size: "MEDIUM_PLUS"
+        ),
+        #"SYSTEM_SYSRULES_richTextIcon"(
+          icon: "angle-left",
+          link: #"SYSTEM_SYSRULES_dynamicLink"(
+            saveInto: {
+              a!save(
+                local!startIndex,
+                tointeger(local!startIndex - 10)
+              ),
+          
+
+            },
+            showWhen: not(local!startIndex = 1)
+          ),
+          linkStyle: "STANDALONE",
+          size: "MEDIUM_PLUS"
+        ),
+        #"SYSTEM_SYSRULES_richTextItem_v1"(
+          text: {
+            #"SYSTEM_SYSRULES_richTextItem_v1"(
+              text: {
+                local!startIndex &amp; " - " &amp; if(
+                  local!totalSinc &gt; local!batchSize,
+                  local!batchSize,
+                  local!totalSinc
+                )
+              },
+              style: { "STRONG" }
+            ),
+            " de " &amp; local!totalSinc
+          },
+          size: "STANDARD"
+        ),
+        #"SYSTEM_SYSRULES_richTextIcon"(
+          icon: "angle-right",
+          link: #"SYSTEM_SYSRULES_dynamicLink"(
+            saveInto: {
+              a!save(
+                local!startIndex,
+                tointeger(local!startIndex + 10)
+              ),
+           
+
+            },
+            showWhen: 
+            local!startIndex+9 &lt; local!totalSinc
+          ),
+          linkStyle: "STANDALONE",
+          size: "MEDIUM_PLUS"
+        ),
+        #"SYSTEM_SYSRULES_richTextIcon"(
+          icon: "angle-double-right",
+          link: #"SYSTEM_SYSRULES_dynamicLink"(
+            saveInto: {
+              a!save(
+                local!startIndex,
+                tointeger(
+                  local!totalSinc - tointeger(right(local!totalSinc)) + 1
+                )
+              ),
+             
+            },
+            showWhen: 
+            local!startIndex+9 &lt; local!totalSinc
+          ),
+          linkStyle: "STANDALONE",
+          size: "MEDIUM_PLUS"
+        )
+      },
+      align: "RIGHT",
+      showWhen: local!sinc
+    )
+  }
+)</definition>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+        <isCustom>false</isCustom>
+    </interface>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000e878-569a-8000-e5e4-01ef9001ef90_1950063"/>
+        <historyInfo versionUuid="_a-0000e9f5-96e6-8000-e641-01ef9001ef90_6596910"/>
+        <historyInfo versionUuid="_a-0000eb09-d442-8000-e687-01ef9001ef90_8817766"/>
+        <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9388934"/>
+        <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9450636"/>
+        <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9505908"/>
+    </history>
+</contentHaul>

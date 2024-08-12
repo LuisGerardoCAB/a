@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9386517</versionUuid>
+    <rule>
+        <name>SCDO_getSupervisoresVistaByFilters</name>
+        <uuid>_a-0000e982-d80b-8000-e63b-01ef9001ef90_4617772</uuid>
+        <description>Regresa la información de la vista V_CDO_Supervisores</description>
+        <parentUuid>_a-0000e9a3-ab27-8000-e63d-01ef9001ef90_4830328</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>#"_a-0000e8b9-0989-8000-e5fd-01ef9001ef90_2420859"(
+  dataStoreEntity_dt: #"_a-0000e982-d80b-8000-e63b-01ef9001ef90_4621838",
+  queryFilter_any: {
+    #"SYSTEM_SYSRULES_queryFilter"(
+      field: "idsegusuario",
+      operator: "=",
+      value: ri!idsegusuario,
+      applyWhen: isnull(ri!idsegusuario) &lt;&gt; true
+    ),
+    #"SYSTEM_SYSRULES_queryFilter"(
+      field: "usuario",
+      operator: "=",
+      value: ri!usuario,
+      applyWhen: isnull(ri!usuario) &lt;&gt; true
+    ),
+    #"SYSTEM_SYSRULES_queryFilter"(
+      field: "nombre",
+      operator: "=",
+      value: ri!nombre,
+      applyWhen: isnull(ri!nombre) &lt;&gt; true
+    ),
+    #"SYSTEM_SYSRULES_queryFilter"(
+      field: "tipo",
+      operator: "=",
+      value: ri!tipo,
+      applyWhen: isnull(ri!tipo) &lt;&gt; true
+    ),
+    #"SYSTEM_SYSRULES_queryFilter"(
+      field: "password",
+      operator: "=",
+      value: ri!password,
+      applyWhen: isnull(ri!password) &lt;&gt; true
+    ),
+    #"SYSTEM_SYSRULES_queryFilter"(
+      field: "segmento",
+      operator: "=",
+      value: ri!segmento,
+      applyWhen: isnull(ri!segmento) &lt;&gt; true
+    ),
+    #"SYSTEM_SYSRULES_queryFilter"(
+      field: "usuarion",
+      operator: "=",
+      value: ri!usuarion,
+      applyWhen: isnull(ri!usuarion) &lt;&gt; true
+    ),
+  },
+  pagingInfo_pi: if(
+    not(isnull(ri!paginInfo)),
+    ri!paginInfo,
+    #"SYSTEM_SYSRULES_pagingInfo"(
+      startIndex: 1,
+      batchSize: -1,
+      sort: #"SYSTEM_SYSRULES_sortInfo"(field: "idsegusuario", ascending: true())
+    )
+  ),
+  
+  selectionColumn_txt: ri!seleccionColumnas,   
+  /*pagingInfo_pi: ri!paginInfo,*/
+  ignoreFiltersWithEmptyValues_bool:true,
+  fetchTotalCount_bool: true
+)
+
+</definition>
+        <namedTypedValue>
+            <name>idsegusuario</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>usuario</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>nombre</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>tipo</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>password</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>paginInfo</name>
+            <type>
+                <name>PagingInfo</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>seleccionColumnas</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>segmento</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>usuarion</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <preferredEditor>legacy</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000e9a3-ab27-8000-e63d-01ef9001ef90_4831028"/>
+        <historyInfo versionUuid="_a-0000eae4-5659-8000-e685-01ef9001ef90_8620254"/>
+        <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9386517"/>
+    </history>
+</contentHaul>

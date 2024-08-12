@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9386483</versionUuid>
+    <rule>
+        <name>SCDO_getReportesByFilterCorreccion</name>
+        <uuid>_a-0000eb09-d442-8000-e687-01ef9001ef90_8842299</uuid>
+        <description>Regla que consulta la información del cdt Reportes para la correccion de errores.</description>
+        <parentUuid>_a-0000e9a3-ab27-8000-e63d-01ef9001ef90_4829156</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>#"_a-0000e8b9-0989-8000-e5fd-01ef9001ef90_2420859"(
+  dataStoreEntity_dt: #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_1932909",
+  queryFilter_any: {
+    #"SYSTEM_SYSRULES_queryFilter"(
+      field: "idreporte",
+      operator: "=",
+      value: ri!idreporte,
+      applyWhen: isnull(ri!idreporte) &lt;&gt; true
+    ),
+   
+    #"SYSTEM_SYSRULES_queryFilter"(
+      field: "operacion",
+      operator: "=",
+      value: ri!operacion,
+      applyWhen: isnull(ri!operacion) &lt;&gt; true
+    ),
+    #"SYSTEM_SYSRULES_queryFilter"(
+      field: "usuario",
+      operator: "in",
+      value: ri!usuarios,
+      applyWhen: isnull(ri!usuarios) &lt;&gt; true
+    ),
+    #"SYSTEM_SYSRULES_queryFilter"(
+      field: "ccostos",
+      operator: "in",
+      value: ri!ccostos,
+      applyWhen: isnull(ri!ccostos) &lt;&gt; true
+    ),
+   
+  },
+  selectionColumn_txt: ri!seleccionColumnas,
+  pagingInfo_pi: 
+  if(
+    isnull(ri!paginInfo),
+    #"SYSTEM_SYSRULES_pagingInfo"(startIndex: 1, batchSize: 50),
+    ri!paginInfo
+  ),
+   
+  
+  ignoreFiltersWithEmptyValues_bool: true,
+  fetchTotalCount_bool: true
+).data</definition>
+        <namedTypedValue>
+            <name>idreporte</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>operacion</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>ccostos</name>
+            <type>
+                <name>Text?list</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>usuarios</name>
+            <type>
+                <name>Text?list</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>seleccionColumnas</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>paginInfo</name>
+            <type>
+                <name>PagingInfo</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>legacy</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000eb09-d442-8000-e687-01ef9001ef90_8843510"/>
+        <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9386483"/>
+    </history>
+</contentHaul>

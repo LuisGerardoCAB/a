@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9387015</versionUuid>
+    <interface>
+        <name>SCDO_Centro_Costos</name>
+        <uuid>_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1899600</uuid>
+        <description>Interfaz para todo el modulo de Centro de Costos</description>
+        <parentUuid>_a-0000e801-560f-8000-e5d9-01ef9001ef90_1707049</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>a!localVariables(
+  local!opcionMenuSeleccionada: #"_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1899517"()[1],
+  local!indiceMenuSeleccionado: 1,
+  local!ccostos,
+  local!nombre,
+  local!segmento,
+  local!region,
+  local!modificar,
+  local!datoSeleccionado,
+  local!datosSeleccionados,
+  local!proceso_txt,
+  /*local!datoSeleccionado: 'type!{urn:com:appian:types}cdo_centroscostos'(*/
+  /*),*/
+  /*local!category,*/
+  /*local!proceso_txt,*/
+  /*local!centrocosto_cdt,*/
+  /*local!centroSeleccionado,*/
+  local!mostrarPantallaDetalle,
+  /*local!startIndex,*/
+  /*local!batchSize,*/
+  
+  #"SYSTEM_SYSRULES_columnsLayout"(
+    columns: {
+      #"SYSTEM_SYSRULES_columnLayout"(
+        contents: {
+          #"_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1881575"(
+            opcionSeleccionada_any: local!opcionMenuSeleccionada,
+            opciones_any: #"_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1899517"(),
+            indiceSeleccionado_int: local!indiceMenuSeleccionado
+          ),
+          if(
+            local!opcionMenuSeleccionada.titulo = #"_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1899451"[1],
+            #"_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1898923"(
+              /*proceso_txt: local!proceso_txt,*/
+              /*category: local!category,*/
+              /*centrocosto_cdt: local!centrocosto_cdt,*/
+              /*centroSeleccionado: local!centroSeleccionado,*/
+              /*datoSeleccionado: local!datoSeleccionado,*/
+              /*datosSeleccionados: local!datosSeleccionados,*/
+              /*proceso_txt: local!proceso_txt,*/
+/*              */
+              /*mostrarPantallaDetalle: local!mostrarPantallaDetalle*/
+              
+            ),
+          choose(
+              local!opcionMenuSeleccionada.titulo = #"_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1899451"[2],
+              #"_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1899264"(
+                /*ccostos: local!ccostos,*/
+                /*nombre: local!nombre,*/
+                /*segmento: local!segmento,*/
+                /*region: local!region,*/
+                /*modificar: local!modificar*/
+              
+              )
+              
+            )
+          )
+        },
+        width: "AUTO"
+      )
+      
+    }
+  )
+)</definition>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+        <isCustom>false</isCustom>
+    </interface>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000e94c-78eb-8000-e637-01ef9001ef90_3792839"/>
+        <historyInfo versionUuid="_a-0000e9a7-6d42-8000-e63f-01ef9001ef90_5271578"/>
+        <historyInfo versionUuid="_a-0000eabf-35e2-8000-e683-01ef9001ef90_8450764"/>
+        <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9387015"/>
+    </history>
+</contentHaul>

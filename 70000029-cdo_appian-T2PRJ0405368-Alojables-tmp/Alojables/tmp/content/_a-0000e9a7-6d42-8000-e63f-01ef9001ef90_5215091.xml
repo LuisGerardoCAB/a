@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9389864</versionUuid>
+    <interface>
+        <name>SCDO_Mantenimiento</name>
+        <uuid>_a-0000e9a7-6d42-8000-e63f-01ef9001ef90_5215091</uuid>
+        <description>Interfaz que contiene mantenimiento de cdo</description>
+        <parentUuid>_a-0000e801-560f-8000-e5d9-01ef9001ef90_1707049</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>a!localVariables(
+  local!opcionMenuSeleccionada: #"_a-0000e9a7-6d42-8000-e63f-01ef9001ef90_5221019"()[1],
+  local!indiceMenuSeleccionado: 1,
+  #"SYSTEM_SYSRULES_sectionLayout_v1"(
+    contents: {#"SYSTEM_SYSRULES_columnsLayout"(
+      columns: {
+        #"SYSTEM_SYSRULES_columnLayout"(
+          contents: {
+            #"_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1881575"(
+              opcionSeleccionada_any: local!opcionMenuSeleccionada,
+              opciones_any: #"_a-0000e9a7-6d42-8000-e63f-01ef9001ef90_5221019"(),
+              indiceSeleccionado_int: local!indiceMenuSeleccionado
+            ),
+            if(
+              local!opcionMenuSeleccionada.titulo = #"_a-0000e9a7-6d42-8000-e63f-01ef9001ef90_5220995"[1],
+              #"_a-0000e9a7-6d42-8000-e63f-01ef9001ef90_5084957"(),
+              if(
+                local!opcionMenuSeleccionada.titulo = #"_a-0000e9a7-6d42-8000-e63f-01ef9001ef90_5220995"[2],
+                #"_a-0000e9a7-6d42-8000-e63f-01ef9001ef90_5218117"(),
+                if(
+                  local!opcionMenuSeleccionada.titulo = #"_a-0000e9a7-6d42-8000-e63f-01ef9001ef90_5220995"[3],
+                  choose(
+                    local!opcionMenuSeleccionada.titulo = #"_a-0000e9a7-6d42-8000-e63f-01ef9001ef90_5220995"[3],
+                    #"_a-0000e9a3-ab27-8000-e63d-01ef9001ef90_4830969"(
+                    )
+                
+                  ),
+                  {
+                    #"_a-0000e9a7-6d42-8000-e63f-01ef9001ef90_5771020"()
+                  }
+                )
+
+              )
+            )
+
+          },
+          width: "AUTO"
+        )
+      }
+      /*width: "AUTO"*/
+    )}
+  )
+  
+)</definition>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+        <isCustom>false</isCustom>
+    </interface>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000e9a7-6d42-8000-e63f-01ef9001ef90_5771579"/>
+        <historyInfo versionUuid="_a-0000eb09-d442-8000-e687-01ef9001ef90_8849352"/>
+        <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9389864"/>
+    </history>
+</contentHaul>

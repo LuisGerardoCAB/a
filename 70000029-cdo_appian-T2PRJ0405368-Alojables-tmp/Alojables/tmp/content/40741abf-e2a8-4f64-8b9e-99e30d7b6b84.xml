@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000e9a7-6d42-8000-e63f-01ef9001ef90_5887788</versionUuid>
+    <rule>
+        <name>SCDO_marcajeObligatorioPorReportes</name>
+        <uuid>40741abf-e2a8-4f64-8b9e-99e30d7b6b84</uuid>
+        <description>Regla de expresión que marca como obligatorio a los reportes que se pasan por parámetro.</description>
+        <parentUuid>_a-0000e9a3-ab27-8000-e63d-01ef9001ef90_4829216</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>#"SYSTEM_SYSRULES_forEach"(
+  items: if( a!isNullOrEmpty(ri!reportes), ri!reportesAprobados, ri!reportes),
+  expression: {
+    if(a!isNullOrEmpty(ri!reportes),
+    'type!{urn:com:appian:types}cdo_reportes_aprobados'(
+      idreporte: if(a!isNullOrEmpty(fv!item.idreporte), null(), fv!item.idreporte),
+      mercado: if(a!isNullOrEmpty(fv!item.mercado),null(), fv!item.mercado),
+      operacion: if(a!isNullOrEmpty(fv!item.operacion), null(), fv!item.operacion),
+      contrato: if(a!isNullOrEmpty(fv!item.contrato), null(), fv!item.contrato),
+      nombre: if(a!isNullOrEmpty(fv!item.nombre), null(), fv!item.nombre),
+      emisora: if(a!isNullOrEmpty(fv!item.emisora), null(), fv!item.emisora),
+      monto: if(a!isNullOrEmpty(fv!item.monto), null(), fv!item.monto),
+      promotor: if(a!isNullOrEmpty(fv!item.promotor), null(), fv!item.promotor),
+      ccostos: if(a!isNullOrEmpty(fv!item.ccostos), null(), fv!item.ccostos),
+      usuario: if(a!isNullOrEmpty(fv!item.usuario), null(), fv!item.usuario),
+      fechacaptura: if(a!isNullOrEmpty(fv!item.fechacaptura), null(), fv!item.fechacaptura),
+      horacaptura: if(a!isNullOrEmpty(fv!item.horacaptura), null(), fv!item.horacaptura),
+      bitacora: if(a!isNullOrEmpty(fv!item.bitacora), null(), fv!item.bitacora),
+      riesgo: if(a!isNullOrEmpty(fv!item.riesgo), null(), fv!item.riesgo),
+      revisado: if(a!isNullOrEmpty(fv!item.revisado), null(), fv!item.revisado),
+      usuarioreviso: if(a!isNullOrEmpty(fv!item.usuarioreviso), null(), fv!item.usuarioreviso),
+      ccreviso: if(a!isNullOrEmpty(fv!item.ccreviso), null(), fv!item.ccreviso),
+      ip: if(a!isNullOrEmpty(fv!item.horacaptura), null(), fv!item.horacaptura),
+      fechareviso: if(a!isNullOrEmpty(fv!item.fechareviso), null(), fv!item.fechareviso),
+      observaciones: if(a!isNullOrEmpty(fv!item.observaciones), null(), fv!item.observaciones),
+      extra1: if(a!isNullOrEmpty(fv!item.extra1), null(), fv!item.extra1),
+      extra2: if(a!isNullOrEmpty(fv!item.extra2), null(), fv!item.extra2),
+      extra3: if(a!isNullOrEmpty(fv!item.extra3), null(), fv!item.extra3),
+      extra4: if(a!isNullOrEmpty(fv!item.extra4), null(), fv!item.extra4),
+      extra5: if(a!isNullOrEmpty(fv!item.extra5), null(), fv!item.extra5),
+      obligatorio: "*",
+      titulo: if(a!isNullOrEmpty(fv!item.titulo), null(), fv!item.titulo),
+      usuarioaprobo: fv!item.usuarioaprobo,
+      fechaaprobacion: fv!item.fechaaprobacion,
+      ipaprobacion: fv!item.ipaprobacion,
+    ),
+    'type!{urn:com:appian:types}cdo_reportes'(
+      idreporte: if(a!isNullOrEmpty(fv!item.idreporte), null(), fv!item.idreporte),
+      mercado: if(a!isNullOrEmpty(fv!item.mercado),null(), fv!item.mercado),
+      operacion: if(a!isNullOrEmpty(fv!item.operacion), null(), fv!item.operacion),
+      contrato: if(a!isNullOrEmpty(fv!item.contrato), null(), fv!item.contrato),
+      nombre: if(a!isNullOrEmpty(fv!item.nombre), null(), fv!item.nombre),
+      emisora: if(a!isNullOrEmpty(fv!item.emisora), null(), fv!item.emisora),
+      monto: if(a!isNullOrEmpty(fv!item.monto), null(), fv!item.monto),
+      promotor: if(a!isNullOrEmpty(fv!item.promotor), null(), fv!item.promotor),
+      ccostos: if(a!isNullOrEmpty(fv!item.ccostos), null(), fv!item.ccostos),
+      usuario: if(a!isNullOrEmpty(fv!item.usuario), null(), fv!item.usuario),
+      fechacaptura: if(a!isNullOrEmpty(fv!item.fechacaptura), null(), fv!item.fechacaptura),
+      horacaptura: if(a!isNullOrEmpty(fv!item.horacaptura), null(), fv!item.horacaptura),
+      bitacora: if(a!isNullOrEmpty(fv!item.bitacora), null(), fv!item.bitacora),
+      riesgo: if(a!isNullOrEmpty(fv!item.riesgo), null(), fv!item.riesgo),
+      revisado: if(a!isNullOrEmpty(fv!item.revisado), null(), fv!item.revisado),
+      usuarioreviso: if(a!isNullOrEmpty(fv!item.usuarioreviso), null(), fv!item.usuarioreviso),
+      ccreviso: if(a!isNullOrEmpty(fv!item.ccreviso), null(), fv!item.ccreviso),
+      ip: if(a!isNullOrEmpty(fv!item.horacaptura), null(), fv!item.horacaptura),
+      fechareviso: if(a!isNullOrEmpty(fv!item.fechareviso), null(), fv!item.fechareviso),
+      observaciones: if(a!isNullOrEmpty(fv!item.observaciones), null(), fv!item.observaciones),
+      extra1: if(a!isNullOrEmpty(fv!item.extra1), null(), fv!item.extra1),
+      extra2: if(a!isNullOrEmpty(fv!item.extra2), null(), fv!item.extra2),
+      extra3: if(a!isNullOrEmpty(fv!item.extra3), null(), fv!item.extra3),
+      extra4: if(a!isNullOrEmpty(fv!item.extra4), null(), fv!item.extra4),
+      extra5: if(a!isNullOrEmpty(fv!item.extra5), null(), fv!item.extra5),
+      obligatorio: "*",
+      titulo: if(a!isNullOrEmpty(fv!item.titulo), null(), fv!item.titulo),
+    )
+    )
+  }
+)</definition>
+        <namedTypedValue>
+            <name>reportes</name>
+            <type>
+                <name>cdo_reportes?list</name>
+                <namespace>urn:com:appian:types</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>reportesAprobados</name>
+            <type>
+                <name>cdo_reportes_aprobados?list</name>
+                <namespace>urn:com:appian:types</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>legacy</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000e9a7-6d42-8000-e63f-01ef9001ef90_5887788"/>
+    </history>
+</contentHaul>

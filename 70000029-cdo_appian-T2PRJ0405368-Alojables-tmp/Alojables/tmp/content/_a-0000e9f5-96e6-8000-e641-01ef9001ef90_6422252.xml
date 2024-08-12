@@ -1,0 +1,365 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9491409</versionUuid>
+    <rule>
+        <name>SCDO_obtenerReportesInterfazEjecutivo</name>
+        <uuid>_a-0000e9f5-96e6-8000-e641-01ef9001ef90_6422252</uuid>
+        <description>Regla de expresión para obtener los reportes de la interfaz de ejecutivo</description>
+        <parentUuid>_a-0000e9a3-ab27-8000-e63d-01ef9001ef90_4829216</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>a!localVariables(
+  /*local!usuariosPorSegmento: */
+  /*if(a!isNotNullOrEmpty(ri!ejecutivo),*/
+  /*a!refreshVariable(*/
+/**/
+    /*value: a!flatten(*/
+      /*index(rule!SCDO_getUsuariosOPByFilters(idSegmento: ri!ejecutivo.idsegmento).data,"usuarioopics",null)*/
+    /*),*/
+    /*refreshAlways: true,*/
+    /*refreshOnVarChange: ri!refreshCount,*/
+    /*refreshOnReferencedVarChange: true*/
+/**/
+  /*),null*/
+  /*),*/
+/**/
+/* */
+/*   */
+  /*if(and(a!isNotNullOrEmpty(local!usuariosPorSegmento),a!isNotNullOrEmpty(ri!username)),*/
+  /*if(contains( local!usuariosPorSegmento,ri!username ),*/
+if(a!isNotNullOrEmpty(ri!username),
+#"SYSTEM_SYSRULES_queryEntity_v2"(
+
+  entity: /*cons!SCDO_ENTIDAD_REPORTES*/#"_a-0000eae4-5659-8000-e685-01ef9001ef90_8675093",
+  query: #"SYSTEM_SYSRULES_query"(
+    logicalExpression: #"SYSTEM_SYSRULES_queryLogicalExpression"(
+      operator: "AND",
+      filters: {
+        #"SYSTEM_SYSRULES_queryFilter"(
+          field: "fechacaptura",
+          operator: "=",
+          value: if(
+            and(
+              a!isNotNullOrEmpty(ri!FechaDividida),
+              length(ri!FechaDividida) &gt; 2
+            ),
+            date(tointeger(ri!FechaDividida[3]),tointeger(ri!FechaDividida[2]),tointeger(ri!FechaDividida[1])),
+
+            null
+          ),
+          applywhen: and(
+            a!isNullOrEmpty(ri!Fechaal),
+            a!isNotNullOrEmpty(ri!fecha)
+          )
+        ),
+        #"SYSTEM_SYSRULES_queryFilter"(
+          field: "fechacaptura",
+          operator: "&lt;=",
+          value: if(
+            and(
+              a!isNotNullOrEmpty(ri!FechaalDividida),
+              length(ri!FechaalDividida) &gt; 2
+            ),
+            date(tointeger(ri!FechaalDividida[3]),tointeger(ri!FechaalDividida[2]),tointeger(ri!FechaalDividida[1])),
+
+            null
+          ),
+          applywhen: and(
+            a!isNotNullOrEmpty(ri!Fechaal),
+            isnull(ri!fecha)
+          )
+        ),
+        if(
+          and(
+            a!isNotNullOrEmpty(ri!Fechaal),
+            a!isNotNullOrEmpty(ri!Fecha)
+          ),
+          if(
+            (ri!Fecha) &lt; (ri!Fechaal),
+            {
+              #"SYSTEM_SYSRULES_queryFilter"(
+                field: "fechacaptura",
+                operator: "&lt;=",
+                value: if(
+                  and(
+                    a!isNotNullOrEmpty(ri!FechaalDividida),
+                    a!isNotNullOrEmpty(ri!FechaDividida),
+                    (ri!fecha) &lt; (ri!Fechaal),
+                    length(ri!FechaalDividida) &gt; 2
+                  ),
+                  date(tointeger(ri!FechaalDividida[3]),tointeger(ri!FechaalDividida[2]),tointeger(ri!FechaalDividida[1])),
+
+                  null
+                )
+              ),
+              #"SYSTEM_SYSRULES_queryFilter"(
+                field: "fechacaptura",
+                operator: "&gt;=",
+                value: if(
+                  and(
+                    a!isNotNullOrEmpty(ri!FechaDividida),
+                    a!isNotNullOrEmpty(ri!FechaalDividida),
+                    (ri!Fecha) &lt; (ri!Fechaal),
+                    length(ri!FechaDividida) &gt; 2
+                  ),
+                  date(tointeger(ri!FechaDividida[3]),tointeger(ri!FechaDividida[2]),tointeger(ri!FechaDividida[1])),
+
+                  null
+                )
+              )
+            },
+            if(
+              (ri!Fecha) = (ri!Fechaal),
+              {
+                #"SYSTEM_SYSRULES_queryFilter"(
+                  field: "fechacaptura",
+                  operator: "=",
+                  value: if(
+                    and(
+                      a!isNotNullOrEmpty(ri!FechaDividida),
+                      length(ri!FechaDividida) &gt; 2
+                    ),
+                    date(tointeger(ri!FechaDividida[3]),tointeger(ri!FechaDividida[2]),tointeger(ri!FechaDividida[1])),
+
+                    null
+                  )
+                )
+              },
+              {
+                #"SYSTEM_SYSRULES_queryFilter"(
+                  field: "fechacaptura",
+                  operator: "&gt;=",
+                  value: if(
+                    and(
+                      a!isNotNullOrEmpty(ri!FechaDividida),
+                      a!isNotNullOrEmpty(ri!FechaalDividida),
+                      (ri!fecha) &gt; (ri!Fechaal),
+                      length(ri!FechaDividida) &gt; 2
+                    ),
+                    null,
+                    null
+                  )
+                )
+              }
+            )
+          ),
+          {}
+        ),
+        #"SYSTEM_SYSRULES_queryFilter"(
+          field: "contrato",
+          operator: "=",
+          value: ri!Con,
+          applyWhen: a!isNotNullOrEmpty(ri!Con)
+
+        ),
+        #"SYSTEM_SYSRULES_queryFilter"(
+          field: "observaciones",
+          operator: "not null",
+          applywhen: if(
+            a!isNotNullOrEmpty(ri!KeyGrids),
+            if(ri!KeyGrids[1] = 1, true, false),
+            false
+          )
+        ),
+        #"SYSTEM_SYSRULES_queryFilter"(
+          field: "extra4",
+          operator: "includes",
+          value: ri!ComV,
+          applyWhen: a!isNotNullOrEmpty( ri!ComV)
+        ),
+        #"SYSTEM_SYSRULES_queryFilter"(
+          field: "emisora",
+          operator: "=",
+          value: ri!emisora,
+          applyWhen: a!isNotNullOrEmpty( ri!emisora)
+        ),
+        #"SYSTEM_SYSRULES_queryFilter"(
+          field: "operacion",
+          operator: "=",
+          value: ri!operacion,
+          applyWhen: a!isNotNullOrEmpty( ri!operacion)
+        ),
+        #"SYSTEM_SYSRULES_queryFilter"(
+          field: "revisado",
+          operator: "=",
+          value: "N"
+        ),
+
+        #"SYSTEM_SYSRULES_queryFilter"(
+          field: "usuario",
+          operator: "=",
+          value: ri!username,
+          applywhen: a!isNotNullOrEmpty(ri!username)
+        ),
+
+      },
+      ignoreFiltersWithEmptyValues: true
+    ),
+    pagingInfo: #"SYSTEM_SYSRULES_pagingInfo"(
+      startIndex: ri!startIndex,
+      batchSize: ri!batchSize,
+
+    )
+  ),
+  fetchTotalCount: true
+),
+null
+
+)
+ 
+  /*,*/
+  /*null*/
+  /*),null()*/
+  /*)*/
+ 
+ 
+
+)</definition>
+        <namedTypedValue>
+            <name>fecha</name>
+            <type>
+                <name>date</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>fechaal</name>
+            <type>
+                <name>date</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>fechaDividida</name>
+            <type>
+                <name>Text?list</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>FechaalDividida</name>
+            <type>
+                <name>Text?list</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>Con</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>KeyGrids</name>
+            <type>
+                <name>Integer?list</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>ComV</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>emisora</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>operacion</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>startIndex</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>batchSize</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>ejecutivo</name>
+            <type>
+                <name>V_CDO_Ejecutivo</name>
+                <namespace>urn:com:appian:types</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>username</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>refreshCount</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>legacy</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000ea52-e6d5-8000-e654-01ef9001ef90_7533953"/>
+        <historyInfo versionUuid="_a-0000ea52-e6d5-8000-e654-01ef9001ef90_7544642"/>
+        <historyInfo versionUuid="_a-0000eb09-d442-8000-e687-01ef9001ef90_8806996"/>
+        <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9386595"/>
+        <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9450770"/>
+        <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9491409"/>
+    </history>
+</contentHaul>

@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9387645</versionUuid>
+    <interface>
+        <name>SCDO_Documentacion_Operacion_Aprobada</name>
+        <uuid>_a-0000e9a7-6d42-8000-e63f-01ef9001ef90_4879925</uuid>
+        <description>Tabla con los Documentos de las operaciones aprobadas</description>
+        <parentUuid>_a-0000e801-560f-8000-e5d9-01ef9001ef90_1707049</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>a!localVariables(
+  /*Datos de prueba  */
+  /*local!contrato: "60541900216",*/
+  /*local!operacion: "2162118",*/
+  /*local!documentacion: rule!SCDO_obtenerDocumentacionPendientePorContrato(contrato: "60541900216"),*/
+  {
+    #"SYSTEM_SYSRULES_sectionLayout_v1"(
+      label: "",
+      contents: {
+        #"SYSTEM_SYSRULES_sideBySideLayout"(
+          items: {
+            #"SYSTEM_SYSRULES_sideBySideItem"(
+              item: #"SYSTEM_SYSRULES_ButtonArrayLayout"(
+                buttons: {
+                  #"SYSTEM_SYSRULES_ButtonWidget"(
+                    label: "Salir",
+                    icon: "window-close",
+                    value: false,
+                    saveInto: {
+                      ri!mostrarGrid,
+                      /*a!save(*/
+                      /*local!documento_descargar,*/
+                      /*null*/
+                      /*)*/
+
+                    },
+                    /*submit: true,*/
+                    style: "SECONDARY"
+                  )
+                },
+                align: "END"
+              )
+            )
+          }
+        ),
+        #"SYSTEM_SYSRULES_richTextDisplayField"(
+          value: {
+            #"SYSTEM_SYSRULES_richTextItem_v1"(
+              text: { "Documentación de Operación aprobada" },
+              size: "MEDIUM_PLUS"
+            )
+          },
+          align: "CENTER"
+        )
+      }
+    ),
+    #"SYSTEM_SYSRULES_gridField_v1"(
+      label: {
+        concat(
+          "Operación: ",
+          /*ri!operacion*/ri!reporte_aprobado.operacion
+        )
+      },
+      labelPosition: "ABOVE",
+      /*local!documentacion,*/
+      emptyGridMessage: "No hay documentacón para mostrar",
+      data: /*ri!documentacion*/ri!documentacion_d,
+      columns: {
+        #"SYSTEM_SYSRULES_gridColumn"(
+          label: "Documento",
+          value: /*fv!row.nomdocumento*/fv!row.nombreimagen,
+          align: "CENTER",
+          width: "MEDIUM_PLUS"
+        ),
+        /*a!gridColumn(*/
+        /*label: "Corresponde",*/
+        /*value: fv!row.tipo,*/
+        /*align: "CENTER",*/
+        /*width: "AUTO"*/
+        /*),*/
+        #"SYSTEM_SYSRULES_gridColumn"(
+          label: "Estado",
+          value: fv!row.estado,
+          align: "CENTER",
+          width: "AUTO"
+        ),
+        #"SYSTEM_SYSRULES_gridColumn"(
+          label: "Ver Doctos",
+          value: a!localVariables(
+            local!documento_descargar,
+            /*local!busque: false,*/
+            local!busque: a!refreshVariable(
+              value:false,
+              refreshOnVarChange:ri!documentacion_d,
+            ),
+            #"SYSTEM_SYSRULES_richTextDisplayField"(
+              labelPosition: "COLLAPSED",
+              value: {
+                #"SYSTEM_SYSRULES_richTextIcon"(
+                  icon: "file-signature",
+                  link: {
+                    #"SYSTEM_SYSRULES_dynamicLink"(
+                      saveInto: {
+                        #"SYSTEM_SYSRULES_startProcess"(
+                          processModel: #"_a-0000eabf-35e2-8000-e683-01ef9001ef90_8425441",
+                          processParameters: { nombre_doc: fv!row.nombreimagen },
+                          onSuccess: {
+                            a!save(
+                              local!documento_descargar,
+                              fv!processInfo.pv.documento
+                            ),
+                            a!save(local!busque, true),
+
+                          }
+                        ),
+
+                      }
+                    ),
+
+                  },
+                  linkStyle: "STANDALONE"
+                ),
+                if(
+                  local!busque = false,
+                  "",
+                  if(
+                    and(
+                      local!busque,
+                      a!isNotNullOrEmpty(local!documento_descargar)
+                    ),
+                    #"SYSTEM_SYSRULES_richTextIcon"(
+                      caption: "Descargar documento.",
+                      icon: "download",
+                      link: {
+                        
+                          #"SYSTEM_SYSRULES_documentDownloadLink"(document: local!documento_descargar),
+                         
+                        
+                      },
+                      linkStyle: "STANDALONE"
+                    ),
+                    #"SYSTEM_SYSRULES_richTextIcon"(
+                      caption: "Ha ocurrido un error al obtener el documento.",
+                      icon: "exclamation",
+                      linkStyle: "STANDALONE"
+                    )
+                  )
+                )
+              }
+            ),
+
+          ),
+          /*!richTextDisplayField(
+            value: a!richTextIcon(
+              icon: "file-signature",
+              link: a!startProcessLink()
+            )
+          ),*/
+          align: "CENTER",
+          width: "AUTO"
+        ),
+
+      },
+      spacing: "DENSE",
+      /*refreshAlways: true,*/
+      /*refreshOnReferencedVarChange: true,*/
+      refreshOnVarChange: {
+        /*ri!documentacion*//*ri!documentacion_d*/ri!operacion
+      }
+    )
+  }
+)</definition>
+        <namedTypedValue>
+            <name>cancel</name>
+            <type>
+                <name>boolean</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>documentacion</name>
+            <type>
+                <name>scdo_documentacion?list</name>
+                <namespace>urn:com:appian:types</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>operacion</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>documentacion_d</name>
+            <type>
+                <name>cdo_digitalizados?list</name>
+                <namespace>urn:com:appian:types</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>reporte_aprobado</name>
+            <type>
+                <name>cdo_reportes_aprobados</name>
+                <namespace>urn:com:appian:types</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>mostrarGrid</name>
+            <type>
+                <name>boolean</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+        <isCustom>false</isCustom>
+    </interface>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000e9a7-6d42-8000-e63f-01ef9001ef90_4880115"/>
+        <historyInfo versionUuid="_a-0000eae4-5659-8000-e685-01ef9001ef90_8692305"/>
+        <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9387645"/>
+    </history>
+</contentHaul>

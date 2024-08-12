@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9386742</versionUuid>
+    <rule>
+        <name>SCDO_opcionesDocumentacion</name>
+        <uuid>_a-0000e878-569a-8000-e5e4-01ef9001ef90_1946976</uuid>
+        <description>Expression Rule de las opciones interface Documentación</description>
+        <parentUuid>_a-0000e982-d80b-8000-e63b-01ef9001ef90_4815880</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>{
+  {
+    titulo: #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_1946756"[1],
+    icono: #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_1946858"[1],
+    perfiles: {#"_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1881741", #"_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1881746"},
+  },
+  {
+    titulo: #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_1946756"[2],
+    icono: #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_1946858"[2],
+    perfiles: {#"_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1881741", #"_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1881746"},
+  }
+},</definition>
+        <preferredEditor>legacy</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000e878-569a-8000-e5e4-01ef9001ef90_1947464"/>
+        <historyInfo versionUuid="_a-0000e982-d80b-8000-e63b-01ef9001ef90_4816128"/>
+        <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9386742"/>
+    </history>
+</contentHaul>

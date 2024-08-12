@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9386968</versionUuid>
+    <rule>
+        <name>SCDO_MODIFICAR_REPORTES_APROBADOS_PARA_CC</name>
+        <uuid>_a-0000eb09-d442-8000-e687-01ef9001ef90_8810805</uuid>
+        <description>Regla auxiliar para el proceso de modificación de cc</description>
+        <parentUuid>_a-0000e9a3-ab27-8000-e63d-01ef9001ef90_4829216</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>a!localVariables(
+  local!reportes_aprobados:#"SYSTEM_SYSRULES_forEach"(
+    items: ri!reportesAprobados,
+    expression: 'type!{urn:com:appian:types}cdo_reportes_aprobados'(
+      idreporte: fv!item.idreporte,
+      mercado: fv!item.mercado,
+      operacion: fv!item.operacion,
+      contrato: fv!item.contrato,
+      nombre: fv!item.nombre,
+      emisora: fv!item.emisora,
+      monto: fv!item.monto,
+      promotor: fv!item.promotor,
+      ccostos: ri!CDT_CentroCostos.cc,
+      usuario:fv!item.usuario,
+      fechacaptura: fv!item.fechacaptura,
+      horacaptura: fv!item.horacaptura,
+      bitacora: fv!item.bitacora,
+      riesgo: fv!item.riesgo,
+      revisado: fv!item.revisado,
+      usuarioreviso: fv!item.usuarioreviso,
+      ccreviso: fv!item.ccreviso,
+      ip: fv!item.ip,
+      fechareviso: fv!item.fechareviso,
+      observaciones:fv!item.observaciones,
+      usuarioaprobo: fv!item.usuarioaprobo,
+      fechaaprobacion: fv!item.fechaaprobacion,
+      ipaprobacion:fv!item.ipaprobacion,
+      tipo:fv!item.tipo,
+      extra1:fv!item.extra1,
+      extra2:fv!item.extra2,
+      extra3:fv!item.extra3,
+      extra4:fv!item.extra4,
+      obligatorio:fv!item.obligatorio,
+      extra5:fv!item.extra5,
+      titulo:fv!item.titulo
+
+    )),
+    local!reportes_aprobados
+)</definition>
+        <namedTypedValue>
+            <name>reportesAprobados</name>
+            <type>
+                <name>cdo_reportes_aprobados</name>
+                <namespace>urn:com:appian:types</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>CDT_CentroCostos</name>
+            <type>
+                <name>cdo_centroscostos</name>
+                <namespace>urn:com:appian:types</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>legacy</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000eb09-d442-8000-e687-01ef9001ef90_8810890"/>
+        <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9386968"/>
+    </history>
+</contentHaul>

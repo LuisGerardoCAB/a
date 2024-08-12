@@ -1,0 +1,600 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9451649</versionUuid>
+    <rule>
+        <name>SCDO_getVistaAprobacionesByFilter</name>
+        <uuid>_a-0000e916-edcb-8000-e60c-01ef9001ef90_3132557</uuid>
+        <description>Regla que cosulta los datos de la Vista Aprobaciones</description>
+        <parentUuid>_a-0000e9a3-ab27-8000-e63d-01ef9001ef90_4829868</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>#"SYSTEM_SYSRULES_queryEntity_v2"(
+  entity: #"_a-0000e916-edcb-8000-e60c-01ef9001ef90_3132740",
+  query: #"SYSTEM_SYSRULES_query"(
+    logicalExpression: #"SYSTEM_SYSRULES_queryLogicalExpression"(
+      operator: "AND",
+      filters: {
+        #"SYSTEM_SYSRULES_queryFilter"(
+          field: "idreporte",
+          operator: "=",
+          value: ri!idreporte,
+          applyWhen: isnull(ri!idreporte) &lt;&gt; true
+        ),
+        #"SYSTEM_SYSRULES_queryFilter"(
+          field: "mercado",
+          operator: "=",
+          value: ri!mercado,
+          applyWhen: isnull(ri!mercado) &lt;&gt; true
+        ),
+        #"SYSTEM_SYSRULES_queryFilter"(
+          field: "operacion",
+          operator: "=",
+          value: ri!operacion,
+          applyWhen: isnull(ri!operacion) &lt;&gt; true
+        ),
+        #"SYSTEM_SYSRULES_queryFilter"(
+          field: "contrato",
+          operator: "=",
+          value: ri!contrato,
+          applyWhen: isnull(ri!contrato) &lt;&gt; true
+        ),
+        #"SYSTEM_SYSRULES_queryFilter"(
+          field: "nombre",
+          operator: "=",
+          value: ri!nombre,
+          applyWhen: isnull(ri!nombre) &lt;&gt; true
+        ),
+        #"SYSTEM_SYSRULES_queryFilter"(
+          field: "emisora",
+          operator: "=",
+          value: ri!emisora,
+          applyWhen: isnull(ri!emisora) &lt;&gt; true
+        ),
+        #"SYSTEM_SYSRULES_queryFilter"(
+          field: "monto",
+          operator: "=",
+          value: ri!monto,
+          applyWhen: isnull(ri!monto) &lt;&gt; true
+        ),
+        #"SYSTEM_SYSRULES_queryFilter"(
+          field: "promotor",
+          operator: "=",
+          value: ri!promotor,
+          applyWhen: isnull(ri!promotor) &lt;&gt; true
+        ),
+        #"SYSTEM_SYSRULES_queryFilter"(
+          field: "ccostos",
+          operator: "=",
+          value: ri!ccostos,
+          applyWhen: isnull(ri!ccostos) &lt;&gt; true
+        ),
+        #"SYSTEM_SYSRULES_queryFilter"(
+          field: "region",
+          operator: "=",
+          value: ri!region,
+          applyWhen: isnull(ri!region) &lt;&gt; true
+        ),
+        #"SYSTEM_SYSRULES_queryFilter"(
+          field: "usuario",
+          operator: "=",
+          value: ri!usuario,
+          applyWhen: isnull(ri!usuario) &lt;&gt; true
+        ),
+        #"SYSTEM_SYSRULES_queryFilter"(
+          field: "segmento",
+          operator: "=",
+          value: ri!segmento,
+          applyWhen: isnull(ri!segmento) &lt;&gt; true
+        ),
+        
+        #"SYSTEM_SYSRULES_queryFilter"(
+          field: "fechacaptura",
+          operator: "between",
+          value: ri!fechaInicio,
+          applyWhen: isnull(ri!fechaInicio) &lt;&gt; true
+        ),
+        #"SYSTEM_SYSRULES_queryFilter"(
+          field: "horacaptura",
+          operator: "=",
+          value: ri!horacaptura,
+          applyWhen: isnull(ri!horacaptura) &lt;&gt; true
+        ),
+        #"SYSTEM_SYSRULES_queryFilter"(
+          field: "bitacora",
+          operator: "=",
+          value: ri!bitacora,
+          applyWhen: isnull(ri!bitacora) &lt;&gt; true
+        ),
+        #"SYSTEM_SYSRULES_queryFilter"(
+          field: "riesgo",
+          operator: "=",
+          value: ri!riesgo,
+          applyWhen: isnull(ri!riesgo) &lt;&gt; true
+        ),
+        #"SYSTEM_SYSRULES_queryFilter"(
+          field: "revisado",
+          operator: "=",
+          value: ri!revisado,
+          applyWhen: isnull(ri!revisado) &lt;&gt; true
+        ),
+        #"SYSTEM_SYSRULES_queryFilter"(
+          field: "usuarioreviso",
+          operator: "=",
+          value: ri!usuarioreviso,
+          applyWhen: isnull(ri!usuarioreviso) &lt;&gt; true
+        ),
+        #"SYSTEM_SYSRULES_queryFilter"(
+          field: "ccreviso",
+          operator: "=",
+          value: ri!ccreviso,
+          applyWhen: isnull(ri!ccreviso) &lt;&gt; true
+        ),
+        #"SYSTEM_SYSRULES_queryFilter"(
+          field: "ip",
+          operator: "=",
+          value: ri!ip,
+          applyWhen: isnull(ri!ip) &lt;&gt; true
+        ),
+        #"SYSTEM_SYSRULES_queryFilter"(
+          field: "fechareviso",
+          operator: "=",
+          value: ri!fechareviso,
+          applyWhen: isnull(ri!fechareviso) &lt;&gt; true
+        ),
+        #"SYSTEM_SYSRULES_queryFilter"(
+          field: "observaciones",
+          operator: "=",
+          value: ri!observaciones,
+          applyWhen: isnull(ri!observaciones) &lt;&gt; true
+        ),
+        #"SYSTEM_SYSRULES_queryFilter"(
+          field: "rechazo",
+          operator: "=",
+          value: ri!rechazo,
+          applyWhen: isnull(ri!rechazo) &lt;&gt; true
+        ),
+        #"SYSTEM_SYSRULES_queryFilter"(
+          field: "tInicial",
+          operator: "=",
+          value: ri!tinicial,
+          applyWhen: isnull(ri!tinicial) &lt;&gt; true
+        ),
+        #"SYSTEM_SYSRULES_queryFilter"(
+          field: "tFinal",
+          operator: "=",
+          value: ri!tfinal,
+          applyWhen: isnull(ri!tfinal) &lt;&gt; true
+        ),
+        #"SYSTEM_SYSRULES_queryFilter"(
+          field: "cV",
+          operator: "=",
+          value: ri!cv,
+          applyWhen: isnull(ri!cv) &lt;&gt; true
+        ),
+        #"SYSTEM_SYSRULES_queryFilter"(
+          field: "extra5",
+          operator: "=",
+          value: ri!extra5,
+          applyWhen: isnull(ri!extra5) &lt;&gt; true
+        ),
+        #"SYSTEM_SYSRULES_queryFilter"(
+          field: "obligatorio",
+          operator: "=",
+          value: ri!obligatorio,
+          applyWhen: isnull(ri!obligatorio) &lt;&gt; true
+        ),
+        #"SYSTEM_SYSRULES_queryFilter"(
+          field: "titulo",
+          operator: "=",
+          value: ri!titulo,
+          applyWhen: isnull(ri!titulo) &lt;&gt; true
+        ),
+        #"SYSTEM_SYSRULES_queryFilter"(
+          field: "usuarioaprobo",
+          operator: "=",
+          value: ri!usuarioaprobo,
+          applyWhen: isnull(ri!usuarioaprobo) &lt;&gt; true
+        ),
+        
+        #"SYSTEM_SYSRULES_queryFilter"(
+          field: "fechaaprobacion",
+          operator: "between",
+          value: ri!fechaFin, 
+          applyWhen: isnull(ri!fechaFin) &lt;&gt; true
+        ),
+        #"SYSTEM_SYSRULES_queryFilter"(
+          field: "ipaprobacion",
+          operator: "=",
+          value: ri!ipaprobacion,
+          applyWhen: isnull(ri!ipaprobacion) &lt;&gt; true
+        ),
+        #"SYSTEM_SYSRULES_queryFilter"(
+          field: "tipoAprobacion",
+          operator: "=",
+          value: ri!tipoaprobacion,
+          applyWhen: isnull(ri!tipoaprobacion) &lt;&gt; true
+        ),
+        #"SYSTEM_SYSRULES_queryFilter"(
+          field: "motivoEliminado",
+          operator: "=",
+          value: ri!motivoeliminado,
+          applyWhen: isnull(ri!motivoeliminado) &lt;&gt; true
+        ),
+        #"SYSTEM_SYSRULES_queryFilter"(
+          field: "estatus",
+          operator: "=",
+          value: ri!estatus,
+          applyWhen: isnull(ri!estatus) &lt;&gt; true
+        ),
+        
+      },
+      ignoreFiltersWithEmptyValues: true,
+      
+    ),
+    pagingInfo: if(
+      not(isnull(ri!paginInfo)),
+      ri!paginInfo,
+      #"SYSTEM_SYSRULES_pagingInfo"(
+        startIndex: 1,
+        batchSize: 80,
+        sort: #"SYSTEM_SYSRULES_sortInfo"(field: "idreporte", ascending: true())
+      )
+    ),
+    
+   
+    
+    
+  ),
+  
+)</definition>
+        <namedTypedValue>
+            <name>idreporte</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>mercado</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>operacion</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>contrato</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>nombre</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>emisora</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>monto</name>
+            <type>
+                <name>double</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>promotor</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>ccostos</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>region</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>usuario</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>segmento</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>fechacaptura</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>horacaptura</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>bitacora</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>riesgo</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>revisado</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>usuarioreviso</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>ccreviso</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>ip</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>fechareviso</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>observaciones</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>rechazo</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>tinicial</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>tfinal</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>cv</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>extra5</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>obligatorio</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>titulo</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>usuarioaprobo</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>fechaaprobacion</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>ipaprobacion</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>tipoaprobacion</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>motivoeliminado</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>estatus</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>seleccionColumnas</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>paginInfo</name>
+            <type>
+                <name>PagingInfo</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>fechaInicio</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>fechaFin</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <preferredEditor>legacy</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000e93b-1de6-8000-e635-01ef9001ef90_3567996"/>
+        <historyInfo versionUuid="_a-0000e9a3-ab27-8000-e63d-01ef9001ef90_4830019"/>
+        <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9156915"/>
+        <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9386027"/>
+        <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9451649"/>
+    </history>
+</contentHaul>

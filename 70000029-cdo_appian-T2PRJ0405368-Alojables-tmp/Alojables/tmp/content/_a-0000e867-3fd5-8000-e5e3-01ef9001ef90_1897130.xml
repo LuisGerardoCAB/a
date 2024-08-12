@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9387051</versionUuid>
+    <interface>
+        <name>SCDO_Reverso_Operaciones</name>
+        <uuid>_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1897130</uuid>
+        <description>Interfaz correspondiente a Reverso de Operaciones conjunto a Menu Horizontal</description>
+        <parentUuid>_a-0000e801-560f-8000-e5d9-01ef9001ef90_1707049</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>a!localVariables(
+  local!opcionMenuSeleccionada: #"_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1897428"()[1],
+  local!indiceMenuSeleccionado: 1,
+  local!documentoseleccionado,
+  local!contrato,
+  local!segmento,
+  local!operaciones,
+  #"SYSTEM_SYSRULES_columnsLayout"(
+    columns: {
+      #"SYSTEM_SYSRULES_columnLayout"(
+        contents: {
+          #"_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1881575"(
+            opcionSeleccionada_any: local!opcionMenuSeleccionada,
+            opciones_any: #"_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1897428"(),
+            indiceSeleccionado_int: local!indiceMenuSeleccionado
+          ),
+          if(
+            local!opcionMenuSeleccionada.titulo = #"_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1897395"[1],
+            #"_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1846713"(
+              /*documentoseleccionado: local!documentoseleccionado,*/
+              /*contrato: local!contrato*/
+            ),
+            if(
+              local!opcionMenuSeleccionada.titulo = #"_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1897395"[2],
+              #"_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1897036"(
+                documentoseleccionado: local!documentoseleccionado,
+                contrato: local!contrato,
+                segmento: local!segmento,
+                operaciones: local!operaciones
+              ),
+             choose (
+                /*local!opcionMenuSeleccionada.titulo = cons!SCDO_OPCIONES_REVERSOO[3],*/
+                /*rule!SCDO_CargaMDocumentos()*/
+             )
+            )
+           )
+        },
+        width: "AUTO"
+      )
+    }
+  )
+)</definition>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+        <isCustom>false</isCustom>
+    </interface>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000e94c-78eb-8000-e637-01ef9001ef90_3792697"/>
+        <historyInfo versionUuid="_a-0000e9f5-96e6-8000-e641-01ef9001ef90_6014890"/>
+        <historyInfo versionUuid="_a-0000eabf-35e2-8000-e683-01ef9001ef90_8450741"/>
+        <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9387051"/>
+    </history>
+</contentHaul>

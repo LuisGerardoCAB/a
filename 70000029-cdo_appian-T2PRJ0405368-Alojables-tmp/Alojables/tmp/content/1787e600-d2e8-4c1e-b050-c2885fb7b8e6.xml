@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000e9f5-96e6-8000-e641-01ef9001ef90_6020045</versionUuid>
+    <rule>
+        <name>SCDO_llenarPerfilesDadoDatosTxt</name>
+        <uuid>1787e600-d2e8-4c1e-b050-c2885fb7b8e6</uuid>
+        <description>Regla de expresión para llenar una lista de perfiles dado los datos en formato texto</description>
+        <parentUuid>_a-0000e9a3-ab27-8000-e63d-01ef9001ef90_4829216</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>a!localVariables(
+  
+  local!perfiles: #"SYSTEM_SYSRULES_forEach"(
+    items: ri!datosTxt, 
+    expression: {
+      a!localVariables( 
+        local!datosFila: split(fv!item, "|"),
+        local!perfil: 'type!{urn:com:appian:types}cdo_perfiles_temp'(
+          br: index(local!datosFila, 1, null),
+          opendate: index(local!datosFila, 2, null),
+          contrato: index(local!datosFila, 3, null),
+          cost: index(local!datosFila, 4, null),
+          trad: index(local!datosFila, 5, null),
+          castdsc: todecimal(index(local!datosFila, 6, 0)),
+          profile: index(local!datosFila, 7, null),
+          max: index(local!datosFila, 8, null),
+          cliente: index(local!datosFila, 9, null),
+          canal: index(local!datosFila, 10, null),
+        ),
+        local!perfil
+      )
+    }
+  ),
+  local!perfiles
+)</definition>
+        <namedTypedValue>
+            <name>datosTxt</name>
+            <type>
+                <name>Text?list</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>legacy</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000e9f5-96e6-8000-e641-01ef9001ef90_6020045"/>
+    </history>
+</contentHaul>

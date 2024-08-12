@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9386533</versionUuid>
+    <rule>
+        <name>SCDO_LLENAR_IMAGENES_PENDIENTES_TXT</name>
+        <uuid>_a-0000eaa5-8248-8000-e681-01ef9001ef90_8334724</uuid>
+        <description>Regla de expresión para ver que reporte del txt está en imagenes pendientes</description>
+        <parentUuid>_a-0000e9a3-ab27-8000-e63d-01ef9001ef90_4829216</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>a!localVariables(
+  local!imagenes_pendientes:if(a!isNotNullOrEmpty(ri!reportes),
+  #"SYSTEM_SYSRULES_forEach"(
+    items: ri!reportes,
+    expression:
+    {
+      a!localVariables(
+        local!auxiliar:#"_a-0000e982-d80b-8000-e63b-01ef9001ef90_4679254"(deal:fv!item.operacion,contrato:fv!item.contrato).data,
+        if(a!isNotNullOrEmpty(local!auxiliar),
+
+         local!auxiliar,
+         null
+        )
+      )
+    
+    
+    }
+  ),
+  null
+  
+),
+local!devolver: a!flatten(reject(fn!isnull, local!imagenes_pendientes)),
+local!devolver,
+)</definition>
+        <namedTypedValue>
+            <name>reportes</name>
+            <type>
+                <name>cdo_reportes?list</name>
+                <namespace>urn:com:appian:types</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>legacy</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000eaa5-8248-8000-e681-01ef9001ef90_8334742"/>
+        <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9386533"/>
+    </history>
+</contentHaul>

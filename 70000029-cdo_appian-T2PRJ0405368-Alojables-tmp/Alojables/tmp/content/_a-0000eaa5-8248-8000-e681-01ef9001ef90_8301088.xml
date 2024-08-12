@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9540242</versionUuid>
+    <rule>
+        <name>SCDO_FECHAS_EXISTEN_EN_BD</name>
+        <uuid>_a-0000eaa5-8248-8000-e681-01ef9001ef90_8301088</uuid>
+        <description>Regla de expresión para validar si alguna de las fechas del .txt existen en la bd</description>
+        <parentUuid>_a-0000e9a3-ab27-8000-e63d-01ef9001ef90_4829216</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>a!localVariables(
+  
+  local!fechas:#"SYSTEM_SYSRULES_forEach"(
+    items: ri!texto, 
+    expression: {
+      a!localVariables(
+        local!datosFila: split(fv!item, "|"),
+        local!fecha1: (index(local!datosFila, 10, null)),
+        if(true,
+
+       local!fecha1,
+        null)
+
+      )
+
+    } 
+  ),
+
+  /*local!correcto1:if(a!isNotNullOrEmpty(a!flatten(reject(fn!isnull, local!correcto))),false,true),*/
+  /*local!correcto1*/
+  /*count(a!flatten(reject(fn!isnull, local!fecha)))=ri!total_lineas*/
+ local!fechas_txt: 
+ #"_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9533439"(
+   arreglo_1:a!flatten(reject(fn!isnull, local!fechas)),
+   arreglo_2:a!flatten(reject(fn!isnull, local!fechas)),
+ ),
+ /*union(a!flatten(reject(fn!isnull, local!fechas)),a!flatten(reject(fn!isnull, local!fechas))),*/
+
+ local!fechas_cambiadas:#"SYSTEM_SYSRULES_forEach"(
+   items: local!fechas_txt,
+   
+   expression: if(#"_a-0000eaa5-8248-8000-e681-01ef9001ef90_8301144"(fechacaptura:text(date(tointeger(mid(fv!item,7, 4)),tointeger(mid(fv!item, 4, 2)),tointeger(mid(fv!item, 1, 2))), "yyyy-MM-dd 00:00:00"))&gt;0,
+   fv!item,null) ,
+  
+
+ ),
+ /*local!devolver:a!forEach(*/
+   /*items:local!fechas_cambiadas,*/
+   /*expression:if(rule!SCDO_getReportesByFilterValidarTXT(fechacaptura: fv!item)&gt;0,*/
+   /*true,null) ,*/
+/*   */
+ /*),*/
+ /*if(count(a!flatten(reject(fn!isnull, local!fechas_cambiadas)))&gt;0,true,false) */
+ a!flatten(reject(fn!isnull, local!fechas_cambiadas))
+)</definition>
+        <namedTypedValue>
+            <name>texto</name>
+            <type>
+                <name>Text?list</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>legacy</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000eaa5-8248-8000-e681-01ef9001ef90_8301218"/>
+        <historyInfo versionUuid="_a-0000eae4-5659-8000-e685-01ef9001ef90_8673823"/>
+        <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9386869"/>
+        <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9540242"/>
+    </history>
+</contentHaul>

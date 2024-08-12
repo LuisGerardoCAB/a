@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9386200</versionUuid>
+    <rule>
+        <name>SCDO_calcularLogModificaciones</name>
+        <uuid>_a-0000e968-30a1-8000-e639-01ef9001ef90_4373014</uuid>
+        <description>Analiza dos objetos y devuelve un listado de modificaciones por campo.</description>
+        <parentUuid>_a-0000e9a3-ab27-8000-e63d-01ef9001ef90_4829216</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>a!localVariables(
+  local!propiedades: dictutil_getkeys(
+    cast(
+      typeof(
+        { key: "value" }
+      ),
+      ri!objetoViejo_any
+    )
+  ),
+  local!modificacionesExistentesDataSubset: #"_a-0000e9a7-6d42-8000-e63f-01ef9001ef90_5247960"(
+    idTabla_txt: ri!idTabla_txt,
+    codigoLlave_txt: index(ri!objetoViejo_any, ri!propiedadId_txt)
+  ),
+  local!modificacionesExistentes: cast(
+    typeof({'type!{urn:com:appian:types}cdo_modificaciones_r'()}),
+    local!modificacionesExistentesDataSubset.data
+  ),
+  reject(
+    fn!isnull,
+    #"SYSTEM_SYSRULES_forEach"(
+      local!propiedades,
+      if(
+        index(ri!objetoViejo_any, fv!item) &lt;&gt; index(ri!objetoNuevo_any, fv!item),
+        'type!{urn:com:appian:types}cdo_modificaciones_r'(
+          idTabla: ri!idTabla_txt,
+          codigoLlave: index(ri!objetoViejo_any, ri!propiedadId_txt),
+          campo: fv!item,
+          numerosecuencia: a!localVariables(
+            local!modificacionesDelCampo: index(
+              local!modificacionesExistentes,
+              wherecontains(
+                fv!item, local!modificacionesExistentes.campo
+              ),
+              {}
+            ),
+            if (
+              length(local!modificacionesDelCampo) &gt; 0,
+              max(local!modificacionesDelCampo.numeroSecuencia) + 1,
+              1
+            )
+          ),
+          valorPrevio: index(ri!objetoViejo_any, fv!item),
+          valorNuevo: index(ri!objetoNuevo_any, fv!item),
+          fechaYHora: now(),
+          usuario: ri!usuario_txt
+        ),
+        null
+      )
+    )
+  )
+)</definition>
+        <namedTypedValue>
+            <name>objetoViejo_any</name>
+            <type>
+                <name>Variant</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>objetoNuevo_any</name>
+            <type>
+                <name>Variant</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>idTabla_txt</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>propiedadId_txt</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>usuario_txt</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <preferredEditor>legacy</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000e9a7-6d42-8000-e63f-01ef9001ef90_5815720"/>
+        <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9386200"/>
+    </history>
+</contentHaul>

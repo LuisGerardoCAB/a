@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9387033</versionUuid>
+    <interface>
+        <name>SCDO_Usuarios</name>
+        <uuid>_a-0000e94c-78eb-8000-e637-01ef9001ef90_4002782</uuid>
+        <description>Interfaz para todo el modulo de Usuarios</description>
+        <parentUuid>_a-0000e801-560f-8000-e5d9-01ef9001ef90_1707049</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>a!localVariables(
+  local!opcionMenuSeleccionada: #"_a-0000e94c-78eb-8000-e637-01ef9001ef90_4003080"()[1],
+  local!indiceMenuSeleccionado: 1,
+  local!bUser,
+  local!segmento,
+  local!usuario,
+  local!refreshCount: 0,
+  #"SYSTEM_SYSRULES_columnsLayout"(
+    columns: {
+      #"SYSTEM_SYSRULES_columnLayout"(
+        contents: {
+          #"_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1881575"(
+            opcionSeleccionada_any: local!opcionMenuSeleccionada,
+            opciones_any: #"_a-0000e94c-78eb-8000-e637-01ef9001ef90_4003080"(),
+            indiceSeleccionado_int: local!indiceMenuSeleccionado
+          ),
+          if(
+            local!opcionMenuSeleccionada.titulo = #"_a-0000e94c-78eb-8000-e637-01ef9001ef90_4003090"[1],
+            #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2113400"(refreshCount: local!refreshCount),
+            if(
+              local!opcionMenuSeleccionada.titulo = #"_a-0000e94c-78eb-8000-e637-01ef9001ef90_4003090"[2],
+              #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2226531"(refreshCount: local!refreshCount),
+              if(
+                local!opcionMenuSeleccionada.titulo = #"_a-0000e94c-78eb-8000-e637-01ef9001ef90_4003090"[3],
+                #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2226543"(refreshCount: local!refreshCount),
+                if(
+                  local!opcionMenuSeleccionada.titulo = #"_a-0000e94c-78eb-8000-e637-01ef9001ef90_4003090"[4],
+                  #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2226554"(refreshCount: local!refreshCount),
+                  if(
+                    local!opcionMenuSeleccionada.titulo = #"_a-0000e94c-78eb-8000-e637-01ef9001ef90_4003090"[5],
+                    #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2226561"(
+                      idadmon: ri!idadmon,
+                      idsegmento: ri!idsegmento,
+                      refreshCount: local!refreshCount
+                    ),
+                    if(
+                      local!opcionMenuSeleccionada.titulo = #"_a-0000e94c-78eb-8000-e637-01ef9001ef90_4003090"[6],
+                      #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2226568"(refreshCount: local!refreshCount),
+                      choose(
+                        local!opcionMenuSeleccionada.titulo = #"_a-0000e94c-78eb-8000-e637-01ef9001ef90_4003090"[7],
+                        #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2226575"(
+                          /*bUser: local!bUser,*/
+                          refreshCount: local!refreshCount
+                        )
+                      )
+                    )
+                  )
+                )
+              )
+            )
+          )
+        },
+        width: "AUTO"
+      )
+    }
+  )
+)</definition>
+        <namedTypedValue>
+            <name>idadmon</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>idsegmento</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+        <isCustom>false</isCustom>
+    </interface>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000ea22-4ef8-8000-e643-01ef9001ef90_6743026"/>
+        <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9387033"/>
+    </history>
+</contentHaul>

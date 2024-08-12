@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9385787</versionUuid>
+    <rule>
+        <name>SCDO_opcionesReversoO</name>
+        <uuid>_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1897428</uuid>
+        <description>Contiene la información estructurada del Reverso de Operaciones</description>
+        <parentUuid>_a-0000e9a3-ab27-8000-e63d-01ef9001ef90_4829216</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>{
+  {
+    titulo: #"_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1897395"[1],
+    icono: #"_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1897407"[1],
+    perfiles: {#"_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1881741", #"_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1881746"},
+  },
+  {
+    titulo: #"_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1897395"[2],
+    icono: #"_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1897407"[2],
+    perfiles: {#"_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1881741", #"_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1881746"},
+ },
+ /*{*/
+   /*titulo: cons!SCDO_OPCIONES_REVERSOO[3],*/
+   /*icono: cons!SCDO_ICONO_REVERSOO[3],*/
+   /*perfiles: {cons!SCDO_GRUPO_PERFIL_USUARIO, cons!SCDO_GRUPO_PERFIL_ADMINISTRADOR},*/
+ /*}*/
+},</definition>
+        <preferredEditor>legacy</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1897452"/>
+        <historyInfo versionUuid="_a-0000e9f5-96e6-8000-e641-01ef9001ef90_6014871"/>
+        <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9385787"/>
+    </history>
+</contentHaul>

@@ -1,0 +1,502 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9392341</versionUuid>
+    <interface>
+        <name>SCDO_MostrarReporteObligatorios</name>
+        <uuid>_a-0000e9a7-6d42-8000-e63f-01ef9001ef90_5765674</uuid>
+        <description>Interfaz para mostrar los reportes que se pretenden poner en obligatorio y los que se pusieron</description>
+        <parentUuid>_a-0000e801-560f-8000-e5d9-01ef9001ef90_1707049</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>{
+  #"SYSTEM_SYSRULES_sectionLayout_v1"(
+    contents: {
+      #"SYSTEM_SYSRULES_sideBySideLayout"(
+        items: {
+          #"SYSTEM_SYSRULES_sideBySideItem"(
+            item: #"SYSTEM_SYSRULES_richTextDisplayField"(
+              labelPosition: "COLLAPSED",
+              value: concat("Cantidad de operaciones a modificar: ",if(isnull(ri!totalCount),"0",ri!totalCount - 1))
+            )
+          ),
+          #"SYSTEM_SYSRULES_sideBySideItem"(
+            item: #"SYSTEM_SYSRULES_richTextDisplayField"(
+              labelPosition: "COLLAPSED",
+              value: concat("Cantidad de operaciones modificadas: ",if(isnull(ri!reportes),"0",length(ri!reportes) + length(ri!reportesAprobados)))
+            )
+          )
+        }
+      )
+    }
+  ),
+  #"SYSTEM_SYSRULES_sectionLayout_v1"(
+    label: "Lista de operaciones cambiadas a obligatorio",
+    contents: {
+      #"SYSTEM_SYSRULES_gridField_v1"(
+        label: "Reportes",
+        labelPosition: "ABOVE",
+        showWhen: a!isNotNullOrEmpty(ri!reportes),
+        data: ri!reportes,
+        columns: {
+          #"SYSTEM_SYSRULES_gridColumn"(
+            label: "R.",
+            value: #"SYSTEM_SYSRULES_richTextDisplayField"(
+              value: {
+                if(
+                  a!isNullOrEmpty(fv!row.riesgo),
+                  #"SYSTEM_SYSRULES_richTextIcon"(
+                    icon: "arrow-circle-down-alt",
+                    caption: " Sin Riesgo",
+                    color: "#222222"
+                  ),
+                  choose(
+
+                    fv!row.riesgo,
+                    #"SYSTEM_SYSRULES_richTextIcon"(
+                      icon: "arrow-circle-down-alt",
+                      caption: " Risgo Bajo",
+                      color: "#1F8926"
+                    ),
+                    #"SYSTEM_SYSRULES_richTextIcon"(
+                      icon: "minus-circle",
+                      caption: " Riesgo Medio ",
+                      color: "#FFCC33"
+                    ),
+                    #"SYSTEM_SYSRULES_richTextIcon"(
+                      icon: "arrow-circle-up-alt",
+                      caption: " Riesgo Alto ",
+                      color: "#EC0000"
+                    )
+                  )
+                ),
+                " ",
+                /*if(a!isNotNullOrEmpty( fv!row.riesgo),*/
+                /*choose(*/
+                  /*fv!row.riesgo,*/
+                  /*a!richTextIcon(*/
+                    /*icon: "arrow-circle-down-alt",*/
+                    /*caption: " Risgo Bajo",*/
+                    /*color: "#1F8926"*/
+                  /*),*/
+                  /*a!richTextIcon(*/
+                    /*icon: "minus-circle",*/
+                    /*caption: " Riesgo Medio ",*/
+                    /*color: "#FFCC33"*/
+                  /*),*/
+                  /*a!richTextIcon(*/
+                    /*icon: "arrow-circle-up-alt",*/
+                    /*caption: " Riesgo Alto ",*/
+                    /*color: "#EC0000"*/
+                  /*)*/
+                /*),*/
+                /*" "),*/
+                /*" ",*/
+                if(
+                  fv!row.obligatorio = "*",
+                  #"SYSTEM_SYSRULES_richTextIcon"(
+                    icon: "check-square-o",
+                    caption: "Obligatorio",
+                  ),
+                  #"SYSTEM_SYSRULES_richTextIcon"(
+                    icon: "square-o",
+                    caption: "No Obligatorio",
+                  )
+                )
+              }
+            )
+          ),
+          #"SYSTEM_SYSRULES_gridColumn"(
+            label: "Operacion",
+            sortField: "operacion",
+            value: fv!row.operacion
+          ),
+          #"SYSTEM_SYSRULES_gridColumn"(
+            label: "Contrato",
+            sortField: "contrato",
+            value: fv!row.contrato
+          ),
+          #"SYSTEM_SYSRULES_gridColumn"(
+            label: "Cliente",
+            sortField: "nombre",
+            value: fv!row.nombre,            
+          ),
+          #"SYSTEM_SYSRULES_gridColumn"(
+            label: "Mercado",
+            sortField: "Mercado",
+            value: fv!row.Mercado
+          ),
+          #"SYSTEM_SYSRULES_gridColumn"(
+            label: "Emisora",
+            sortField: "emisora",
+            value: fv!row.Emisora
+          ),
+          #"SYSTEM_SYSRULES_gridColumn"(
+            label: "Monto",
+            sortField: "Monto",
+            value: if(
+              isnull(fv!row.Monto),
+              fv!row.Monto,
+              fixed(fv!row.Monto, 2)
+            ),
+            align: "END"
+          ),
+          #"SYSTEM_SYSRULES_gridColumn"(
+            label: "Fecha Captura",
+            sortField: "fehcacaptura",
+            value: fv!row.fechacaptura
+          ),
+          #"SYSTEM_SYSRULES_gridColumn"(
+            label: "Hora Captura",
+            sortField: "horacaptura",
+            value: fv!row.horacaptura
+          ),
+          #"SYSTEM_SYSRULES_gridColumn"(
+            label: "Bitacora",
+            sortField: "bitacora",
+            value: fv!row.bitacora
+          ),
+          #"SYSTEM_SYSRULES_gridColumn"(
+            label: "Usuario",
+            sortField: "usuario",
+            value: fv!row.Usuario
+          ),
+          #"SYSTEM_SYSRULES_gridColumn"(
+            label: "Promotor",
+            sortField: "promotor",
+            value: fv!row.promotor
+          ),
+          #"SYSTEM_SYSRULES_gridColumn"(
+            label: "CCostos",
+            sortField: "ccostos",
+            value: fv!row.ccostos
+          ),
+          #"SYSTEM_SYSRULES_gridColumn"(
+            label: "Revisado",
+            sortField: "revisado",
+            value: fv!row.revisado
+          ),
+          #"SYSTEM_SYSRULES_gridColumn"(
+            label: "Usuario Reviso",
+            sortField: "usuarioreviso",
+            value: fv!row.usuarioreviso
+          ),
+          #"SYSTEM_SYSRULES_gridColumn"(
+            label: "Ccreviso",
+            sortField: "ccreviso",
+            value: fv!row.ccreviso
+          ),
+          #"SYSTEM_SYSRULES_gridColumn"(
+            label: "Fecha Reviso",
+            sortField: "fechareviso",
+            value: fv!row.fechareviso
+          ),
+          #"SYSTEM_SYSRULES_gridColumn"(
+            label: "Ip",
+            sortField: "ip",
+            value: fv!row.íp
+          ),
+          #"SYSTEM_SYSRULES_gridColumn"(
+            label: "Observaciones",
+            sortField: "observaciones",
+            value: fv!row.observaciones
+          ),
+          #"SYSTEM_SYSRULES_gridColumn"(
+            label: "Extra1",
+            sortField: "extra1",
+            value: fv!row.extra1
+          ),
+          #"SYSTEM_SYSRULES_gridColumn"(
+            label: "Extra2",
+            sortField: "extra2",
+            value: fv!row.extra2
+          ),
+          #"SYSTEM_SYSRULES_gridColumn"(
+            label: "Extra3",
+            sortField: "extra3",
+            value: fv!row.extra3
+          ),
+          #"SYSTEM_SYSRULES_gridColumn"(
+            label: "Extra4",
+            sortField: "extra4",
+            value: fv!row.extra4
+          ),
+          #"SYSTEM_SYSRULES_gridColumn"(
+            label: "Extra5",
+            sortField: "extra5",
+            value: fv!row.extra5
+          ),
+          #"SYSTEM_SYSRULES_gridColumn"(
+            label: "Titulo",
+            sortField: "titulo",
+            value: fv!row.titlulo
+          ),
+        },
+        validations: {}
+      ),
+      #"SYSTEM_SYSRULES_gridField_v1"(
+        label: "Reportes Aprobados",
+        data: ri!reportesAprobados,
+        columns: {
+
+          #"SYSTEM_SYSRULES_gridColumn"(
+            label: "R.",
+            value: #"SYSTEM_SYSRULES_richTextDisplayField"(
+              value: {
+                choose(
+                  fv!row.riesgo,
+                  #"SYSTEM_SYSRULES_richTextIcon"(
+                    icon: "arrow-circle-down-alt",
+                    caption: " Risgo Bajo",
+                    color: "#1F8926"
+                  ),
+                  #"SYSTEM_SYSRULES_richTextIcon"(
+                    icon: "minus-circle",
+                    caption: " Riesgo Medio ",
+                    color: "#FFCC33"
+                  ),
+                  #"SYSTEM_SYSRULES_richTextIcon"(
+                    icon: "arrow-circle-up-alt",
+                    caption: " Riesgo Alto ",
+                    color: "#EC0000"
+                  )
+                ),
+                " ",
+                if(
+                  fv!row.obligatorio = "*",
+                  #"SYSTEM_SYSRULES_richTextIcon"(
+                    icon: "check-square-o",
+                    caption: "Obligatorio",
+                  ),
+                  #"SYSTEM_SYSRULES_richTextIcon"(
+                    icon: "square-o",
+                    caption: "No Obligatorio",
+                  )
+                )
+              }
+            )
+          ),
+          #"SYSTEM_SYSRULES_gridColumn"(
+            label: "Operacion",
+            sortField: "operacion",
+            value: fv!row.operacion
+          ),
+          #"SYSTEM_SYSRULES_gridColumn"(
+            label: "Contrato",
+            sortField: "contrato",
+            value: fv!row.contrato
+          ),
+          #"SYSTEM_SYSRULES_gridColumn"(
+            label: "Cliente",
+            sortField: "nombre",
+            value: fv!row.nombre,            
+          ),
+          #"SYSTEM_SYSRULES_gridColumn"(
+            label: "Mercado",
+            sortField: "Mercado",
+            value: fv!row.Mercado
+          ),
+          #"SYSTEM_SYSRULES_gridColumn"(
+            label: "Emisora",
+            sortField: "emisora",
+            value: fv!row.Emisora
+          ),
+          #"SYSTEM_SYSRULES_gridColumn"(
+            label: "Monto",
+            sortField: "Monto",
+            value: if(
+              isnull(fv!row.Monto),
+              fv!row.Monto,
+              fixed(fv!row.Monto, 2)
+            ),
+            align: "END"
+          ),
+          #"SYSTEM_SYSRULES_gridColumn"(
+            label: "Fecha Captura",
+            sortField: "fehcacaptura",
+            value: fv!row.fechacaptura
+          ),
+          #"SYSTEM_SYSRULES_gridColumn"(
+            label: "Hora Captura",
+            sortField: "horacaptura",
+            value: fv!row.horacaptura
+          ),
+          #"SYSTEM_SYSRULES_gridColumn"(
+            label: "Bitacora",
+            sortField: "bitacora",
+            value: fv!row.bitacora
+          ),
+          #"SYSTEM_SYSRULES_gridColumn"(
+            label: "Usuario",
+            sortField: "usuario",
+            value: fv!row.Usuario
+          ),
+          #"SYSTEM_SYSRULES_gridColumn"(
+            label: "Promotor",
+            sortField: "promotor",
+            value: fv!row.promotor
+          ),
+          #"SYSTEM_SYSRULES_gridColumn"(
+            label: "CCostos",
+            sortField: "ccostos",
+            value: fv!row.ccostos
+          ),
+          #"SYSTEM_SYSRULES_gridColumn"(
+            label: "Revisado",
+            sortField: "revisado",
+            value: fv!row.revisado
+          ),
+          #"SYSTEM_SYSRULES_gridColumn"(
+            label: "Usuario Reviso",
+            sortField: "usuarioreviso",
+            value: fv!row.usuarioreviso
+          ),
+          #"SYSTEM_SYSRULES_gridColumn"(
+            label: "Ccreviso",
+            sortField: "ccreviso",
+            value: fv!row.ccreviso
+          ),
+          #"SYSTEM_SYSRULES_gridColumn"(
+            label: "Fecha Reviso",
+            sortField: "fechareviso",
+            value: fv!row.fechareviso
+          ),
+          #"SYSTEM_SYSRULES_gridColumn"(
+            label: "Ip",
+            sortField: "ip",
+            value: fv!row.íp
+          ),
+          #"SYSTEM_SYSRULES_gridColumn"(
+            label: "Observaciones",
+            sortField: "observaciones",
+            value: fv!row.observaciones
+          ),
+          #"SYSTEM_SYSRULES_gridColumn"(
+            label: "Extra1",
+            sortField: "extra1",
+            value: fv!row.extra1
+          ),
+          #"SYSTEM_SYSRULES_gridColumn"(
+            label: "Extra2",
+            sortField: "extra2",
+            value: fv!row.extra2
+          ),
+          #"SYSTEM_SYSRULES_gridColumn"(
+            label: "Extra3",
+            sortField: "extra3",
+            value: fv!row.extra3
+          ),
+          #"SYSTEM_SYSRULES_gridColumn"(
+            label: "Extra4",
+            sortField: "extra4",
+            value: fv!row.extra4
+          ),
+          #"SYSTEM_SYSRULES_gridColumn"(
+            label: "Extra5",
+            sortField: "extra5",
+            value: fv!row.extra5
+          ),
+          #"SYSTEM_SYSRULES_gridColumn"(
+            label: "Tipo",
+            sortField: "tipo",
+            value: fv!row.tipo
+          ),
+          #"SYSTEM_SYSRULES_gridColumn"(
+            label: "Titulo",
+            sortField: "titulo",
+            value: fv!row.titlulo
+          ),
+          #"SYSTEM_SYSRULES_gridColumn"(
+            label: "Usuario Aprobo",
+            sortField: "usuarioaprobo",
+            value: fv!row.usuarioaprobo
+          ),
+          #"SYSTEM_SYSRULES_gridColumn"(
+            label: "FechaAprobo",
+            sortField: "fechaaprobo",
+            value: fv!row.fechaaprobo
+          ),
+          #"SYSTEM_SYSRULES_gridColumn"(
+            label: "Ip Aprobacion",
+            sortField: "ipaprobacion",
+            value: fv!row.ipaprobacion
+          ),
+        },
+        showWhen: a!isNotNullOrEmpty(ri!reportesAprobados)
+      )
+    }
+  ),
+  #"SYSTEM_SYSRULES_ButtonArrayLayout"(
+    align: "CENTER",
+    buttons: {
+      #"SYSTEM_SYSRULES_ButtonWidget"(
+        label: "ACEPTAR",
+        submit: true,
+        style: "PRIMARY"
+      )
+    },
+  )
+}</definition>
+        <namedTypedValue>
+            <name>reportes</name>
+            <type>
+                <name>cdo_reportes?list</name>
+                <namespace>urn:com:appian:types</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>totalCount</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>reportesAprobados</name>
+            <type>
+                <name>cdo_reportes_aprobados?list</name>
+                <namespace>urn:com:appian:types</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+        <isCustom>false</isCustom>
+    </interface>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000e9a7-6d42-8000-e63f-01ef9001ef90_5909947"/>
+        <historyInfo versionUuid="_a-0000ea97-682f-8000-e67f-01ef9001ef90_8167291"/>
+        <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9392341"/>
+    </history>
+</contentHaul>

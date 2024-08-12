@@ -1,0 +1,438 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9433243</versionUuid>
+    <interface>
+        <name>SCDO_ControldeDatos</name>
+        <uuid>_a-0000e801-560f-8000-e5d9-01ef9001ef90_1713686</uuid>
+        <description>Interfaz de control de Datos</description>
+        <parentUuid>_a-0000e801-560f-8000-e5d9-01ef9001ef90_1707049</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>a!localVariables(
+  
+  local!KeyGrids,
+  local!documentousuariosopics,
+  local!documentocentrocostos,
+  local!documentoadmonrevisores,
+  local!documentoaccesos,
+  local!contratoPendienteSeleccionado,
+  local!pendientePorRevisarSeleccionado,
+  local!nodocumentalLlamadaSeleccionado,
+  local!revisadosSeleccionado,
+  local!documentacionContratosSeleccionado,
+  local!registrarArriboSeleccionado,
+  local!panelcontrolSeleccionado: false,
+  local!reporteOperaciones: false,
+  local!indiceMenuPagina: 1,
+  local!idadmon,
+  local!idsegmento,
+  /*local!usuario_logueado: rule!SCDO_obtenerAdministradorPorUsuarioN(loggedInUser()),*/
+  local!admin: #"_a-0000eae4-5659-8000-e685-01ef9001ef90_8619011"(loggedInUser()),
+ 
+  /*local!PaginaRep,*/
+  /*local!PanelContol,*/
+  local!IndicedePagina :1,
+   {
+     #"_a-0000eabf-35e2-8000-e683-01ef9001ef90_8470714"(),
+     #"SYSTEM_SYSRULES_billboardLayout_v1"(
+       backgroundMedia: #"SYSTEM_SYSRULES_documentImage"(
+         document: #"_a-0000e9a7-6d42-8000-e63f-01ef9001ef90_5973460"
+       ),
+       backgroundColor: "#f0f0f0",
+       height: "SHORT"
+       /*overlay: a!barOverlay(*/
+       /*contents: {}*/
+       /*)*/
+     ),
+     
+     #"SYSTEM_SYSRULES_sectionLayout_v1"(
+       label: "",
+       contents: {
+         #"_a-0000e982-d80b-8000-e63b-01ef9001ef90_4638299"(
+           admon: local!admin
+         )
+       }
+     ),
+     #"SYSTEM_SYSRULES_sectionLayout_v1"(
+       label: "",
+       contents: {
+         #"SYSTEM_SYSRULES_columnsLayout"(
+           columns: {
+             #"SYSTEM_SYSRULES_columnLayout"(
+               contents: {
+                 #"_a-0000e8c4-62ba-8000-e603-01ef9001ef90_2659616"(
+                   documento_doc: local!documentousuariosopics
+                 )
+               }
+             ),
+             #"SYSTEM_SYSRULES_columnLayout"(
+               contents: {
+                 #"_a-0000e8c4-62ba-8000-e603-01ef9001ef90_2682974"(
+                   documento_doc: local!documentocentrocostos
+                 )
+               }
+             ),
+             #"SYSTEM_SYSRULES_columnLayout"(
+               contents: {
+                 #"_a-0000e8c4-62ba-8000-e603-01ef9001ef90_2683509"(
+                   documento_doc: local!documentoadmonrevisores
+                 )
+               }
+             ),
+             #"SYSTEM_SYSRULES_columnLayout"(
+               contents: {
+                #"_a-0000e94c-78eb-8000-e637-01ef9001ef90_4002698"(
+                  documento_doc: local!documentoaccesos
+                )
+               },
+               width: "AUTO"
+             ),
+             #"SYSTEM_SYSRULES_columnLayout"(
+               contents: {
+                 #"SYSTEM_SYSRULES_cardLayout"(
+                   contents: {
+                     #"SYSTEM_SYSRULES_richTextDisplayField"(
+                       labelPosition: "COLLAPSED",
+                       value: {
+                         #"SYSTEM_SYSRULES_richTextItem_v1"(
+                           text: {
+                             #"SYSTEM_SYSRULES_richTextIcon"(icon: "files-o"),
+                             " Reporte de operaciones"
+                           },
+                           /*size: "MEDIUM",*/
+                           color: "NEGATIVE",
+                           style: { "STRONG" }
+                         )
+
+                       },
+                       align: "CENTER"
+                     )                
+                   },                       
+                   link: #"SYSTEM_SYSRULES_dynamicLink"(
+                     saveInto: {
+                       a!save(local!KeyGrids, null),
+                       a!save(local!contratoPendienteSeleccionado, null),
+                       a!save(local!pendientePorRevisarSeleccionado, null),
+                       a!save(local!nodocumentalLlamadaSeleccionado, null),
+                       a!save(local!revisadosSeleccionado, null),
+                       a!save(local!documentacionContratosSeleccionado, null),
+                       a!save(local!registrarArriboSeleccionado, null),
+                       a!save(local!panelcontrolSeleccionado, false),
+                       a!save(local!reporteOperaciones, if(local!reporteOperaciones = true, false, true))
+                     }
+                   ),
+                   tooltip: if(
+                     local!IndicedePagina = true,
+                     "Cerrar Reportes de Operaciones",
+                     "Abrir Reportes de Operaciones"
+                   ),
+                   showWhen: true,
+                   style: if(local!reporteOperaciones = true, "INFO", ""),
+                   shape:"ROUNDED",
+                   marginBelow: "STANDARD",
+                   decorativeBarColor: "NEGATIVE"
+
+
+                 )
+               }
+             ),
+             #"SYSTEM_SYSRULES_columnLayout"(
+               contents: {
+                #"SYSTEM_SYSRULES_cardLayout"(
+                   contents: {
+                     #"SYSTEM_SYSRULES_richTextDisplayField"(
+                       labelPosition: "COLLAPSED",
+                       value: {
+                         #"SYSTEM_SYSRULES_richTextItem_v1"(
+                           text: {
+                             #"SYSTEM_SYSRULES_richTextIcon"(icon: "solar-panel"),
+                             " Panel de control"
+                           },
+                           color: "NEGATIVE",
+                           style: { "STRONG" }
+                         )
+
+                       },
+                       align: "CENTER"
+                     )                
+                   },                       
+                   link: #"SYSTEM_SYSRULES_dynamicLink"(
+                     value:
+                       if(
+                         local!panelcontrolSeleccionado = false,
+                         true,
+                         false
+                       ),
+                     saveInto: {
+                       a!save(local!contratoPendienteSeleccionado, null),
+                       a!save(local!pendientePorRevisarSeleccionado, null),
+                       a!save(local!nodocumentalLlamadaSeleccionado, null),
+                       a!save(local!revisadosSeleccionado, null),
+                       a!save(local!documentacionContratosSeleccionado, null),
+                       a!save(local!registrarArriboSeleccionado, null),
+                       a!save(local!KeyGrids, null),
+                       a!save(local!revisadosSeleccionado, null),
+                       a!save(local!reporteOperaciones, false),
+                       local!panelcontrolSeleccionado
+                     }
+                   ),
+                   tooltip: if(
+                     local!panelcontrolSeleccionado = false,
+                     "Abrir Panel de Control",
+                     "Cerrar Panel de Control"
+                   ),
+                   showWhen: true,
+                   style: {
+                     if(
+                       local!panelcontrolSeleccionado = false,
+                       "",
+                       "INFO"
+                     )
+                   },
+                   shape:"ROUNDED",
+                   marginBelow: "STANDARD",
+                   decorativeBarColor: "NEGATIVE"
+                 )
+               }
+             )
+           }
+         )
+       }
+     ),
+     if(
+       local!panelcontrolSeleccionado = true,
+       #"_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1847102"(indiceMenuSeleccionado: local!indiceMenuPagina, idadmon: local!idadmon, idsegmento: local!idsegmento),
+       {}
+     ),
+     #"SYSTEM_SYSRULES_sectionLayout_v1"(
+       label: "",
+       labelSize: "LARGE_PLUS",
+       contents: {
+         #"SYSTEM_SYSRULES_sideBySideLayout"(
+           items: {
+             #"SYSTEM_SYSRULES_sideBySideItem"(
+               item: #"SYSTEM_SYSRULES_checkboxField"(
+                 label: "",
+                 labelPosition: "ABOVE",
+
+                 choiceLabels: {"Contratos Pendientes"},
+                 choiceValues: {1},
+                 value: local!contratoPendienteSeleccionado,
+                 saveInto: {
+                  a!save(local!pendientePorRevisarSeleccionado, null),
+                  a!save(local!nodocumentalLlamadaSeleccionado, null),
+                  a!save(local!revisadosSeleccionado, null),
+                  a!save(local!documentacionContratosSeleccionado, null),
+                  a!save(local!registrarArriboSeleccionado, null),
+                  a!save(local!reporteOperaciones, false),
+                  a!save(local!panelcontrolSeleccionado, false),
+                  local!contratoPendienteSeleccionado,
+                  a!save(local!KeyGrids,local!contratoPendienteSeleccionado)
+                 },
+                 choiceLayout: "COMPACT",
+                 validations: {}
+               )
+             ),
+             #"SYSTEM_SYSRULES_sideBySideItem"(
+               item: #"SYSTEM_SYSRULES_checkboxField"(
+                 label: "",
+                 labelPosition: "ABOVE",
+                 choiceLabels: {"Pendientes por Revisar"},
+                 choiceValues: {2},
+                 value: local!pendientePorRevisarSeleccionado,
+                 saveInto: {
+                   a!save(local!contratoPendienteSeleccionado, null),
+                   a!save(local!nodocumentalLlamadaSeleccionado, null),
+                   a!save(local!revisadosSeleccionado, null),
+                   a!save(local!documentacionContratosSeleccionado, null),
+                   a!save(local!registrarArriboSeleccionado, null),
+                   a!save(local!reporteOperaciones, false),
+                   a!save(local!panelcontrolSeleccionado, false),
+                   local!pendientePorRevisarSeleccionado,
+                   a!save(local!KeyGrids,local!pendientePorRevisarSeleccionado)
+                 },
+                 choiceLayout: "COMPACT",
+                 validations: {}
+               )
+             ),
+             #"SYSTEM_SYSRULES_sideBySideItem"(
+               item: #"SYSTEM_SYSRULES_checkboxField"(
+                 label: "",
+                 labelPosition: "ABOVE",
+                 choiceLabels: {"No documental,Llamada"},
+                 choiceValues: {3},
+                 value: local!nodocumentalLlamadaSeleccionado,
+                 saveInto: {
+                   a!save(local!contratoPendienteSeleccionado, null),
+                   a!save(local!pendientePorRevisarSeleccionado, null),
+                   a!save(local!revisadosSeleccionado, null),
+                   a!save(local!documentacionContratosSeleccionado, null),
+                   a!save(local!registrarArriboSeleccionado, null),
+                   a!save(local!reporteOperaciones, false),
+                   a!save(local!panelcontrolSeleccionado, false),
+                   local!nodocumentalLlamadaSeleccionado,
+                   a!save(local!KeyGrids,local!nodocumentalLlamadaSeleccionado)
+                 },
+                 choiceLayout: "COMPACT",
+                 validations: {}
+               )
+             ),
+             #"SYSTEM_SYSRULES_sideBySideItem"(
+               item: #"SYSTEM_SYSRULES_checkboxField"(
+                 label: "",
+                 labelPosition: "ABOVE",
+                 choiceLabels: {"Revisados"},
+                 choiceValues: {4},
+                 value: local!revisadosSeleccionado,
+                 saveInto: {
+                   a!save(local!contratoPendienteSeleccionado, null),
+                   a!save(local!pendientePorRevisarSeleccionado, null),
+                   a!save(local!nodocumentalLlamadaSeleccionado, null),
+                   a!save(local!documentacionContratosSeleccionado, null),
+                   a!save(local!registrarArriboSeleccionado, null),
+                   a!save(local!reporteOperaciones, false),
+                   a!save(local!panelcontrolSeleccionado, false),
+                   local!revisadosSeleccionado,
+                   a!save(local!KeyGrids,local!revisadosSeleccionado)
+                 },
+                 choiceLayout: "COMPACT",
+                 validations: {}
+               )
+             ),
+             #"SYSTEM_SYSRULES_sideBySideItem"(
+               item: #"SYSTEM_SYSRULES_checkboxField"(
+                 label: "",
+                 labelPosition: "ABOVE",
+                 choiceLabels: {"Documentacion Contratos"},
+                 choiceValues: {5},
+                 value: local!documentacionContratosSeleccionado,
+                 saveInto: {
+                   a!save(local!contratoPendienteSeleccionado, null),
+                   a!save(local!pendientePorRevisarSeleccionado, null),
+                   a!save(local!nodocumentalLlamadaSeleccionado, null),
+                   a!save(local!revisadosSeleccionado, null),
+                   a!save(local!registrarArriboSeleccionado, null),
+                   a!save(local!reporteOperaciones, false),
+                   a!save(local!panelcontrolSeleccionado, false),
+                   local!documentacionContratosSeleccionado,
+                   a!save(local!KeyGrids,local!documentacionContratosSeleccionado)
+                 },
+                 choiceLayout: "COMPACT",
+                 validations: {}
+               )
+             ),
+             #"SYSTEM_SYSRULES_sideBySideItem"(
+               item: #"SYSTEM_SYSRULES_checkboxField"(
+                 label: "",
+                 labelPosition: "ABOVE",
+                 choiceLabels: {"Registrar Arribo"},
+                 choiceValues: {6},
+                 value: local!registrarArriboSeleccionado,
+                 saveInto: {
+                   a!save(local!contratoPendienteSeleccionado, null),
+                   a!save(local!pendientePorRevisarSeleccionado, null),
+                   a!save(local!nodocumentalLlamadaSeleccionado, null),
+                   a!save(local!revisadosSeleccionado, null),
+                   a!save(local!documentacionContratosSeleccionado, null),
+                   a!save(local!reporteOperaciones, false),
+                   a!save(local!panelcontrolSeleccionado, false),
+                   local!registrarArriboSeleccionado,
+                   a!save(local!KeyGrids,local!registrarArriboSeleccionado)
+                 },
+                 choiceLayout: "COMPACT",
+                 validations: {}
+               )
+             )
+           }
+         )
+       },
+       showWhen: {
+         if(
+           and(local!panelcontrolSeleccionado = false, local!reporteOperaciones = false),
+           true,
+           false
+         )
+       },
+       divider: "ABOVE",
+       dividerWeight: "MEDIUM",
+       dividerColor: "#cc0000"
+     ),
+
+     #"SYSTEM_SYSRULES_columnsLayout"(
+       columns: {
+         #"SYSTEM_SYSRULES_columnLayout"(
+           contents: {
+             choose(
+               local!KeyGrids,
+               #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2076428"(),
+               #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2259988"(),
+               #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2257344"(),
+               #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2260007"(),
+               #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2260035"(),
+               #"_a-0000e801-560f-8000-e5d9-01ef9001ef90_1721128"()
+               /*rule!SCDO_ROperaciones( SCDO_Indice_Pagina: local!IndicedePagina )*/
+             )
+           }
+         )
+       },
+       showWhen: a!isNotNullOrEmpty(local!KeyGrids)
+     ),
+     if(
+       local!reporteOperaciones = true,
+       #"_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1845825"(),
+         {}
+     )
+     
+   }
+   
+   /*rule!SCDO_Menu_Panel(*/
+     /*SCDO_Indice_Pagina: local!IndicedePagina*/
+   /*)*/
+)</definition>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+        <isCustom>false</isCustom>
+    </interface>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000e93b-1de6-8000-e635-01ef9001ef90_3465940"/>
+        <historyInfo versionUuid="_a-0000e9f5-96e6-8000-e641-01ef9001ef90_6582269"/>
+        <historyInfo versionUuid="_a-0000eaa5-8248-8000-e681-01ef9001ef90_8347260"/>
+        <historyInfo versionUuid="_a-0000eabf-35e2-8000-e683-01ef9001ef90_8478273"/>
+        <historyInfo versionUuid="_a-0000eae4-5659-8000-e685-01ef9001ef90_8619143"/>
+        <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9390309"/>
+        <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9433243"/>
+    </history>
+</contentHaul>

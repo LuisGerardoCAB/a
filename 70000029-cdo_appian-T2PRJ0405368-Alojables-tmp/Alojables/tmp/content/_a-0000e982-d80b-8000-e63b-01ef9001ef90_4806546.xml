@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9386142</versionUuid>
+    <rule>
+        <name>SCDO_getDoctosFisicosByFilters</name>
+        <uuid>_a-0000e982-d80b-8000-e63b-01ef9001ef90_4806546</uuid>
+        <description>Regla que consulta todos los datos del CDT Doctos Físicos</description>
+        <parentUuid>_a-0000e9a3-ab27-8000-e63d-01ef9001ef90_4831029</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>#"_a-0000e8b9-0989-8000-e5fd-01ef9001ef90_2420859"(
+  dataStoreEntity_dt: #"_a-0000e8b2-d897-8000-e5f1-01ef9001ef90_2373385",
+  queryFilter_any: {
+    #"SYSTEM_SYSRULES_queryFilter"(
+      field: "iddocumento",
+      operator: "=",
+      value: ri!iddocumento
+      /*applyWhen: isnull(ri!iddocumento) &lt;&gt; true*/
+    ),
+    #"SYSTEM_SYSRULES_queryFilter"(
+      field: "estatus",
+      operator: "=",
+      value: ri!estatus
+      /*applyWhen: isnull(ri!estatus) &lt;&gt; true*/
+    ),
+    #"SYSTEM_SYSRULES_queryFilter"(
+      field: "contrato",
+      operator: "=",
+      value: ri!contrato
+      /*applyWhen: isnull(ri!contrato) &lt;&gt; true*/
+    ),
+    #"SYSTEM_SYSRULES_queryFilter"(
+      field: "adf",
+      operator: "=",
+      value: ri!adf
+      /*applyWhen: isnull(ri!adf) &lt;&gt; true*/
+    ),
+    #"SYSTEM_SYSRULES_queryFilter"(
+      field: "fechaRegistro",
+      operator: "=",
+      value: ri!fechaRegistro
+      /*applyWhen: isnull(ri!fechaRegistro) &lt;&gt; true*/
+    ),
+    #"SYSTEM_SYSRULES_queryFilter"(
+      field: "comentarios",
+      operator: "=",
+      value: ri!comentarios
+      /*applyWhen: isnull(ri!comentarios) &lt;&gt; true*/
+    )
+  },
+  pagingInfo_pi: if(
+    not(isnull(ri!paginInfo)),
+    ri!paginInfo,
+    #"SYSTEM_SYSRULES_pagingInfo"(
+      startIndex: 1,
+      batchSize: 50,
+      sort: #"SYSTEM_SYSRULES_sortInfo"(field: "iddocumento", ascending: true())
+    )
+  ),
+ 
+  selectionColumn_txt: ri!seleccionColumnas,   
+  /*pagingInfo_pi: ri!paginInfo,*/
+  ignoreFiltersWithEmptyValues_bool:true,
+  fetchTotalCount_bool: true
+)
+
+
+
+
+</definition>
+        <namedTypedValue>
+            <name>iddocumento</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>estatus</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>contrato</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>adf</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>paginInfo</name>
+            <type>
+                <name>PagingInfo</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>seleccionColumnas</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>fechaRegistro</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>comentarios</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <preferredEditor>legacy</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000e9f5-96e6-8000-e641-01ef9001ef90_6016244"/>
+        <historyInfo versionUuid="_a-0000eaa5-8248-8000-e681-01ef9001ef90_8235009"/>
+        <historyInfo versionUuid="_a-0000eb09-d442-8000-e687-01ef9001ef90_8846081"/>
+        <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9386142"/>
+    </history>
+</contentHaul>

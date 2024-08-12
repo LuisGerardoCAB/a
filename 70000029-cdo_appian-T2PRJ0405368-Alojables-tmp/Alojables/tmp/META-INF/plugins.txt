@@ -1,0 +1,36 @@
+AddDocumentsToZip
+Add Documents to Zip
+1.0.1
+
+com.appiancorp.ps.plugins.contenttools
+Content Tools
+1.7.1
+
+com.appiancorp.solutionsconsulting.dateAndTimeUtilities
+Date and Time Utilities
+1.1.0
+
+innodev.appianplugin.functions.dict
+Dictionary Utilities
+1.1.0
+
+com.appiancorp.ps.exceltools
+Excel Tools
+2.5.0
+
+psshared.peoplefunctions
+People Functions
+1.15.0
+
+com.appiancorp.a2.process.runtime.activities.sftp
+SFTP Functions
+2.1.0
+
+com.nathanthered.plugins.textfilefunctions
+Text File Functions
+1.0.1
+
+com.vuram.plugins.zipextractor
+ZIP Utility
+1.0.3
+

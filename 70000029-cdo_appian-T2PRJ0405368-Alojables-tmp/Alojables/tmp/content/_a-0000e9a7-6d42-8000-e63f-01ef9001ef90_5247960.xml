@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9386300</versionUuid>
+    <rule>
+        <name>SCDO_obtenerLogModificacionesDiarias</name>
+        <uuid>_a-0000e9a7-6d42-8000-e63f-01ef9001ef90_5247960</uuid>
+        <description>Consulta informacion de la tabla CDO_MX_AUX_MODIFICACIONES_RA</description>
+        <parentUuid>_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1882376</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>#"_a-0000e8b9-0989-8000-e5fd-01ef9001ef90_2420859"(
+  dataStoreEntity_dt: #"_a-0000e9a7-6d42-8000-e63f-01ef9001ef90_5247914",
+  selectionColumn_txt: ri!seleccionColumnasList_txt,
+  queryFilter_any: {
+    #"SYSTEM_SYSRULES_queryFilter"(
+      field: "idtabla",
+      operator: "=",
+      value: ri!idTabla_txt,
+      applyWhen: isnull(ri!idTabla_txt) &lt;&gt; true
+    ),
+    #"SYSTEM_SYSRULES_queryFilter"(
+      field: "codigollave",
+      operator: "=",
+      value: ri!codigoLlave_txt,
+      applyWhen: isnull(ri!codigoLlave_txt) &lt;&gt; true
+    ),
+    #"SYSTEM_SYSRULES_queryFilter"(
+      field: "fechaYHora",
+      operator: "between",
+      value: {
+        datetime(
+          year(ri!fechaInicio_dt),
+          month(ri!fechaInicio_dt),
+          day(ri!fechaInicio_dt),
+          0,
+          0,
+          0
+        ) - intervalds(timezone() / 60, 0, 0),
+        datetime(
+          year(ri!fechaFin_dt),
+          month(ri!fechaFin_dt),
+          day(ri!fechaFin_dt),
+          23,
+          59,
+          59
+        ) - intervalds(timezone() / 60, 0, 0),
+      },
+      applyWhen: and(
+        not(#"_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1882382"(ri!fechaInicio_dt)),
+        not(#"_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1882382"(ri!fechaFin_dt))
+      )
+    )
+  },
+  pagingInfo_pi: ri!paginInfo_pi,
+  ignoreFiltersWithEmptyValues_bool: true,
+  fetchTotalCount_bool: true
+)</definition>
+        <namedTypedValue>
+            <name>seleccionColumnasList_txt</name>
+            <type>
+                <name>Text?list</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>paginInfo_pi</name>
+            <type>
+                <name>PagingInfo</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>idTabla_txt</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>codigoLlave_txt</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>fechaInicio_dt</name>
+            <type>
+                <name>date</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>fechaFin_dt</name>
+            <type>
+                <name>date</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>legacy</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000e9a7-6d42-8000-e63f-01ef9001ef90_5291730"/>
+        <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9386300"/>
+    </history>
+</contentHaul>

@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9510127</versionUuid>
+    <interface>
+        <name>SCDO_Doc_Catalogo</name>
+        <uuid>_a-0000e878-569a-8000-e5e4-01ef9001ef90_1946988</uuid>
+        <description>Interface contiene menú Horizontal para el modulo de documentación</description>
+        <parentUuid>_a-0000e801-560f-8000-e5d9-01ef9001ef90_1707049</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>a!localVariables(
+  local!opcionMenuSeleccionada: #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_1946976"()[1],
+  local!indiceMenuSeleccionado: 1,
+  local!documento,
+  local!segmento,
+  local!descripcion,
+  local!tipo,
+ 
+  
+  
+  
+  
+  #"SYSTEM_SYSRULES_columnsLayout"(
+    columns: {
+      #"SYSTEM_SYSRULES_columnLayout"(
+        contents: {
+          #"_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1881575"(
+            opcionSeleccionada_any: local!opcionMenuSeleccionada,
+            opciones_any: #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_1946976"(),
+            indiceSeleccionado_int: local!indiceMenuSeleccionado
+          ),
+          if(
+            local!opcionMenuSeleccionada.titulo = #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_1946756"[1],
+            #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_1945903"(
+              documento: local!documento,
+              segmento: local!segmento,
+             
+            ),
+            choose(
+              local!opcionMenuSeleccionada.titulo = #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_1946756"[2],
+              #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_1946556"(
+                documento: local!documento,
+                tipo: local!tipo,
+                descripcion: local!descripcion
+              ),
+              )
+            ),
+            
+
+        },
+        width: "AUTO"
+      ),
+     },
+        /*width: "AUTO"*/
+    )
+)
+</definition>
+        <namedTypedValue>
+            <name>segmento_cdt</name>
+            <type>
+                <name>Variant</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+        <isCustom>false</isCustom>
+    </interface>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <typedValue>
+        <type>
+            <name>RuleTestConfig?list</name>
+            <namespace>http://www.appian.com/ae/types/2009</namespace>
+        </type>
+        <value>
+            <el>
+                <a:name/>
+                <a:ruleInputTestConfigs>
+                    <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="a:Expression">#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2233353"(
+  seleccionColumnas: {"segmento", "idsegmento"}
+
+).data</a:value>
+                    <a:nameRef>segmento_cdt</a:nameRef>
+                    <a:id>1</a:id>
+                </a:ruleInputTestConfigs>
+                <a:assertions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+            </el>
+        </value>
+    </typedValue>
+    <history>
+        <historyInfo versionUuid="_a-0000e878-569a-8000-e5e4-01ef9001ef90_1988852"/>
+        <historyInfo versionUuid="_a-0000e9a7-6d42-8000-e63f-01ef9001ef90_5271940"/>
+        <historyInfo versionUuid="_a-0000eb09-d442-8000-e687-01ef9001ef90_8793881"/>
+        <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9391233"/>
+        <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9510127"/>
+    </history>
+</contentHaul>

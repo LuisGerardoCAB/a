@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9387799</versionUuid>
+    <interface>
+        <name>SCDO_Operaciones</name>
+        <uuid>_a-0000e878-569a-8000-e5e4-01ef9001ef90_1950234</uuid>
+        <description>Interface que contiene las opciones y el menu Horizontal</description>
+        <parentUuid>_a-0000e801-560f-8000-e5d9-01ef9001ef90_1707049</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>a!localVariables(
+  local!proceso_txt,
+  local!datoSeleccionado,
+  local!opcionMenuSeleccionada: #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_1950215"()[1],
+  local!indiceMenuSeleccionado: 1,
+  local!borrar_valores:false,
+  #"SYSTEM_SYSRULES_columnsLayout"(
+    columns: {
+      #"SYSTEM_SYSRULES_columnLayout"(
+        contents: {
+          #"_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1881575"(
+            opcionSeleccionada_any: local!opcionMenuSeleccionada,
+            opciones_any: #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_1950215"(),
+            indiceSeleccionado_int: local!indiceMenuSeleccionado
+          ),
+          if(
+            local!opcionMenuSeleccionada.titulo = #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_1950209"[1],
+            #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_1950028"(
+              /*proceso_txt: local!proceso_txt,*/
+              /*datoSeleccionado: local!datoSeleccionado*/
+              
+            ),
+            if(
+              local!opcionMenuSeleccionada.titulo = #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_1950209"[2],
+              #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_1950064"(
+                proceso_txt: local!proceso_txt,
+                datoSeleccionado: local!datoSeleccionado
+                
+              ),
+           choose(
+            local!opcionMenuSeleccionada.titulo = #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_1950209"[3],
+            #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_1950139"(
+              
+              proceso_txt: local!proceso_txt,
+              datoSeleccionado: local!datoSeleccionado
+              
+            ),
+            /*if(*/
+              /*local!opcionMenuSeleccionada.titulo = cons!SMC_OPCIONES_MENU_PANTALLA_PRINCIPAL[4],*/
+              /*rule!SMC_AdministracionUsuarios(*/
+                /*titulo_txt: "Administración de Usuarios por Perfiles",*/
+                /*grupoSeguridad_g: cons!SMC_GRUPO_SEGURIDAD_POR_PERFILES*/
+              /*),*/
+              /*if(*/
+                /*local!opcionMenuSeleccionada.titulo = cons!SMC_OPCIONES_MENU_PANTALLA_PRINCIPAL[5],*/
+                /*{*/
+                  /*rule!SMC_Monitoreo(),*/
+                  /*rule!SMC_Movimiento(),*/
+                  /*if(*/
+                    /*a!isUserMemberOfGroup(*/
+                      /*loggedInUser(),*/
+                      /*{cons!SMC_GRUPO_PERFIL_ADMINISTRADOR_SEGUIMIENTO}*/
+                    /*),*/
+                    /*rule!SMC_AdministracionUsuarios(*/
+                      /*titulo_txt: "Administración de Usuarios por Columnas",*/
+                      /*grupoSeguridad_g: cons!SMC_GRUPO_ENTIDAD_SEGUIMIENTO*/
+                    /*),*/
+                    /*{}*/
+                  /*),*/
+                  /*if(*/
+                    /*a!isUserMemberOfGroup(*/
+                      /*loggedInUser(),*/
+                      /*{cons!SMC_GRUPO_PERFIL_ADMINISTRADOR_SEGUIMIENTO}*/
+                    /*),*/
+                    /*rule!SMC_AdministracionUsuarios(*/
+                      /*titulo_txt: "Administración de Usuarios por Perfiles",*/
+                      /*grupoSeguridad_g: cons!SMC_GRUPO_SEGURIDAD_POR_PERFILES*/
+                    /*),*/
+                    /*{}*/
+                  /*)*/
+                /*},*/
+                /*{}*/
+              /*)*/
+            /*)*/
+          )
+          )
+          )
+
+        },
+        width: "AUTO"
+      )
+    }
+    /*width: "AUTO"*/
+  )
+)
+</definition>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+        <isCustom>false</isCustom>
+    </interface>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000e878-569a-8000-e5e4-01ef9001ef90_1988861"/>
+        <historyInfo versionUuid="_a-0000e9a7-6d42-8000-e63f-01ef9001ef90_5271971"/>
+        <historyInfo versionUuid="_a-0000eabf-35e2-8000-e683-01ef9001ef90_8451234"/>
+        <historyInfo versionUuid="_a-0000eb09-d442-8000-e687-01ef9001ef90_8815371"/>
+        <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9387799"/>
+    </history>
+</contentHaul>

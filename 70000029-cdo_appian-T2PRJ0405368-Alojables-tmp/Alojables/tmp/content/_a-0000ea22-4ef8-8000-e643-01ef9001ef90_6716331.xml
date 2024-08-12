@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9386991</versionUuid>
+    <rule>
+        <name>SCDO_ObtenerTrazarUsuarioFaltante</name>
+        <uuid>_a-0000ea22-4ef8-8000-e643-01ef9001ef90_6716331</uuid>
+        <description>Regla de expresion para obtener las trazas de los reportes de un usuario faltante</description>
+        <parentUuid>_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1882376</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>a!localVariables(
+  local!temp: #"SYSTEM_SYSRULES_forEach"(
+    items: ri!ids_reportes,
+    expression: {
+      #"_a-0000e8d8-9b98-8000-e605-01ef9001ef90_2933354"(idreporte: fv!item)
+    }
+  ),
+  #"SYSTEM_SYSRULES_forEach"(
+    items: local!temp,
+    expression: {
+      'type!{urn:com:appian:types}cdo_reportes_auditoria'(
+        idreporte: fv!item.idreporte,
+        mercado: fv!item.mercado,
+        operacion: fv!item.operacion,
+        contrato: fv!item.contrato,
+        nombre: fv!item.nombre,
+        emisora: fv!item.emisora,
+        monto: fv!item.monto,
+        promotor: fv!item.promotor,
+        ccostos: fv!item.ccostos,
+        usuario: fv!item.usuario,
+        fechacaptura: fv!item.fechacaptura,
+        horacaptura: fv!item.horacaptura,
+        bitacora: fv!item.bitacora,
+        riesgo: fv!item.riesgo,
+        revisado: fv!item.revisado,
+        usuarioreviso: fv!item.usuarioreviso,
+        ccreviso: fv!item.ccreviso,
+        ip: fv!item.ip,
+        fechareviso: fv!item.fechareviso,
+        observaciones: fv!item.observaciones,
+        extra1: fv!item.extra1,
+        extra2: fv!item.extra2,
+        extra3: fv!item.extra3,
+        extra4: fv!item.extra4,
+        extra5: fv!item.extra5,
+        obligatorio: fv!item.obligatorio,
+        titulo: fv!item.titulo,
+        dml: "DELETE",
+        fchaDml: now()
+      )
+    }
+  )
+)</definition>
+        <namedTypedValue>
+            <name>ids_reportes</name>
+            <type>
+                <name>Integer?list</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>legacy</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000ea22-4ef8-8000-e643-01ef9001ef90_6716612"/>
+        <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9386991"/>
+    </history>
+</contentHaul>

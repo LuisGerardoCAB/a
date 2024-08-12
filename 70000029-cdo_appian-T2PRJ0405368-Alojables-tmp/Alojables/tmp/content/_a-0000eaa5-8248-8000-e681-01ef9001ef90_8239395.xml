@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9386756</versionUuid>
+    <rule>
+        <name>SCDO_EXTRAER_CONTRATOS_EXCEL</name>
+        <uuid>_a-0000eaa5-8248-8000-e681-01ef9001ef90_8239395</uuid>
+        <description>Extrae los contratos del excel</description>
+        <parentUuid>_a-0000e9a3-ab27-8000-e63d-01ef9001ef90_4829216</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>a!localVariables(
+  local!totalCount: readexcelsheetpaging(
+    excelDocument: ri!documento,
+    sheetNumber: 0,
+    pagingInfo: #"SYSTEM_SYSRULES_pagingInfo"(1, -1),
+    numberOfColumns: 0
+  ).totalCount,
+  local!informacion: readexcelsheetpaging(
+    excelDocument: ri!documento,
+    sheetNumber: 0,
+    pagingInfo: #"SYSTEM_SYSRULES_pagingInfo"(1, local!totalCount),
+    numberOfColumns: 0
+  ).data,
+  
+  local!contratos: reject(
+    fn!isnull,
+    a!flatten(
+      #"SYSTEM_SYSRULES_forEach"(
+        items: local!informacion,
+        expression: {
+          if(
+            fv!index = 1,
+            null(),
+            if(
+              a!isNullOrEmpty(fv!item.values[1]),
+              null,
+              fv!item.values[1]
+              /*if(*/
+              /*len(fv!item.values[ri!posExcelContrato]) &lt; 11,*/
+              /*rule!SCDO_insertarCerosParaContrato(contrato: fv!item.values[ri!posExcelContrato], ceros: 11 - len(fv!item.values[ri!posExcelContrato])),*/
+              /*fv!item.values[ri!posExcelContrato]*/
+              /*)*/
+            )
+          )
+        }
+      )
+    ),
+  ),
+  if( length(local!contratos)=local!totalCount-1,
+  local!contratos,
+  null
+  )
+  
+)</definition>
+        <namedTypedValue>
+            <name>documento</name>
+            <type>
+                <name>CollaborationDocument</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>legacy</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000eaa5-8248-8000-e681-01ef9001ef90_8240602"/>
+        <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9386756"/>
+    </history>
+</contentHaul>

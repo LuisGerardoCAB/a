@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9386309</versionUuid>
+    <rule>
+        <name>SCDO_VALIDAR_OPERACIONES_IGUAL_CONTRATO_SIN_LETRAS</name>
+        <uuid>_a-0000ea97-682f-8000-e67f-01ef9001ef90_8182757</uuid>
+        <description>Regla de expresión para validar si existe la misma cantidad de operaciones que de contratos y si ninguno tiene letras.</description>
+        <parentUuid>_a-0000e9a3-ab27-8000-e63d-01ef9001ef90_4829216</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>a!localVariables(
+  local!operaciones:#"SYSTEM_SYSRULES_forEach"(
+    items: ri!texto, 
+    expression: {
+      a!localVariables(
+        local!datosFila: split(fv!item, "|"),
+        local!operacion: index(local!datosFila,2, null),
+        if( /*and(*/
+          a!isNotNullOrEmpty(local!operacion)/*,rule!SCDO_HAY_LETRAS(texto:local!operacion)=false)*/,
+        local!operacion,
+        null
+        )
+
+      )
+
+    } 
+  ),
+  local!contratos:#"SYSTEM_SYSRULES_forEach"(
+    items: ri!texto, 
+    expression: {
+      a!localVariables(
+        local!datosFila: split(fv!item, "|"),
+        local!contrato: index(local!datosFila,3, null),
+        if(and(len(local!contrato)=&lt;11,a!isNotNullOrEmpty(local!contrato)/*,rule!SCDO_HAY_LETRAS(texto:local!contrato)=false*/),
+        local!contrato,
+        null
+        )
+
+      )
+
+    } 
+  ),
+  /*count( reject(fn!isnull, local!operaciones))=ri!total_lineas,*/
+  and(count(reject(fn!isnull, local!operaciones))=ri!total_lineas,count(reject(fn!isnull, local!contratos))=ri!total_lineas)
+  
+
+
+)</definition>
+        <namedTypedValue>
+            <name>texto</name>
+            <type>
+                <name>Text?list</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>total_lineas</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>legacy</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000eaa5-8248-8000-e681-01ef9001ef90_8300850"/>
+        <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9386309"/>
+    </history>
+</contentHaul>

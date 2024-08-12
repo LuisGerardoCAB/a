@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9386034</versionUuid>
+    <rule>
+        <name>SCDO_ACTUALIZAR_DOCS_FISICOS_A_RECHAZAR</name>
+        <uuid>_a-0000eaa5-8248-8000-e681-01ef9001ef90_8195592</uuid>
+        <description>Regla de expresión para actualizar los documentos físicos relacionados con la documentación a rechazar.</description>
+        <parentUuid>_a-0000e9a3-ab27-8000-e63d-01ef9001ef90_4829216</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>a!localVariables(
+  local!docs:ri!docs_fisicos,
+  if(a!isNotNullOrEmpty(local!docs),
+  #"SYSTEM_SYSRULES_forEach"(
+    items:local!docs,
+    expression: 'type!{urn:com:appian:types}cdo_doctos_fisicos'(
+      iddoctosFisicos: fv!item.iddoctosFisicos,
+      contrato:fv!item.contrato,
+      fechaRegistro:fv!item.fechaRegistro,
+      adf:fv!item.adf,
+      idusuario:fv!item.idusuario,
+      comentarios:concat("invalidado por rechazo de documento",now(),"por usuario",fv!item.idusuario),
+      iddocumento:fv!item.iddocumento,
+      estatus:"0"
+    )
+  )
+  
+  
+  ,null
+  )
+)</definition>
+        <namedTypedValue>
+            <name>docs_fisicos</name>
+            <type>
+                <name>cdo_doctos_fisicos?list</name>
+                <namespace>urn:com:appian:types</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>legacy</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000eaa5-8248-8000-e681-01ef9001ef90_8195610"/>
+        <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9386034"/>
+    </history>
+</contentHaul>

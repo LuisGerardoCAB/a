@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9451885</versionUuid>
+    <rule>
+        <name>SCDO_getVistaEjecu</name>
+        <uuid>4abb2c14-ac25-4b4a-a0f6-a11f52071c0b</uuid>
+        <description>Regla que consulta todos los datos de la Vista V_CDO_Ejecutivo</description>
+        <parentUuid>_a-0000e9a3-ab27-8000-e63d-01ef9001ef90_4828984</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>#"SYSTEM_SYSRULES_queryEntity_v2"(
+  entity: #"_a-0000e982-d80b-8000-e63b-01ef9001ef90_4726165",
+  query: #"SYSTEM_SYSRULES_query"(
+    logicalExpression: #"SYSTEM_SYSRULES_queryLogicalExpression"(
+      operator: "AND",
+      filters: {
+        #"SYSTEM_SYSRULES_queryFilter"(
+          field: "idacceso",
+          operator: "=",
+          value: ri!idacceso,
+          applyWhen: isnull(ri!idacceso) &lt;&gt; true
+        ),
+        #"SYSTEM_SYSRULES_queryFilter"(
+          field: "usuarioopics",
+          operator: "=",
+          value: ri!usuarioopics,
+          applyWhen: isnull(ri!usuarioopics) &lt;&gt; true
+        ),
+        #"SYSTEM_SYSRULES_queryFilter"(
+          field: "idsegmento",
+          operator: "=",
+          value: ri!idsegmento,
+          applyWhen: isnull(ri!idsegmento) &lt;&gt; true
+        ),
+        #"SYSTEM_SYSRULES_queryFilter"(
+          field: "expediente",
+          operator: "=",
+          value: ri!expediente,
+          applyWhen: isnull(ri!expediente) &lt;&gt; true
+        ),
+        #"SYSTEM_SYSRULES_queryFilter"(
+          field: "nombre",
+          operator: "=",
+          value: ri!nombre,
+          applyWhen: isnull(ri!nombre) &lt;&gt; true
+        ),
+        #"SYSTEM_SYSRULES_queryFilter"(
+          field: "fechaingreso",
+          operator: "=",
+          value: ri!fechaingreso,
+          applyWhen: isnull(ri!fechaingreso) &lt;&gt; true
+        ),
+        #"SYSTEM_SYSRULES_queryFilter"(
+          field: "tipoacceso",
+          operator: "=",
+          value: ri!tipoacceso,
+          applyWhen: isnull(ri!tipoacceso) &lt;&gt; true
+        ),
+
+      },
+      ignoreFiltersWithEmptyValues: true,
+
+    ),
+    pagingInfo: if(
+      not(isnull(ri!paginInfo)),
+      ri!paginInfo,
+      #"SYSTEM_SYSRULES_pagingInfo"(
+        startIndex: 1,
+        batchSize: 20000,
+        /*sort: a!sortInfo(field: "idReporte", ascending: true())*/
+      )
+    ),
+
+
+
+
+  ),
+
+)</definition>
+        <namedTypedValue>
+            <name>idacceso</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>usuarioopics</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>idsegmento</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>expediente</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>nombre</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>fechaingreso</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>tipoacceso</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>paginInfo</name>
+            <type>
+                <name>PagingInfo</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>legacy</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000e9a7-6d42-8000-e63f-01ef9001ef90_5250336"/>
+        <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9451885"/>
+    </history>
+</contentHaul>

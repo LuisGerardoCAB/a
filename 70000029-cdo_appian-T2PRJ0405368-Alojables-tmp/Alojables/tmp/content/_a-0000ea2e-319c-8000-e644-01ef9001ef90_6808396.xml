@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9387512</versionUuid>
+    <interface>
+        <name>SCDO_Boton_Exportar_Excel_DocXContrato</name>
+        <uuid>_a-0000ea2e-319c-8000-e644-01ef9001ef90_6808396</uuid>
+        <description>Muestra la funcionalidad para exportar el catálogo excel de la funcionalidad Documentación por Contrato</description>
+        <parentUuid>_a-0000e801-560f-8000-e5d9-01ef9001ef90_1707049</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>a!localVariables(
+  local!usuariosPorSegmento,
+  local!ccostosNoBD,
+  local!centrosPorRegion,
+  local!usuarioSeleccionado,
+  
+  {
+    if(
+      isnull(ri!documento_doc),
+      #"SYSTEM_SYSRULES_richTextDisplayField"(
+        value: #"SYSTEM_SYSRULES_richTextItem_v1"(
+          text: {
+            #"SYSTEM_SYSRULES_richTextIcon"(icon: "file-excel-o", size: "MEDIUM"),
+            "GENERAR EXCEL"
+          },
+          link: #"SYSTEM_SYSRULES_dynamicLink"(
+            saveInto: {
+              a!save(
+                local!ccostosNoBD,
+                if(
+                  a!isNullOrEmpty(
+                    #"_a-0000e9f5-96e6-8000-e641-01ef9001ef90_6351963"(ccosto: null)
+                  ),
+                  null,
+                  #"_a-0000e9f5-96e6-8000-e641-01ef9001ef90_6351963"(ccosto: null).cc
+                )
+              ),
+              #"SYSTEM_SYSRULES_startProcess"(
+                processModel: #"_a-0000ea2e-319c-8000-e644-01ef9001ef90_6808403",
+                processParameters: {
+                  ccostos: ri!ccostos,
+                  contrato: ri!contrato,
+                  FechaDividida: ri!fechaDividida,
+                  Fechal: ri!fechaFin,
+                  Fecha: ri!fechaInicio,
+                  FechaalDividida: ri!fechaalDividida,
+                  estado: ri!estado,
+                  estadocc: ri!estadoCC,
+                  iddocumento: ri!catDoc,
+                  imagen:ri!imagen
+                },
+                onSuccess: {
+                  a!save(
+                    ri!documento_doc,
+                    fv!processInfo.pv.documento
+                  )
+                },
+                onError: "No se puede generar el EXCEL"
+              )
+            }
+          ),
+          linkStyle: "STANDALONE",
+          style: "STRONG",
+          color: "#cc0000"
+        )
+      ),
+      #"SYSTEM_SYSRULES_richTextDisplayField"(
+        value: #"SYSTEM_SYSRULES_richTextItem_v1"(
+          text: {
+            #"SYSTEM_SYSRULES_richTextIcon"(icon: "download", size: "MEDIUM"),
+            "DESCARGAR EXCEL"
+          },
+          link: #"SYSTEM_SYSRULES_documentDownloadLink"(document: ri!documento_doc),
+          linkStyle: "STANDALONE",
+          style: "STRONG",
+          color: "#cc0000"
+        )
+      )
+
+    )
+  }
+)
+</definition>
+        <namedTypedValue>
+            <name>documento_doc</name>
+            <type>
+                <name>CollaborationDocument</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>ccostos</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>contrato</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>fechaDividida</name>
+            <type>
+                <name>Text?list</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>fechaFin</name>
+            <type>
+                <name>date</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>fechaInicio</name>
+            <type>
+                <name>date</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>fechaalDividida</name>
+            <type>
+                <name>Text?list</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>estado</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>estadoCC</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>catDoc</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>imagen</name>
+            <type>
+                <name>Integer?list</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+        <isCustom>false</isCustom>
+    </interface>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000ea2e-319c-8000-e644-01ef9001ef90_6808458"/>
+        <historyInfo versionUuid="_a-0000eb09-d442-8000-e687-01ef9001ef90_8969475"/>
+        <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9387512"/>
+    </history>
+</contentHaul>

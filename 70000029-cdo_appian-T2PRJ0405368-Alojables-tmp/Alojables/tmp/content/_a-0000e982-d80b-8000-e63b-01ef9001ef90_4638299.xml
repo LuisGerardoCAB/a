@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9388732</versionUuid>
+    <interface>
+        <name>SCDO_SegmentoE</name>
+        <uuid>_a-0000e982-d80b-8000-e63b-01ef9001ef90_4638299</uuid>
+        <description>Contiene el perfil de cada usuario</description>
+        <parentUuid>_a-0000e801-560f-8000-e5d9-01ef9001ef90_1707049</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>a!localVariables(
+  
+  {
+    #"SYSTEM_SYSRULES_sectionLayout_v1"(
+      label: "",
+      labelColor: "#b7b7b7",
+      contents: {
+        #"SYSTEM_SYSRULES_columnsLayout"(
+          columns: {
+            #"SYSTEM_SYSRULES_columnLayout"(
+              contents: {
+                #"SYSTEM_SYSRULES_sideBySideLayout"(
+                  items: {
+                    #"SYSTEM_SYSRULES_sideBySideItem"(
+                      item: #"SYSTEM_SYSRULES_richTextDisplayField"(
+                        label: "",
+                        labelPosition: "ABOVE",
+                        value: {
+                          #"SYSTEM_SYSRULES_richTextItem_v1"(
+                            text: {
+                              "Expediente"
+                            },
+                            color: "STANDARD",
+                            size: "MEDIUM",
+                            style: {
+                              "STRONG"
+                            }
+                          )
+                        }
+                      ),
+                      width: "MINIMIZE"
+                    ),
+                    #"SYSTEM_SYSRULES_sideBySideItem"(
+                      item: #"SYSTEM_SYSRULES_textField"(
+                        label: "",
+                        labelPosition: "ABOVE",
+                        align: "LEFT",
+/* El valor del expediente depende de los valores que se pasan por parametro a la interfaz*/
+                        value: {
+                          if(
+                            a!isNotNullOrEmpty(ri!ejecutivo),
+                            ri!ejecutivo.expediente,
+                            if(
+                              a!isNotNullOrEmpty(ri!admon),
+                              ri!admon.usuario,
+                              if(
+                                a!isNotNullOrEmpty(ri!supervisor),
+                                ri!supervisor.usuario,
+                                "Sin expediente"
+                              )
+                              
+                            )
+                          )
+                        }
+                        ,
+                        saveInto: {},
+                        refreshAfter: "UNFOCUS",
+                        disabled: true(),
+                        validations: {}
+                      ),
+                      width: "MINIMIZE"
+                    ),
+                    /*a!sideBySideItem(*/
+                      /*item: a!buttonArrayLayout(*/
+                        /*buttons: {*/
+                          /*a!buttonWidget(*/
+                            /*label: "Salir",*/
+                            /*style: "SECONDARY",*/
+                            /*size: "SMALL",*/
+                            /*icon: "times"*/
+                          /*)*/
+                        /*},*/
+                        /*align: "START"*/
+                      /*)*/
+                    /*)*/
+                  }
+                )
+              },
+              width: "AUTO"
+            ),
+/*El valor del nombre de usuario depende de los valores que se le pasen por parametro a la interfaz*/
+            #"SYSTEM_SYSRULES_columnLayout"(
+              contents: {
+                #"SYSTEM_SYSRULES_textField"(
+                  label: "Bienvenid@",
+                  labelPosition: "JUSTIFIED",
+                  value: {
+                    if(
+                      a!isNotNullOrEmpty(ri!ejecutivo),
+                      ri!ejecutivo.nombre,
+                      if(
+                        a!isNotNullOrEmpty(ri!supervisor),
+                        ri!supervisor.nombre,
+                        if(
+                          a!isNotNullOrEmpty(ri!admon),
+                          ri!admon.nombre,
+                          "Sin Usuario"
+                        )
+                      )
+                    )
+                    
+                  },
+                  saveInto: {},
+                  refreshAfter: "UNFOCUS",
+                  disabled: true(),
+                  validations: {},
+                  
+                ),
+/*El valor del segmento o del usuario depende de los valores que se pasan por parametro en la interfaz*/
+                if(
+                  or(a!isNotNullOrEmpty(ri!ejecutivo), a!isNotNullOrEmpty(ri!supervisor)),
+                  #"SYSTEM_SYSRULES_textField"(
+                    label: if(
+                      a!isNotNullOrEmpty(ri!admon),
+                      "Usuario:",
+                      "Segmento: "
+                    ),
+                    labelPosition: "JUSTIFIED",
+                    value: {
+                      if(
+                        a!isNotNullOrEmpty(ri!ejecutivo),
+                        #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2233353"(idSegmento: ri!ejecutivo.idsegmento).data.segmento,
+                        if(
+                          a!isNotNullOrEmpty(ri!supervisor),
+                          ri!supervisor.segmento,
+                          if(
+                            a!isNotNullOrEmpty(ri!admon),
+                            ri!admon.tipo,
+                            "Nada que mostrar"
+                          )
+                        )
+                      )  
+                    },
+                    saveInto: {},
+                    refreshAfter: "UNFOCUS",
+                    disabled: true(),
+                    validations: {},
+                    align: "LEFT"
+                  ),
+                  #"SYSTEM_SYSRULES_textField"(
+                    label: "Usuario:",
+                    labelPosition: "JUSTIFIED",
+                    value: {
+                      if(
+                        a!isNotNullOrEmpty(ri!admon),
+                        ri!admon.tipo,
+                        "Sin Tipo Usuario"
+                      )
+                    },
+                    refreshAfter: "UNFOCUS",
+                    disabled: true(),
+                    validations: {}
+                  )
+                )
+                
+              },
+              width: "MEDIUM_PLUS"
+            )
+          }
+        )
+      },
+      isCollapsible: false,
+      divider: "BELOW",
+      dividerWeight: "MEDIUM",
+      dividerColor: "#cc0000",
+      marginAbove: "EVEN_LESS",
+      marginBelow: "NONE"
+    )
+  }
+)
+</definition>
+        <namedTypedValue>
+            <name>ejecutivo</name>
+            <type>
+                <name>V_CDO_Ejecutivo</name>
+                <namespace>urn:com:appian:types</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>supervisor</name>
+            <type>
+                <name>V_CDO_Supervisores</name>
+                <namespace>urn:com:appian:types</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>admon</name>
+            <type>
+                <name>cdo_administradores</name>
+                <namespace>urn:com:appian:types</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+        <isCustom>false</isCustom>
+    </interface>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000ea2e-319c-8000-e644-01ef9001ef90_6808394"/>
+        <historyInfo versionUuid="_a-0000eabf-35e2-8000-e683-01ef9001ef90_8452093"/>
+        <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9388732"/>
+    </history>
+</contentHaul>

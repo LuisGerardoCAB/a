@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9387803</versionUuid>
+    <interface>
+        <name>SCDO_RefrescarPixel</name>
+        <uuid>_a-0000eabf-35e2-8000-e683-01ef9001ef90_8470714</uuid>
+        <description>Contiene la llamada a pixel para mantener la sesión activa del portal</description>
+        <parentUuid>_a-0000e801-560f-8000-e5d9-01ef9001ef90_1707049</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>a!localVariables(
+  local!unixPixel: a!refreshVariable(
+    value: #"_a-0000eabf-35e2-8000-e683-01ef9001ef90_8470721" &amp; #"_a-0000eabf-35e2-8000-e683-01ef9001ef90_8470827"(),
+    refreshAlways: true,
+    refreshInterval: 1,
+    refreshOnReferencedVarChange:true
+  ),
+  local!urlPixel: a!refreshVariable(
+    value: #"_a-0000eabf-35e2-8000-e683-01ef9001ef90_8470721" &amp; datetext( now(), "yyyy-MM-dd HH:mm:ss" ),
+    refreshAlways: true,
+    refreshInterval: 1,
+    refreshOnReferencedVarChange:true
+  ),
+  {
+    #"SYSTEM_SYSRULES_imageField_v1"(
+      label: local!urlPixel,
+      labelPosition: "COLLAPSED",
+      images: #"SYSTEM_SYSRULES_webImage"(
+        caption: local!urlPixel,
+        source: local!urlPixel
+      ),
+      size:"MEDIUM",
+      isThumbnail: false,
+      style:"STANDARD"
+    ),
+    #"SYSTEM_SYSRULES_imageField_v1"(
+      label: "Pixel Unix",
+      labelPosition: "COLLAPSED",
+      images: #"SYSTEM_SYSRULES_webImage"(
+        caption: local!unixPixel,
+        source: local!unixPixel
+      ),
+      size:"MEDIUM",
+      isThumbnail: false,
+      style:"STANDARD",
+      showWhen: false
+    )
+  }
+)</definition>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+        <isCustom>false</isCustom>
+    </interface>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000eabf-35e2-8000-e683-01ef9001ef90_8470840"/>
+        <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9387803"/>
+    </history>
+</contentHaul>

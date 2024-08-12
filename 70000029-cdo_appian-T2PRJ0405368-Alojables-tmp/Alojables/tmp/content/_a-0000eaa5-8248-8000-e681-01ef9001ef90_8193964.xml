@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9386792</versionUuid>
+    <rule>
+        <name>SCDO_HAY_LETRAS_EN_HORA</name>
+        <uuid>_a-0000eaa5-8248-8000-e681-01ef9001ef90_8193964</uuid>
+        <description></description>
+        <parentUuid>_a-0000e9a3-ab27-8000-e63d-01ef9001ef90_4829216</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>a!localVariables(
+  local!arreglo:{"0","1","2","3","4","5","6","7","8","9",":"},
+
+  local!recorrer:if(
+    a!isNotNullOrEmpty(ri!texto),
+    #"SYSTEM_SYSRULES_forEach"(
+      items:enumerate(len(ri!texto)),
+      expression: 
+      if(contains(local!arreglo,charat(ri!texto,fv!index)),false,true)
+    ),
+    null
+
+  ),
+
+  local!respuesta: if(
+    a!isNotNullOrEmpty(local!recorrer),
+    if(
+      contains(local!recorrer,true),
+      true,
+      false),
+      false),
+      local!respuesta
+
+
+)</definition>
+        <namedTypedValue>
+            <name>texto</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <preferredEditor>legacy</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000eaa5-8248-8000-e681-01ef9001ef90_8193976"/>
+        <historyInfo versionUuid="_a-0000eb09-d442-8000-e687-01ef9001ef90_8848583"/>
+        <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9386792"/>
+    </history>
+</contentHaul>

@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9390945</versionUuid>
+    <interface>
+        <name>SCDO_AceptarDocumentacionContratos</name>
+        <uuid>_a-0000e982-d80b-8000-e63b-01ef9001ef90_4747042</uuid>
+        <description>Interfaz para aceptar la documentacion</description>
+        <parentUuid>_a-0000e801-560f-8000-e5d9-01ef9001ef90_1707049</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>{
+  #"SYSTEM_SYSRULES_sectionLayout_v1"(
+    label: "",
+    contents: {
+      #"SYSTEM_SYSRULES_textField"(
+        label: "",
+        labelPosition: "ABOVE",
+        value:concat("Se ",if(ri!decision = "Rechazar", "rechazará", "aceptará")," el documento:" , ri!nombre_archivo,". ¿Deseas confirmar la operación?"),
+        saveInto: {},
+        refreshAfter: "UNFOCUS",
+        readOnly: true,
+        validations: {}
+      )
+    }
+  ),
+  #"SYSTEM_SYSRULES_sideBySideLayout"(
+    items: {
+      #"SYSTEM_SYSRULES_sideBySideItem"(
+        item: #"SYSTEM_SYSRULES_ButtonArrayLayout"(
+          buttons: {
+            #"SYSTEM_SYSRULES_ButtonWidget"(
+              label: "CANCELAR",
+              value: true,
+              saveInto: ri!cancelar,
+              style: "NORMAL",
+              submit: true
+            )
+          },
+          align: "START"
+        )
+      ),
+      #"SYSTEM_SYSRULES_sideBySideItem"(
+        item: #"SYSTEM_SYSRULES_ButtonArrayLayout"(
+          buttons: {
+            #"SYSTEM_SYSRULES_ButtonWidget"(
+              label: "ACEPTAR",
+              value: false,
+              saveInto: ri!cancelar,
+              style: "NORMAL",
+              submit: true
+            )
+          },
+          align: "END"
+        )
+      )
+    }
+  )
+}</definition>
+        <namedTypedValue>
+            <name>cancelar</name>
+            <type>
+                <name>boolean</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>decision</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>nombre_archivo</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+        <isCustom>false</isCustom>
+    </interface>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000e9f5-96e6-8000-e641-01ef9001ef90_6402757"/>
+        <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9390945"/>
+    </history>
+</contentHaul>

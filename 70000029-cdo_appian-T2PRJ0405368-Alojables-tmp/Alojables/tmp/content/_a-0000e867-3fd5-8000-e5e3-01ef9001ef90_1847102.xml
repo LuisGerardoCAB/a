@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9392143</versionUuid>
+    <interface>
+        <name>SCDO_Menu_Panel</name>
+        <uuid>_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1847102</uuid>
+        <description>Menu del panel de control</description>
+        <parentUuid>_a-0000e801-560f-8000-e5d9-01ef9001ef90_1707049</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>a!localVariables(
+  local!opcionMenuSeleccionada: #"_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1881160"()[1],
+  local!region,
+  local!modificar,
+  local!segmento,
+  {
+    #"SYSTEM_SYSRULES_columnsLayout"(
+      columns: {
+        #"SYSTEM_SYSRULES_columnLayout"(
+          contents: {
+            #"_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1884076"(
+              opcionSeleccionada_any: local!opcionMenuSeleccionada,
+              opciones_any: #"_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1881160"(),
+              indiceSeleccionado_int:ri!indiceMenuSeleccionado
+            )
+          },
+          width: "NARROW"
+        ),
+        #"SYSTEM_SYSRULES_columnLayout"(
+          contents: {
+            if(
+              local!opcionMenuSeleccionada.titulo = #"_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1836153"[1],
+              #"_a-0000e9f5-96e6-8000-e641-01ef9001ef90_6270996"()
+              ,
+              if(
+                local!opcionMenuSeleccionada.titulo = #"_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1836153"[2],
+                  #"_a-0000e9f5-96e6-8000-e641-01ef9001ef90_6016288"(),
+                if(
+                  local!opcionMenuSeleccionada.titulo = #"_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1836153"[3],
+                  #"_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1897130"(),
+                  if(
+                    local!opcionMenuSeleccionada.titulo = #"_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1836153"[4],
+                    #"_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1899600"(),
+                    if(
+                      local!opcionMenuSeleccionada.titulo = #"_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1836153"[5],
+                      #"_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1906472"(
+                        region: local!region,
+                        modificar: local!modificar
+                      ),
+                      if(
+                        local!opcionMenuSeleccionada.titulo = #"_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1836153"[6],
+                        #"_a-0000e94c-78eb-8000-e637-01ef9001ef90_4002782"(
+                          idadmon: ri!idadmon,
+                          idsegmento: ri!idsegmento
+                        ),
+                      if(
+                        local!opcionMenuSeleccionada.titulo = #"_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1836153"[7],
+                        #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_1946988"(
+                          segmento_cdt: local!segmento
+                        ),
+                        if(
+                          local!opcionMenuSeleccionada.titulo = #"_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1836153"[8],
+                          #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_1950234"(),
+                          if(
+                            local!opcionMenuSeleccionada.titulo = #"_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1836153"[10],
+                            #"_a-0000e9a7-6d42-8000-e63f-01ef9001ef90_5215091"(),
+                        choose(
+                          local!opcionMenuSeleccionada.titulo = #"_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1836153"[9],
+                          {
+                            #"_a-0000e9a7-6d42-8000-e63f-01ef9001ef90_5939823"()
+                          }
+                         
+                         )
+                         )
+                        )
+                      )
+                    )
+                  )
+                )
+              )
+            )
+           )
+          },
+          width: "AUTO"
+        )
+      }
+    )
+  }
+)</definition>
+        <namedTypedValue>
+            <name>SCDO_Indice_Pagina</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>indiceMenuSeleccionado</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>idadmon</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>idsegmento</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+        <isCustom>false</isCustom>
+    </interface>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000e94c-78eb-8000-e637-01ef9001ef90_3804396"/>
+        <historyInfo versionUuid="_a-0000ea3c-477e-8000-e648-01ef9001ef90_7231417"/>
+        <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9392143"/>
+    </history>
+</contentHaul>

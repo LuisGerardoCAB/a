@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9396424</versionUuid>
+    <interface>
+        <name>SCDO_Reverso_Ope_Doc</name>
+        <uuid>_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1846713</uuid>
+        <description>Interface Reverso Operación y Doc Correspondiente a Panel de control</description>
+        <parentUuid>_a-0000e801-560f-8000-e5d9-01ef9001ef90_1707049</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>a!localVariables(
+  local!showInformationBanner: true,
+  /*correcto*/
+  local!flag: now(),
+  local!showWhen: a!refreshVariable(
+    value: now() &lt; local!flag,
+    refreshInterval: 0.5
+  ),
+  /*-----*/
+  /*error*/
+  local!flag_error: now(),
+  local!showWhen_error: a!refreshVariable(
+    value: now() &lt; local!flag_error,
+    /* especifique el intervalo después de cuántos minutos desea finalizar el examen */
+    refreshInterval: 0.5
+  ),
+  /*------*/
+  local!contrato,
+  local!documentosDelContrato: if(
+    a!isNullOrEmpty(local!contrato),
+    null,
+    #"_a-0000e8b2-d897-8000-e5f1-01ef9001ef90_2372887"(contrato: local!contrato, estado: "A").data
+  ),
+  {
+    #"SYSTEM_SYSRULES_sectionLayout_v1"(
+      label: "",
+      contents: {
+        #"SYSTEM_SYSRULES_columnsLayout"(
+          columns: {
+            /*CORRECTO*/
+            #"SYSTEM_SYSRULES_columnLayout"(
+              contents: {
+                #"_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9394093"(
+                  showInformationBanner: local!showInformationBanner
+                )
+              },
+              showWhen: and(
+                local!showInformationBanner,
+                local!showWhen
+              )
+            ),
+            /*ERROR*/
+            #"SYSTEM_SYSRULES_columnLayout"(
+              contents: {
+                #"_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9394317"(
+                  showInformationBanner: local!showInformationBanner
+                )
+              },
+              showWhen: and(
+                local!showInformationBanner,
+                local!showWhen_error
+              )
+            ),
+
+          }
+        )
+      }
+    ),
+    #"SYSTEM_SYSRULES_richTextDisplayField"(
+      labelPosition: "COLLAPSED",
+      value: {
+        #"SYSTEM_SYSRULES_richTextItem_v1"(
+          text: {
+            "Ingresa el contrato y selecciona el documento a reversar"
+          },
+          size: "MEDIUM"
+        )
+      }
+    ),
+    #"SYSTEM_SYSRULES_columnsLayout"(
+      columns: {
+        #"SYSTEM_SYSRULES_columnLayout"(
+          contents: {
+            #"SYSTEM_SYSRULES_textField"(
+              label: "Contrato:",
+              labelPosition: "ADJACENT",
+              value: local!contrato,
+              align: "LEFT",
+              saveInto: local!contrato,
+              refreshAfter: "KEYPRESS",
+              characterLimit: 11,
+              validations: {}
+            )
+          },
+          width: "MEDIUM"
+        ),
+        
+      }
+    ),
+    #"SYSTEM_SYSRULES_columnsLayout"(
+      columns: {
+        #"SYSTEM_SYSRULES_columnLayout"(
+          contents: {
+            #"SYSTEM_SYSRULES_gridField_v1"(
+              label: "Tabla con los Documentos Aprobados del Contrato:",
+              data: local!documentosDelContrato,
+              emptyGridMessage: if(a!isNullOrEmpty(local!contrato), "Ingrese un contrato para que se obeserven los documentos de este", "No se encontraron documentos para este contrato"),
+              columns: {
+                #"SYSTEM_SYSRULES_gridColumn"(
+                  label: "Reversar",
+                  value: #"SYSTEM_SYSRULES_ButtonArrayLayout"(
+                    buttons: {
+                      #"SYSTEM_SYSRULES_ButtonWidget"(
+                        label: "",
+                        icon: "file-upload",
+                        saveInto: {
+                          #"SYSTEM_SYSRULES_startProcess"(
+                            processModel: #"_a-0000e8d8-9b98-8000-e605-01ef9001ef90_3020878",
+                            processParameters: {
+                              cdt_documentacion: fv!row
+                            },
+                            onSuccess: {
+                              a!save(local!showInformationBanner, true),
+                              if(
+                                toboolean(fv!processInfo.pv.error) = false,
+                                {a!save(local!flag, addseconds(now(), 10)),
+                                a!save(local!documentosDelContrato, #"_a-0000e8b2-d897-8000-e5f1-01ef9001ef90_2372887"(contrato: local!contrato, estado: "A").data),
+
+                                },
+                                a!save(local!flag_error, addseconds(now(), 10))
+                              )
+
+                            }
+                          ),
+                        },
+                        style: "DESTRUCTIVE",
+                        size: "SMALL",
+                        confirmHeader: concat( "Se modificará el documento aprobado: ", fv!row.nomdocumento," del contrato: ", local!contrato),
+                        confirmMessage: "¿Continuar?"
+                      )
+                    },
+                    align: "CENTER"
+                  ),
+                  width: "NARROW",
+                  align: "CENTER"
+                ),
+                #"SYSTEM_SYSRULES_gridColumn"(
+                  label: "Id",
+                  value: if(a!isNullOrEmpty(local!documentosDelContrato), "NO", fv!row.iddocumentacion),
+                  align: "CENTER",
+                  width: "NARROW",
+                ),
+                #"SYSTEM_SYSRULES_gridColumn"(
+                  label: "Nombre de Archivo",
+                  value: if(a!isNullOrEmpty(local!documentosDelContrato), "NO", fv!row.nomdocumento),
+                  align: "CENTER",
+                  width: "MEDIUM_PLUS",
+                ),
+                #"SYSTEM_SYSRULES_gridColumn"(
+                  label: "Documento",
+                  value: if(a!isNullOrEmpty(#"_a-0000e968-30a1-8000-e639-01ef9001ef90_4493570"(iddocumento: fv!row.iddocumento)), "NO", #"_a-0000e968-30a1-8000-e639-01ef9001ef90_4493570"(iddocumento: fv!row.iddocumento).documento),
+                  align: "CENTER",
+                ),
+                #"SYSTEM_SYSRULES_gridColumn"(
+                  label: "Tipo Documento",
+                  value: if(a!isNullOrEmpty(#"_a-0000e968-30a1-8000-e639-01ef9001ef90_4493570"(iddocumento: fv!row.iddocumento)),"NO" ,#"_a-0000e968-30a1-8000-e639-01ef9001ef90_4493570"(iddocumento: fv!row.iddocumento)[1].documentaa),
+                  align: "CENTER",
+                  width: "MEDIUM"
+                ),
+                #"SYSTEM_SYSRULES_gridColumn"(
+                  label: "Estado",
+                  value: if(a!isNullOrEmpty(local!documentosDelContrato), "NO", fv!row.estado),
+                  align: "CENTER",
+                  width: "NARROW",
+                ),
+                #"SYSTEM_SYSRULES_gridColumn"(
+                  label: "Usuario Carga",
+                  value: if(a!isNullOrEmpty(local!documentosDelContrato), "NO", fv!row.usuariocargo),
+                  align: "CENTER",
+                  width: "AUTO",
+                ),
+                #"SYSTEM_SYSRULES_gridColumn"(
+                  label: "Fecha Carga",
+                  value: if(a!isNullOrEmpty(local!documentosDelContrato), "NO", fv!row.fechacarga),
+                  align: "CENTER",
+                  width: "AUTO",
+                ),
+                #"SYSTEM_SYSRULES_gridColumn"(
+                  label: "Usuario Acepto",
+                  value: if(a!isNullOrEmpty(local!documentosDelContrato), "NO", if(fv!row.estado = "A", fv!row.usuarioacepto, "NO")),
+                  align: "CENTER",
+                  width: "AUTO",
+                ),
+                #"SYSTEM_SYSRULES_gridColumn"(
+                  label: "Fecha Acepto",
+                  value: if(a!isNullOrEmpty(local!documentosDelContrato), "NO", if(fv!row.estado = "A", fv!row.fechaacepto, "NO")),
+                  align: "CENTER",
+                  width: "AUTO",
+                ),
+              }
+            )
+          }
+        )
+      }
+    ),
+  }
+)</definition>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+        <isCustom>false</isCustom>
+    </interface>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000e94c-78eb-8000-e637-01ef9001ef90_3792601"/>
+        <historyInfo versionUuid="_a-0000e9f5-96e6-8000-e641-01ef9001ef90_6337213"/>
+        <historyInfo versionUuid="_a-0000eb09-d442-8000-e687-01ef9001ef90_8782539"/>
+        <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9396424"/>
+    </history>
+</contentHaul>

@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9386663</versionUuid>
+    <rule>
+        <name>SCDO_getCentroCostoByFilters</name>
+        <uuid>_a-0000e8c4-62ba-8000-e603-01ef9001ef90_2682345</uuid>
+        <description>Regla que consulta todos los datos del CDT Centro de Costo</description>
+        <parentUuid>_a-0000e9a7-6d42-8000-e63f-01ef9001ef90_4873693</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>#"_a-0000e8b9-0989-8000-e5fd-01ef9001ef90_2420859"(
+  dataStoreEntity_dt: #"_a-0000e8b2-d897-8000-e5f1-01ef9001ef90_2379550",
+  queryFilter_any: {
+    #"SYSTEM_SYSRULES_queryFilter"(
+      field: "idccostos",
+      operator: "=",
+      value: ri!idccostos,
+      applyWhen: isnull(ri!idccostos) &lt;&gt; true
+    ),
+    #"SYSTEM_SYSRULES_queryFilter"(
+      field: "cc",
+      operator: "=",
+      value: ri!cc,
+      applyWhen: isnull(ri!cc) &lt;&gt; true
+    ),
+    #"SYSTEM_SYSRULES_queryFilter"(
+      field: "idsegmento",
+      operator: "=",
+      value: ri!idsegmento,
+      applyWhen: isnull(ri!idsegmento) &lt;&gt; true
+    ),
+    #"SYSTEM_SYSRULES_queryFilter"(
+      field: "idregion",
+      operator: "=",
+      value: ri!idregion,
+      applyWhen: isnull(ri!idregion) &lt;&gt; true
+    ),
+    #"SYSTEM_SYSRULES_queryFilter"(
+      field: "nombre",
+      operator: "=",
+      value: ri!nombre,
+      applyWhen: isnull(ri!nombre) &lt;&gt; true
+    ),
+    #"SYSTEM_SYSRULES_queryFilter"(
+      field: "idzona",
+      operator: "=",
+      value: ri!idzona,
+      applyWhen: isnull(ri!idzona) &lt;&gt; true
+    )
+  },
+  /*pagingInfo_pi: if(*/
+    /*not(isnull(ri!paginInfo)),*/
+    /*ri!paginInfo,*/
+    /*a!pagingInfo(*/
+      /*startIndex: 1,*/
+      /*batchSize: -1,*/
+      /*sort: a!sortInfo(field: "cc", ascending: true())*/
+    /*)*/
+  /*),*/
+ 
+  selectionColumn_txt: ri!seleccionColumnas,   
+  pagingInfo_pi: ri!paginInfo,
+  ignoreFiltersWithEmptyValues_bool:true,
+  fetchTotalCount_bool: true()
+)
+
+
+
+
+</definition>
+        <namedTypedValue>
+            <name>idccostos</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>cc</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>idsegmento</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>idregion</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>nombre</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>idzona</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>paginInfo</name>
+            <type>
+                <name>PagingInfo</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>seleccionColumnas</name>
+            <type>
+                <name>Text?list</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>legacy</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000e928-a819-8000-e60e-01ef9001ef90_3287221"/>
+        <historyInfo versionUuid="_a-0000e9a7-6d42-8000-e63f-01ef9001ef90_4874118"/>
+        <historyInfo versionUuid="_a-0000eb09-d442-8000-e687-01ef9001ef90_8860075"/>
+        <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9386663"/>
+    </history>
+</contentHaul>

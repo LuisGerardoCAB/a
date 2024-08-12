@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<webApiHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>cd9990ca-d4e7-4ad8-a1d5-bc6c5f173d69</versionUuid>
+    <webApi a:uuid="1c7fcbab-cc6e-44be-a1b3-f2373431da4d" name="SCDO Aprovisionamiento de Usuario SAML">
+        <a:description>Utilizado por el batch de aprovisionamiento. para crear un usuario.</a:description>
+        <a:expression>a!localVariables(
+  local!requestBody: #"SYSTEM_SYSRULES_fromJson_v1"(http!request.body),
+  local!errors: #"_a-0000eabf-35e2-8000-e683-01ef9001ef90_8471165"(
+    requestBody: local!requestBody
+  ),
+  if(
+    a!isNullOrEmpty(
+      local!errors,
+    ),
+    #"SYSTEM_SYSRULES_startProcess"(
+      processModel: #"_a-0000eabf-35e2-8000-e683-01ef9001ef90_8478469",
+      processParameters: {
+        bodyRequest: cast(
+          typeof('type!{urn:com:appian:types:SCDO}SCDO_DatosUsuario'()),
+          local!requestBody
+        )
+      },
+      onSuccess: #"SYSTEM_SYSRULES_httpResponse_v1"(
+        statusCode: 200,
+        headers: {
+          #"SYSTEM_SYSRULES_httpHeader"(
+            name: "Content-Type",
+            value: "application/json"
+          )
+        },
+        body: #"SYSTEM_SYSRULES_toJson_v1"(
+          {
+            code: 200,
+            messages: {
+              "El usuario " &amp; index(
+                local!requestBody,
+                "profile",
+                "username",
+                {}
+              ) &amp; " ha sido sincronizado correctamente."
+            }
+          }
+        )
+      ),
+      onError: #"SYSTEM_SYSRULES_httpResponse_v1"(
+        statusCode: 500,
+        headers: {
+          #"SYSTEM_SYSRULES_httpHeader"(
+            name: "Content-Type",
+            value: "application/json"
+          )
+        },
+        body: #"SYSTEM_SYSRULES_toJson_v1"(
+          {
+            code: 500,
+            messages: {
+              "Ha ocurrido un error iniciando el proceso"
+            }
+          }
+        )
+      )
+    ),
+    #"SYSTEM_SYSRULES_httpResponse_v1"(
+      statusCode: 400,
+      headers: {
+        #"SYSTEM_SYSRULES_httpHeader"(
+          name: "Content-Type",
+          value: "application/json"
+        )
+      },
+      body: #"SYSTEM_SYSRULES_toJson_v1"(
+        value: {
+          code: 400,
+          messages: local!errors
+        }
+      )
+    )
+  )
+)</a:expression>
+        <a:urlAlias>SCDOAprovisionamientoUsuarioSAML</a:urlAlias>
+        <a:httpMethod>POST</a:httpMethod>
+        <a:system>false</a:system>
+        <a:requestBodyType>NONE</a:requestBodyType>
+        <a:loggingEnabled>false</a:loggingEnabled>
+    </webApi>
+    <roleMap>
+        <role name="web_api_administrator">
+            <users/>
+            <groups>
+                <groupUuid>_e-0000e801-560f-8000-e5d6-011e94011e94_5700</groupUuid>
+                <groupUuid>_e-0000e801-560f-8000-e5d6-011e94011e94_5698</groupUuid>
+            </groups>
+        </role>
+        <role name="web_api_viewer">
+            <users/>
+            <groups>
+                <groupUuid>_e-0000e867-3fd5-8000-e5e0-011e94011e94_5795</groupUuid>
+            </groups>
+        </role>
+    </roleMap>
+    <typedValue>
+        <type>
+            <name>WebApiRequest?list</name>
+            <namespace>http://www.appian.com/ae/types/2009</namespace>
+        </type>
+        <value>
+            <el>
+                <a:path/>
+                <a:headers>
+                    <a:name>Content-Type</a:name>
+                    <a:value>application/json</a:value>
+                </a:headers>
+                <a:body>{
+"profile":
+{
+"username" :"x623382",
+"firstName" : "Jorge Ivan",
+"lastName"	:"Uribe Mejia",
+"nickname"	:" ",
+"supervisor" :" ",
+"title" :" "
+},
+"contact":
+{
+"email" :"joruribe@empresaexterna.com.mx",
+"officePhone" :" ",
+"mobilePhone" :" ",
+"homePhone" :" "
+},
+
+"location":
+{
+"address1" :" ",
+"address2" :" ",
+"address3" :" ",
+"city" :" ",
+"state" :" ",
+"zipCode" :" ",
+"country" :" "
+},
+"customFields":
+{
+"customField1":"",
+"customField2":"",
+"customField3":"",
+"customField4":"",
+"customField5":"",
+"customField6":"",
+"customField7":"",
+"customField8":"",
+"customField9":"",
+"customField10":""
+},
+"group":[
+{
+"nameGroup":"SMC Perfil ADMINISTRADOR"
+},
+{
+"nameGroup":"SMC Perfil ADMINISTRADOR SEGUIMIENTO"
+}
+]
+}</a:body>
+            </el>
+        </value>
+    </typedValue>
+    <history>
+        <historyInfo versionUuid="2361fb2f-b7fa-44c4-a42a-a978d1af9c52"/>
+        <historyInfo versionUuid="cd9990ca-d4e7-4ad8-a1d5-bc6c5f173d69"/>
+    </history>
+</webApiHaul>

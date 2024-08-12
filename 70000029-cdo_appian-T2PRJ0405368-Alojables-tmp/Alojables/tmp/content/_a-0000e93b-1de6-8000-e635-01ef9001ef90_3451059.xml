@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000eb9b-4ec6-8000-e68b-01ef9001ef90_9605686</versionUuid>
+    <interface>
+        <name>SCDO_FiltroReporteOperaciones</name>
+        <uuid>_a-0000e93b-1de6-8000-e635-01ef9001ef90_3451059</uuid>
+        <description>Pantalla que muestra el filtro de Reporte de Operaciones.</description>
+        <parentUuid>_a-0000e801-560f-8000-e5d9-01ef9001ef90_1707049</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>a!localVariables(
+  local!fechaI,
+  local!fechaI_aux,
+  local!fechaF,
+  local!fechaF_aux,
+  local!tipoReporte,
+ 
+  {
+    #"SYSTEM_SYSRULES_columnsLayout"(
+      columns: {
+        #"SYSTEM_SYSRULES_columnLayout"(
+          contents: {
+            #"SYSTEM_SYSRULES_boxLayout"(
+              label: "Reporte de Operaciones ",
+              contents: {
+                #"SYSTEM_SYSRULES_columnsLayout"(
+                  columns: {
+                    #"SYSTEM_SYSRULES_columnLayout"(
+                      contents: {
+                        #"SYSTEM_SYSRULES_dateField"(
+                          
+                          label: "Fecha Inicial",
+                          
+                          labelPosition: "ADJACENT",
+                          value: local!fechaI, 
+                          
+                       
+
+                          saveInto: {
+                            local!fechaI,
+                            a!save(
+                              local!fechaI_aux,
+                              if(a!isNotNullOrEmpty( local!fechaI),
+                              text( date(year((local!fechaI)),month((local!fechaI)), day((local!fechaI))),"dd/mm/yyyy"),
+                              null
+                              )
+
+                            ),
+                      
+                          },
+                          helpTooltip: if(
+                            a!isNullOrEmpty(local!fechaF),
+                            "Se mostrarán los reportes de la fecha seleccionada",
+                            ""
+                          )
+                        )
+                      }
+                    ),
+                    #"SYSTEM_SYSRULES_columnLayout"(
+                      contents: {
+                        #"SYSTEM_SYSRULES_dateField"(
+                          label: "Fecha Final",
+                          labelPosition: "ADJACENT",
+                          value: local!fechaF,
+                          helpTooltip: if(
+                            a!isNullOrEmpty(local!fechaI),
+                            "Se mostrarán los reportes hasta la fecha",
+                              "Se mostrarán los reportes desde la fecha de inicio hasta la fecha final seleccionada seleccionada"
+                          ),
+                          saveInto: {
+                            local!fechaF,
+                            a!save(
+                              local!fechaF_aux,
+                              if(a!isNotNullOrEmpty( local!fechaF),
+                              text( date(year((local!fechaF)),month((local!fechaF)), day((local!fechaF))),"dd/mm/yyyy"),
+                              null
+                              )
+                            ),
+                            
+                          },
+                          validations: {
+                            if(
+                              and(a!isNotNullOrEmpty(local!fechaF), a!isNotNullOrEmpty(local!fechaI)),
+                              if(
+                                local!fechaI &gt; local!fechaF,
+                                "La fecha inicial no puede ser mayor que la fecha de final",
+                                ""
+                              ),
+                              ""
+                            )
+                          }
+                        )
+                      }
+                    ),
+                    #"SYSTEM_SYSRULES_columnLayout"(
+                      contents: {
+                        #"SYSTEM_SYSRULES_dropdownFieldByIndex_v1"(
+                          label: "Tipo de Reporte:",
+                          labelPosition: "ADJACENT",
+                          placeholder: "Tipo de Reporte",
+                          value: local!tipoReporte,
+                          choiceLabels: {"Reportes", "Reportes Aprobados", "Reportes Eliminados"},
+                          helpTooltip: if(
+                            a!isNullOrEmpty(local!tipoReporte),
+                            "Seleccione el tipo de reporte",
+                            ""
+                          ),
+                          saveInto: {
+                            local!tipoReporte
+                          },
+                        )
+                      }
+                    ),
+                    #"SYSTEM_SYSRULES_columnLayout"(
+                      contents: {
+                        #"SYSTEM_SYSRULES_ButtonArrayLayout"(
+                          buttons: {
+                            #"SYSTEM_SYSRULES_ButtonWidget"(
+                              label: "Buscar",
+                              icon: "search",
+                              size: "SMALL",
+                              loadingIndicator: true,
+                              saveInto: {
+                                /*a!save(ri!fechaInicio, tostring(local!fechaI)),*/
+                                /*a!save(ri!fechaFin, tostring(local!fechaF)),*/
+                                a!save(ri!fechaInicio,local!fechaI),
+                                a!save(ri!fechaFin, local!fechaF),
+                                a!save(ri!fechaalDividida, split(tostring(local!fechaF_aux), "/")),
+                                a!save(ri!fechaDividida, split(tostring(local!fechaI_aux), "/")),
+                                a!save(ri!tipoReporte, local!tipoReporte),
+                                a!save(ri!documento, null),
+                              },
+                              disabled: if(
+                               and(a!isNullOrEmpty(local!fechaF), a!isNullOrEmpty(local!fechaI), a!isNullOrEmpty(local!tipoReporte)),
+                               true,
+                               if(
+                                 a!isNullOrEmpty(local!tipoReporte),
+                                 false,
+                                 if(
+                                   and(a!isNotNullOrEmpty(local!fechaF), a!isNotNullOrEmpty(local!fechaI)),
+                                   if(
+                                     local!fechaF &lt; local!fechaI,
+                                     true,
+                                     false,
+                                   ),
+                                   false
+                                 )
+                               )
+                              ),
+                              style: "DESTRUCTIVE",
+                            )
+                          },
+                          align: "START",
+                          marginAbove: "NONE"
+                        )
+                      }
+                    )
+                  }
+                ),
+              },
+              style: "STANDARD",
+              shape: "SEMI_ROUNDED",
+              marginBelow: "STANDARD"
+            )
+          }
+        )
+      }
+    ),
+
+  }
+)</definition>
+        <namedTypedValue>
+            <name>fechaInicio</name>
+            <type>
+                <name>date</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>fechaFin</name>
+            <type>
+                <name>date</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>documento</name>
+            <type>
+                <name>CollaborationDocument</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>tipoReporte</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>fechaDividida</name>
+            <type>
+                <name>Text?list</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>fechaalDividida</name>
+            <type>
+                <name>Text?list</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+        <isCustom>false</isCustom>
+    </interface>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000e93b-1de6-8000-e635-01ef9001ef90_3567889"/>
+        <historyInfo versionUuid="_a-0000ea52-e6d5-8000-e654-01ef9001ef90_7502740"/>
+        <historyInfo versionUuid="_a-0000eae4-5659-8000-e685-01ef9001ef90_8673243"/>
+        <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9389856"/>
+        <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9505211"/>
+        <historyInfo versionUuid="_a-0000eb9b-4ec6-8000-e68b-01ef9001ef90_9605686"/>
+    </history>
+</contentHaul>
