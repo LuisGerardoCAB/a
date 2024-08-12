@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
-    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9505697</versionUuid>
+    <versionUuid>_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10115371</versionUuid>
     <interface>
         <name>SCDO_CargaMDocumentos</name>
         <uuid>_a-0000e9a7-6d42-8000-e63f-01ef9001ef90_5214775</uuid>
@@ -21,7 +21,7 @@
   local!catalogo_documentos_contrato: #"_a-0000e968-30a1-8000-e639-01ef9001ef90_4493570"(
     iddocumento: null,
     tipo:"CONTRATO",
-    documento: null, 
+    documento: null 
   ),
   local!catalogo_documentos_adf: reject(
     fn!isnull,
@@ -107,16 +107,12 @@
                 ),
                 #"SYSTEM_SYSRULES_sideBySideItem"(
                   item: #"SYSTEM_SYSRULES_dropdownField_v1"(
-                    label: "Elegir el tipo de documento",
-                    labelPosition: "ABOVE",
-                    placeholder: "--- Seleccionar un valor ---",
-                    instructions: if(a!isNullOrEmpty(ri!tipo_operacion), "Seleccione el tipo de carga primero", if(and(ri!tipo_operacion = 2, a!isNullOrEmpty(ri!tipo_doc)), "Seleccione el tipo de documentación primero", "")),
                     choiceLabels: if(
-                      a!isNullOrEmpty(ri!tipo_operacion), 
-                      {}, 
+                      a!isNullOrEmpty(ri!tipo_operacion),                                     
+                      {},                                     
                       if(
-                        ri!tipo_operacion = 1, 
-                        index(local!catalogo_documentos_operacion,"documento",{}), 
+                        ri!tipo_operacion = 1,                                     
+                        index(local!catalogo_documentos_operacion,"documento",{}),                                     
                         if(
                           and(ri!tipo_operacion = 2, isnull(ri!tipo_doc)),
                           index(local!catalogo_documentos_contrato,"documento",{}),
@@ -125,20 +121,20 @@
                             index(local!catalogo_documentos_contrato,"documento",{}),
                             if(
                               and(ri!tipo_operacion = 2, ri!tipo_doc = 2),
-                              index(local!catalogo_documentos_adf,"iddocumento",{}),
+                              index(local!catalogo_documentos_adf,"documento",{}),
                               /*cons!SCDO_TIPOS_DOCUMENTOS_ARRIBADOS,*/
                               {}
                             )
                           )
                         )
-                      ),
+                      )
                     ),
                     choiceValues: if(
-                      a!isNullOrEmpty(ri!tipo_operacion), 
+                      a!isNullOrEmpty(ri!tipo_operacion),                                     
                       {},
                       if(
-                        ri!tipo_operacion = 1, 
-                        index(local!catalogo_documentos_operacion,"iddocumento",{}), 
+                        ri!tipo_operacion = 1,                                     
+                        index(local!catalogo_documentos_operacion,"iddocumento",{}),                                     
                         if(
                           and(ri!tipo_operacion = 2, isnull(ri!tipo_doc)),
                           index(local!catalogo_documentos_contrato,"iddocumento",{}),
@@ -153,12 +149,16 @@
                             )
                           )
                         )
-                      ),
+                      )
                     ),
+                    label: "Elegir el tipo de documento",
+                    labelPosition: "ABOVE",
+                    instructions: if(a!isNullOrEmpty(ri!tipo_operacion), "Seleccione el tipo de carga primero", if(and(ri!tipo_operacion = 2, a!isNullOrEmpty(ri!tipo_doc)), "Seleccione el tipo de documentación primero", "")),
+                    placeholder: "--- Seleccionar un valor ---",
                     value: ri!id_documento,
                     saveInto: ri!id_documento,
-                    disabled: or(isnull( ri!tipo_operacion),and(ri!tipo_operacion = 2,isnull(ri!tipo_doc))),
                     searchDisplay: "AUTO",
+                    disabled: or(isnull( ri!tipo_operacion),and(ri!tipo_operacion = 2,isnull(ri!tipo_doc))),
                     validations: {}
                   )
                 )
@@ -212,7 +212,7 @@
                      
                       maxSelections: 1,
                       value: ri!documento,
-                      saveInto:{ ri!documento,
+                      saveInto:{ ri!documento
                       
                       },
                       disabled: if(
@@ -248,10 +248,11 @@
                     #"SYSTEM_SYSRULES_integerField"(
                       label: "ADF: ",
                       labelPosition: "ADJACENT",
-                      value: ri!adf,
                       instructions: if(a!isNullOrEmpty(ri!adf), "Introduce el número de ADF correspondiente", ""),
+                      value: ri!adf,
                       saveInto: ri!adf,
                       refreshAfter: "UNFOCUS",
+                      showWhen: false,
                       validations: {
                         if(
                           len(tostring(ri!adf)) &gt; 8,
@@ -259,8 +260,7 @@
                           ""
                         )
                       },
-                      validationGroup: "adf",
-                      showWhen: if(or(a!isNullOrEmpty(ri!tipo_operacion), a!isNullOrEmpty(ri!tipo_doc)), false, if(and(ri!tipo_operacion = 2, ri!tipo_doc = 2), true, false))
+                      validationGroup: "adf"
                     )
                   )
                 )
@@ -284,11 +284,17 @@
             #"SYSTEM_SYSRULES_imageField_v1"(
               images: {
                 #"SYSTEM_SYSRULES_documentImage"(
-                  document: if(isnull(ri!adf),#"_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9432317",#"_a-0000eaa5-8248-8000-e681-01ef9001ef90_8240317") ,
+                  document: if(
+                    ri!tipo_operacion = 1,
+                    #"_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9432317",
+                    if(and(ri!tipo_operacion= 2, ri!tipo_doc=1),
+                    #"_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10103044",
+                    #"_a-0000eaa5-8248-8000-e681-01ef9001ef90_8240317")
+                  ),
                   caption: "Imagen de la estructura del Excel a cargar"
                 )
               },
-              size: "FIT",
+              size: "LARGE_PLUS",
               align: "CENTER"
             ),
             #"SYSTEM_SYSRULES_sideBySideLayout"(
@@ -300,7 +306,6 @@
                     label: "Cargar documento Excel con los reportes",
                     labelPosition: "ABOVE",
                     target: #"_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1899606",
-                    validationGroup: "prueba",
                     fileNames: 
                     
                     /*concat(*/
@@ -318,9 +323,10 @@
                     fileDescriptions: "Excel con reportes para la carga masiva de documentos",
                     maxSelections: 1,
                     value: ri!excel_reportes,
-                    saveInto: {ri!excel_reportes,
+                    saveInto: {ri!excel_reportes
                    
                     },
+                    required: true,
                     validations:{
                       a!localVariables(
                       local!invalidExtensions: difference(upper(fv!files.extension), { "XLSX", "XLS" }),
@@ -329,49 +335,32 @@
                         "El archivo adjunto debe ser de tipo Excel: (XLSX, XLS). ELIMINAR ARCHIVO CARGADO: " &amp; 
                         index(fv!files, "name", wherecontains(local!invalidExtensions, upper(fv!files.extension)), {}), 
                         ""
-                      ),
+                      )
                      
                    
 
                     )
-                    }
+                    },
+                    validationGroup: "prueba"
                   )
                 ),
                 #"SYSTEM_SYSRULES_sideBySideItem"(
-                  showWhen: isnull(ri!adf),
                   item: #"SYSTEM_SYSRULES_dropdownField_v1"(
-                    label: "Segmento",
-                    labelPosition: "ABOVE",
-                    instructions: "Si se desea asignar el documento a un segmento específico de los reportes, seleccione un segmento",
-                    placeholder: "Seleccione un Segmento",
                     choiceLabels: {
                       index(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2233353"(idSegmento: null).data,"segmento",{})
                     },
                     choiceValues: {
                       index(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2233353"(idSegmento: null).data,"idsegmento",{})
                     },
+                    label: "Segmento",
+                    labelPosition: "ABOVE",
+                    instructions: "Si se desea asignar el documento a un segmento específico de los reportes, seleccione un segmento",
+                    placeholder: "Seleccione un Segmento",
                     value: ri!segmento,
                     saveInto: ri!segmento,
                     validations: {}
-                  )
-                ),
-                #"SYSTEM_SYSRULES_sideBySideItem"(
-                  item: #"SYSTEM_SYSRULES_dropdownField_v1"(
-                    label: "Cargado Por",
-                    labelPosition: "ABOVE",
-                    instructions: "Si se desea que el documento sea cargado por un usuario Opics específico, seleccione un usuario",
-                    placeholder: "Seleccione un Usuario",
-                    choiceLabels: { index(local!usuariosopics,"usuarioopics",{}) },
-                    choiceValues: { index(local!usuariosopics,"idusuarioopics",{}) },
-                    value: ri!usuarioCarga,
-                    saveInto: {ri!usuarioCarga,
-                    a!save(
-                    local!user_name_opic,
-                    #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2152641"(idusuarioopic:ri!usuarioCarga).data[1].usuarioopics
-                    )
-                    },
-                    validations: {}
-                  )
+                  ),
+                  showWhen: isnull(ri!adf)
                 )
               }
             )
@@ -393,7 +382,7 @@
             showWhen: or(
               isnull(ri!tipo_operacion),
               isnull(ri!id_documento),
-              and(a!isNullOrEmpty(ri!documento),isnull(ri!adf))
+              and(a!isNullOrEmpty(ri!documento))
             ),
             color: "NEGATIVE"
           ),
@@ -415,14 +404,13 @@
                 and(a!isNullOrEmpty(ri!documento),a!isNotNullOrEmpty(ri!tipo_operacion), a!isNotNullOrEmpty(ri!tipo_doc)),
                 if(
                   and(or(ri!tipo_doc = 1, ri!tipo_operacion = 2), or(ri!tipo_doc &lt;&gt; 2, a!isNullOrEmpty(ri!tipo_doc))),
-                  "* Documento",
-                  "* Número de ADF"
+                  "* Documento",null
                 ),
                 "* Documento"
               ),
               char(10)
             ),
-            showWhen: and(a!isNullOrEmpty(ri!documento),isnull(ri!adf)),
+            showWhen: a!isNullOrEmpty(ri!documento),
             color: "NEGATIVE"
           ),
           #"SYSTEM_SYSRULES_richTextItem_v1"(
@@ -446,30 +434,42 @@
       buttons: {
         #"SYSTEM_SYSRULES_ButtonWidget"(
           label: "Atrás",
+          style: "SECONDARY",
           saveInto: {
             a!save(local!pasoActivo, local!pasoActivo - 1)
           },
-          style: "SECONDARY",
           showWhen: if(local!pasoActivo = 2, true, false)
         ),
         #"SYSTEM_SYSRULES_ButtonWidget"(
-          validationGroup: "prueba",
-          validate:true,
           label: if(
             local!pasoActivo = 1,
             "Siguiente Paso",
             "Cargar"
           ),
-          saveInto: {
-            a!save(
-              local!pasoActivo,
-              if(
-                local!pasoActivo = 1,
-                local!pasoActivo + 1,
-                local!pasoActivo
-              ),
+          style: if(
+            local!pasoActivo = 2,
+            "PRIMARY",
+            "STANDARD"
+          ),
+          disabled: /*or(*/
+            if(
+            and(
+              or(a!isNotNullOrEmpty(ri!documento), ri!tipo_doc=2),
+              a!isNotNullOrEmpty(ri!tipo_operacion),
+              a!isNotNullOrEmpty(ri!id_documento),
+             
+              local!pasoActivo = 1
             ),
-          },
+            false,
+            if(
+              a!isNullOrEmpty(ri!excel_reportes),
+              /*or(a!isNullOrEmpty(ri!excel_reportes),rule!SCDO_COMPROBAR_FORMATOS_EXCEL(texto:tostring(ri!excel_reportes))=false),*/
+              true,
+              false
+             
+            )
+
+            ),
           submit: if(
             and(
               local!pasoActivo = 2,
@@ -478,34 +478,18 @@
             true,
             false
           ),
-          style: if(
-            local!pasoActivo = 2,
-            "PRIMARY",
-            "STANDARD"
-          ),
-          disabled:/*or(*/
-            if(
-            and(
-              or(a!isNotNullOrEmpty(ri!documento),and(a!isNotNullOrEmpty(ri!adf), len(tostring(ri!adf)) &lt; 9)),
-              a!isNotNullOrEmpty(ri!tipo_operacion),
-              a!isNotNullOrEmpty(ri!id_documento),
-             
-              local!pasoActivo = 1
-            ),
-            false,
-            if(
-              or(a!isNullOrEmpty(ri!excel_reportes),a!isNullOrEmpty(ri!usuarioCarga)),
-              /*or(a!isNullOrEmpty(ri!excel_reportes),rule!SCDO_COMPROBAR_FORMATOS_EXCEL(texto:tostring(ri!excel_reportes))=false),*/
-              true,
+          validate:true,
+          saveInto: {
+            a!save(
+              local!pasoActivo,
               if(
-                and(a!isNotNullOrEmpty(ri!adf), len(tostring(ri!adf)) &gt; 8),
-                true,
-                false
+                local!pasoActivo = 1,
+                local!pasoActivo + 1,
+                local!pasoActivo
               )
-            ),
-            
-          )
-          ,
+            ), a!save(ri!adf,if(ri!tipo_doc=2, 1, null)),
+          },
+          validationGroup: "prueba",
           /*if(a!isNotNullOrEmpty(ri!documento),
           if(and(document(ri!documento,"extension")&lt;&gt;"XLSX",a!document(ri!documento,"extension")&lt;&gt;"XLS"),true,false),true)),*/
           loadingIndicator: { if(local!pasoActivo = 2, true, false) }
@@ -517,11 +501,11 @@
       buttons: {
         #"SYSTEM_SYSRULES_ButtonWidget"(
           label: "Cancelar",
-          icon: "times",
+          style: "DESTRUCTIVE",
+          submit: true,
           value: true,
           saveInto: ri!cancel,
-          submit: true,
-          style: "DESTRUCTIVE"
+          icon: "times"
         )
       },
       align: "START"
@@ -633,5 +617,6 @@
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9432441"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9468321"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9505697"/>
+        <historyInfo versionUuid="_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10115371"/>
     </history>
 </contentHaul>

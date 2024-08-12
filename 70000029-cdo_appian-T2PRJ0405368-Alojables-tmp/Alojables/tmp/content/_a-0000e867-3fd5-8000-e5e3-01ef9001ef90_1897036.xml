@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
-    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9396533</versionUuid>
+    <versionUuid>_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10131803</versionUuid>
     <interface>
         <name>SCDO_Reverso_Opera</name>
         <uuid>_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1897036</uuid>
@@ -307,35 +307,35 @@
               columns: {
                 #"SYSTEM_SYSRULES_gridColumn"(
                   label: "Operación",
-                  value: fv!row.operacion
+                  value: index(fv!row,"operacion", null)
                 ),
-                #"SYSTEM_SYSRULES_gridColumn"(label: "Contrato", value: fv!row.contrato),
+                #"SYSTEM_SYSRULES_gridColumn"(label: "Contrato", value: index(fv!row,"contrato",null)),
                 #"SYSTEM_SYSRULES_gridColumn"(
                   label: "Título",
                   value: if(
-                    a!isNullOrEmpty(fv!row.titulo),
+                    a!isNullOrEmpty(index(fv!row,"titulo", null)),
                     "Sin Titulo",
                     if(
-                      fv!row.titulo = """""",
+                      index(fv!row,"titulo", null) = """""",
                       "Sin Titulo",
-                      fv!row.titulo
+                      index(fv!row,"titulo", null)
                     )
                   )
                 ),
                 #"SYSTEM_SYSRULES_gridColumn"(
                   label: "Tipo Operación",
                   value: if(
-                    fv!row.extra4 = "C",
+                    index(fv!row,"extra4", null) = "C",
                     "Compra",
-                    if(fv!row.extra4 = "V", "Venta", "Sin Tipo")
+                    if(index(fv!row,"extra4", null) = "V", "Venta", "Sin Tipo")
                   )
                 ),
                 #"SYSTEM_SYSRULES_gridColumn"(
                   label: "Fecha Captura",
                   /*value: fv!row.fechacaptura*/
-                  value: if(len(fv!row.fechacaptura)&gt;10,
-                  mid(fv!row.fechacaptura,1,10),
-                  fv!row.fechacaptura
+                  value: if(len(index(fv!row,"fechacaptura", null))&gt;10,
+                  mid(index(fv!row,"fechacaptura", null),1,10),
+                  index(fv!row,"fechacaptura", null)
                   )
                 ),
               
@@ -343,23 +343,24 @@
                   label: "Monto",
                   /*value: fv!row.monto*/
                   value: if(
-                    isnull(fv!row.monto),
+                    isnull(index(fv!row,"monto", null)),
                     "-",
-                    dollar(fv!row.monto, 2, 0)
+                    dollar(index(fv!row,"monto", null), 2, 0)
                   )
                 ),
                 #"SYSTEM_SYSRULES_gridColumn"(
                   label: "Segmento",
                   value: 
-                  if(a!isNullOrEmpty(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2152641"(usuarioOpic: fv!row.usuario).data),
+                  if(a!isNullOrEmpty(
+                    index(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2152641"(usuarioOpic: index(fv!row,"usuario", null)),"data", null)),
                   "-",
-                  #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2233353"(
-                    idSegmento: #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2152641"(usuarioOpic: fv!row.usuario).data[1].idsegmento
-                  ).data.segmento
+                  index(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2233353"(
+                    idSegmento: index(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2152641"(usuarioOpic: index(fv!row,"usuario", null)),"data", "idsegmento", null)
+                  ),"data","segmento", null)
                   )
 
                 ),
-                #"SYSTEM_SYSRULES_gridColumn"(label: "Revisado", value: fv!row.revisado)
+                #"SYSTEM_SYSRULES_gridColumn"(label: "Revisado", value: index(fv!row,"revisado",null))
               },
               showWhen: and(
                 a!isNotNullOrEmpty(ri!operaciones),
@@ -406,60 +407,59 @@
               columns: {
                 #"SYSTEM_SYSRULES_gridColumn"(
                   label: "Operacion",
-                  value: fv!row.operacion
+                  value: index(fv!row,"operacion", null)
                 ),
-                #"SYSTEM_SYSRULES_gridColumn"(label: "Contrato", value: fv!row.contrato),
+                #"SYSTEM_SYSRULES_gridColumn"(label: "Contrato", value: index(fv!row,"contrato",null)),
                 #"SYSTEM_SYSRULES_gridColumn"(
                   label: "Titulo",
                   value: if(
-                    a!isNullOrEmpty(fv!row.titulo),
+                    a!isNullOrEmpty(index(fv!row,"titulo", null)),
                     "Sin Titulo",
                     if(
-                      fv!row.titulo = """""",
+                      index(fv!row,"titulo", null) = """""",
                       "Sin Titulo",
-                      fv!row.titulo
+                      index(fv!row,"titulo", null)
                     )
                   )
                 ),
                 #"SYSTEM_SYSRULES_gridColumn"(
                   label: "Tipo Operacion",
                   value: if(
-                    fv!row.extra4 = "C",
+                    index(fv!row,"extra4", null) = "C",
                     "Compra",
-                    if(fv!row.extra4 = "V", "Venta", "Sin Tipo")
+                    if(index(fv!row,"extra4", null) = "V", "Venta", "Sin Tipo")
                   )
                 ),
                 #"SYSTEM_SYSRULES_gridColumn"(
                   label: "Fecha Captura",
                   /*value: fv!row.fechacaptura*/
-                  value: if(len(fv!row.fechacaptura)&gt;10,
-                  mid(fv!row.fechacaptura,1,10),
-                  fv!row.fechacaptura
+                  value: if(len(index(fv!row,"fechacaptura", null))&gt;10,
+                  mid(index(fv!row,"fechacaptura", null),1,10),
+                  index(fv!row,"fechacaptura", null)
                   )
                 ),
 
                 #"SYSTEM_SYSRULES_gridColumn"(
                   label: "Monto",
-                  /*value: fv!row.monto*/
+                  /*value: index(fv!row,"monto", null)*/
                   value: if(
-                    isnull(fv!row.monto),
+                    isnull(index(fv!row,"monto", null)),
                     "-",
-                    dollar(fv!row.monto, 2, 0)
+                    dollar(index(fv!row,"monto", null), 2, 0)
                   )
-                ),
-                #"SYSTEM_SYSRULES_gridColumn"(
+                ),  #"SYSTEM_SYSRULES_gridColumn"(
                   label: "Segmento",
                   value: 
-                  
-                  if(a!isNullOrEmpty(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2152641"(usuarioOpic: fv!row.usuario).data),
-                  "-",
-                  #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2233353"(
-                    idSegmento: #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2152641"(usuarioOpic: fv!row.usuario).data[1].idsegmento
-                  ).data.segmento
+                  if(a!isNullOrEmpty(
+                    index(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2152641"(usuarioOpic: index(fv!row,"usuario", null)),"data", null)),
+                    "-",
+                    index(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2233353"(
+                      idSegmento: index(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2152641"(usuarioOpic: index(fv!row,"usuario", null)),"data", "idsegmento", null)
+                    ),"data","segmento", null)
                   )
 
                 ),
-                #"SYSTEM_SYSRULES_gridColumn"(label: "Revisado", value: fv!row.revisado)
+                #"SYSTEM_SYSRULES_gridColumn"(label: "Revisado", value: index(fv!row,"revisado",null))
               },
               showWhen: and(
                 a!isNotNullOrEmpty(ri!operaciones),
@@ -659,23 +659,7 @@
             <value/>
         </namedTypedValue>
         <namedTypedValue>
-            <name>segmento</name>
-            <type>
-                <name>string</name>
-                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
-            </type>
-            <value/>
-        </namedTypedValue>
-        <namedTypedValue>
             <name>operaciones</name>
-            <type>
-                <name>string</name>
-                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
-            </type>
-            <value/>
-        </namedTypedValue>
-        <namedTypedValue>
-            <name>titulo</name>
             <type>
                 <name>string</name>
                 <namespace>http://www.w3.org/2001/XMLSchema</namespace>
@@ -717,5 +701,6 @@
         <historyInfo versionUuid="_a-0000ea3c-477e-8000-e648-01ef9001ef90_6934107"/>
         <historyInfo versionUuid="_a-0000eb09-d442-8000-e687-01ef9001ef90_8782320"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9396533"/>
+        <historyInfo versionUuid="_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10131803"/>
     </history>
 </contentHaul>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
-    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9386483</versionUuid>
+    <versionUuid>_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10123879</versionUuid>
     <rule>
         <name>SCDO_getReportesByFilterCorreccion</name>
         <uuid>_a-0000eb09-d442-8000-e687-01ef9001ef90_8842299</uuid>
@@ -15,9 +15,12 @@
             <system>false</system>
             <unlogged>false</unlogged>
         </visibility>
-        <definition>#"_a-0000e8b9-0989-8000-e5fd-01ef9001ef90_2420859"(
-  dataStoreEntity_dt: #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_1932909",
-  queryFilter_any: {
+        <definition>index(#"SYSTEM_SYSRULES_queryEntity_v2"(
+  entity: #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_1932909",
+  query: #"SYSTEM_SYSRULES_query"(
+    logicalExpression: #"SYSTEM_SYSRULES_queryLogicalExpression"(
+      operator: "AND",
+      filters: {
     #"SYSTEM_SYSRULES_queryFilter"(
       field: "idreporte",
       operator: "=",
@@ -45,18 +48,19 @@
     ),
    
   },
-  selectionColumn_txt: ri!seleccionColumnas,
-  pagingInfo_pi: 
-  if(
-    isnull(ri!paginInfo),
-    #"SYSTEM_SYSRULES_pagingInfo"(startIndex: 1, batchSize: 50),
-    ri!paginInfo
-  ),
-   
-  
-  ignoreFiltersWithEmptyValues_bool: true,
-  fetchTotalCount_bool: true
-).data</definition>
+  ignoreFiltersWithEmptyValues: true()
+    ),
+    pagingInfo: if(
+      a!isNotNullOrEmpty(ri!paginInfo),
+      ri!paginInfo,
+      #"SYSTEM_SYSRULES_pagingInfo"(
+        startIndex: 1,
+        batchSize: 10,
+      )
+    )
+
+  )
+), "data", null)</definition>
         <namedTypedValue>
             <name>idreporte</name>
             <type>
@@ -133,5 +137,6 @@
     <history>
         <historyInfo versionUuid="_a-0000eb09-d442-8000-e687-01ef9001ef90_8843510"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9386483"/>
+        <historyInfo versionUuid="_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10123879"/>
     </history>
 </contentHaul>

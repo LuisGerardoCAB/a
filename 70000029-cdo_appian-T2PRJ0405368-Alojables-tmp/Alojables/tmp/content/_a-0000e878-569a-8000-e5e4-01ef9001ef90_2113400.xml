@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
-    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9505853</versionUuid>
+    <versionUuid>_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10133626</versionUuid>
     <interface>
         <name>SCDO_GridAccesos</name>
         <uuid>_a-0000e878-569a-8000-e5e4-01ef9001ef90_2113400</uuid>
@@ -88,7 +88,7 @@
   ),
   /*------*/
   local!usuarioopicB: index(
-    #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2152641"(usuarioOpic: local!bUser).data,
+    #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2152641"(usuarioOpic: local!bUser),"data",
     "idusuarioopics",
     null
   ),
@@ -112,7 +112,7 @@
       {},
       #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2113426"(
         idusuariooPics: index(
-          #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2152641"(usuarioOpic: local!bUser).data,
+          #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2152641"(usuarioOpic: local!bUser),"data",
           "idusuarioopics",
           null
         )
@@ -122,7 +122,7 @@
     refreshOnVarChange: ri!refreshCount
   ),
   local!tipoTemp: #"SYSTEM_SYSRULES_forEach"(
-    items: if(a!isNotNullOrEmpty(local!accesoGrid),local!accesoGrid.data,{}),
+    items: if(a!isNotNullOrEmpty(local!accesoGrid),index(local!accesoGrid,"data",null),{}),
     expression: {
       'type!{urn:com:appian:types}cdo_permisosusuarios'(
         tipoacceso: fv!item.tipoacceso
@@ -357,35 +357,35 @@
                   expression: #"SYSTEM_SYSRULES_gridRowLayout"(
                     contents: {
                       #"SYSTEM_SYSRULES_textField"(
-                        value: #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2114113"(idExpediente: fv!item.idexpediente).data.expediente,
+                        value: index(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2114113"(idExpediente: fv!item.idexpediente),"data","expediente", null),
                         readOnly: true,
                         align: "CENTER"
                       ),
                       #"SYSTEM_SYSRULES_textField"(
-                        value: #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2114113"(idExpediente: fv!item.idexpediente).data.nombre,
+                        value: index(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2114113"(idExpediente: fv!item.idexpediente),"data","nombre", null),
                         readOnly: true,
                         align: "CENTER"
                       ),
                       #"SYSTEM_SYSRULES_textField"(
-                        value: #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2114113"(idExpediente: fv!item.idexpediente).data.fechaingreso,
+                        value: index(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2114113"(idExpediente: fv!item.idexpediente),"data","fechaingreso", null),
                         readOnly: true,
                         align: "CENTER"
                       ),
                       #"SYSTEM_SYSRULES_textField"(
-                        value: #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2152641"(idUsuarioOpic: fv!item.idusuarioopics).data.usuarioopics,
+                        value: index(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2152641"(idUsuarioOpic: fv!item.idusuarioopics),"data","usuarioopics", null),
                         readOnly: true,
                         align: "CENTER"
                       ),
                       #"SYSTEM_SYSRULES_textField"(
                         value: 
                         if(a!isNotNullOrEmpty(
-                          #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2233353"(
-                            idSegmento: #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2152641"(idUsuarioOpic: fv!item.idusuarioopics).data.idsegmento
-                          ).data
+                          index(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2233353"(
+                            idSegmento: index(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2152641"(idUsuarioOpic: fv!item.idusuarioopics),"data","idsegmento",null)
+                          ),"data", null)
                         ),
-                        #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2233353"(
-                          idSegmento: #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2152641"(idUsuarioOpic: fv!item.idusuarioopics).data.idsegmento
-                        ).data.segmento,null
+                        index(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2233353"(
+                          idSegmento: index(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2152641"(idUsuarioOpic: fv!item.idusuarioopics),"data","idsegmento",null)
+                        ),"data","segmento",null),null
                         ),
                        
                         readOnly: true,
@@ -484,8 +484,8 @@
                                 tointeger(fv!item.idacceso)
                               ),
                               or(
-                                #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2113426"(idAcceso: fv!item.idacceso).data.idexpediente &lt;&gt; fv!item.idexpediente,
-                                #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2113426"(idAcceso: fv!item.idacceso).data.idusuarioopics &lt;&gt; fv!item.idusuarioopics,
+                                index(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2113426"(idAcceso: fv!item.idacceso),"data","idexpediente",null) &lt;&gt; fv!item.idexpediente,
+                                index(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2113426"(idAcceso: fv!item.idacceso),"data","idusuarioopics",null) &lt;&gt; fv!item.idusuarioopics,
                                 local!tipoTemp[fv!index].tipoacceso &lt;&gt; fv!item.tipoacceso
                               ),
                               not(
@@ -497,8 +497,8 @@
                               ),
                               not(
                                 and(
-                                  #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2113426"(idUsuariooPics: fv!item.idusuarioopics).totalCount &gt; 0,
-                                  #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2113426"(idAcceso: fv!item.idacceso).data.idusuarioopics &lt;&gt; fv!item.idusuarioopics
+                                  index(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2113426"(idUsuariooPics: fv!item.idusuarioopics),"totalCount", null) &gt; 0,
+                                  index(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2113426"(idAcceso: fv!item.idacceso),"data","idusuarioopics",null) &lt;&gt; fv!item.idusuarioopics
                                 )
                               )/*not(*/
                               /*and(*/
@@ -522,7 +522,7 @@
                                 a!save(local!permisoDelete, fv!item),
                                 a!save(
                                   local!userDelete,
-                                  #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2152641"(idUsuarioOpic: fv!item.idusuarioopics).data.usuarioopics
+                                  index(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2152641"(idUsuarioOpic: fv!item.idusuarioopics),"data","usuarioopics",null)
                                 ),
                                 a!save(local!deleteSuccess,true)
                               }
@@ -602,8 +602,8 @@
                         label: "Expediente",
                         labelPosition: "ABOVE",
                         placeholder: "--- Seleccione un valor---",
-                        choiceLabels: index(local!expedientes.data,"nombre",{}),
-                        choiceValues: index(local!expedientes.data,"idexpediente",{}),
+                        choiceLabels: index(local!expedientes,"data","nombre",{}),
+                        choiceValues: index(local!expedientes,"data","idexpediente",{}),
                         value: local!accesoWrite.idexpediente,
                         saveInto: {
                           local!accesoWrite.idexpediente,
@@ -627,8 +627,8 @@
                         label: "Usuario",
                         labelPosition: "ABOVE",
                         placeholder: "--- Seleccione un valor ---",
-                        choiceLabels: index(local!usuariosOpics.data,"usuarioopics",{}),
-                        choiceValues: index(local!usuariosOpics.data,"idusuarioopics",{}),
+                        choiceLabels: index(local!usuariosOpics,"data","usuarioopics",{}),
+                        choiceValues: index(local!usuariosOpics,"data","idusuarioopics",{}),
                         value: local!accesoWrite.idusuarioopics,
                         saveInto: { local!accesoWrite.idusuarioopics },
                         searchDisplay: "AUTO",
@@ -681,9 +681,9 @@
                                     ),
                                     a!save(
                                       local!permisoGuardado,
-                                      #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2114113"(
-                                        idExpediente: local!accesoWrite.idexpediente
-                                      ).data[1].nombre
+                                      index(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2114113"(
+                                        idExpediente: local!accesoWrite.idexpediente, paginInfo: #"SYSTEM_SYSRULES_pagingInfo"(startIndex: 1, batchSize: 1)
+                                      ),"data","nombre", null)
                                     ),
                                     a!save(local!mostrarSuccess, true),
                                     a!save(
@@ -802,13 +802,13 @@
                           value: {
                             #"SYSTEM_SYSRULES_richTextItem_v1"(
                               text: {
-                                "* El expediente " &amp; #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2114113"(
+                                "* El expediente " &amp; index(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2114113"(
                                   idExpediente: local!accesoWrite.idexpediente
-                                ).data.nombre &amp; " ya pertenece al siguiente usuario " &amp; #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2152641"(
-                                  idUsuarioOpic: #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2113426"(
+                                ),"data","nombre",null) &amp; " ya pertenece al siguiente usuario " &amp; index(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2152641"(
+                                  idUsuarioOpic: index(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2113426"(
                                     idExpediente: local!accesoWrite.idexpediente
-                                  ).data.idusuarioopics
-                                ).data.usuarioopics
+                                  ),"data","idusuarioopics", null)
+                                ),"data","usuarioopics", null)
                               },
                               color: local!colorDV
                             )
@@ -822,13 +822,13 @@
                           value: {
                             #"SYSTEM_SYSRULES_richTextItem_v1"(
                               text: {
-                                "* El usuario " &amp; #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2152641"(
+                                "* El usuario " &amp; index(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2152641"(
                                   idUsuarioOpic: local!accesoWrite.idusuarioopics
-                                ).data.usuarioopics &amp; " ya pertenece al siguiente expediente " &amp; #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2114113"(
-                                  idExpediente: #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2113426"(
+                                ),"data","usuarioopics", null) &amp; " ya pertenece al siguiente expediente " &amp; index(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2114113"(
+                                  idExpediente: index(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2113426"(
                                     idUsuariooPics: local!accesoWrite.idusuarioopics
-                                  ).data.idexpediente
-                                ).data[1].nombre
+                                  ),"data","idexpediente", null), paginInfo: #"SYSTEM_SYSRULES_pagingInfo"(startIndex: 1,batchSize: 1)
+                                ),"data","nombre", null)
                               },
                               color: local!colorDV
                             )
@@ -913,5 +913,6 @@
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9395442"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9469213"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9505853"/>
+        <historyInfo versionUuid="_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10133626"/>
     </history>
 </contentHaul>

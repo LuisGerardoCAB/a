@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
-    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9387051</versionUuid>
+    <versionUuid>_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10127456</versionUuid>
     <interface>
         <name>SCDO_Reverso_Operaciones</name>
         <uuid>_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1897130</uuid>
@@ -31,26 +31,20 @@
             opciones_any: #"_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1897428"(),
             indiceSeleccionado_int: local!indiceMenuSeleccionado
           ),
-          if(
-            local!opcionMenuSeleccionada.titulo = #"_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1897395"[1],
-            #"_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1846713"(
-              /*documentoseleccionado: local!documentoseleccionado,*/
-              /*contrato: local!contrato*/
-            ),
-            if(
-              local!opcionMenuSeleccionada.titulo = #"_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1897395"[2],
-              #"_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1897036"(
-                documentoseleccionado: local!documentoseleccionado,
-                contrato: local!contrato,
-                segmento: local!segmento,
-                operaciones: local!operaciones
-              ),
-             choose (
-                /*local!opcionMenuSeleccionada.titulo = cons!SCDO_OPCIONES_REVERSOO[3],*/
-                /*rule!SCDO_CargaMDocumentos()*/
-             )
-            )
-           )
+          a!match(value:local!opcionMenuSeleccionada.titulo = #"_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1897395"[1],
+          equals: true(),
+          then: #"_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1846713"(
+          ),
+          whenTrue: local!opcionMenuSeleccionada.titulo = #"_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1897395"[2],
+          then: #"_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1897036"(
+            documentoseleccionado: local!documentoseleccionado,
+            contrato: local!contrato,
+            segmento: local!segmento,
+            operaciones: local!operaciones
+          ),
+          default: {}
+          
+          ),
         },
         width: "AUTO"
       )
@@ -92,5 +86,6 @@
         <historyInfo versionUuid="_a-0000e9f5-96e6-8000-e641-01ef9001ef90_6014890"/>
         <historyInfo versionUuid="_a-0000eabf-35e2-8000-e683-01ef9001ef90_8450741"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9387051"/>
+        <historyInfo versionUuid="_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10127456"/>
     </history>
 </contentHaul>

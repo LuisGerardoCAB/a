@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
-    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9387033</versionUuid>
+    <versionUuid>_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10127008</versionUuid>
     <interface>
         <name>SCDO_Usuarios</name>
         <uuid>_a-0000e94c-78eb-8000-e637-01ef9001ef90_4002782</uuid>
@@ -18,9 +18,6 @@
         <definition>a!localVariables(
   local!opcionMenuSeleccionada: #"_a-0000e94c-78eb-8000-e637-01ef9001ef90_4003080"()[1],
   local!indiceMenuSeleccionado: 1,
-  local!bUser,
-  local!segmento,
-  local!usuario,
   local!refreshCount: 0,
   #"SYSTEM_SYSRULES_columnsLayout"(
     columns: {
@@ -31,38 +28,29 @@
             opciones_any: #"_a-0000e94c-78eb-8000-e637-01ef9001ef90_4003080"(),
             indiceSeleccionado_int: local!indiceMenuSeleccionado
           ),
-          if(
-            local!opcionMenuSeleccionada.titulo = #"_a-0000e94c-78eb-8000-e637-01ef9001ef90_4003090"[1],
-            #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2113400"(refreshCount: local!refreshCount),
-            if(
-              local!opcionMenuSeleccionada.titulo = #"_a-0000e94c-78eb-8000-e637-01ef9001ef90_4003090"[2],
-              #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2226531"(refreshCount: local!refreshCount),
-              if(
-                local!opcionMenuSeleccionada.titulo = #"_a-0000e94c-78eb-8000-e637-01ef9001ef90_4003090"[3],
-                #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2226543"(refreshCount: local!refreshCount),
-                if(
-                  local!opcionMenuSeleccionada.titulo = #"_a-0000e94c-78eb-8000-e637-01ef9001ef90_4003090"[4],
-                  #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2226554"(refreshCount: local!refreshCount),
-                  if(
-                    local!opcionMenuSeleccionada.titulo = #"_a-0000e94c-78eb-8000-e637-01ef9001ef90_4003090"[5],
-                    #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2226561"(
-                      idadmon: ri!idadmon,
-                      idsegmento: ri!idsegmento,
-                      refreshCount: local!refreshCount
-                    ),
-                    if(
-                      local!opcionMenuSeleccionada.titulo = #"_a-0000e94c-78eb-8000-e637-01ef9001ef90_4003090"[6],
-                      #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2226568"(refreshCount: local!refreshCount),
-                      choose(
-                        local!opcionMenuSeleccionada.titulo = #"_a-0000e94c-78eb-8000-e637-01ef9001ef90_4003090"[7],
-                        #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2226575"(
-                          /*bUser: local!bUser,*/
-                          refreshCount: local!refreshCount
-                        )
-                      )
-                    )
-                  )
-                )
+          a!match(
+            value:  local!opcionMenuSeleccionada.titulo = #"_a-0000e94c-78eb-8000-e637-01ef9001ef90_4003090"[1],
+            equals: true(),
+            then: #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2113400"(refreshCount: local!refreshCount),
+            whenTrue: local!opcionMenuSeleccionada.titulo = #"_a-0000e94c-78eb-8000-e637-01ef9001ef90_4003090"[2],
+            then: #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2226531"(refreshCount: local!refreshCount),
+            whenTrue:    local!opcionMenuSeleccionada.titulo = #"_a-0000e94c-78eb-8000-e637-01ef9001ef90_4003090"[3],
+            then: #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2226543"(refreshCount: local!refreshCount),
+            whenTrue: local!opcionMenuSeleccionada.titulo = #"_a-0000e94c-78eb-8000-e637-01ef9001ef90_4003090"[4],
+            then:  #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2226554"(refreshCount: local!refreshCount),
+            whenTrue: local!opcionMenuSeleccionada.titulo = #"_a-0000e94c-78eb-8000-e637-01ef9001ef90_4003090"[5],
+            then: #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2226561"(
+              idadmon: ri!idadmon,
+              idsegmento: ri!idsegmento,
+              refreshCount: local!refreshCount
+            ),
+            whenTrue: local!opcionMenuSeleccionada.titulo = #"_a-0000e94c-78eb-8000-e637-01ef9001ef90_4003090"[6],
+            then: #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2226568"(refreshCount: local!refreshCount),
+            default:    choose(
+              local!opcionMenuSeleccionada.titulo = #"_a-0000e94c-78eb-8000-e637-01ef9001ef90_4003090"[7],
+              #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2226575"(
+                /*bUser: local!bUser,*/
+                refreshCount: local!refreshCount
               )
             )
           )
@@ -119,5 +107,6 @@
     <history>
         <historyInfo versionUuid="_a-0000ea22-4ef8-8000-e643-01ef9001ef90_6743026"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9387033"/>
+        <historyInfo versionUuid="_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10127008"/>
     </history>
 </contentHaul>

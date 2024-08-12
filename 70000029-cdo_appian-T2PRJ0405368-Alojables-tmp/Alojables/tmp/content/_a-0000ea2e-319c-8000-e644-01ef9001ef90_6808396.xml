@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
-    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9387512</versionUuid>
+    <versionUuid>_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10129240</versionUuid>
     <interface>
         <name>SCDO_Boton_Exportar_Excel_DocXContrato</name>
         <uuid>_a-0000ea2e-319c-8000-e644-01ef9001ef90_6808396</uuid>
@@ -39,7 +39,7 @@
                     #"_a-0000e9f5-96e6-8000-e641-01ef9001ef90_6351963"(ccosto: null)
                   ),
                   null,
-                  #"_a-0000e9f5-96e6-8000-e641-01ef9001ef90_6351963"(ccosto: null).cc
+                  index(#"_a-0000e9f5-96e6-8000-e641-01ef9001ef90_6351963"(ccosto: null),"cc", null)
                 )
               ),
               #"SYSTEM_SYSRULES_startProcess"(
@@ -59,7 +59,7 @@
                 onSuccess: {
                   a!save(
                     ri!documento_doc,
-                    fv!processInfo.pv.documento
+                    index(fv!processInfo, "pv","documento", null)
                   )
                 },
                 onError: "No se puede generar el EXCEL"
@@ -203,5 +203,6 @@
         <historyInfo versionUuid="_a-0000ea2e-319c-8000-e644-01ef9001ef90_6808458"/>
         <historyInfo versionUuid="_a-0000eb09-d442-8000-e687-01ef9001ef90_8969475"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9387512"/>
+        <historyInfo versionUuid="_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10129240"/>
     </history>
 </contentHaul>

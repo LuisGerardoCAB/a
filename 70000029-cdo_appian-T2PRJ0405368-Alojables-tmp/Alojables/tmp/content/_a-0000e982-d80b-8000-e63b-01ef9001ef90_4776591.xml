@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
-    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9393221</versionUuid>
+    <versionUuid>_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10141363</versionUuid>
     <constant>
         <name>SCDO_Entidad_Digitalizado_Rechazo</name>
         <uuid>_a-0000e982-d80b-8000-e63b-01ef9001ef90_4776591</uuid>
@@ -53,5 +53,7 @@
     <history>
         <historyInfo versionUuid="_a-0000e982-d80b-8000-e63b-01ef9001ef90_4776595"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9393221"/>
+        <historyInfo versionUuid="_a-0000ec52-2d7d-8000-e69d-01ef9001ef90_10082521"/>
+        <historyInfo versionUuid="_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10141363"/>
     </history>
 </contentHaul>

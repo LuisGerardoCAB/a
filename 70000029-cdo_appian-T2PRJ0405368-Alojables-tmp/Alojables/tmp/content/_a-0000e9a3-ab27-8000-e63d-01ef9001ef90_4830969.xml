@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
-    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9543120</versionUuid>
+    <versionUuid>_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10135479</versionUuid>
     <interface>
         <name>SCDO_ReporteAuditoria</name>
         <uuid>_a-0000e9a3-ab27-8000-e63d-01ef9001ef90_4830969</uuid>
@@ -49,8 +49,9 @@
                   value: local!tipoReporte,
                   saveInto: {
                     local!tipoReporte,
-                    if(isnull(local!tipoReporte),
-                   { a!save({
+                    a!match(value: isnull(local!tipoReporte),
+                    equals: true, 
+                    then:    { a!save({
                       local!documento_contratos_pendientes,
                       local!documento_no_documental,
                       local!documento_pendiente_revisar,
@@ -61,9 +62,9 @@
                       local!busque_no_documental,
                       local!busque_pendiente_revisar,
                       local!busque_revisados
-                    },false),},
-                    if(local!tipoReporte=1,
-                    {a!save({
+                    },false)},
+                    whenTrue: local!tipoReporte=1,
+                    then:  {a!save({
                       local!documento_pendiente_revisar,
                       local!documento_no_documental,
                       local!documento_revisados
@@ -72,9 +73,9 @@
                       local!busque_pendiente_revisar,
                       local!busque_no_documental,
                       local!busque_revisados
-                    },false),},
-                    if(local!tipoReporte=2,
-                   { a!save({
+                    },false)},
+                    whenTrue: local!tipoReporte=2,
+                    then:  { a!save({
                       local!documento_contratos_pendientes,
                       local!documento_no_documental,
                       local!documento_revisados
@@ -84,8 +85,8 @@
                       local!busque_no_documental,
                       local!busque_revisados
                     },false)},
-                    if(local!tipoReporte=3,
-                   { a!save({
+                    whenTrue: local!tipoReporte=3,
+                    then:  { a!save({
                       local!documento_contratos_pendientes,
                       local!documento_pendiente_revisar,
                       local!documento_revisados
@@ -94,8 +95,8 @@
                       local!busque_contratos_pendientes,
                       local!busque_pendiente_revisar,
                       local!busque_revisados
-                    },false),},
-                    {a!save({
+                    },false)},
+                    default:  {a!save({
                       local!documento_contratos_pendientes,
                       local!documento_pendiente_revisar,
                       local!documento_no_documental,
@@ -105,11 +106,10 @@
                       local!busque_pendiente_revisar,
                       local!busque_no_documental,
                     },false)}
-                      
                     )
-                    )
-                    )
-                    ),
+                    
+                    
+                
                  
                   },
                   searchDisplay: "AUTO",
@@ -123,9 +123,9 @@
               contents: {
                 #"SYSTEM_SYSRULES_ButtonArrayLayout"(
                   buttons: {
-                    #"SYSTEM_SYSRULES_ButtonWidget"(
+                    #"SYSTEM_SYSRULES_buttonWidget_v1"(
                       label: "Generar Auditoría",
-                      style: "DESTRUCTIVE",
+                      style: "GHOST",
                       size: "SMALL",
                       icon: "file-excel-o",
                       loadingIndicator: true,
@@ -137,82 +137,87 @@
                      
                       disabled: or(a!isNullOrEmpty(local!tipoReporte)),
                       saveInto: {
+                        a!match(value: local!tipoReporte = 1,
+                        equals: true(),
+                        then:        {
+                          #"SYSTEM_SYSRULES_startProcess"(
+                            processModel: #"_a-0000eabf-35e2-8000-e683-01ef9001ef90_8499310",
+                            processParameters: {
+                              type_Audit: local!tipoReporte
+                            },
+                            onSuccess: {
 
-                        if(
-                          local!tipoReporte = 1,
-                         {
-                           #"SYSTEM_SYSRULES_startProcess"(
-                             processModel: #"_a-0000eb09-d442-8000-e687-01ef9001ef90_8875440",
-                             onSuccess: {
+                              a!save(
+                                local!documento_contratos_pendientes,
+                                fv!processInfo.pv.documento_salida
+                              ),
+                              a!save(
+                                local!busque_contratos_pendientes,
+                                true
+                              ),
 
-                               a!save(
-                                 local!documento_contratos_pendientes,
-                                 fv!processInfo.pv.documento_salida
-                               ),
-                               a!save(
-                                 local!busque_contratos_pendientes,
-                                 true
-                               ),
+                            }
+                          ),
 
-                             }
-                           ),
-                          
-                         },
-                          
-                          if(
-                            local!tipoReporte = 2,
-                            #"SYSTEM_SYSRULES_startProcess"(
-                              processModel: #"_a-0000eabf-35e2-8000-e683-01ef9001ef90_8525344",
-                              onSuccess: {
-                                /*a!save(local!mostrarEspera, true),*/
-                                a!save(
-                                  local!documento_pendiente_revisar,
-                                  fv!processInfo.pv.documento_salida
-                                ),
-                                a!save(
-                                  local!busque_pendiente_revisar,
-                                  true
-                                ),
-
-                              }
+                        },
+                        whenTrue: local!tipoReporte = 2,
+                        then: #"SYSTEM_SYSRULES_startProcess"(
+                          processModel: #"_a-0000eabf-35e2-8000-e683-01ef9001ef90_8499310",
+                          processParameters: {
+                            type_Audit: local!tipoReporte
+                          },
+                          onSuccess: {
+                            /*a!save(local!mostrarEspera, true),*/
+                            a!save(
+                              local!documento_pendiente_revisar,
+                              fv!processInfo.pv.documento_salida
                             ),
-                           
-                            if(
-                              local!tipoReporte = 3,
-                              #"SYSTEM_SYSRULES_startProcess"(
-                                processModel: #"_a-0000eabf-35e2-8000-e683-01ef9001ef90_8499310",
-                                onSuccess: {
+                            a!save(
+                              local!busque_pendiente_revisar,
+                              true
+                            ),
 
-                                  a!save(
-                                    local!documento_no_documental,
-                                    fv!processInfo.pv.documento_salida
-                                  ),
-                                  a!save(
-                                    local!busque_no_documental,
-                                   true
-                                  ),
+                          }
+                        ),
+                        whenTrue: local!tipoReporte = 3,
+                        then: #"SYSTEM_SYSRULES_startProcess"(
+                          processModel: #"_a-0000eabf-35e2-8000-e683-01ef9001ef90_8499310",
+                          processParameters: {
+                            type_Audit: local!tipoReporte
+                          },
+                          onSuccess: {
 
-                                }
-                              ),
-                              { #"SYSTEM_SYSRULES_startProcess"(
-                                processModel: #"_a-0000eb09-d442-8000-e687-01ef9001ef90_8875446",
-                                onSuccess: {
+                            a!save(
+                              local!documento_no_documental,
+                              fv!processInfo.pv.documento_salida
+                            ),
+                            a!save(
+                              local!busque_no_documental,
+                              true
+                            ),
 
-                                  a!save(
-                                    local!documento_revisados,
-                                    fv!processInfo.pv.documento_salida
-                                  ),
-                                  a!save(
-                                    local!busque_revisados,
-                                    true
-                                  ),
+                          }
+                        ),
+                        default:  { #"SYSTEM_SYSRULES_startProcess"(
+                          processModel: #"_a-0000eabf-35e2-8000-e683-01ef9001ef90_8499310",
+                          processParameters: {
+                            type_Audit: local!tipoReporte
+                          },
+                          onSuccess: {
 
-                                }
-                              ),
-                               
-                              }
-                            )
-                          )
+                            a!save(
+                              local!documento_revisados,
+                              fv!processInfo.pv.documento_salida
+                            ),
+                            a!save(
+                              local!busque_revisados,
+                              true
+                            ),
+
+                          }
+                        ),
+
+                        }
                         )
                       }
                     ),
@@ -223,102 +228,94 @@
                 #"SYSTEM_SYSRULES_richTextDisplayField"(
                   labelPosition: "COLLAPSED",
                   value: {
-                    if(
-                      a!isNullOrEmpty(local!tipoReporte),
-                      "",
-                      if(
-                        local!tipoReporte = 1,
-                        {
-                          #"SYSTEM_SYSRULES_richTextIcon"(
-                          caption: "Descargar Contratos Pendientes",
-                          icon: "download",
-                          link: {
-                            #"SYSTEM_SYSRULES_documentDownloadLink"(
-                              document: local!documento_contratos_pendientes
-                            ),
-
-                          },
-                          linkStyle: "STANDALONE",
-                          showWhen:and(a!isNotNullOrEmpty(local!documento_contratos_pendientes),local!tipoReporte=1)
-                        ),
-                        #"SYSTEM_SYSRULES_richTextIcon"(
-                          caption:"Ha ocurrido un error al obtener el documento.",
-                          icon: "exclamation",
-
-
-                          linkStyle: "STANDALONE",
-                          showWhen:and(a!isNullOrEmpty(local!documento_contratos_pendientes),local!tipoReporte=1,local!busque_contratos_pendientes=true)
-                        )
-                        },
-                        if(
-                          local!tipoReporte = 2,
-                          {#"SYSTEM_SYSRULES_richTextIcon"(
-                            caption: "Descargar Pendientes Por Revisar",
-                            icon: "download",
-                            link: {
-                              #"SYSTEM_SYSRULES_documentDownloadLink"(
-                                document: local!documento_pendiente_revisar
-                              ),
-
-                            },
-                            linkStyle: "STANDALONE",
-                            showWhen:and(a!isNotNullOrEmpty(local!documento_pendiente_revisar),local!tipoReporte=2)
+                    a!match(value: a!isNullOrEmpty(local!tipoReporte),
+                    equals: true(),
+                    then: "",
+                    whenTrue: 
+                    local!tipoReporte = 1,
+                    then:  {
+                      #"SYSTEM_SYSRULES_richTextIcon"(
+                        caption: "Descargar Contratos Pendientes",
+                        icon: "download",
+                        link: {
+                          #"SYSTEM_SYSRULES_documentDownloadLink"(
+                            document: local!documento_contratos_pendientes
                           ),
-                          #"SYSTEM_SYSRULES_richTextIcon"(
-                            caption:"Ha ocurrido un error al obtener el documento.",
-                            icon: "exclamation",
 
-
-                            linkStyle: "STANDALONE",
-                            showWhen:and(a!isNullOrEmpty(local!documento_pendiente_revisar),local!tipoReporte=2,local!busque_pendiente_revisar=true)
-                          )
-                          },
-                          if(
-                            local!tipoReporte = 3,
-                           
-                               { #"SYSTEM_SYSRULES_richTextIcon"(
-                                  caption: "Descargar No Documental",
-                                  icon: "download",
-                                  link: {
-                                    #"SYSTEM_SYSRULES_documentDownloadLink"(document: local!documento_no_documental),
-
-                                  },
-                                  linkStyle: "STANDALONE",
-                                  showWhen:and(a!isNotNullOrEmpty(local!documento_no_documental),local!tipoReporte=3)
-                                ),
-                                #"SYSTEM_SYSRULES_richTextIcon"(
-                                  caption:"Ha ocurrido un error al obtener el documento.",
-                                  icon: "exclamation",
-
-
-                                  linkStyle: "STANDALONE",
-                                  showWhen:and(a!isNullOrEmpty(local!documento_no_documental),local!tipoReporte=3,local!busque_no_documental=true)
-                                )},
-
-                           
-                           { #"SYSTEM_SYSRULES_richTextIcon"(
-                              caption: "Descargar Revisados",
-                              icon: "download",
-                              link: {
-                                #"SYSTEM_SYSRULES_documentDownloadLink"(document: local!documento_revisados),
-
-                              },
-                              linkStyle: "STANDALONE",
-                              showWhen:and(a!isNotNullOrEmpty(local!documento_revisados),local!tipoReporte=4)
-                            ),
-                            #"SYSTEM_SYSRULES_richTextIcon"(
-                              caption:"Ha ocurrido un error al obtener el documento.",
-                              icon: "exclamation",
-
-
-                              linkStyle: "STANDALONE",
-                              showWhen:and(a!isNullOrEmpty(local!documento_revisados),local!tipoReporte=4,local!busque_revisados=true)
-                            )}
-
-                          )
-                        )
+                        },
+                        linkStyle: "STANDALONE",
+                        showWhen:and(a!isNotNullOrEmpty(local!documento_contratos_pendientes),local!tipoReporte=1)
                       ),
+                      #"SYSTEM_SYSRULES_richTextIcon"(
+                        caption:"Ha ocurrido un error al obtener el documento.",
+                        icon: "exclamation",
 
+
+                        linkStyle: "STANDALONE",
+                        showWhen:and(a!isNullOrEmpty(local!documento_contratos_pendientes),local!tipoReporte=1,local!busque_contratos_pendientes=true)
+                      )
+                    },
+                    whenTrue: local!tipoReporte = 2,
+                    then: {#"SYSTEM_SYSRULES_richTextIcon"(
+                      caption: "Descargar Pendientes Por Revisar",
+                      icon: "download",
+                      link: {
+                        #"SYSTEM_SYSRULES_documentDownloadLink"(
+                          document: local!documento_pendiente_revisar
+                        ),
+
+                      },
+                      linkStyle: "STANDALONE",
+                      showWhen:and(a!isNotNullOrEmpty(local!documento_pendiente_revisar),local!tipoReporte=2)
+                    ),
+                    #"SYSTEM_SYSRULES_richTextIcon"(
+                      caption:"Ha ocurrido un error al obtener el documento.",
+                      icon: "exclamation",
+
+
+                      linkStyle: "STANDALONE",
+                      showWhen:and(a!isNullOrEmpty(local!documento_pendiente_revisar),local!tipoReporte=2,local!busque_pendiente_revisar=true)
+                    )
+                    },
+                    whenTrue: local!tipoReporte = 3,
+
+                    then: { #"SYSTEM_SYSRULES_richTextIcon"(
+                      caption: "Descargar No Documental",
+                      icon: "download",
+                      link: {
+                        #"SYSTEM_SYSRULES_documentDownloadLink"(document: local!documento_no_documental),
+
+                      },
+                      linkStyle: "STANDALONE",
+                      showWhen:and(a!isNotNullOrEmpty(local!documento_no_documental),local!tipoReporte=3)
+                    ),
+                    #"SYSTEM_SYSRULES_richTextIcon"(
+                      caption:"Ha ocurrido un error al obtener el documento.",
+                      icon: "exclamation",
+
+
+                      linkStyle: "STANDALONE",
+                      showWhen:and(a!isNullOrEmpty(local!documento_no_documental),local!tipoReporte=3,local!busque_no_documental=true)
+                    )},
+                    default: 
+                    { #"SYSTEM_SYSRULES_richTextIcon"(
+                      caption: "Descargar Revisados",
+                      icon: "download",
+                      link: {
+                        #"SYSTEM_SYSRULES_documentDownloadLink"(document: local!documento_revisados),
+
+                      },
+                      linkStyle: "STANDALONE",
+                      showWhen:and(a!isNotNullOrEmpty(local!documento_revisados),local!tipoReporte=4)
+                    ),
+                    #"SYSTEM_SYSRULES_richTextIcon"(
+                      caption:"Ha ocurrido un error al obtener el documento.",
+                      icon: "exclamation",
+
+
+                      linkStyle: "STANDALONE",
+                      showWhen:and(a!isNullOrEmpty(local!documento_revisados),local!tipoReporte=4,local!busque_revisados=true)
+                    )}
                     )
                   }
                 )
@@ -374,5 +371,6 @@
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9391146"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9470174"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9543120"/>
+        <historyInfo versionUuid="_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10135479"/>
     </history>
 </contentHaul>

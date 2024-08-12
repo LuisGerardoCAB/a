@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
-    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9542131</versionUuid>
+    <versionUuid>_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10134543</versionUuid>
     <interface>
         <name>SCDO_Regiones</name>
         <uuid>_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1906472</uuid>
@@ -67,9 +67,8 @@
   /*------*/
   /*------------*/
   local!refreshregion,
-  local!valortabla,
   local!cdtregion: a!refreshVariable(
-    value: #"_a-0000e8d8-9b98-8000-e605-01ef9001ef90_2872186"(paginInfo: null).data,
+    value: index(#"_a-0000e8d8-9b98-8000-e605-01ef9001ef90_2872186"(paginInfo: null),"data",null),
     refreshAlways: true,
     refreshOnReferencedVarChange: local!refreshregion
   ),
@@ -196,14 +195,14 @@
                   if(
                     a!isNullOrEmpty(local!idregionSeleccionada),
                     null,
-                    #"_a-0000e8d8-9b98-8000-e605-01ef9001ef90_2872186"(idregion: local!idregionSeleccionada).data
+                    index(#"_a-0000e8d8-9b98-8000-e605-01ef9001ef90_2872186"(idregion: local!idregionSeleccionada),"data",null)
                   )
                 ),
                 a!save(
                   local!regionUtilizada,
                   if(
                     a!isNotNullOrEmpty(local!idregionSeleccionada),
-                    #"_a-0000e8c4-62ba-8000-e603-01ef9001ef90_2682345"(idregion: local!idregionSeleccionada).data,
+                    index(#"_a-0000e8c4-62ba-8000-e603-01ef9001ef90_2682345"(idregion: local!idregionSeleccionada),"data", null),
                     null
                   )
                 ),
@@ -213,7 +212,8 @@
                     a!isNotNullOrEmpty(ri!modificar),
                     if(
                       a!isNotNullOrEmpty(local!idregionSeleccionada),
-                      #"_a-0000e8d8-9b98-8000-e605-01ef9001ef90_2872186"(idregion: local!idregionSeleccionada).data[1].region,
+                      index(#"_a-0000e8d8-9b98-8000-e605-01ef9001ef90_2872186"(idregion: local!idregionSeleccionada, 
+                      paginInfo: #"SYSTEM_SYSRULES_pagingInfo"(startIndex: 1, batchSize: 1)),"data","region", null),
                       null
                     ),
                     null
@@ -248,7 +248,7 @@
                   if(
                     a!isNullOrEmpty(ri!modificar),
                     null,
-                    local!regionSeleccionada.region
+                    index(local!regionSeleccionada,"region", null)
                   )
                 ),
                 a!save(
@@ -309,7 +309,6 @@
                       processModel: #"_a-0000e94c-78eb-8000-e637-01ef9001ef90_3803651",
                       processParameters: {
                         idregion: local!idregionSeleccionada,
-                        valortabla: local!valortabla,
                         region: ri!region
                       },
                       onSuccess: {
@@ -560,5 +559,6 @@
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9470315"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9508756"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9542131"/>
+        <historyInfo versionUuid="_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10134543"/>
     </history>
 </contentHaul>

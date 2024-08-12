@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
-    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9386331</versionUuid>
+    <versionUuid>_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10119757</versionUuid>
     <rule>
         <name>SCDO_validarObtenerReportesExcel</name>
         <uuid>_a-0000e9a7-6d42-8000-e63f-01ef9001ef90_5927078</uuid>
@@ -16,18 +16,18 @@
             <unlogged>false</unlogged>
         </visibility>
         <definition>a!localVariables(
-  local!totalCount: readexcelsheetpaging(
+  local!totalCount: index(readexcelsheetpaging(
     excelDocument: ri!documento,
     sheetNumber: 0,
-    pagingInfo: #"SYSTEM_SYSRULES_pagingInfo"(1, -1),
+    pagingInfo: #"SYSTEM_SYSRULES_pagingInfo"(1, 0),
     numberOfColumns: 0
-  ).totalCount,
-  local!informacion: readexcelsheetpaging(
+  ),"totalCount", null),
+  local!informacion:index(readexcelsheetpaging(
     excelDocument: ri!documento,
     sheetNumber: 0,
     pagingInfo: #"SYSTEM_SYSRULES_pagingInfo"(1, local!totalCount),
     numberOfColumns: 0
-  ).data,
+  ),"data", null),
   local!operaciones: reject(
     fn!isnull,
     a!flatten(
@@ -78,21 +78,26 @@
             if(
               a!isNullOrEmpty(ri!segmento),
               if(
-                a!isNullOrEmpty(#"_a-0000e8d8-9b98-8000-e605-01ef9001ef90_2933354"(operacion: local!operaciones[fv!index], contrato: local!contratos[fv!index])),
+                a!isNullOrEmpty(#"_a-0000e8d8-9b98-8000-e605-01ef9001ef90_2933354"(operacion: local!operaciones[fv!index], contrato: local!contratos[fv!index],
+                estado:  if(a!isNullOrEmpty(ri!estado), null, "N")) 
+                
+                ),
                 null,
-                #"_a-0000e8d8-9b98-8000-e605-01ef9001ef90_2933354"(operacion: local!operaciones[fv!index], contrato: local!contratos[fv!index])
+                #"_a-0000e8d8-9b98-8000-e605-01ef9001ef90_2933354"(operacion: local!operaciones[fv!index], contrato: local!contratos[fv!index],
+                estado: if(a!isNullOrEmpty(ri!estado), null, "N"))
               ),
               reject(
                 fn!isnull,
                 a!flatten(
                   #"SYSTEM_SYSRULES_forEach"(
-                    items: #"_a-0000e8d8-9b98-8000-e605-01ef9001ef90_2933354"(operacion: local!operaciones[fv!index], contrato: local!contratos[fv!index]),
+                    items: #"_a-0000e8d8-9b98-8000-e605-01ef9001ef90_2933354"(operacion: local!operaciones[fv!index], contrato: local!contratos[fv!index],
+                    estado:  if(a!isNullOrEmpty(ri!estado), null, "N")),
                     expression: {
                       if(
-                        a!isNullOrEmpty(#"4abb2c14-ac25-4b4a-a0f6-a11f52071c0b"(usuarioopics: fv!item.usuario).data),
+                        a!isNullOrEmpty(index(#"4abb2c14-ac25-4b4a-a0f6-a11f52071c0b"(usuarioopics: fv!item.usuario),"data", null)),
                         null,
                         if(
-                          tointeger(#"4abb2c14-ac25-4b4a-a0f6-a11f52071c0b"(usuarioopics: fv!item.usuario).data[1].idsegmento) = ri!segmento,
+                          tointeger(index(#"4abb2c14-ac25-4b4a-a0f6-a11f52071c0b"(usuarioopics: fv!item.usuario),"data","idsegmento", null)) = ri!segmento,
                           fv!item,
                           null
                         )
@@ -131,10 +136,10 @@
                         items: #"_a-0000e8d8-9b98-8000-e605-01ef9001ef90_2873730"(operacion: local!operaciones[fv!index], contrato: local!contratos[fv!index]),
                         expression: {
                           if(
-                            a!isNullOrEmpty(#"4abb2c14-ac25-4b4a-a0f6-a11f52071c0b"(usuarioopics: fv!item.usuario).data),
+                            a!isNullOrEmpty(index(#"4abb2c14-ac25-4b4a-a0f6-a11f52071c0b"(usuarioopics: fv!item.usuario),"data",null)),
                             null,
                             if(
-                              tointeger(#"4abb2c14-ac25-4b4a-a0f6-a11f52071c0b"(usuarioopics: fv!item.usuario).data[1].idsegmento) = ri!segmento,
+                            tointeger(index(#"4abb2c14-ac25-4b4a-a0f6-a11f52071c0b"(usuarioopics: fv!item.usuario),"data","idsegmento",null)) = ri!segmento,
                               fv!item,
                               null,
                             )
@@ -196,6 +201,13 @@
                 <namespace>http://www.w3.org/2001/XMLSchema</namespace>
             </type>
         </namedTypedValue>
+        <namedTypedValue>
+            <name>estado</name>
+            <type>
+                <name>boolean</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
         <preferredEditor>legacy</preferredEditor>
         <offlineEnabled>false</offlineEnabled>
     </rule>
@@ -230,5 +242,6 @@
         <historyInfo versionUuid="_a-0000eaa5-8248-8000-e681-01ef9001ef90_8230656"/>
         <historyInfo versionUuid="_a-0000eb09-d442-8000-e687-01ef9001ef90_8815491"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9386331"/>
+        <historyInfo versionUuid="_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10119757"/>
     </history>
 </contentHaul>

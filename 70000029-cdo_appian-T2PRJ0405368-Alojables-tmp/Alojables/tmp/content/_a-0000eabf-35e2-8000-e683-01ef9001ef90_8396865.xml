@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
-    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9392603</versionUuid>
+    <versionUuid>_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10136481</versionUuid>
     <outboundIntegration>
         <name>SCDO_GetAccesToken</name>
         <uuid>_a-0000eabf-35e2-8000-e683-01ef9001ef90_8396865</uuid>
@@ -16,38 +16,6 @@
             <unlogged>false</unlogged>
         </visibility>
         <definition></definition>
-        <namedTypedValue>
-            <name>client_id</name>
-            <type>
-                <name>string</name>
-                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
-            </type>
-            <value/>
-        </namedTypedValue>
-        <namedTypedValue>
-            <name>client_secret</name>
-            <type>
-                <name>string</name>
-                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
-            </type>
-            <value/>
-        </namedTypedValue>
-        <namedTypedValue>
-            <name>grant_type</name>
-            <type>
-                <name>string</name>
-                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
-            </type>
-            <value/>
-        </namedTypedValue>
-        <namedTypedValue>
-            <name>scope</name>
-            <type>
-                <name>string</name>
-                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
-            </type>
-            <value/>
-        </namedTypedValue>
         <metadataExpr></metadataExpr>
         <preferredEditor>legacy</preferredEditor>
         <offlineEnabled>false</offlineEnabled>
@@ -86,7 +54,7 @@
                     </item>
                     <item>
                         <a:name>scope</a:name>
-                        <a:value xsi:type="a:Expression">ri!scope</a:value>
+                        <a:value xsi:type="a:Expression">#"_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10136453"</a:value>
                     </item>
                 </parameters>
                 <removeNullOrEmptyJsonFields xsi:type="xsd:boolean">true</removeNullOrEmptyJsonFields>
@@ -148,41 +116,10 @@
             <groups/>
         </role>
     </roleMap>
-    <typedValue>
-        <type>
-            <name>RuleTestConfig?list</name>
-            <namespace>http://www.appian.com/ae/types/2009</namespace>
-        </type>
-        <value>
-            <el>
-                <a:name/>
-                <a:ruleInputTestConfigs>
-                    <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="a:Expression">"nPatFz41U-cLG46-fMBrBtHAuW4MmnUETam22DYyjKw"</a:value>
-                    <a:nameRef>client_id</a:nameRef>
-                    <a:id/>
-                </a:ruleInputTestConfigs>
-                <a:ruleInputTestConfigs>
-                    <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="a:Expression">"pFLAKQIm5s2CuzeTTHD9CV-4wY8KXxqlwr6j1ZZ5xnk"</a:value>
-                    <a:nameRef>client_secret</a:nameRef>
-                    <a:id/>
-                </a:ruleInputTestConfigs>
-                <a:ruleInputTestConfigs>
-                    <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="a:Expression">"client_credentials"</a:value>
-                    <a:nameRef>grant_type</a:nameRef>
-                    <a:id/>
-                </a:ruleInputTestConfigs>
-                <a:ruleInputTestConfigs>
-                    <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="a:Expression">"cdo"</a:value>
-                    <a:nameRef>scope</a:nameRef>
-                    <a:id/>
-                </a:ruleInputTestConfigs>
-                <a:assertions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
-            </el>
-        </value>
-    </typedValue>
     <history>
         <historyInfo versionUuid="_a-0000eabf-35e2-8000-e683-01ef9001ef90_8411214"/>
         <historyInfo versionUuid="_a-0000eae4-5659-8000-e685-01ef9001ef90_8698023"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9392603"/>
+        <historyInfo versionUuid="_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10136481"/>
     </history>
 </contentHaul>

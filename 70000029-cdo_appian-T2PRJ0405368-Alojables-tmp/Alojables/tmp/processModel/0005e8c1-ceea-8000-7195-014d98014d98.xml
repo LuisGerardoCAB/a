@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <processModelHaul>
-  <versionUuid>0001eb77-a402-8000-aeaa-014d98014d98</versionUuid>
+  <versionUuid>0000ec71-cc51-8000-cf8e-014d98014d98</versionUuid>
   <folderUuid>_g-0000e801-560f-8000-3039-014d98014d98_291</folderUuid>
   <roleMap>
     <role name="ADMIN_OWNER">
@@ -48,7 +48,7 @@
             </pair>
             <pair>
               <locale country="" lang="es" variant=""/>
-              <value/>
+              <value><![CDATA[SCDO Escribir BD Administradores]]></value>
             </pair>
           </string-map>
         </name>
@@ -60,7 +60,7 @@
             </pair>
             <pair>
               <locale country="" lang="es" variant=""/>
-              <value/>
+              <value><![CDATA[Este modelo escribirá la información a la base de datos de la tabla cdo_administradores.]]></value>
             </pair>
           </string-map>
         </desc>
@@ -69,11 +69,11 @@
           <string-map>
             <pair>
               <locale country="US" lang="en" variant=""/>
-              <value><![CDATA[SCDO Escribir BD Administradores]]></value>
+              <value><![CDATA[="SCDO Escribir BD Administradores"&today()]]></value>
             </pair>
             <pair>
               <locale country="" lang="es" variant=""/>
-              <value/>
+              <value><![CDATA[="SCDO Escribir BD Administradores"&today()]]></value>
             </pair>
           </string-map>
         </process-name>
@@ -91,14 +91,14 @@
           <usersandgroups>
             <people>
               <type>4096</type>
-              <stringId><![CDATA[_e-0000e867-3fd5-8000-e5e0-011e94011e94_5799]]></stringId>
+              <stringId><![CDATA[_e-0000ec31-ac7e-8000-e698-011e94011e94_8438]]></stringId>
             </people>
           </usersandgroups>
           <recipients-exp/>
         </pm-notification-settings>
-        <cleanup-action>3</cleanup-action>
+        <cleanup-action>2</cleanup-action>
         <auto-archive-delay>7</auto-archive-delay>
-        <auto-delete-delay>0</auto-delete-delay>
+        <auto-delete-delay>1</auto-delete-delay>
         <timeZoneId><![CDATA[America/Mexico_City]]></timeZoneId>
         <useProcessInitiatorTimeZone>true</useProcessInitiatorTimeZone>
       </meta>
@@ -419,7 +419,13 @@
           <on-complete-delete-previous-completed>false</on-complete-delete-previous-completed>
           <pre-triggers/>
           <post-triggers/>
-          <event-producers/>
+          <event-producers>
+            <terminate-producer index="0">
+              <persistentId>0001ec5f-7576-8000-ce35-014d98014d98</persistentId>
+              <name><![CDATA[Terminate Process_1]]></name>
+              <desc/>
+            </terminate-producer>
+          </event-producers>
           <exception-flow/>
           <label>
             <fontColor>#000000</fontColor>
@@ -454,7 +460,7 @@
               </pair>
               <pair>
                 <locale country="" lang="es" variant=""/>
-                <value/>
+                <value><![CDATA[delete?]]></value>
               </pair>
             </string-map>
           </fname>
@@ -468,7 +474,7 @@
               </pair>
               <pair>
                 <locale country="" lang="es" variant=""/>
-                <value/>
+                <value><![CDATA[delete?]]></value>
               </pair>
             </string-map>
           </display>
@@ -700,11 +706,11 @@
             <string-map>
               <pair>
                 <locale country="US" lang="en" variant=""/>
-                <value><![CDATA[Escribir cdo_administradores]]></value>
+                <value><![CDATA[Write cdo_administradores]]></value>
               </pair>
               <pair>
                 <locale country="" lang="es" variant=""/>
-                <value/>
+                <value><![CDATA[Escribir cdo_administradores]]></value>
               </pair>
             </string-map>
           </fname>
@@ -714,11 +720,11 @@
             <string-map>
               <pair>
                 <locale country="US" lang="en" variant=""/>
-                <value><![CDATA[Escribir cdo_administradores]]></value>
+                <value><![CDATA[Write cdo_administradores]]></value>
               </pair>
               <pair>
                 <locale country="" lang="es" variant=""/>
-                <value/>
+                <value><![CDATA[Escribir cdo_administradores]]></value>
               </pair>
             </string-map>
           </display>
@@ -888,11 +894,11 @@
             <string-map>
               <pair>
                 <locale country="US" lang="en" variant=""/>
-                <value><![CDATA[Eliminar cdo_administradore]]></value>
+                <value><![CDATA[cdo_administradores]]></value>
               </pair>
               <pair>
                 <locale country="" lang="es" variant=""/>
-                <value/>
+                <value><![CDATA[Eliminar cdo_administradore]]></value>
               </pair>
             </string-map>
           </fname>
@@ -902,11 +908,11 @@
             <string-map>
               <pair>
                 <locale country="US" lang="en" variant=""/>
-                <value><![CDATA[Eliminar cdo_administradore]]></value>
+                <value><![CDATA[cdo_administradores]]></value>
               </pair>
               <pair>
                 <locale country="" lang="es" variant=""/>
-                <value/>
+                <value><![CDATA[Eliminar cdo_administradore]]></value>
               </pair>
             </string-map>
           </display>
@@ -1024,6 +1030,246 @@
           <on-complete-keep-form-data>false</on-complete-keep-form-data>
           <skipNotification>false</skipNotification>
         </node>
+        <node uuid="0002eb19-dffb-8000-9194-014d98014d98">
+          <guiId>8</guiId>
+          <owner/>
+          <icon id="68"/>
+          <picon id="69"/>
+          <fname>
+            <string-map>
+              <pair>
+                <locale country="US" lang="en" variant=""/>
+                <value><![CDATA[ok]]></value>
+              </pair>
+              <pair>
+                <locale country="" lang="es" variant=""/>
+                <value><![CDATA[todo ok]]></value>
+              </pair>
+            </string-map>
+          </fname>
+          <x>728</x>
+          <y>308</y>
+          <display>
+            <string-map>
+              <pair>
+                <locale country="US" lang="en" variant=""/>
+                <value><![CDATA[ok]]></value>
+              </pair>
+              <pair>
+                <locale country="" lang="es" variant=""/>
+                <value><![CDATA[todo ok]]></value>
+              </pair>
+            </string-map>
+          </display>
+          <desc>
+            <string-map>
+              <pair>
+                <locale country="US" lang="en" variant=""/>
+                <value/>
+              </pair>
+              <pair>
+                <locale country="" lang="es" variant=""/>
+                <value/>
+              </pair>
+            </string-map>
+          </desc>
+          <notify>false</notify>
+          <confirmation-url/>
+          <lane>0</lane>
+          <overrideLaneAssignment>false</overrideLaneAssignment>
+          <ac>
+            <local-id>internal.16</local-id>
+            <name><![CDATA[Unattended Multiple Questions]]></name>
+            <acps/>
+            <custom-params/>
+            <output-exprs>
+              <el typeFlag="0"><![CDATA[error:false]]></el>
+            </output-exprs>
+            <requires-user-interaction>true</requires-user-interaction>
+            <run-as>
+              <performer id="0"/>
+            </run-as>
+            <form-map/>
+            <helper-class/>
+          </ac>
+          <multiple-instance/>
+          <escalations/>
+          <connections>
+            <connection>
+              <guiId>9</guiId>
+              <to>6</to>
+              <toObjectType>ap.gui.Node</toObjectType>
+              <fromAnchor>1</fromAnchor>
+              <toAnchor>3</toAnchor>
+              <showArrowhead>true</showArrowhead>
+              <flowLabel/>
+              <label>
+                <fontColor>#000</fontColor>
+                <fontFamily>Appian Open Sans, Sans-Serif</fontFamily>
+                <fontSize>12</fontSize>
+                <bold>false</bold>
+                <italics>false</italics>
+                <underline>false</underline>
+              </label>
+              <associations/>
+              <chained>true</chained>
+              <overridesAssignment>true</overridesAssignment>
+              <synchronizeData>false</synchronizeData>
+            </connection>
+          </connections>
+          <associations/>
+          <target-completion>5.0</target-completion>
+          <target-lag>1.0</target-lag>
+          <attachments/>
+          <notes/>
+          <lingering>false</lingering>
+          <on-create-ignore-if-active>false</on-create-ignore-if-active>
+          <on-create-delete-previous-active>false</on-create-delete-previous-active>
+          <on-complete-delete-previous-completed>false</on-complete-delete-previous-completed>
+          <pre-triggers/>
+          <post-triggers/>
+          <event-producers/>
+          <exception-flow/>
+          <label>
+            <fontColor>#000</fontColor>
+            <fontFamily>Appian Open Sans, Sans-Serif</fontFamily>
+            <fontSize>12</fontSize>
+            <bold>false</bold>
+            <italics>false</italics>
+            <underline>false</underline>
+          </label>
+          <deadline>
+            <enabled>false</enabled>
+            <type>0</type>
+            <units>0</units>
+            <rex/>
+            <aex/>
+          </deadline>
+          <allowsBack>false</allowsBack>
+          <refreshDefaultValues>false</refreshDefaultValues>
+          <on-complete-keep-form-data>false</on-complete-keep-form-data>
+          <skipNotification>false</skipNotification>
+        </node>
+        <node uuid="0001eb19-dffb-8000-9194-014d98014d98">
+          <guiId>7</guiId>
+          <owner/>
+          <icon id="68"/>
+          <picon id="69"/>
+          <fname>
+            <string-map>
+              <pair>
+                <locale country="US" lang="en" variant=""/>
+                <value><![CDATA[ok]]></value>
+              </pair>
+              <pair>
+                <locale country="" lang="es" variant=""/>
+                <value><![CDATA[todo ok]]></value>
+              </pair>
+            </string-map>
+          </fname>
+          <x>756</x>
+          <y>112</y>
+          <display>
+            <string-map>
+              <pair>
+                <locale country="US" lang="en" variant=""/>
+                <value><![CDATA[ok]]></value>
+              </pair>
+              <pair>
+                <locale country="" lang="es" variant=""/>
+                <value><![CDATA[todo ok]]></value>
+              </pair>
+            </string-map>
+          </display>
+          <desc>
+            <string-map>
+              <pair>
+                <locale country="US" lang="en" variant=""/>
+                <value/>
+              </pair>
+              <pair>
+                <locale country="" lang="es" variant=""/>
+                <value/>
+              </pair>
+            </string-map>
+          </desc>
+          <notify>false</notify>
+          <confirmation-url/>
+          <lane>0</lane>
+          <overrideLaneAssignment>false</overrideLaneAssignment>
+          <ac>
+            <local-id>internal.16</local-id>
+            <name><![CDATA[Unattended Multiple Questions]]></name>
+            <acps/>
+            <custom-params/>
+            <output-exprs>
+              <el typeFlag="0"><![CDATA[error:false]]></el>
+            </output-exprs>
+            <requires-user-interaction>true</requires-user-interaction>
+            <run-as>
+              <performer id="0"/>
+            </run-as>
+            <form-map/>
+            <helper-class/>
+          </ac>
+          <multiple-instance/>
+          <escalations/>
+          <connections>
+            <connection>
+              <guiId>8</guiId>
+              <to>5</to>
+              <toObjectType>ap.gui.Node</toObjectType>
+              <fromAnchor>1</fromAnchor>
+              <toAnchor>3</toAnchor>
+              <showArrowhead>true</showArrowhead>
+              <flowLabel/>
+              <label>
+                <fontColor>#000</fontColor>
+                <fontFamily>Appian Open Sans, Sans-Serif</fontFamily>
+                <fontSize>12</fontSize>
+                <bold>false</bold>
+                <italics>false</italics>
+                <underline>false</underline>
+              </label>
+              <associations/>
+              <chained>true</chained>
+              <overridesAssignment>true</overridesAssignment>
+              <synchronizeData>false</synchronizeData>
+            </connection>
+          </connections>
+          <associations/>
+          <target-completion>5.0</target-completion>
+          <target-lag>1.0</target-lag>
+          <attachments/>
+          <notes/>
+          <lingering>false</lingering>
+          <on-create-ignore-if-active>false</on-create-ignore-if-active>
+          <on-create-delete-previous-active>false</on-create-delete-previous-active>
+          <on-complete-delete-previous-completed>false</on-complete-delete-previous-completed>
+          <pre-triggers/>
+          <post-triggers/>
+          <event-producers/>
+          <exception-flow/>
+          <label>
+            <fontColor>#000</fontColor>
+            <fontFamily>Appian Open Sans, Sans-Serif</fontFamily>
+            <fontSize>12</fontSize>
+            <bold>false</bold>
+            <italics>false</italics>
+            <underline>false</underline>
+          </label>
+          <deadline>
+            <enabled>false</enabled>
+            <type>0</type>
+            <units>0</units>
+            <rex/>
+            <aex/>
+          </deadline>
+          <allowsBack>false</allowsBack>
+          <refreshDefaultValues>false</refreshDefaultValues>
+          <on-complete-keep-form-data>false</on-complete-keep-form-data>
+          <skipNotification>false</skipNotification>
+        </node>
         <node uuid="0001eace-74f8-8000-810d-014d98014d98">
           <guiId>5</guiId>
           <owner/>
@@ -1033,11 +1279,11 @@
             <string-map>
               <pair>
                 <locale country="US" lang="en" variant=""/>
-                <value><![CDATA[Subprocess]]></value>
+                <value><![CDATA[Audit]]></value>
               </pair>
               <pair>
                 <locale country="" lang="es" variant=""/>
-                <value/>
+                <value><![CDATA[Audit]]></value>
               </pair>
             </string-map>
           </fname>
@@ -1047,11 +1293,11 @@
             <string-map>
               <pair>
                 <locale country="US" lang="en" variant=""/>
-                <value><![CDATA[Subprocess]]></value>
+                <value><![CDATA[Audit]]></value>
               </pair>
               <pair>
                 <locale country="" lang="es" variant=""/>
-                <value/>
+                <value><![CDATA[Audit]]></value>
               </pair>
             </string-map>
           </display>
@@ -1637,11 +1883,11 @@
             <string-map>
               <pair>
                 <locale country="US" lang="en" variant=""/>
-                <value><![CDATA[Subprocess]]></value>
+                <value><![CDATA[Audit]]></value>
               </pair>
               <pair>
                 <locale country="" lang="es" variant=""/>
-                <value><![CDATA[Copy of Subprocess]]></value>
+                <value><![CDATA[Audit]]></value>
               </pair>
             </string-map>
           </fname>
@@ -1651,11 +1897,11 @@
             <string-map>
               <pair>
                 <locale country="US" lang="en" variant=""/>
-                <value><![CDATA[Subprocess]]></value>
+                <value><![CDATA[Audit]]></value>
               </pair>
               <pair>
                 <locale country="" lang="es" variant=""/>
-                <value><![CDATA[Copy of Subprocess]]></value>
+                <value><![CDATA[Audit]]></value>
               </pair>
             </string-map>
           </display>
@@ -2232,238 +2478,6 @@
           <on-complete-keep-form-data>false</on-complete-keep-form-data>
           <skipNotification>false</skipNotification>
         </node>
-        <node uuid="0001eb19-dffb-8000-9194-014d98014d98">
-          <guiId>7</guiId>
-          <owner/>
-          <icon id="68"/>
-          <picon id="69"/>
-          <fname>
-            <string-map>
-              <pair>
-                <locale country="US" lang="en" variant=""/>
-                <value><![CDATA[Script Task]]></value>
-              </pair>
-              <pair>
-                <locale country="" lang="es" variant=""/>
-                <value><![CDATA[todo ok]]></value>
-              </pair>
-            </string-map>
-          </fname>
-          <x>756</x>
-          <y>112</y>
-          <display>
-            <string-map>
-              <pair>
-                <locale country="US" lang="en" variant=""/>
-                <value><![CDATA[Script Task]]></value>
-              </pair>
-              <pair>
-                <locale country="" lang="es" variant=""/>
-                <value><![CDATA[todo ok]]></value>
-              </pair>
-            </string-map>
-          </display>
-          <desc>
-            <string-map>
-              <pair>
-                <locale country="US" lang="en" variant=""/>
-                <value/>
-              </pair>
-            </string-map>
-          </desc>
-          <notify>false</notify>
-          <confirmation-url/>
-          <lane>0</lane>
-          <overrideLaneAssignment>false</overrideLaneAssignment>
-          <ac>
-            <local-id>internal.16</local-id>
-            <name><![CDATA[Unattended Multiple Questions]]></name>
-            <acps/>
-            <custom-params/>
-            <output-exprs>
-              <el typeFlag="0"><![CDATA[error:false]]></el>
-            </output-exprs>
-            <requires-user-interaction>true</requires-user-interaction>
-            <run-as>
-              <performer id="0"/>
-            </run-as>
-            <form-map/>
-            <helper-class/>
-          </ac>
-          <multiple-instance/>
-          <escalations/>
-          <connections>
-            <connection>
-              <guiId>8</guiId>
-              <to>5</to>
-              <toObjectType>ap.gui.Node</toObjectType>
-              <fromAnchor>1</fromAnchor>
-              <toAnchor>3</toAnchor>
-              <showArrowhead>true</showArrowhead>
-              <flowLabel/>
-              <label>
-                <fontColor>#000</fontColor>
-                <fontFamily>Appian Open Sans, Sans-Serif</fontFamily>
-                <fontSize>12</fontSize>
-                <bold>false</bold>
-                <italics>false</italics>
-                <underline>false</underline>
-              </label>
-              <associations/>
-              <chained>true</chained>
-              <overridesAssignment>true</overridesAssignment>
-              <synchronizeData>false</synchronizeData>
-            </connection>
-          </connections>
-          <associations/>
-          <target-completion>5.0</target-completion>
-          <target-lag>1.0</target-lag>
-          <attachments/>
-          <notes/>
-          <lingering>false</lingering>
-          <on-create-ignore-if-active>false</on-create-ignore-if-active>
-          <on-create-delete-previous-active>false</on-create-delete-previous-active>
-          <on-complete-delete-previous-completed>false</on-complete-delete-previous-completed>
-          <pre-triggers/>
-          <post-triggers/>
-          <event-producers/>
-          <exception-flow/>
-          <label>
-            <fontColor>#000</fontColor>
-            <fontFamily>Appian Open Sans, Sans-Serif</fontFamily>
-            <fontSize>12</fontSize>
-            <bold>false</bold>
-            <italics>false</italics>
-            <underline>false</underline>
-          </label>
-          <deadline>
-            <enabled>false</enabled>
-            <type>0</type>
-            <units>0</units>
-            <rex/>
-            <aex/>
-          </deadline>
-          <allowsBack>false</allowsBack>
-          <refreshDefaultValues>false</refreshDefaultValues>
-          <on-complete-keep-form-data>false</on-complete-keep-form-data>
-          <skipNotification>false</skipNotification>
-        </node>
-        <node uuid="0002eb19-dffb-8000-9194-014d98014d98">
-          <guiId>8</guiId>
-          <owner/>
-          <icon id="68"/>
-          <picon id="69"/>
-          <fname>
-            <string-map>
-              <pair>
-                <locale country="US" lang="en" variant=""/>
-                <value><![CDATA[Script Task]]></value>
-              </pair>
-              <pair>
-                <locale country="" lang="es" variant=""/>
-                <value><![CDATA[todo ok]]></value>
-              </pair>
-            </string-map>
-          </fname>
-          <x>728</x>
-          <y>308</y>
-          <display>
-            <string-map>
-              <pair>
-                <locale country="US" lang="en" variant=""/>
-                <value><![CDATA[Script Task]]></value>
-              </pair>
-              <pair>
-                <locale country="" lang="es" variant=""/>
-                <value><![CDATA[todo ok]]></value>
-              </pair>
-            </string-map>
-          </display>
-          <desc>
-            <string-map>
-              <pair>
-                <locale country="US" lang="en" variant=""/>
-                <value/>
-              </pair>
-            </string-map>
-          </desc>
-          <notify>false</notify>
-          <confirmation-url/>
-          <lane>0</lane>
-          <overrideLaneAssignment>false</overrideLaneAssignment>
-          <ac>
-            <local-id>internal.16</local-id>
-            <name><![CDATA[Unattended Multiple Questions]]></name>
-            <acps/>
-            <custom-params/>
-            <output-exprs>
-              <el typeFlag="0"><![CDATA[error:false]]></el>
-            </output-exprs>
-            <requires-user-interaction>true</requires-user-interaction>
-            <run-as>
-              <performer id="0"/>
-            </run-as>
-            <form-map/>
-            <helper-class/>
-          </ac>
-          <multiple-instance/>
-          <escalations/>
-          <connections>
-            <connection>
-              <guiId>9</guiId>
-              <to>6</to>
-              <toObjectType>ap.gui.Node</toObjectType>
-              <fromAnchor>1</fromAnchor>
-              <toAnchor>3</toAnchor>
-              <showArrowhead>true</showArrowhead>
-              <flowLabel/>
-              <label>
-                <fontColor>#000</fontColor>
-                <fontFamily>Appian Open Sans, Sans-Serif</fontFamily>
-                <fontSize>12</fontSize>
-                <bold>false</bold>
-                <italics>false</italics>
-                <underline>false</underline>
-              </label>
-              <associations/>
-              <chained>true</chained>
-              <overridesAssignment>true</overridesAssignment>
-              <synchronizeData>false</synchronizeData>
-            </connection>
-          </connections>
-          <associations/>
-          <target-completion>5.0</target-completion>
-          <target-lag>1.0</target-lag>
-          <attachments/>
-          <notes/>
-          <lingering>false</lingering>
-          <on-create-ignore-if-active>false</on-create-ignore-if-active>
-          <on-create-delete-previous-active>false</on-create-delete-previous-active>
-          <on-complete-delete-previous-completed>false</on-complete-delete-previous-completed>
-          <pre-triggers/>
-          <post-triggers/>
-          <event-producers/>
-          <exception-flow/>
-          <label>
-            <fontColor>#000</fontColor>
-            <fontFamily>Appian Open Sans, Sans-Serif</fontFamily>
-            <fontSize>12</fontSize>
-            <bold>false</bold>
-            <italics>false</italics>
-            <underline>false</underline>
-          </label>
-          <deadline>
-            <enabled>false</enabled>
-            <type>0</type>
-            <units>0</units>
-            <rex/>
-            <aex/>
-          </deadline>
-          <allowsBack>false</allowsBack>
-          <refreshDefaultValues>false</refreshDefaultValues>
-          <on-complete-keep-form-data>false</on-complete-keep-form-data>
-          <skipNotification>false</skipNotification>
-        </node>
       </nodes>
       <annotations/>
       <lanes>
@@ -2531,5 +2545,7 @@
     <historyInfo versionUuid="0000eace-74f9-8000-810e-014d98014d98"/>
     <historyInfo versionUuid="0003eb19-dffb-8000-9194-014d98014d98"/>
     <historyInfo versionUuid="0001eb77-a402-8000-aeaa-014d98014d98"/>
+    <historyInfo versionUuid="0000ec5f-7577-8000-ce36-014d98014d98"/>
+    <historyInfo versionUuid="0000ec71-cc51-8000-cf8e-014d98014d98"/>
   </history>
 </processModelHaul>

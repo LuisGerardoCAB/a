@@ -1,14 +1,14 @@
 [
   {
-    "objectUuid": "0002e945-8b52-8000-b557-014d98014d98",
-    "designGuidanceKey": "sysrule.designGuidance.processModel.alertSettingsNotCustomized",
+    "objectUuid": "0002e9a2-44be-8000-e75a-014d98014d98",
+    "designGuidanceKey": "sysrule.designGuidance.processModel.tooManyNodes",
     "dismissed": true,
     "instanceCount": 1,
     "objectTypeName": "{http://www.appian.com/ae/types/2009}ProcessModel"
   },
   {
-    "objectUuid": "0002e945-8b52-8000-b557-014d98014d98",
-    "designGuidanceKey": "sysrule.designGuidance.processModel.displayNameNotDynamic",
+    "objectUuid": "0002e9e9-5997-8000-0c00-014d98014d98",
+    "designGuidanceKey": "sysrule.designGuidance.processModel.taskNameNotDynamic",
     "dismissed": true,
     "instanceCount": 1,
     "objectTypeName": "{http://www.appian.com/ae/types/2009}ProcessModel"

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
-    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9451691</versionUuid>
+    <versionUuid>_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10114732</versionUuid>
     <rule>
         <name>SCDO_getcdo_catalogo_documentos</name>
         <uuid>_a-0000e968-30a1-8000-e639-01ef9001ef90_4493570</uuid>
@@ -15,7 +15,7 @@
             <system>false</system>
             <unlogged>false</unlogged>
         </visibility>
-        <definition>#"SYSTEM_SYSRULES_queryEntity_v2"(
+        <definition>index(#"SYSTEM_SYSRULES_queryEntity_v2"(
   entity: #"_a-0000e8d8-9b98-8000-e605-01ef9001ef90_2694251",
   query: #"SYSTEM_SYSRULES_query"(
     logicalExpression: #"SYSTEM_SYSRULES_queryLogicalExpression"(
@@ -61,14 +61,14 @@
       },
       ignoreFiltersWithEmptyValues: true
     ),
-    pagingInfo: #"SYSTEM_SYSRULES_pagingInfo"(
+    pagingInfo: if(a!isNullOrEmpty(ri!paginginfo), #"SYSTEM_SYSRULES_pagingInfo"(
       startIndex: 1,
       batchSize: 500,
       sort: #"SYSTEM_SYSRULES_sortInfo"(field: "iddocumento", ascending: true())
-    )
+    ), ri!paginginfo ) 
   ),
   fetchTotalCount: false
-).data</definition>
+), "data", null)</definition>
         <namedTypedValue>
             <name>iddocumento</name>
             <type>
@@ -114,6 +114,13 @@
                 <namespace>http://www.w3.org/2001/XMLSchema</namespace>
             </type>
         </namedTypedValue>
+        <namedTypedValue>
+            <name>paginginfo</name>
+            <type>
+                <name>PagingInfo</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
         <preferredEditor>legacy</preferredEditor>
         <offlineEnabled>false</offlineEnabled>
     </rule>
@@ -148,5 +155,6 @@
         <historyInfo versionUuid="_a-0000eaa5-8248-8000-e681-01ef9001ef90_8326598"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9385937"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9451691"/>
+        <historyInfo versionUuid="_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10114732"/>
     </history>
 </contentHaul>

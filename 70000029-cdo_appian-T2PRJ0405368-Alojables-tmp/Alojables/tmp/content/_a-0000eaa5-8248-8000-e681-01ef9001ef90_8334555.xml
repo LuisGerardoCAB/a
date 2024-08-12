@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
-    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9451386</versionUuid>
+    <versionUuid>_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10122198</versionUuid>
     <rule>
         <name>SCDO_OBTENER_TOTAL_COUNT_REPORTES</name>
         <uuid>_a-0000eaa5-8248-8000-e681-01ef9001ef90_8334555</uuid>
@@ -15,16 +15,16 @@
             <system>false</system>
             <unlogged>false</unlogged>
         </visibility>
-        <definition>#"SYSTEM_SYSRULES_queryEntity_v2"(
+        <definition>index(#"SYSTEM_SYSRULES_queryEntity_v2"(
   entity: #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_1932909",
   query: #"SYSTEM_SYSRULES_query"(
     pagingInfo: #"SYSTEM_SYSRULES_pagingInfo"(
       startIndex: 1,
-      batchSize: 1
+      batchSize: 0
     )
   ),
   fetchTotalCount: true
-).totalCount</definition>
+),"totalCount",null)</definition>
         <preferredEditor>legacy</preferredEditor>
         <offlineEnabled>false</offlineEnabled>
     </rule>
@@ -58,5 +58,6 @@
         <historyInfo versionUuid="_a-0000eaa5-8248-8000-e681-01ef9001ef90_8334566"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9386467"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9451386"/>
+        <historyInfo versionUuid="_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10122198"/>
     </history>
 </contentHaul>

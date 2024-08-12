@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
-    <versionUuid>_a-0000eb9b-4ec6-8000-e68b-01ef9001ef90_9621644</versionUuid>
+    <versionUuid>_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10139270</versionUuid>
     <rule>
         <name>SCDO_obtenerReportesInterfazSupervisor</name>
         <uuid>_a-0000e9f5-96e6-8000-e641-01ef9001ef90_6492923</uuid>
@@ -24,14 +24,15 @@
             if(
               a!isNotNullOrEmpty(index(ri!supervisor, "segmento", null)),
               a!isNotNullOrEmpty(
-                #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2233353"(segmento: ri!supervisor.segmento).data
+                index(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2233353"(segmento: ri!supervisor.segmento),"data", null)
               ),
               false()
             ),
-            #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2233353"(segmento: ri!supervisor.segmento).data[1].idsegmento,
+            index(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2233353"(segmento: ri!supervisor.segmento, paginInfo: #"SYSTEM_SYSRULES_pagingInfo"(startIndex: 1,
+            batchSize: 1)),"data","idsegmento",null),
             0
           )
-        ).data,
+        ),"data",
         "usuarioopics",
         {}
       )
@@ -43,7 +44,7 @@
       a!isNotNullOrEmpty(ri!region),
       a!flatten(
         index(
-          #"_a-0000e8c4-62ba-8000-e603-01ef9001ef90_2682345"(idregion: ri!region).data,
+          #"_a-0000e8c4-62ba-8000-e603-01ef9001ef90_2682345"(idregion: ri!region),"data",
           "cc",
           {}
         )
@@ -57,9 +58,9 @@
       a!isNotNullOrEmpty(ri!usuario),
       if(
         a!isNotNullOrEmpty(
-          #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2152641"(idUsuarioOpic: ri!usuario).data
+          index(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2152641"(idUsuarioOpic: ri!usuario),"data", null),
         ),
-        #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2152641"(idUsuarioOpic: ri!usuario).data[1].usuarioopics,
+        tostring(index(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2152641"(idUsuarioOpic: ri!usuario),"data","usuarioopics", null)),
         null
       ),
       null
@@ -264,5 +265,7 @@
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9514892"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9555824"/>
         <historyInfo versionUuid="_a-0000eb9b-4ec6-8000-e68b-01ef9001ef90_9621644"/>
+        <historyInfo versionUuid="_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10120790"/>
+        <historyInfo versionUuid="_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10139270"/>
     </history>
 </contentHaul>

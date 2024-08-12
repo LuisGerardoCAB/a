@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
-    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9505543</versionUuid>
+    <versionUuid>_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10139089</versionUuid>
     <interface>
         <name>SDO_Detalle_Reportes_Aprobados</name>
         <uuid>_a-0000e9f5-96e6-8000-e641-01ef9001ef90_6442370</uuid>
@@ -45,7 +45,7 @@
       ),
       #"SYSTEM_SYSRULES_ButtonArrayLayout"(
         buttons: {
-          #"SYSTEM_SYSRULES_ButtonWidget"(
+          #"SYSTEM_SYSRULES_buttonWidget_v1"(
             icon: "times",
             tooltip: "Ocultar detalles de operacion",
             saveInto: { 
@@ -54,7 +54,7 @@
               a!save(local!digitalizado, null),
               a!save(local!documentacion, null),
             },
-            style: "DESTRUCTIVE"
+            style: "GHOST"
           )
         })
 
@@ -130,16 +130,15 @@
                                   label: "Usuarioreviso: ",
                                   labelPosition: "ADJACENT",
                                   /*value: if(a!isNullOrEmpty(ri!revisado.usuario), "NO", ri!revisado.usuario),*/
-                                  value: if(
-                                    a!isNullOrEmpty(ri!revisado.usuario),
-                                    "NO",
-                                    if(
-                                      a!isNullOrEmpty(
-                                        #"4abb2c14-ac25-4b4a-a0f6-a11f52071c0b"(usuarioopics: (ri!revisado.usuario)).data
-                                      ),
-                                      "NO",
-                                      #"4abb2c14-ac25-4b4a-a0f6-a11f52071c0b"(usuarioopics: (ri!revisado.usuario)).data[1].nombre
-                                    )
+                                  value: 
+                                  a!match(value:  a!isNullOrEmpty(ri!revisado.usuario),
+                                  equals: true(),
+                                  then: "NO",
+                                  whenTrue:  a!isNullOrEmpty(
+                                    index(#"4abb2c14-ac25-4b4a-a0f6-a11f52071c0b"(usuarioopics: (ri!revisado.usuario)),"data", null)
+                                  ),
+                                  then: "NO",
+                                  default: index(#"4abb2c14-ac25-4b4a-a0f6-a11f52071c0b"(usuarioopics: (ri!revisado.usuario)),"data","nombre", null)
                                   ),
                                   readOnly: true
                                 ),
@@ -177,12 +176,11 @@
                               {
                                 #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2076687"(
                                   
-                                  digitalizados_rechazados:local!digitalizados_rechazados,
+                                 
                                   documentacion: local!documentacion,
                                   reporte: ri!reporte,
                                   reporteAprobado: ri!revisado,
                                   
-                                  digitalizados: local!digitalizado,
                                   soloDocumentos: true
                                 )
                               }
@@ -194,7 +192,7 @@
                           contents: {
                             #"SYSTEM_SYSRULES_ButtonArrayLayout"(
                               buttons: {
-                                #"SYSTEM_SYSRULES_ButtonWidget"(
+                                #"SYSTEM_SYSRULES_buttonWidget_v1"(
                                   icon: "times",
                                   tooltip: "Ocultar detalles de operacion",
                                   size: "SMALL",
@@ -204,7 +202,7 @@
                                     a!save(ri!reporte, null),
                                     a!save(ri!revisado, null)
                                   },
-                                  style: "DESTRUCTIVE"
+                                  style: "GHOST"
                                 ),
                               },
                               align: "END"
@@ -249,7 +247,34 @@
                                 #"SYSTEM_SYSRULES_textField"(
                                   label: "Nombre: ",
                                   labelPosition: "ADJACENT",
-                                  value: if(a!isNullOrEmpty(ri!reporte.nombre), "NO", ri!reporte.nombre),
+                                  value: if(
+                                    isnull(index(ri!reporte, "nombre", null)),
+                                    "Sin Cliente",
+                                    a!match(
+                                      value: index(
+                                        decrypttext(
+                                          valueToDecrypt: index(ri!reporte, "nombre", null),
+                                          iv: #"_a-0000ec31-ac7e-8000-e69b-01ef9001ef90_10021470",
+                                          scsKey: #"_a-0000ec31-ac7e-8000-e69b-01ef9001ef90_10021476"
+                                        ),
+                                        "success",
+                                        null
+                                      ),
+                                      equals: true,
+                                      then: index(
+                                        decrypttext( valueToDecrypt:
+                                        index(ri!reporte, "nombre", null),
+                                        iv: #"_a-0000ec31-ac7e-8000-e69b-01ef9001ef90_10021470",
+                                        scsKey: #"_a-0000ec31-ac7e-8000-e69b-01ef9001ef90_10021476"
+                                        ),
+                                        "value",
+                                        null
+                                      ),
+                                      equals: false,
+                                      then: index(ri!reporte, "nombre", null),
+                                      default: "Sin Nombre"
+                                    )
+                                  ),
                                   readOnly: true
                                 ),
                                 #"SYSTEM_SYSRULES_floatingPointField"(
@@ -261,7 +286,16 @@
                                 #"SYSTEM_SYSRULES_textField"(
                                   label: "Ccostos: ",
                                   labelPosition: "ADJACENT",
-                                  value: if(a!isNullOrEmpty(ri!reporte.ccostos), "NO", if(a!isNullOrEmpty(#"_a-0000e8c4-62ba-8000-e603-01ef9001ef90_2682345"(cc: ri!reporte.ccostos).data), "El Centro de Costo no está registrado", #"_a-0000e8c4-62ba-8000-e603-01ef9001ef90_2682345"(cc: ri!reporte.ccostos).data[1].nombre)),
+                                  value: 
+                                  a!match(value:  a!isNullOrEmpty(ri!reporte.ccostos),
+                                  equals: true(),
+                                  then: "NO",
+                                  whenTrue:  a!isNullOrEmpty(
+                                    index(#"_a-0000e8c4-62ba-8000-e603-01ef9001ef90_2682345"(cc: ri!reporte.ccostos),"data", null)
+                                  ),
+                                  then:"El Centro de Costo no está registrado",
+                                  default: index(#"_a-0000e8c4-62ba-8000-e603-01ef9001ef90_2682345"(cc: ri!reporte.ccostos),"data","nombre", null)
+                                  ),
                                   readOnly: true
                                 ),
                                 #"SYSTEM_SYSRULES_textField"(
@@ -307,21 +341,18 @@
                                   documentacion: local!documentacion,
                                   reporte: ri!reporte,
                                   reporteAprobado: ri!revisado,
-                                  /*rechazar: local!rechazar,*/
-                                  digitalizados: local!digitalizado,
-                                  digitalizados_rechazados:local!digitalizados_rechazados,
                                   soloDocumentos: true
                                 )
                               }
                             ),
                             #"SYSTEM_SYSRULES_ButtonArrayLayout"(
                               buttons: {
-                                #"SYSTEM_SYSRULES_ButtonWidget"(
+                                #"SYSTEM_SYSRULES_buttonWidget_v1"(
                                   label: if(local!mostrarDocumentos = false, "Ver Documentacion", "Cerrar Documentacion"),
                                   icon: "file",
                                   tooltip: "Ver Documentos del Reporte",
                                   size: "SMALL",
-                                  style: "PRIMARY",
+                                  style: "GHOST",
                                   value: local!mostrarDocumentos,
                                   saveInto: {
                                     a!save(local!mostrarDocumentos, if(local!mostrarDocumentos = false, true, false)),
@@ -340,7 +371,7 @@
                           contents: {
                             #"SYSTEM_SYSRULES_ButtonArrayLayout"(
                               buttons: {
-                                #"SYSTEM_SYSRULES_ButtonWidget"(
+                                #"SYSTEM_SYSRULES_buttonWidget_v1"(
                                   icon: "times",
                                   tooltip: "Ocultar detalles de operacion",
                                   size: "SMALL",
@@ -350,7 +381,7 @@
                                     a!save(ri!revisado, null),
                                     a!save(local!mostrarDocumentos, false)
                                   },
-                                  style: "DESTRUCTIVE"
+                                  style: "GHOST"
                                 ),
                               },
                               align: "END"
@@ -443,22 +474,22 @@
             <el>
                 <a:name/>
                 <a:ruleInputTestConfigs>
-                    <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:boolean">false</a:value>
+                    <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:boolean">true</a:value>
                     <a:nameRef>mostrarGrid</a:nameRef>
                     <a:id>1</a:id>
                 </a:ruleInputTestConfigs>
                 <a:ruleInputTestConfigs>
-                    <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="xsd:boolean"/>
+                    <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:boolean">false</a:value>
                     <a:nameRef>rev</a:nameRef>
                     <a:id>2</a:id>
                 </a:ruleInputTestConfigs>
                 <a:ruleInputTestConfigs>
-                    <a:value xmlns:n1="urn:com:appian:types" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="n1:cdo_reportes_aprobados"/>
+                    <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="a:Expression">null</a:value>
                     <a:nameRef>revisado</a:nameRef>
                     <a:id>3</a:id>
                 </a:ruleInputTestConfigs>
                 <a:ruleInputTestConfigs>
-                    <a:value xmlns:n1="urn:com:appian:types" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="n1:cdo_reportes"/>
+                    <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="a:Expression">null</a:value>
                     <a:nameRef>reporte</a:nameRef>
                     <a:id>4</a:id>
                 </a:ruleInputTestConfigs>
@@ -473,5 +504,7 @@
         <historyInfo versionUuid="_a-0000eb09-d442-8000-e687-01ef9001ef90_8861187"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9390479"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9505543"/>
+        <historyInfo versionUuid="_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10133565"/>
+        <historyInfo versionUuid="_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10139089"/>
     </history>
 </contentHaul>

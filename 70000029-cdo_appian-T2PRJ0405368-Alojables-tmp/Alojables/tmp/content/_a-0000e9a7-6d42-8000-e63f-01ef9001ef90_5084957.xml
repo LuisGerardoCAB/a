@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
-    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9505162</versionUuid>
+    <versionUuid>_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10133478</versionUuid>
     <interface>
         <name>SCDO_CorrecionDatosO</name>
         <uuid>_a-0000e9a7-6d42-8000-e63f-01ef9001ef90_5084957</uuid>
@@ -22,7 +22,7 @@
   /*local!operacionesReportesAprobados: {},*/
  
   local!usuarios: a!refreshVariable(
-   value: #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2152641"(usuarioOpic: null()).data,
+   value: index(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2152641"(usuarioOpic: null()),"data", null),
    /*refreshAlways: true,*/
    refreshOnVarChange:local!refrescar
   ),
@@ -30,19 +30,19 @@
 
   local!usuarios_buscar: a!refreshVariable(
   
-  value:index(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2152641"(usuarioOpic: null()).data,"usuarioopics",{}),
+    value:index(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2152641"(usuarioOpic: null()),"data","usuarioopics",{}),
   /*refreshAlways: true,*/
   refreshOnVarChange:local!refrescar
   ),
   local!noHayResultados,
   local!centroCostos:a!refreshVariable(
   
-  value:#"_a-0000e94c-78eb-8000-e637-01ef9001ef90_3874604"(idccostos: null).data,
+    value:index(#"_a-0000e8c4-62ba-8000-e603-01ef9001ef90_2682345"(idccostos: null),"data", null),
   /*refreshAlways: true,*/
   refreshOnVarChange:local!refrescar
   ),
   local!centroCostos_buscar: a!refreshVariable(
-  value:index(#"_a-0000e94c-78eb-8000-e637-01ef9001ef90_3874604"(idccostos: null).data,"cc",{}),
+    value:index(#"_a-0000e8c4-62ba-8000-e603-01ef9001ef90_2682345"(idccostos: null),"data","cc",{}),
   /*refreshAlways: true,*/
   refreshOnVarChange:local!refrescar
 ),
@@ -109,7 +109,7 @@
               contents: {
                 #"SYSTEM_SYSRULES_ButtonArrayLayout"(
                   buttons: {
-                    #"SYSTEM_SYSRULES_ButtonWidget"(
+                    #"SYSTEM_SYSRULES_buttonWidget_v1"(
                       label: "Buscar",
                       loadingIndicator: true,
                       saveInto: {
@@ -128,12 +128,12 @@
                           )
                         )
                       },
-                      style: "DESTRUCTIVE"
+                      style: "GHOST"
                     ),
-                    #"SYSTEM_SYSRULES_ButtonWidget"(
+                    #"SYSTEM_SYSRULES_buttonWidget_v1"(
                       label: "Limpiar",
                       loadingIndicator: true,
-                      style: "SECONDARY",
+                      style: "GHOST",
                       saveInto: {
                         
                         a!save(local!operacion, null),
@@ -169,21 +169,19 @@
         )
       },
       showWhen: {
-        if(
-          and(
-            a!isNotNullOrEmpty(local!operacionesReportes),
-            a!isNotNullOrEmpty(local!operacionesReportesAprobados)
-          ),
-          false,
-          if(
-            or(
-              a!isNotNullOrEmpty(local!operacionesReportes),
-              a!isNotNullOrEmpty(local!operacionesReportesAprobados)
-            ),
-            false,
-            true
-          )
-        )
+        a!match(value:and(
+          a!isNotNullOrEmpty(local!operacionesReportes),
+          a!isNotNullOrEmpty(local!operacionesReportesAprobados)
+        ),
+        equals: true(),
+        then: false(),
+        whenTrue:  or(
+          a!isNotNullOrEmpty(local!operacionesReportes),
+          a!isNotNullOrEmpty(local!operacionesReportesAprobados)
+        ),
+        then: false(),
+        default: true())
+  
       }
     ),
     #"SYSTEM_SYSRULES_sectionLayout_v1"(
@@ -280,5 +278,6 @@
         <historyInfo versionUuid="_a-0000eb09-d442-8000-e687-01ef9001ef90_8850027"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9390069"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9505162"/>
+        <historyInfo versionUuid="_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10133478"/>
     </history>
 </contentHaul>

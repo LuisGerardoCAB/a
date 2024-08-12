@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <processModelHaul>
-  <versionUuid>0003eb77-a402-8000-aeaa-014d98014d98</versionUuid>
+  <versionUuid>0000ec71-cb88-8000-cf8c-014d98014d98</versionUuid>
   <folderUuid>_g-0000e801-560f-8000-3039-014d98014d98_291</folderUuid>
   <roleMap>
     <role name="ADMIN_OWNER">
@@ -48,7 +48,7 @@
             </pair>
             <pair>
               <locale country="" lang="es" variant=""/>
-              <value/>
+              <value><![CDATA[SCDO_Actualizar_Reverso_Documentos]]></value>
             </pair>
           </string-map>
         </name>
@@ -60,7 +60,7 @@
             </pair>
             <pair>
               <locale country="" lang="es" variant=""/>
-              <value/>
+              <value><![CDATA[Proceso para atualizar los datos dado un número de contrato, en Reverso de Documentos.]]></value>
             </pair>
           </string-map>
         </desc>
@@ -69,11 +69,11 @@
           <string-map>
             <pair>
               <locale country="US" lang="en" variant=""/>
-              <value><![CDATA[SCDO_Actualizar_Reverso_Documentos]]></value>
+              <value><![CDATA[=pv!cdt_documentacion_auditoria.contrato &" SCDO_Actualizar_Reverso_Documentos"]]></value>
             </pair>
             <pair>
               <locale country="" lang="es" variant=""/>
-              <value/>
+              <value><![CDATA[=pv!cdt_documentacion_auditoria.contrato &" SCDO_Actualizar_Reverso_Documentos"]]></value>
             </pair>
           </string-map>
         </process-name>
@@ -85,15 +85,20 @@
           <aex/>
         </deadline>
         <pm-notification-settings>
-          <custom-settings>false</custom-settings>
+          <custom-settings>true</custom-settings>
           <notify-initiator>false</notify-initiator>
           <notify-owner>false</notify-owner>
-          <usersandgroups/>
+          <usersandgroups>
+            <people>
+              <type>4096</type>
+              <stringId><![CDATA[_e-0000ec31-ac7e-8000-e698-011e94011e94_8438]]></stringId>
+            </people>
+          </usersandgroups>
           <recipients-exp/>
         </pm-notification-settings>
-        <cleanup-action>3</cleanup-action>
+        <cleanup-action>2</cleanup-action>
         <auto-archive-delay>7</auto-archive-delay>
-        <auto-delete-delay>0</auto-delete-delay>
+        <auto-delete-delay>1</auto-delete-delay>
         <timeZoneId><![CDATA[America/Mexico_City]]></timeZoneId>
         <useProcessInitiatorTimeZone>true</useProcessInitiatorTimeZone>
       </meta>
@@ -402,7 +407,13 @@
           <on-complete-delete-previous-completed>false</on-complete-delete-previous-completed>
           <pre-triggers/>
           <post-triggers/>
-          <event-producers/>
+          <event-producers>
+            <terminate-producer index="0">
+              <persistentId>0001ec5f-762a-8000-ce37-014d98014d98</persistentId>
+              <name><![CDATA[Terminate Process_1]]></name>
+              <desc/>
+            </terminate-producer>
+          </event-producers>
           <exception-flow/>
           <label>
             <fontColor>#000000</fontColor>
@@ -433,11 +444,11 @@
             <string-map>
               <pair>
                 <locale country="US" lang="en" variant=""/>
-                <value><![CDATA[Obtener nuevos datos]]></value>
+                <value><![CDATA[Set CDT_DOCUMENTACION]]></value>
               </pair>
               <pair>
                 <locale country="" lang="es" variant=""/>
-                <value/>
+                <value><![CDATA[Set CDT_DOCUMENTACION]]></value>
               </pair>
             </string-map>
           </fname>
@@ -447,11 +458,11 @@
             <string-map>
               <pair>
                 <locale country="US" lang="en" variant=""/>
-                <value><![CDATA[Obtener nuevos datos]]></value>
+                <value><![CDATA[Set CDT_DOCUMENTACION]]></value>
               </pair>
               <pair>
                 <locale country="" lang="es" variant=""/>
-                <value/>
+                <value><![CDATA[Set CDT_DOCUMENTACION]]></value>
               </pair>
             </string-map>
           </display>
@@ -546,6 +557,343 @@
           <on-complete-keep-form-data>false</on-complete-keep-form-data>
           <skipNotification>false</skipNotification>
         </node>
+        <node uuid="0004e90c-9b4f-8000-969c-014d98014d98">
+          <guiId>12</guiId>
+          <owner/>
+          <icon id="998"/>
+          <picon id="98"/>
+          <fname>
+            <string-map>
+              <pair>
+                <locale country="US" lang="en" variant=""/>
+                <value><![CDATA[CDO_DOCUMENTACION]]></value>
+              </pair>
+              <pair>
+                <locale country="" lang="es" variant=""/>
+                <value><![CDATA[CDO_DOCUMENTACION]]></value>
+              </pair>
+            </string-map>
+          </fname>
+          <x>364</x>
+          <y>280</y>
+          <display>
+            <string-map>
+              <pair>
+                <locale country="US" lang="en" variant=""/>
+                <value><![CDATA[CDO_DOCUMENTACION]]></value>
+              </pair>
+              <pair>
+                <locale country="" lang="es" variant=""/>
+                <value><![CDATA[CDO_DOCUMENTACION]]></value>
+              </pair>
+            </string-map>
+          </display>
+          <desc>
+            <string-map>
+              <pair>
+                <locale country="US" lang="en" variant=""/>
+                <value/>
+              </pair>
+              <pair>
+                <locale country="" lang="es" variant=""/>
+                <value/>
+              </pair>
+            </string-map>
+          </desc>
+          <notify>false</notify>
+          <confirmation-url/>
+          <lane/>
+          <overrideLaneAssignment>false</overrideLaneAssignment>
+          <ac>
+            <local-id>appian.system.smart-services.write-to-data-store</local-id>
+            <name><![CDATA[Write to Data Store Entity]]></name>
+            <acps>
+              <acp name="DataStoreEntity">
+                <a:value xsi:nil="true" xsi:type="a:DataStoreEntity"/>
+                <a:local-id>input-DataStoreEntity</a:local-id>
+                <a:expr><![CDATA[=#"_a-0000e8b2-d897-8000-e5f1-01ef9001ef90_2372873"]]></a:expr>
+                <a:required>1</a:required>
+                <a:editable>1</a:editable>
+                <a:assign-to-pv/>
+                <a:input-to-activity-class>true</a:input-to-activity-class>
+                <a:hidden-from-designer>false</a:hidden-from-designer>
+                <a:generated>false</a:generated>
+                <a:enumeration/>
+                <a:customDisplayReference/>
+              </acp>
+              <acp name="StoredValues">
+                <a:value xsi:nil="true" xsi:type="a:Variant?list"/>
+                <a:local-id>output-StoredValues</a:local-id>
+                <a:expr/>
+                <a:required>0</a:required>
+                <a:editable>1</a:editable>
+                <a:assign-to-pv/>
+                <a:input-to-activity-class>false</a:input-to-activity-class>
+                <a:hidden-from-designer>false</a:hidden-from-designer>
+                <a:generated>false</a:generated>
+                <a:enumeration/>
+                <a:customDisplayReference/>
+              </acp>
+            </acps>
+            <custom-params>
+              <acp name="CDT_Cambios_Documentacion">
+                <a:value xmlns:n1="urn:com:appian:types" xsi:nil="true" xsi:type="n1:cdo_documentacion"/>
+                <a:local-id/>
+                <a:expr><![CDATA[=pv!cdt_documentacion]]></a:expr>
+                <a:required>0</a:required>
+                <a:editable>1</a:editable>
+                <a:assign-to-pv/>
+                <a:input-to-activity-class>true</a:input-to-activity-class>
+                <a:hidden-from-designer>false</a:hidden-from-designer>
+                <a:generated>false</a:generated>
+                <a:enumeration/>
+                <a:customDisplayReference/>
+              </acp>
+            </custom-params>
+            <output-exprs>
+              <el typeFlag="1"><![CDATA[cdt_documentacion:AC!StoredValues]]></el>
+            </output-exprs>
+            <requires-user-interaction>true</requires-user-interaction>
+            <run-as>
+              <performer id="0"/>
+            </run-as>
+            <form-map>
+              <pair>
+                <locale country="" lang="es" variant=""/>
+                <form-config>
+                  <form>
+                    <type>3</type>
+                    <enabled>false</enabled>
+                    <dynamic-form>
+                      <form-elements/>
+                    </dynamic-form>
+                    <hiddenSections>16</hiddenSections>
+                  </form>
+                </form-config>
+              </pair>
+              <pair>
+                <locale country="US" lang="en" variant=""/>
+                <form-config>
+                  <form>
+                    <type>3</type>
+                    <enabled>true</enabled>
+                    <dynamic-form>
+                      <form-elements/>
+                    </dynamic-form>
+                    <hiddenSections>16</hiddenSections>
+                  </form>
+                </form-config>
+              </pair>
+            </form-map>
+            <helper-class/>
+          </ac>
+          <multiple-instance/>
+          <escalations/>
+          <connections>
+            <connection>
+              <guiId>4</guiId>
+              <to>4</to>
+              <toObjectType>ap.gui.Node</toObjectType>
+              <fromAnchor>1</fromAnchor>
+              <toAnchor>3</toAnchor>
+              <showArrowhead>true</showArrowhead>
+              <flowLabel/>
+              <label>
+                <fontColor>#000000</fontColor>
+                <fontFamily>Arial, Helvetica, Sans-Serif</fontFamily>
+                <fontSize>12</fontSize>
+                <bold>false</bold>
+                <italics>false</italics>
+                <underline>false</underline>
+              </label>
+              <associations/>
+              <chained>true</chained>
+              <overridesAssignment>true</overridesAssignment>
+              <synchronizeData>false</synchronizeData>
+            </connection>
+          </connections>
+          <associations/>
+          <target-completion>5.0</target-completion>
+          <target-lag>1.0</target-lag>
+          <attachments/>
+          <notes/>
+          <lingering>false</lingering>
+          <on-create-ignore-if-active>false</on-create-ignore-if-active>
+          <on-create-delete-previous-active>false</on-create-delete-previous-active>
+          <on-complete-delete-previous-completed>false</on-complete-delete-previous-completed>
+          <pre-triggers/>
+          <post-triggers/>
+          <event-producers/>
+          <exception-flow/>
+          <label>
+            <fontColor>#000000</fontColor>
+            <fontFamily>Arial, Helvetica, Sans-Serif</fontFamily>
+            <fontSize>12</fontSize>
+            <bold>false</bold>
+            <italics>false</italics>
+            <underline>false</underline>
+          </label>
+          <deadline>
+            <enabled>false</enabled>
+            <type>0</type>
+            <units>0</units>
+            <rex/>
+            <aex/>
+          </deadline>
+          <allowsBack>false</allowsBack>
+          <refreshDefaultValues>false</refreshDefaultValues>
+          <on-complete-keep-form-data>false</on-complete-keep-form-data>
+          <skipNotification>false</skipNotification>
+        </node>
+        <node uuid="0001ea00-e566-8000-17d8-014d98014d98">
+          <guiId>4</guiId>
+          <owner/>
+          <icon id="68"/>
+          <picon id="69"/>
+          <fname>
+            <string-map>
+              <pair>
+                <locale country="US" lang="en" variant=""/>
+                <value><![CDATA[Create Audit]]></value>
+              </pair>
+              <pair>
+                <locale country="" lang="es" variant=""/>
+                <value><![CDATA[Create Audit]]></value>
+              </pair>
+            </string-map>
+          </fname>
+          <x>504</x>
+          <y>280</y>
+          <display>
+            <string-map>
+              <pair>
+                <locale country="US" lang="en" variant=""/>
+                <value><![CDATA[Create Audit]]></value>
+              </pair>
+              <pair>
+                <locale country="" lang="es" variant=""/>
+                <value><![CDATA[Create Audit]]></value>
+              </pair>
+            </string-map>
+          </display>
+          <desc>
+            <string-map>
+              <pair>
+                <locale country="US" lang="en" variant=""/>
+                <value/>
+              </pair>
+              <pair>
+                <locale country="" lang="es" variant=""/>
+                <value/>
+              </pair>
+            </string-map>
+          </desc>
+          <notify>false</notify>
+          <confirmation-url/>
+          <lane/>
+          <overrideLaneAssignment>false</overrideLaneAssignment>
+          <ac>
+            <local-id>internal.16</local-id>
+            <name><![CDATA[Unattended Multiple Questions]]></name>
+            <acps/>
+            <custom-params>
+              <acp name="documentacion">
+                <a:value xmlns:n1="urn:com:appian:types" xsi:nil="true" xsi:type="n1:cdo_documentacion"/>
+                <a:local-id/>
+                <a:expr><![CDATA[=pv!cdt_documentacion]]></a:expr>
+                <a:required>0</a:required>
+                <a:editable>1</a:editable>
+                <a:assign-to-pv/>
+                <a:input-to-activity-class>true</a:input-to-activity-class>
+                <a:hidden-from-designer>false</a:hidden-from-designer>
+                <a:generated>false</a:generated>
+                <a:enumeration/>
+                <a:customDisplayReference/>
+              </acp>
+            </custom-params>
+            <output-exprs>
+              <el typeFlag="0"><![CDATA[cdt_documentacion_auditoria:'type!{urn:com:appian:types}cdo_documentacion_auditoria'(
+  iddocumentacion: pv!cdt_documentacion.iddocumentacion,
+  contrato: pv!cdt_documentacion.contrato,
+  nomdocumento: pv!cdt_documentacion.nomdocumento,
+  iddocumento: pv!cdt_documentacion.iddocumento,
+  tipo: pv!cdt_documentacion.tipo,
+  fechacarga: pv!cdt_documentacion.fechacarga,
+  usuariocargo: pv!cdt_documentacion.usuariocargo,
+  cc: pv!cdt_documentacion.cc,
+  estado: pv!cdt_documentacion.estado,
+  usuarioacepto: pv!cdt_documentacion.usuarioacepto,
+  fechaacepto: pv!cdt_documentacion.fechaacepto,
+  observacion: "Prueba",
+  dml: "UPDATE",
+  fhcDml: now()
+)]]></el>
+            </output-exprs>
+            <requires-user-interaction>true</requires-user-interaction>
+            <run-as>
+              <performer id="0"/>
+            </run-as>
+            <form-map/>
+            <helper-class/>
+          </ac>
+          <multiple-instance/>
+          <escalations/>
+          <connections>
+            <connection>
+              <guiId>5</guiId>
+              <to>2</to>
+              <toObjectType>ap.gui.Node</toObjectType>
+              <fromAnchor>1</fromAnchor>
+              <toAnchor>3</toAnchor>
+              <showArrowhead>true</showArrowhead>
+              <flowLabel/>
+              <label>
+                <fontColor>#000000</fontColor>
+                <fontFamily>Arial, Helvetica, Sans-Serif</fontFamily>
+                <fontSize>12</fontSize>
+                <bold>false</bold>
+                <italics>false</italics>
+                <underline>false</underline>
+              </label>
+              <associations/>
+              <chained>true</chained>
+              <overridesAssignment>true</overridesAssignment>
+              <synchronizeData>false</synchronizeData>
+            </connection>
+          </connections>
+          <associations/>
+          <target-completion>5.0</target-completion>
+          <target-lag>1.0</target-lag>
+          <attachments/>
+          <notes/>
+          <lingering>false</lingering>
+          <on-create-ignore-if-active>false</on-create-ignore-if-active>
+          <on-create-delete-previous-active>false</on-create-delete-previous-active>
+          <on-complete-delete-previous-completed>false</on-complete-delete-previous-completed>
+          <pre-triggers/>
+          <post-triggers/>
+          <event-producers/>
+          <exception-flow/>
+          <label>
+            <fontColor>#000000</fontColor>
+            <fontFamily>Arial, Helvetica, Sans-Serif</fontFamily>
+            <fontSize>12</fontSize>
+            <bold>false</bold>
+            <italics>false</italics>
+            <underline>false</underline>
+          </label>
+          <deadline>
+            <enabled>false</enabled>
+            <type>0</type>
+            <units>0</units>
+            <rex/>
+            <aex/>
+          </deadline>
+          <allowsBack>false</allowsBack>
+          <refreshDefaultValues>false</refreshDefaultValues>
+          <on-complete-keep-form-data>false</on-complete-keep-form-data>
+          <skipNotification>false</skipNotification>
+        </node>
         <node uuid="0002ea00-e566-8000-17d8-014d98014d98">
           <guiId>2</guiId>
           <owner/>
@@ -555,11 +903,11 @@
             <string-map>
               <pair>
                 <locale country="US" lang="en" variant=""/>
-                <value><![CDATA[Write to Data Store Entity]]></value>
+                <value><![CDATA[CDO_DOCUMENTACION_AUDITORIA]]></value>
               </pair>
               <pair>
                 <locale country="" lang="es" variant=""/>
-                <value><![CDATA[Guardar Trazas]]></value>
+                <value><![CDATA[CDO_DOCUMENTACION_AUDITORIA]]></value>
               </pair>
             </string-map>
           </fname>
@@ -569,11 +917,11 @@
             <string-map>
               <pair>
                 <locale country="US" lang="en" variant=""/>
-                <value><![CDATA[Write to Data Store Entity]]></value>
+                <value><![CDATA[CDO_DOCUMENTACION_AUDITORIA]]></value>
               </pair>
               <pair>
                 <locale country="" lang="es" variant=""/>
-                <value><![CDATA[Guardar Trazas]]></value>
+                <value><![CDATA[CDO_DOCUMENTACION_AUDITORIA]]></value>
               </pair>
             </string-map>
           </display>
@@ -784,8 +1132,8 @@
           <on-complete-keep-form-data>false</on-complete-keep-form-data>
           <skipNotification>false</skipNotification>
         </node>
-        <node uuid="0001ea00-e566-8000-17d8-014d98014d98">
-          <guiId>4</guiId>
+        <node uuid="0001eb1b-586f-8000-91e4-014d98014d98">
+          <guiId>6</guiId>
           <owner/>
           <icon id="68"/>
           <picon id="69"/>
@@ -793,25 +1141,25 @@
             <string-map>
               <pair>
                 <locale country="US" lang="en" variant=""/>
-                <value><![CDATA[Script Task]]></value>
+                <value><![CDATA[OK]]></value>
               </pair>
               <pair>
                 <locale country="" lang="es" variant=""/>
-                <value><![CDATA[Crear Trazas]]></value>
+                <value><![CDATA[todo ok]]></value>
               </pair>
             </string-map>
           </fname>
-          <x>504</x>
+          <x>784</x>
           <y>280</y>
           <display>
             <string-map>
               <pair>
                 <locale country="US" lang="en" variant=""/>
-                <value><![CDATA[Script Task]]></value>
+                <value><![CDATA[OK]]></value>
               </pair>
               <pair>
                 <locale country="" lang="es" variant=""/>
-                <value><![CDATA[Crear Trazas]]></value>
+                <value><![CDATA[todo ok]]></value>
               </pair>
             </string-map>
           </display>
@@ -835,38 +1183,9 @@
             <local-id>internal.16</local-id>
             <name><![CDATA[Unattended Multiple Questions]]></name>
             <acps/>
-            <custom-params>
-              <acp name="documentacion">
-                <a:value xmlns:n1="urn:com:appian:types" xsi:nil="true" xsi:type="n1:cdo_documentacion"/>
-                <a:local-id/>
-                <a:expr><![CDATA[=pv!cdt_documentacion]]></a:expr>
-                <a:required>0</a:required>
-                <a:editable>1</a:editable>
-                <a:assign-to-pv/>
-                <a:input-to-activity-class>true</a:input-to-activity-class>
-                <a:hidden-from-designer>false</a:hidden-from-designer>
-                <a:generated>false</a:generated>
-                <a:enumeration/>
-                <a:customDisplayReference/>
-              </acp>
-            </custom-params>
+            <custom-params/>
             <output-exprs>
-              <el typeFlag="0"><![CDATA[cdt_documentacion_auditoria:'type!{urn:com:appian:types}cdo_documentacion_auditoria'(
-  iddocumentacion: pv!cdt_documentacion.iddocumentacion,
-  contrato: pv!cdt_documentacion.contrato,
-  nomdocumento: pv!cdt_documentacion.nomdocumento,
-  iddocumento: pv!cdt_documentacion.iddocumento,
-  tipo: pv!cdt_documentacion.tipo,
-  fechacarga: pv!cdt_documentacion.fechacarga,
-  usuariocargo: pv!cdt_documentacion.usuariocargo,
-  cc: pv!cdt_documentacion.cc,
-  estado: pv!cdt_documentacion.estado,
-  usuarioacepto: pv!cdt_documentacion.usuarioacepto,
-  fechaacepto: pv!cdt_documentacion.fechaacepto,
-  observacion: "Prueba",
-  dml: "UPDATE",
-  fhcDml: now()
-)]]></el>
+              <el typeFlag="0"><![CDATA[error:false]]></el>
             </output-exprs>
             <requires-user-interaction>true</requires-user-interaction>
             <run-as>
@@ -879,196 +1198,8 @@
           <escalations/>
           <connections>
             <connection>
-              <guiId>5</guiId>
-              <to>2</to>
-              <toObjectType>ap.gui.Node</toObjectType>
-              <fromAnchor>1</fromAnchor>
-              <toAnchor>3</toAnchor>
-              <showArrowhead>true</showArrowhead>
-              <flowLabel/>
-              <label>
-                <fontColor>#000000</fontColor>
-                <fontFamily>Arial, Helvetica, Sans-Serif</fontFamily>
-                <fontSize>12</fontSize>
-                <bold>false</bold>
-                <italics>false</italics>
-                <underline>false</underline>
-              </label>
-              <associations/>
-              <chained>true</chained>
-              <overridesAssignment>true</overridesAssignment>
-              <synchronizeData>false</synchronizeData>
-            </connection>
-          </connections>
-          <associations/>
-          <target-completion>5.0</target-completion>
-          <target-lag>1.0</target-lag>
-          <attachments/>
-          <notes/>
-          <lingering>false</lingering>
-          <on-create-ignore-if-active>false</on-create-ignore-if-active>
-          <on-create-delete-previous-active>false</on-create-delete-previous-active>
-          <on-complete-delete-previous-completed>false</on-complete-delete-previous-completed>
-          <pre-triggers/>
-          <post-triggers/>
-          <event-producers/>
-          <exception-flow/>
-          <label>
-            <fontColor>#000000</fontColor>
-            <fontFamily>Arial, Helvetica, Sans-Serif</fontFamily>
-            <fontSize>12</fontSize>
-            <bold>false</bold>
-            <italics>false</italics>
-            <underline>false</underline>
-          </label>
-          <deadline>
-            <enabled>false</enabled>
-            <type>0</type>
-            <units>0</units>
-            <rex/>
-            <aex/>
-          </deadline>
-          <allowsBack>false</allowsBack>
-          <refreshDefaultValues>false</refreshDefaultValues>
-          <on-complete-keep-form-data>false</on-complete-keep-form-data>
-          <skipNotification>false</skipNotification>
-        </node>
-        <node uuid="0004e90c-9b4f-8000-969c-014d98014d98">
-          <guiId>12</guiId>
-          <owner/>
-          <icon id="998"/>
-          <picon id="98"/>
-          <fname>
-            <string-map>
-              <pair>
-                <locale country="US" lang="en" variant=""/>
-                <value><![CDATA[Guardar las modificaciones]]></value>
-              </pair>
-              <pair>
-                <locale country="" lang="es" variant=""/>
-                <value/>
-              </pair>
-            </string-map>
-          </fname>
-          <x>364</x>
-          <y>280</y>
-          <display>
-            <string-map>
-              <pair>
-                <locale country="US" lang="en" variant=""/>
-                <value><![CDATA[Guardar las modificaciones]]></value>
-              </pair>
-              <pair>
-                <locale country="" lang="es" variant=""/>
-                <value/>
-              </pair>
-            </string-map>
-          </display>
-          <desc>
-            <string-map>
-              <pair>
-                <locale country="US" lang="en" variant=""/>
-                <value/>
-              </pair>
-              <pair>
-                <locale country="" lang="es" variant=""/>
-                <value/>
-              </pair>
-            </string-map>
-          </desc>
-          <notify>false</notify>
-          <confirmation-url/>
-          <lane/>
-          <overrideLaneAssignment>false</overrideLaneAssignment>
-          <ac>
-            <local-id>appian.system.smart-services.write-to-data-store</local-id>
-            <name><![CDATA[Write to Data Store Entity]]></name>
-            <acps>
-              <acp name="DataStoreEntity">
-                <a:value xsi:nil="true" xsi:type="a:DataStoreEntity"/>
-                <a:local-id>input-DataStoreEntity</a:local-id>
-                <a:expr><![CDATA[=#"_a-0000e8b2-d897-8000-e5f1-01ef9001ef90_2372873"]]></a:expr>
-                <a:required>1</a:required>
-                <a:editable>1</a:editable>
-                <a:assign-to-pv/>
-                <a:input-to-activity-class>true</a:input-to-activity-class>
-                <a:hidden-from-designer>false</a:hidden-from-designer>
-                <a:generated>false</a:generated>
-                <a:enumeration/>
-                <a:customDisplayReference/>
-              </acp>
-              <acp name="StoredValues">
-                <a:value xsi:nil="true" xsi:type="a:Variant?list"/>
-                <a:local-id>output-StoredValues</a:local-id>
-                <a:expr/>
-                <a:required>0</a:required>
-                <a:editable>1</a:editable>
-                <a:assign-to-pv/>
-                <a:input-to-activity-class>false</a:input-to-activity-class>
-                <a:hidden-from-designer>false</a:hidden-from-designer>
-                <a:generated>false</a:generated>
-                <a:enumeration/>
-                <a:customDisplayReference/>
-              </acp>
-            </acps>
-            <custom-params>
-              <acp name="CDT_Cambios_Documentacion">
-                <a:value xmlns:n1="urn:com:appian:types" xsi:nil="true" xsi:type="n1:cdo_documentacion"/>
-                <a:local-id/>
-                <a:expr><![CDATA[=pv!cdt_documentacion]]></a:expr>
-                <a:required>0</a:required>
-                <a:editable>1</a:editable>
-                <a:assign-to-pv/>
-                <a:input-to-activity-class>true</a:input-to-activity-class>
-                <a:hidden-from-designer>false</a:hidden-from-designer>
-                <a:generated>false</a:generated>
-                <a:enumeration/>
-                <a:customDisplayReference/>
-              </acp>
-            </custom-params>
-            <output-exprs>
-              <el typeFlag="1"><![CDATA[cdt_documentacion:AC!StoredValues]]></el>
-            </output-exprs>
-            <requires-user-interaction>true</requires-user-interaction>
-            <run-as>
-              <performer id="0"/>
-            </run-as>
-            <form-map>
-              <pair>
-                <locale country="" lang="es" variant=""/>
-                <form-config>
-                  <form>
-                    <type>3</type>
-                    <enabled>false</enabled>
-                    <dynamic-form>
-                      <form-elements/>
-                    </dynamic-form>
-                    <hiddenSections>16</hiddenSections>
-                  </form>
-                </form-config>
-              </pair>
-              <pair>
-                <locale country="US" lang="en" variant=""/>
-                <form-config>
-                  <form>
-                    <type>3</type>
-                    <enabled>true</enabled>
-                    <dynamic-form>
-                      <form-elements/>
-                    </dynamic-form>
-                    <hiddenSections>16</hiddenSections>
-                  </form>
-                </form-config>
-              </pair>
-            </form-map>
-            <helper-class/>
-          </ac>
-          <multiple-instance/>
-          <escalations/>
-          <connections>
-            <connection>
-              <guiId>4</guiId>
-              <to>4</to>
+              <guiId>6</guiId>
+              <to>5</to>
               <toObjectType>ap.gui.Node</toObjectType>
               <fromAnchor>1</fromAnchor>
               <toAnchor>3</toAnchor>
@@ -1130,7 +1261,7 @@
             <string-map>
               <pair>
                 <locale country="US" lang="en" variant=""/>
-                <value><![CDATA[Subprocess]]></value>
+                <value><![CDATA[Audit]]></value>
               </pair>
               <pair>
                 <locale country="" lang="es" variant=""/>
@@ -1144,7 +1275,7 @@
             <string-map>
               <pair>
                 <locale country="US" lang="en" variant=""/>
-                <value><![CDATA[Subprocess]]></value>
+                <value><![CDATA[Audit]]></value>
               </pair>
               <pair>
                 <locale country="" lang="es" variant=""/>
@@ -1725,126 +1856,6 @@
           <on-complete-keep-form-data>false</on-complete-keep-form-data>
           <skipNotification>false</skipNotification>
         </node>
-        <node uuid="0001eb1b-586f-8000-91e4-014d98014d98">
-          <guiId>6</guiId>
-          <owner/>
-          <icon id="68"/>
-          <picon id="69"/>
-          <fname>
-            <string-map>
-              <pair>
-                <locale country="US" lang="en" variant=""/>
-                <value><![CDATA[Script Task]]></value>
-              </pair>
-              <pair>
-                <locale country="" lang="es" variant=""/>
-                <value><![CDATA[todo ok]]></value>
-              </pair>
-            </string-map>
-          </fname>
-          <x>784</x>
-          <y>280</y>
-          <display>
-            <string-map>
-              <pair>
-                <locale country="US" lang="en" variant=""/>
-                <value><![CDATA[Script Task]]></value>
-              </pair>
-              <pair>
-                <locale country="" lang="es" variant=""/>
-                <value><![CDATA[todo ok]]></value>
-              </pair>
-            </string-map>
-          </display>
-          <desc>
-            <string-map>
-              <pair>
-                <locale country="US" lang="en" variant=""/>
-                <value/>
-              </pair>
-              <pair>
-                <locale country="" lang="es" variant=""/>
-                <value/>
-              </pair>
-            </string-map>
-          </desc>
-          <notify>false</notify>
-          <confirmation-url/>
-          <lane/>
-          <overrideLaneAssignment>false</overrideLaneAssignment>
-          <ac>
-            <local-id>internal.16</local-id>
-            <name><![CDATA[Unattended Multiple Questions]]></name>
-            <acps/>
-            <custom-params/>
-            <output-exprs>
-              <el typeFlag="0"><![CDATA[error:false]]></el>
-            </output-exprs>
-            <requires-user-interaction>true</requires-user-interaction>
-            <run-as>
-              <performer id="0"/>
-            </run-as>
-            <form-map/>
-            <helper-class/>
-          </ac>
-          <multiple-instance/>
-          <escalations/>
-          <connections>
-            <connection>
-              <guiId>6</guiId>
-              <to>5</to>
-              <toObjectType>ap.gui.Node</toObjectType>
-              <fromAnchor>1</fromAnchor>
-              <toAnchor>3</toAnchor>
-              <showArrowhead>true</showArrowhead>
-              <flowLabel/>
-              <label>
-                <fontColor>#000000</fontColor>
-                <fontFamily>Arial, Helvetica, Sans-Serif</fontFamily>
-                <fontSize>12</fontSize>
-                <bold>false</bold>
-                <italics>false</italics>
-                <underline>false</underline>
-              </label>
-              <associations/>
-              <chained>true</chained>
-              <overridesAssignment>true</overridesAssignment>
-              <synchronizeData>false</synchronizeData>
-            </connection>
-          </connections>
-          <associations/>
-          <target-completion>5.0</target-completion>
-          <target-lag>1.0</target-lag>
-          <attachments/>
-          <notes/>
-          <lingering>false</lingering>
-          <on-create-ignore-if-active>false</on-create-ignore-if-active>
-          <on-create-delete-previous-active>false</on-create-delete-previous-active>
-          <on-complete-delete-previous-completed>false</on-complete-delete-previous-completed>
-          <pre-triggers/>
-          <post-triggers/>
-          <event-producers/>
-          <exception-flow/>
-          <label>
-            <fontColor>#000000</fontColor>
-            <fontFamily>Arial, Helvetica, Sans-Serif</fontFamily>
-            <fontSize>12</fontSize>
-            <bold>false</bold>
-            <italics>false</italics>
-            <underline>false</underline>
-          </label>
-          <deadline>
-            <enabled>false</enabled>
-            <type>0</type>
-            <units>0</units>
-            <rex/>
-            <aex/>
-          </deadline>
-          <allowsBack>false</allowsBack>
-          <refreshDefaultValues>false</refreshDefaultValues>
-          <on-complete-keep-form-data>false</on-complete-keep-form-data>
-          <skipNotification>false</skipNotification>
-        </node>
       </nodes>
       <annotations/>
       <lanes/>
@@ -1861,6 +1872,9 @@
               <dynamic-form>
                 <form-elements/>
               </dynamic-form>
+              <uiExpressionForm>
+                <expression/>
+              </uiExpressionForm>
               <hiddenSections>16</hiddenSections>
             </form>
           </form-config>
@@ -1874,6 +1888,9 @@
               <dynamic-form>
                 <form-elements/>
               </dynamic-form>
+              <uiExpressionForm>
+                <expression/>
+              </uiExpressionForm>
               <hiddenSections>16</hiddenSections>
             </form>
           </form-config>
@@ -1888,5 +1905,7 @@
     <historyInfo versionUuid="0000eace-17e1-8000-80cc-014d98014d98"/>
     <historyInfo versionUuid="0000eb1b-58a0-8000-91e6-014d98014d98"/>
     <historyInfo versionUuid="0003eb77-a402-8000-aeaa-014d98014d98"/>
+    <historyInfo versionUuid="0002ec5f-762a-8000-ce37-014d98014d98"/>
+    <historyInfo versionUuid="0000ec71-cb88-8000-cf8c-014d98014d98"/>
   </history>
 </processModelHaul>

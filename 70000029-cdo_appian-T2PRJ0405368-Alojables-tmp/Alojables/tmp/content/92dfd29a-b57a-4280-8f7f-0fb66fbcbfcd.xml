@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
-    <versionUuid>_a-0000eae4-5659-8000-e685-01ef9001ef90_8662969</versionUuid>
+    <versionUuid>_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10139893</versionUuid>
     <rule>
         <name>SCDO_llenarReportesDadoListadoTexto</name>
         <uuid>92dfd29a-b57a-4280-8f7f-0fb66fbcbfcd</uuid>
@@ -16,7 +16,7 @@
             <unlogged>false</unlogged>
         </visibility>
         <definition>a!localVariables(
-  local!reportes:#"SYSTEM_SYSRULES_forEach"(
+  local!reportesMatch:#"SYSTEM_SYSRULES_forEach"(
     items: ri!datosArchivoList_txt, 
     expression: {
       a!localVariables(
@@ -46,7 +46,7 @@
             mercado: local!mercado,
             operacion: local!operacion,
             contrato: local!contrato,
-            nombre: local!nombre,
+            nombre: index(encrypttext(local!nombre, #"_a-0000ec31-ac7e-8000-e69b-01ef9001ef90_10021470", #"_a-0000ec31-ac7e-8000-e69b-01ef9001ef90_10021476"), "value", local!nombre),
             emisora: local!emisora,
             monto: local!monto,
             promotor: local!promotor,
@@ -62,47 +62,29 @@
             obligatorio: local!obligatorio,
             titulo: local!titulo,
             revisado: 
-            if(
-              like(local!bitacora, "*GRAB-*"),
-              "SI",
-              if(
-                a!isNullOrEmpty(local!agilizar.data),
-                "N",
-                if(local!agilizar.data.tipo="OBS",
-                "SI",
-                "S"
-                )
-              ),
+            a!match(value: like(local!bitacora, "*GRAB-*"),
+            equals: true(),
+            then: "SI", 
+            whenTrue: a!isNullOrEmpty(local!agilizar.data),
+            then:  "N",
+            whenTrue: local!agilizar.data.tipo="OBS",
+            then:  "SI",
+            default: "S"
             )
             
-            
-            
-            
-            /*if(*/
-              /*a!isNullOrEmpty(local!bitacora),*/
-              /*if(*/
-                /*a!isNullOrEmpty(rule!SCDO_getReportesByFilter(operacion: local!operacion, contrato: local!contrato, revisado: "N")),*/
-                /*"N",*/
-                /*"S"*/
-              /*),*/
-              /*if(*/
-                /*like(local!bitacora, "*GRAB-*"),*/
-                /*"SI",*/
-                /*if(*/
-                  /*a!isNullOrEmpty(rule!SCDO_getReportesByFilter(operacion: local!operacion, contrato: local!contrato, revisado: "N")),*/
-                  /*"N",*/
-                  /*"S"*/
-                /*),*/
-              /*)*/
-            /*),*/
+           
+
+
+
+
           )
-         
+
         )
-        
+
       )
     } 
   ),
-  local!devolver: a!flatten(reject(fn!isnull, local!reportes)),
+  local!devolver: a!flatten(reject(fn!isnull, local!reportesMatch)),
   local!devolver,
 )</definition>
         <namedTypedValue>
@@ -141,7 +123,35 @@
             <groups/>
         </role>
     </roleMap>
+    <typedValue>
+        <type>
+            <name>RuleTestConfig?list</name>
+            <namespace>http://www.appian.com/ae/types/2009</namespace>
+        </type>
+        <value>
+            <el>
+                <a:name>reporte</a:name>
+                <a:ruleInputTestConfigs>
+                    <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="a:Expression">{"NORTE|33104005|00010694157|ALMERIMEX S.A. DE C.V.|Europeo|118000|TORREON EMP|9992|c332637|03/06/2024|09:38:00|GRAB-EXT 50307-  03/06/2024-  09:38:00 |3|||*|283586"}</a:value>
+                    <a:nameRef>datosArchivoList_txt</a:nameRef>
+                    <a:id>1</a:id>
+                </a:ruleInputTestConfigs>
+                <a:assertions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+            </el>
+            <el>
+                <a:name>error falta un signo</a:name>
+                <a:ruleInputTestConfigs>
+                    <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="a:Expression">{"NORTE33104005|00010694157|ALMERIMEX S.A. DE C.V.|Europeo|118000|TORREON EMP|9992|c332637|03/06/2024|09:38:00|GRAB-EXT 50307-  03/06/2024-  09:38:00 |3|||*|283586"}</a:value>
+                    <a:nameRef>datosArchivoList_txt</a:nameRef>
+                    <a:id>1</a:id>
+                </a:ruleInputTestConfigs>
+                <a:assertions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+            </el>
+        </value>
+    </typedValue>
     <history>
         <historyInfo versionUuid="_a-0000eae4-5659-8000-e685-01ef9001ef90_8662969"/>
+        <historyInfo versionUuid="_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10123962"/>
+        <historyInfo versionUuid="_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10139893"/>
     </history>
 </contentHaul>

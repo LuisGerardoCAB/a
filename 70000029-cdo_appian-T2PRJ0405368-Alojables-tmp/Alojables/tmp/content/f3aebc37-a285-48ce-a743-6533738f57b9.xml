@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
-    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9540751</versionUuid>
+    <versionUuid>_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10121486</versionUuid>
     <rule>
         <name>SCDO_obtenerDatosParaTablaSupervisores</name>
         <uuid>f3aebc37-a285-48ce-a743-6533738f57b9</uuid>
@@ -17,34 +17,25 @@
         </visibility>
         <definition>a!localVariables(
   local!supervisoresReales: a!refreshVariable(
-  value:a!flatten(index(#"b0f0446c-2af6-4d77-bb8c-6e0a053488e6"().data,"idadmon",{})),
-  /*refreshAlways: true,*/
+  value:a!flatten(#"b0f0446c-2af6-4d77-bb8c-6e0a053488e6"()),
+
   refreshOnVarChange: {ri!refreshCount}
   ),
   local!idPorUsuario: a!refreshVariable(
  value: if(
     or(a!isNullOrEmpty(ri!criterio), a!isNullOrEmpty(a!flatten(#"_a-0000e8b3-d748-8000-e5f3-01ef9001ef90_2402181"(usuario: ri!criterio).data))),
     null,
-    a!flatten(index(#"_a-0000e8b3-d748-8000-e5f3-01ef9001ef90_2402181"(usuario: ri!criterio).data,"idadmon",null))
+    a!flatten(index(#"_a-0000e8b3-d748-8000-e5f3-01ef9001ef90_2402181"(usuario: ri!criterio),"data","idadmon",null))
   ),
   /*refreshAlways: true,*/
   refreshOnVarChange: {ri!refreshCount}
   ),
-  /*local!idPorNombre: a!refreshVariable(*/
- /*value: if(*/
-    /*or(a!isNullOrEmpty(ri!criterio), a!isNullOrEmpty(a!flatten(rule!SCDO_getAdministradoresByFilters(nombre: ri!criterio).data))),*/
-    /*null,*/
-    /*a!flatten(index(rule!SCDO_getAdministradoresByFilters(nombre: ri!criterio).data,"idadmon",null))*/
-  /*),*/
-  /*refreshAlways: true,*/
-  /*refreshOnVarChange: {ri!refreshCount}*/
-  /*),*/
   local!idPorTipo:  a!refreshVariable(
   
  value: if(
-    or(a!isNullOrEmpty(ri!tipo), a!isNullOrEmpty(a!flatten(#"_a-0000e8b3-d748-8000-e5f3-01ef9001ef90_2402181"(tipo: ri!tipo).data))),
+    or(a!isNullOrEmpty(ri!tipo), a!isNullOrEmpty(a!flatten(index(#"_a-0000e8b3-d748-8000-e5f3-01ef9001ef90_2402181"(tipo: ri!tipo),"data",null)))),
     null,
-    a!flatten(index(#"_a-0000e8b3-d748-8000-e5f3-01ef9001ef90_2402181"(tipo: ri!tipo).data,"idadmon",null)),
+    a!flatten(index(#"_a-0000e8b3-d748-8000-e5f3-01ef9001ef90_2402181"(tipo: ri!tipo),"data","idadmon",null)),
   ),
   /*refreshAlways: true,*/
   refreshOnVarChange: {ri!refreshCount}
@@ -77,26 +68,7 @@
               applywhen: a!isNotNullOrEmpty(ri!tipo )
             )
           },
-          /*logicalexpressions: {*/
-            /*a!queryLogicalExpression(*/
-              /*operator: "OR",*/
-              /*filters: {*/
-                /*a!queryFilter(*/
-                  /*field: "idadmon",*/
-                  /*operator: "in",*/
-                  /*value: local!idPorUsuario,*/
-                  /*applywhen: a!isNotNullOrEmpty(local!idPorUsuario)*/
-                /*),*/
-                /*a!queryFilter(*/
-                  /*field: "idadmon",*/
-                  /*operator: "in",*/
-                  /*value: local!idPorNombre,*/
-                  /*applywhen: a!isNotNullOrEmpty(local!idPorNombre)*/
-                /*),*/
-              /*},*/
-              /*ignorefilterswithemptyvalues: true,*/
-            /*)*/
-          /*},*/
+        
           ignoreFiltersWithEmptyValues: true
         ),
       }, 
@@ -104,51 +76,7 @@
     ),
     fetchTotalCount: true
   )
-  /*,null*/
-  /*a!queryEntity(*/
-    /*entity: cons!SCDO_ENTIDAD_SEGMENTOUSUARIO,*/
-    /*query: a!query(*/
-      /*logicalExpression:{*/
-        /*a!queryLogicalExpression(*/
-          /*operator: "AND",*/
-          /*filters: {*/
-            /*a!queryFilter(*/
-              /*field: "idadmon",*/
-              /*operator: "in",*/
-              /*value: local!supervisoresReales,*/
-/**/
-            /*),*/
-/*          */
-          /*},*/
-          /*logicalexpressions: {*/
-          /*a!queryLogicalExpression(*/
-          /*operator: "OR",*/
-          /*filters: {*/
-          /*a!queryFilter(*/
-          /*field: "idadmon",*/
-          /*operator: "in",*/
-          /*value: local!idPorUsuario,*/
-          /*applywhen: a!isNotNullOrEmpty(local!idPorUsuario)*/
-          /*),*/
-          /*a!queryFilter(*/
-          /*field: "idadmon",*/
-          /*operator: "in",*/
-          /*value: local!idPorNombre,*/
-          /*applywhen: a!isNotNullOrEmpty(local!idPorNombre)*/
-          /*),*/
-          /*},*/
-          /*ignorefilterswithemptyvalues: true,*/
-          /*)*/
-          /*},*/
-          /*ignoreFiltersWithEmptyValues: true*/
-        /*),*/
-      /*}, */
-      /*pagingInfo: a!pagingInfo(startIndex: ri!startIndex, batchSize: ri!batchSize, sort: a!sortInfo(field: "idadmon", ascending: false))*/
-    /*),*/
-    /*fetchTotalCount: true*/
-  /*),*/
-  
-  /*)*/
+ 
   
 )</definition>
         <namedTypedValue>
@@ -222,5 +150,6 @@
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9451822"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9509395"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9540751"/>
+        <historyInfo versionUuid="_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10121486"/>
     </history>
 </contentHaul>

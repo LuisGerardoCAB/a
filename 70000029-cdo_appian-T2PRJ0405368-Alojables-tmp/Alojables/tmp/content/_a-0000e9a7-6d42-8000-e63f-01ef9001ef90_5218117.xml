@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
-    <versionUuid>_a-0000eb9b-4ec6-8000-e68b-01ef9001ef90_9644370</versionUuid>
+    <versionUuid>_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10125161</versionUuid>
     <interface>
         <name>SCDO_TRASPASOO</name>
         <uuid>_a-0000e9a7-6d42-8000-e63f-01ef9001ef90_5218117</uuid>
@@ -32,6 +32,7 @@
     refreshInterval: 0.5
   ),
   /*------*/
+  
   local!operacionT,
   local!operacion,
   local!porTipo,
@@ -53,6 +54,7 @@
   ),
   local!mostrarTraspaso: false,
   local!reporteSeleccionado,
+ 
   {
     if(
       local!mostrarTraspaso = false,
@@ -129,10 +131,10 @@
                   labelPosition: "ADJACENT",
                   placeholder: "--- Seleccione el Usuario ---",
                   choiceLabels: {
-                    index(local!usuariosRegistrados.data,"usuarioopics",{})
+                    index(local!usuariosRegistrados,"data","usuarioopics",{})
                   },
                   choiceValues: {
-                    index(local!usuariosRegistrados.data,"idusuarioopics",{})
+                    index(local!usuariosRegistrados,"data","idusuarioopics",{})
                   },
                   value: local!porUsuario,
                   saveInto: {
@@ -143,17 +145,17 @@
                         a!isNotNullOrEmpty(local!porUsuario),
                         
                         if(a!isNotNullOrEmpty(
-                          #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2233353"(
-                            idSegmento: if(a!isNotNullOrEmpty(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2152641"(usuarioOpic: local!porUsuario).data),
-                            #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2152641"(usuarioOpic:local!porUsuario).data[1].idsegmento,0
+                          index(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2233353"(
+                            idSegmento: if(a!isNotNullOrEmpty(index(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2152641"(usuarioOpic: local!porUsuario),"data",null)),
+                            index(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2152641"(usuarioOpic:local!porUsuario),"data","idsegmento",null),0
                             )
-                          ).data),
+                          ),"data",null)),
 
-                          #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2233353"(
-                            idSegmento: if(a!isNotNullOrEmpty(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2152641"(usuarioOpic: local!porUsuario).data),
-                            #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2152641"(usuarioOpic: local!porUsuario).data[1].idsegmento,0
+                          index(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2233353"(
+                            idSegmento: if(a!isNotNullOrEmpty(index(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2152641"(usuarioOpic: local!porUsuario),"data",null)),
+                            index(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2152641"(usuarioOpic:local!porUsuario),"data","idsegmento",null),0
                             )
-                          ).data[1].segmento,
+                          ),"data","segmento", null),
                           null
                         ),
                         null,
@@ -180,10 +182,10 @@
                   labelPosition: "ADJACENT",
                   placeholder: "--- Seleccione el Segmento ---",
                   choiceLabels: a!flatten(
-                    { index(local!segmentos.data,"segmento",{}) }
+                    { index(local!segmentos,"data","segmento",{}) }
                   ),
                   choiceValues: a!flatten(
-                    { index(local!segmentos.data,"idsegmento",{}) }
+                    { index(local!segmentos,"data","idsegmento",{}) }
                   ),
                   value: local!porSegmento,
                   saveInto: {
@@ -294,7 +296,7 @@
                       field: "usuario",
                       operator: "=",
                       value: tostring(
-                        index(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2152641"(idUsuarioOpic: local!porUsuario).data,"usuarioopics",null)
+                        index(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2152641"(idUsuarioOpic: local!porUsuario),"data","usuarioopics",null)
                       ),
                       applywhen: a!isNotNullOrEmpty(local!porUsuario)
                     )
@@ -316,10 +318,10 @@
                       field: "usuario",
                       operator: "in",
                       value: a!flatten(
-                        index(local!usuariosRegistrados.data,"usuarioopics",{})
+                        index(local!usuariosRegistrados,"data","usuarioopics",{})
                       ),
                       applywhen: and(
-                        a!isNotNullOrEmpty(local!usuariosRegistrados.data),
+                        a!isNotNullOrEmpty(index(local!usuariosRegistrados,"data",null)),
                         a!isNullOrEmpty(local!porUsuario)
                       )
                     )
@@ -395,18 +397,24 @@
               value: if(
                 isnull(fv!row.usuario),
                 "NO",
-                if(a!isNotNullOrEmpty(
-                  #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2233353"(
-                    idSegmento: if(a!isNotNullOrEmpty(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2152641"(usuarioOpic: fv!row.usuario).data),
-                    #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2152641"(usuarioOpic: fv!row.usuario).data[1].idsegmento,0
+                if(
+                  a!isNotNullOrEmpty(
+                  index(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2233353"(
+                    idSegmento: if(a!isNotNullOrEmpty(index(
+                      #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2152641"(usuarioOpic: fv!row.usuario),"data",null)),
+                    tointeger(index(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2152641"(usuarioOpic: fv!row.usuario, paginInfo: #"SYSTEM_SYSRULES_pagingInfo"(startIndex: 1,
+                    batchSize: 1)),"data","idsegmento",null)),0
                     )
-                  ).data),
+                  ),"data", null)),
                 
-                #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2233353"(
-                  idSegmento: if(a!isNotNullOrEmpty(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2152641"(usuarioOpic: fv!row.usuario).data),
-                  #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2152641"(usuarioOpic: fv!row.usuario).data[1].idsegmento,0
+                  tostring(index(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2233353"(
+                    idSegmento: if(a!isNotNullOrEmpty(
+                      index(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2152641"(usuarioOpic: fv!row.usuario, paginInfo: #"SYSTEM_SYSRULES_pagingInfo"(startIndex: 1,
+                    batchSize: 1)),"data",null)),
+                  tointeger(index(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2152641"(usuarioOpic: fv!row.usuario,paginInfo: #"SYSTEM_SYSRULES_pagingInfo"(startIndex: 1,
+                  batchSize: 1)),"data","idsegmento",null)),0
                   )
-                ).data[1].segmento,
+                ),"data","segmento",null)),
                 null
                 )
                 
@@ -425,23 +433,41 @@
             #"SYSTEM_SYSRULES_gridColumn"(
               label: "Nombre de Usuario",
               sortField: "nombreusuario",
-              value: if(
-                a!isNullOrEmpty(
-                  #"4abb2c14-ac25-4b4a-a0f6-a11f52071c0b"(usuarioopics: fv!row.usuario).data
+              value: a!match(
+                value: a!isNullOrEmpty(
+                  index(#"4abb2c14-ac25-4b4a-a0f6-a11f52071c0b"(usuarioopics: fv!row.usuario),"data",null)
                 ),
-                if(
-                  a!isNullOrEmpty(
-                    #"_a-0000e982-d80b-8000-e63b-01ef9001ef90_4617772"(usuario: fv!row.usuario).data
-                  ),
-                  if(a!isNotNullOrEmpty(#"_a-0000e8b3-d748-8000-e5f3-01ef9001ef90_2402181"(usuario: fv!row.usuario).data),
-                  inex(#"_a-0000e8b3-d748-8000-e5f3-01ef9001ef90_2402181"(usuario: fv!row.usuario).data[1],"nombre",null),
-                  null
-                  ),
-
-                  index(#"_a-0000e982-d80b-8000-e63b-01ef9001ef90_4617772"(usuario: fv!row.usuario).data[1],"nombre",null)
-                ),
-                index(#"4abb2c14-ac25-4b4a-a0f6-a11f52071c0b"(usuarioopics: fv!row.usuario).data[1],"nombre",null)
-              )
+                equals: false(),
+                then: index(#"4abb2c14-ac25-4b4a-a0f6-a11f52071c0b"(usuarioopics: fv!row.usuario),"data","nombre",null),
+                whenTrue:  not(a!isNullOrEmpty(
+                  index(#"_a-0000e982-d80b-8000-e63b-01ef9001ef90_4617772"(usuario: fv!row.usuario),"data",null)
+                )),
+                then: index(#"_a-0000e982-d80b-8000-e63b-01ef9001ef90_4617772"(usuario: fv!row.usuario),"data","nombre",null),
+                whenTrue: a!isNotNullOrEmpty(index(#"_a-0000e8b3-d748-8000-e5f3-01ef9001ef90_2402181"(usuario: fv!row.usuario),"data",null)),
+                then: index(#"_a-0000e8b3-d748-8000-e5f3-01ef9001ef90_2402181"(usuario: fv!row.usuario),"data","nombre",null),
+                default: null()
+              ) 
+              
+              
+              
+              
+              /*if(*/
+                /*a!isNullOrEmpty(*/
+                  /*index(rule!SCDO_getVistaEjecu(usuarioopics: fv!row.usuario),"data",null)*/
+                /*),*/
+                /*if(*/
+                  /*a!isNullOrEmpty(*/
+                    /*index(rule!SCDO_getSupervisoresVistaByFilters(usuario: fv!row.usuario),"data",null)*/
+                  /*),*/
+                  /*if(a!isNotNullOrEmpty(index(rule!SCDO_getAdministradoresByFilters(usuario: fv!row.usuario),"data",null)),*/
+                  /*index(rule!SCDO_getAdministradoresByFilters(usuario: fv!row.usuario),"data","nombre",null),*/
+                  /*null*/
+                  /*),*/
+/**/
+                  /*index(rule!SCDO_getSupervisoresVistaByFilters(usuario: fv!row.usuario),"data","nombre",null)*/
+                /*),*/
+                /*index(rule!SCDO_getVistaEjecu(usuarioopics: fv!row.usuario),"data","nombre",null)*/
+              /*)*/
             ),
             #"SYSTEM_SYSRULES_gridColumn"(
               label: "Contrato",
@@ -451,7 +477,30 @@
             #"SYSTEM_SYSRULES_gridColumn"(
               label: "Nombre del cliente",
               sortField: "nombre",
-              value: fv!row.nombre
+              value: a!match(
+                value: index(
+                  decrypttext(
+                    valueToDecrypt: index(fv!row, "nombre", null),
+                    iv: #"_a-0000ec31-ac7e-8000-e69b-01ef9001ef90_10021470",
+                    scsKey: #"_a-0000ec31-ac7e-8000-e69b-01ef9001ef90_10021476"
+                  ),
+                  "success",
+                  null
+                ),
+                equals: true,
+                then: index(
+                  decrypttext( valueToDecrypt:
+                  index(fv!row, "nombre", null),
+                  iv: #"_a-0000ec31-ac7e-8000-e69b-01ef9001ef90_10021470",
+                  scsKey: #"_a-0000ec31-ac7e-8000-e69b-01ef9001ef90_10021476"
+                  ),
+                  "value",
+                  null
+                ),
+                equals: false,
+                then: index(fv!row, "nombre", null),
+                default: "Sin nombre"
+              )
             ),
             #"SYSTEM_SYSRULES_gridColumn"(
               label: "Operacion",
@@ -465,15 +514,15 @@
                 isnull(fv!row.ccostos),
                 "NO",
                 if(a!isNotNullOrEmpty(
-                  #"_a-0000e8d8-9b98-8000-e605-01ef9001ef90_2872186"(
-                    idregion: if(a!isNotNullOrEmpty(#"_a-0000e8c4-62ba-8000-e603-01ef9001ef90_2682345"(cc: fv!row.ccostos).data),
-                    #"_a-0000e8c4-62ba-8000-e603-01ef9001ef90_2682345"(cc: fv!row.ccostos).data[1].idregion,0)
-                  ).data
+                  index(#"_a-0000e8d8-9b98-8000-e605-01ef9001ef90_2872186"(
+                    idregion: if(a!isNotNullOrEmpty(index(#"_a-0000e8c4-62ba-8000-e603-01ef9001ef90_2682345"(cc: fv!row.ccostos),"data",null)),
+                    index(#"_a-0000e8c4-62ba-8000-e603-01ef9001ef90_2682345"(cc: fv!row.ccostos),"data","idregion",null),0)
+                  ),"data",null)
                 ),
-                #"_a-0000e8d8-9b98-8000-e605-01ef9001ef90_2872186"(
-                  idregion: if(a!isNotNullOrEmpty(#"_a-0000e8c4-62ba-8000-e603-01ef9001ef90_2682345"(cc: fv!row.ccostos).data),
-                  #"_a-0000e8c4-62ba-8000-e603-01ef9001ef90_2682345"(cc: fv!row.ccostos).data[1].idregion,0)
-                ).data[1].region,
+                index(#"_a-0000e8d8-9b98-8000-e605-01ef9001ef90_2872186"(
+                  idregion: if(a!isNotNullOrEmpty(index(#"_a-0000e8c4-62ba-8000-e603-01ef9001ef90_2682345"(cc: fv!row.ccostos),"data",null)),
+                  index(#"_a-0000e8c4-62ba-8000-e603-01ef9001ef90_2682345"(cc: fv!row.ccostos),"data","idregion",null),0)
+                ),"data","region", null),
                 null
                 )
                
@@ -596,5 +645,6 @@
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9465977"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9498412"/>
         <historyInfo versionUuid="_a-0000eb9b-4ec6-8000-e68b-01ef9001ef90_9644370"/>
+        <historyInfo versionUuid="_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10125161"/>
     </history>
 </contentHaul>

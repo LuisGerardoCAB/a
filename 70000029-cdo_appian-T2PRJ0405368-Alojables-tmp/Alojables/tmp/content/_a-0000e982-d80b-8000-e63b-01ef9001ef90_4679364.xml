@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
-    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9451455</versionUuid>
+    <versionUuid>_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10122391</versionUuid>
     <rule>
         <name>SCDO_get_imagenesPendientesByFilters</name>
         <uuid>_a-0000e982-d80b-8000-e63b-01ef9001ef90_4679364</uuid>
@@ -15,7 +15,7 @@
             <system>false</system>
             <unlogged>false</unlogged>
         </visibility>
-        <definition>#"SYSTEM_SYSRULES_queryEntity_v2"(
+        <definition>index(#"SYSTEM_SYSRULES_queryEntity_v2"(
   entity: #"_a-0000e982-d80b-8000-e63b-01ef9001ef90_4679248",
   query: #"SYSTEM_SYSRULES_query"(
     selection: #"SYSTEM_SYSRULES_querySelection"(
@@ -105,7 +105,7 @@
     )
   ),
   fetchTotalCount: true
-).data</definition>
+),"data",null)</definition>
         <namedTypedValue>
             <name>idimagen</name>
             <type>
@@ -226,5 +226,6 @@
         <historyInfo versionUuid="_a-0000eb09-d442-8000-e687-01ef9001ef90_8811995"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9386405"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9451455"/>
+        <historyInfo versionUuid="_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10122391"/>
     </history>
 </contentHaul>

@@ -1,6 +1,14 @@
-AddDocumentsToZip
-Add Documents to Zip
-1.0.1
+com.unionbankph.plugins.aesencrypt
+AES Encrypt
+2.0.0
+
+com.appiancorp.plugins.regexfunctions
+Appian Regular Expression Functions
+2.1.2
+
+com.vuram.plugins.csvtoexcel
+CSV to EXCEL
+1.0.4
 
 com.appiancorp.ps.plugins.contenttools
 Content Tools
@@ -29,8 +37,4 @@ SFTP Functions
 com.nathanthered.plugins.textfilefunctions
 Text File Functions
 1.0.1
-
-com.vuram.plugins.zipextractor
-ZIP Utility
-1.0.3
 

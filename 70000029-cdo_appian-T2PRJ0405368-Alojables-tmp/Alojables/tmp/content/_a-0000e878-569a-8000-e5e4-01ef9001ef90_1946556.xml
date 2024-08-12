@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
-    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9500082</versionUuid>
+    <versionUuid>_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10138706</versionUuid>
     <interface>
         <name>SCDO_Catalogo_Documentos</name>
         <uuid>_a-0000e878-569a-8000-e5e4-01ef9001ef90_1946556</uuid>
@@ -147,7 +147,7 @@
               contents: {
                 #"SYSTEM_SYSRULES_ButtonArrayLayout"(
                   buttons: {
-                    #"SYSTEM_SYSRULES_ButtonWidget"(
+                    #"SYSTEM_SYSRULES_buttonWidget_v1"(
                       label: "GUARDAR",
                       loadingIndicator: true,
                       saveInto: {
@@ -212,7 +212,7 @@
                         ),
 
                       },
-                      style: "DESTRUCTIVE",
+                      style: "GHOST",
                       confirmHeader: "Se creará el documento " &amp;local!documento,
                       confirmMessage: "¿Continuar?",
                       size: "SMALL",
@@ -356,7 +356,7 @@
                 ),
                 #"SYSTEM_SYSRULES_ButtonLayout"(
                   primaryButtons: {
-                    #"SYSTEM_SYSRULES_ButtonWidget"(
+                    #"SYSTEM_SYSRULES_buttonWidget_v1"(
                       label: "Eliminar",
                       icon: "times",
                       tooltip: "Eliminar definitivamente",
@@ -423,13 +423,13 @@
                       },
                       size: "SMALL",
                       width: "MINIMIZE",
-                      style: "DESTRUCTIVE",
+                      style: "GHOST",
                       loadingIndicator: true,
 
                     )
                   },
                   secondaryButtons: {
-                    #"SYSTEM_SYSRULES_ButtonWidget"(
+                    #"SYSTEM_SYSRULES_buttonWidget_v1"(
                       label: "cancelar",
                       loadingIndicator: true,
                       icon: "times",
@@ -479,9 +479,9 @@
           contents: {
             #"SYSTEM_SYSRULES_ButtonArrayLayout"(
               buttons: {
-                #"SYSTEM_SYSRULES_ButtonWidget"(
+                #"SYSTEM_SYSRULES_buttonWidget_v1"(
                   label: "Buscar",
-                  style: "NORMAL",
+                  style: "GHOST",
                   loadingIndicator: true,
                   saveInto: {
                     a!save(local!bUser, local!bUserT),
@@ -566,14 +566,14 @@
                   #"SYSTEM_SYSRULES_gridRowLayout"(
                     contents: {
                       #"SYSTEM_SYSRULES_textField"(
-                        value: fv!item.iddocumento,
+                        value: index(fv!item, "iddocumento", null),
                         readOnly: true,
                         align: "CENTER"
                       ),
                       #"SYSTEM_SYSRULES_textField"(
-                        value: fv!item.documento,
+                        value: index(fv!item, "documento", null),
                         refreshAfter: "KEYPRESS",
-                        saveInto: { a!save(fv!item.documento, (save!value)) },
+                        saveInto: { a!save(fv!item.documento, save!value) },
                         readOnly: if(
                           and(
                             local!editGrid[1] = fv!index,
@@ -585,7 +585,7 @@
                         align: "CENTER"
                       ),
                       #"SYSTEM_SYSRULES_dropdownField_v1"(
-                        value: fv!item.documentaa,
+                        value: index(fv!item, "documentaa", null),
                         placeholder: "Sin Tipo",
                         choiceLabels: { #"_a-0000e94c-78eb-8000-e637-01ef9001ef90_4046409" },
                         choiceValues: { #"_a-0000e94c-78eb-8000-e637-01ef9001ef90_4046409" },
@@ -603,7 +603,7 @@
 
                       ),
                       #"SYSTEM_SYSRULES_textField"(
-                        value: fv!item.descripcion,
+                        value: index(fv!item, "descripcion", null),
                         refreshAfter: "KEYPRESS",
                         saveInto: {
                           a!save(fv!item.descripcion, (save!value))
@@ -619,7 +619,7 @@
                         align: "CENTER"
                       ),
                       #"SYSTEM_SYSRULES_textField"(
-                        value: fv!item.orden,
+                        value: index(fv!item, "orden", null),
                         refreshAfter: "KEYPRESS",
                         saveInto: { a!save(fv!item.orden, (save!value)) },
                         readOnly: if(
@@ -636,10 +636,11 @@
                         refreshAfter: "KEYPRESS",
                         value: if(
                           a!isNullOrEmpty(
-                            #"_a-0000e94c-78eb-8000-e637-01ef9001ef90_4046270"(iddocumento: fv!item.iddocumento).data
-                          ),
+                            index(#"_a-0000e94c-78eb-8000-e637-01ef9001ef90_4046270"(iddocumento: index(fv!item, "iddocumento", null)),
+                            "data", null),                          ),
                           "",
-                          #"_a-0000e94c-78eb-8000-e637-01ef9001ef90_4046270"(iddocumento: fv!item.iddocumento).data[1].extra
+                          index(#"_a-0000e94c-78eb-8000-e637-01ef9001ef90_4046270"(iddocumento: index(fv!item, "iddocumento", null)),"data",
+                          "extra", null)
                         ),
                         saveInto: {},
                         align: "CENTER",
@@ -973,5 +974,7 @@
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9394933"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9450454"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9500082"/>
+        <historyInfo versionUuid="_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10133360"/>
+        <historyInfo versionUuid="_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10138706"/>
     </history>
 </contentHaul>

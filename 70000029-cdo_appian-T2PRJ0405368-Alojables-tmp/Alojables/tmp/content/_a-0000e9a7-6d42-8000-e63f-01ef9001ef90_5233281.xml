@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
-    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9388514</versionUuid>
+    <versionUuid>_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10129432</versionUuid>
     <interface>
         <name>SCDO_Grid_Modificaciones_Registro_Arribo</name>
         <uuid>_a-0000e9a7-6d42-8000-e63f-01ef9001ef90_5233281</uuid>
@@ -17,7 +17,7 @@
         </visibility>
         <definition>#"SYSTEM_SYSRULES_sectionLayout_v1"(
   contents: {
-    #"SYSTEM_SYSRULES_gridField_v1"(
+    #"SYSTEM_SYSRULES_gridField_v2"(
       label: "",
       labelPosition: "ABOVE",
       emptyGridMessage: "No existen datos",
@@ -120,5 +120,6 @@
     <history>
         <historyInfo versionUuid="_a-0000e9a7-6d42-8000-e63f-01ef9001ef90_5889555"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9388514"/>
+        <historyInfo versionUuid="_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10129432"/>
     </history>
 </contentHaul>

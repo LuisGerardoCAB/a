@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
-    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9493807</versionUuid>
+    <versionUuid>_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10121456</versionUuid>
     <rule>
         <name>SCDO_obtenerSupervisores</name>
         <uuid>b0f0446c-2af6-4d77-bb8c-6e0a053488e6</uuid>
@@ -19,6 +19,9 @@
   local!devolver: #"SYSTEM_SYSRULES_queryEntity_v2"(
     entity: #"_a-0000e8b3-d748-8000-e5f3-01ef9001ef90_2402150",
     query: #"SYSTEM_SYSRULES_query"(
+      selection: #"SYSTEM_SYSRULES_querySelection"(
+        columns: #"SYSTEM_SYSRULES_queryColumn"("idadmon")
+      ),
       logicalexpression: #"SYSTEM_SYSRULES_queryLogicalExpression"(
         operator: "OR",
         filters: {
@@ -34,10 +37,10 @@
           )
         },
       ),
-      paginginfo: #"SYSTEM_SYSRULES_pagingInfo"(startIndex: 1, batchSize: -1)
+      paginginfo: #"SYSTEM_SYSRULES_pagingInfo"(startIndex: 1, batchSize: 10000)
     ),
   ),
-  local!devolver
+  index(local!devolver, "data", "idadmon", null)
 )</definition>
         <preferredEditor>legacy</preferredEditor>
         <offlineEnabled>false</offlineEnabled>
@@ -72,5 +75,6 @@
         <historyInfo versionUuid="_a-0000e9f5-96e6-8000-e641-01ef9001ef90_6667836"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9451875"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9493807"/>
+        <historyInfo versionUuid="_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10121456"/>
     </history>
 </contentHaul>

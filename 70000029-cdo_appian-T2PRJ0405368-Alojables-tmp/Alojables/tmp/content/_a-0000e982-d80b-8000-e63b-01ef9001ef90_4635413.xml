@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
-    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9450879</versionUuid>
+    <versionUuid>_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10120205</versionUuid>
     <rule>
         <name>SCDO_Obtener_Reportes</name>
         <uuid>_a-0000e982-d80b-8000-e63b-01ef9001ef90_4635413</uuid>
@@ -15,7 +15,7 @@
             <system>false</system>
             <unlogged>false</unlogged>
         </visibility>
-        <definition>#"SYSTEM_SYSRULES_queryEntity_v2"(
+        <definition>index(#"SYSTEM_SYSRULES_queryEntity_v2"(
   entity: #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_1932909",
   query: #"SYSTEM_SYSRULES_query"(
     logicalExpression: #"SYSTEM_SYSRULES_queryLogicalExpression"(
@@ -51,7 +51,7 @@
     )
   ),
   fetchTotalCount: false
-).data</definition>
+),"data",null)</definition>
         <namedTypedValue>
             <name>idreporte</name>
             <type>
@@ -124,5 +124,6 @@
         <historyInfo versionUuid="_a-0000e9f5-96e6-8000-e641-01ef9001ef90_6431652"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9386858"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9450879"/>
+        <historyInfo versionUuid="_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10120205"/>
     </history>
 </contentHaul>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <processModelHaul>
-  <versionUuid>0001eb77-ba0e-8000-aed2-014d98014d98</versionUuid>
+  <versionUuid>0000ec71-e91a-8000-cfce-014d98014d98</versionUuid>
   <folderUuid>_g-0000e801-560f-8000-3039-014d98014d98_291</folderUuid>
   <roleMap>
     <role name="ADMIN_OWNER">
@@ -48,7 +48,7 @@
             </pair>
             <pair>
               <locale country="" lang="es" variant=""/>
-              <value/>
+              <value><![CDATA[SCDO Eliminar documentos temporales]]></value>
             </pair>
           </string-map>
         </name>
@@ -60,7 +60,7 @@
             </pair>
             <pair>
               <locale country="" lang="es" variant=""/>
-              <value/>
+              <value><![CDATA[Elimina diariamente todos los documentos en la carpeta SCDO Documentos Temporales]]></value>
             </pair>
           </string-map>
         </desc>
@@ -73,7 +73,7 @@
             </pair>
             <pair>
               <locale country="" lang="es" variant=""/>
-              <value/>
+              <value><![CDATA[="SCDO Eliminar documentos temporales - " & today()]]></value>
             </pair>
           </string-map>
         </process-name>
@@ -91,7 +91,7 @@
           <usersandgroups>
             <people>
               <type>4096</type>
-              <stringId><![CDATA[_e-0000e867-3fd5-8000-e5e0-011e94011e94_5799]]></stringId>
+              <stringId><![CDATA[_e-0000ec31-ac7e-8000-e698-011e94011e94_8438]]></stringId>
             </people>
           </usersandgroups>
           <recipients-exp/>
@@ -200,7 +200,7 @@
           <on-complete-delete-previous-completed>false</on-complete-delete-previous-completed>
           <pre-triggers>
             <timer-trigger index="0">
-              <persistentId>0002e871-bfd3-8000-4d8a-014d98014d98</persistentId>
+              <persistentId>0001ec71-e919-8000-cfcd-014d98014d98</persistentId>
               <name><![CDATA[Inicio en la madrugada]]></name>
               <desc/>
               <rules/>
@@ -449,6 +449,10 @@
             <string-map>
               <pair>
                 <locale country="US" lang="en" variant=""/>
+                <value><![CDATA[delete all temporaly files]]></value>
+              </pair>
+              <pair>
+                <locale country="" lang="es" variant=""/>
                 <value><![CDATA[Eliminar todos los archivos temporales]]></value>
               </pair>
             </string-map>
@@ -459,6 +463,10 @@
             <string-map>
               <pair>
                 <locale country="US" lang="en" variant=""/>
+                <value><![CDATA[delete all temporaly files]]></value>
+              </pair>
+              <pair>
+                <locale country="" lang="es" variant=""/>
                 <value><![CDATA[Eliminar todos los archivos temporales]]></value>
               </pair>
             </string-map>
@@ -467,6 +475,10 @@
             <string-map>
               <pair>
                 <locale country="US" lang="en" variant=""/>
+                <value/>
+              </pair>
+              <pair>
+                <locale country="" lang="es" variant=""/>
                 <value/>
               </pair>
             </string-map>
@@ -706,5 +718,7 @@
     <historyInfo versionUuid="0004e871-bfd3-8000-4d8a-014d98014d98"/>
     <historyInfo versionUuid="0001e970-3a14-8000-ca13-014d98014d98"/>
     <historyInfo versionUuid="0001eb77-ba0e-8000-aed2-014d98014d98"/>
+    <historyInfo versionUuid="0000ec5e-2d69-8000-cdbe-014d98014d98"/>
+    <historyInfo versionUuid="0000ec71-e91a-8000-cfce-014d98014d98"/>
   </history>
 </processModelHaul>

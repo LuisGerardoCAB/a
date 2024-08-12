@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
-    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9543048</versionUuid>
+    <versionUuid>_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10135413</versionUuid>
     <interface>
         <name>SCDO_GridAdministradores</name>
         <uuid>_a-0000e878-569a-8000-e5e4-01ef9001ef90_2226554</uuid>
@@ -77,11 +77,16 @@
   local!startIndex: 1,
   local!batchSize: 5,
   local!administradorWrite: 'type!{urn:com:appian:types}cdo_administradores'(),
+  local!usuarioTecleado,
+  local!nombresUsuarioTelceado: if(a!isNullOrEmpty(local!usuarioTecleado), local!usuarioTecleado,
+  user(username: tostring(local!usuarioTecleado),property: "firstName")
+  ),
   local!existeUsuario: if(
     a!isNullOrEmpty(local!administradorWrite.usuario),
     false,
     if(
-      a!isNullOrEmpty(#"_a-0000e8b3-d748-8000-e5f3-01ef9001ef90_2402181"(usuario: local!administradorWrite.usuario).data),
+      a!isNullOrEmpty(
+        index(#"_a-0000e8b3-d748-8000-e5f3-01ef9001ef90_2402181"(usuario: local!administradorWrite.usuario),"data", null)),
       false,
       true
     )
@@ -94,6 +99,21 @@
   local!buscarTipo,
   local!colorDV: "#EC0000",
   local!colorSave: "#1F8926",
+  local!usuarioNuevo,
+  local!emailNuevo,
+  local!nombreNuevo,
+  local!ApellidosNuevo,
+
+
+
+  local!EnviarJson:'type!{urn:com:appian:types}SCDO_CARGA_USUARIOS'(
+    username :local!emailNuevo,
+    firstName : local!nombreNuevo,
+    lastName	:local!ApellidosNuevo,
+    email :local!emailNuevo
+  ),
+  local!resultado,
+  local!administradorWriteNuevo: 'type!{urn:com:appian:types}cdo_administradores'(),
   local!administradoresGrid: a!refreshVariable(
     value: #"SYSTEM_SYSRULES_queryEntity_v2"(
       entity: #"_a-0000e8b3-d748-8000-e5f3-01ef9001ef90_2402150",
@@ -146,24 +166,40 @@
     refreshOnVarChange: {ri!refreshCount,local!bUserT,local!bUser}
   ),
   local!administradoreEditar: #"SYSTEM_SYSRULES_forEach"(
-    items: local!administradoresGrid.data,
+    items: index(local!administradoresGrid,"data", null),
     expression: 'type!{urn:com:appian:types}cdo_administradores'(
       idadmon: fv!item.idadmon,
       usuario: fv!item.usuario,
       nombre: fv!item.nombre,
       tipo: fv!item.tipo,
-      password: fv!item.password,
       usuarion: fv!item.usuarion
     )
   ),
   local!administradorSeleccionado,
   local!administradorGuardado,
+  local!mostrarUsuarioNuevo:false,
   {
  
     #"SYSTEM_SYSRULES_sectionLayout_v1"(
       contents: {
         #"SYSTEM_SYSRULES_columnsLayout"(
           columns: {
+            #"SYSTEM_SYSRULES_columnLayout"(
+              contents: {
+                #"SYSTEM_SYSRULES_ButtonArrayLayout"(
+                  buttons: {
+                    #"SYSTEM_SYSRULES_buttonWidget_v1"(
+                      label: "Registrar Nuevo Usuario",
+                      icon: "user-plus",
+                      value: local!mostrarUsuarioNuevo,
+                      saveInto: a!save(local!mostrarUsuarioNuevo, not(local!mostrarUsuarioNuevo)),
+                      style: "OUTLINE"
+                    )
+                  },
+                  align: "START"
+                )
+              }
+            ),
             /*ERROR*/
             #"SYSTEM_SYSRULES_columnLayout"(
               contents: {
@@ -175,34 +211,237 @@
                 local!showInformationBanner,
                 local!showWhen_error
               )
-            ),
+            )
           }
-        ),
+        )
       }
     ),
     #"SYSTEM_SYSRULES_boxLayout"(
-      label: "Agregar Nuevo Administrador",
-      contents: {
+      label:  if(local!mostrarUsuarioNuevo,"Registrar Nuevo Usuario", "Agregar Nuevo Administrador"),
+      contents: if(local!mostrarUsuarioNuevo,
+      {
+        #"SYSTEM_SYSRULES_cardLayout"(
+          contents: {
+            #"SYSTEM_SYSRULES_columnsLayout"(
+              columns: {
+                #"SYSTEM_SYSRULES_columnLayout"(),
+                /* Form content */
+                #"SYSTEM_SYSRULES_columnLayout"(
+                  contents: {
+                    #"SYSTEM_SYSRULES_columnsLayout"(
+                      columns: {
+                        /* Empty column layouts on both sides *
+                       * help to center the content         */
+                        #"SYSTEM_SYSRULES_columnLayout"(),
+                        #"SYSTEM_SYSRULES_columnLayout"(
+                          contents: {
+                            #"SYSTEM_SYSRULES_sectionLayout_v1"(
+                              showWhen: not(#"SYSTEM_SYSRULES_isPageWidth"("PHONE")),
+                              marginBelow: "EVEN_MORE"
+                            ),
+                            #"SYSTEM_SYSRULES_sectionLayout_v1"(
+                              label: "Registrar Usuario",
+                              labelIcon: "user-plus",
+                              labelSize: "LARGE",
+                              labelColor: "STANDARD",
+                              contents: {
+                                #"SYSTEM_SYSRULES_textField"(
+                                  label: "Email:",
+                                  value: local!emailNuevo,
+                                  saveInto: {local!emailNuevo,
+                                  local!administradorWriteNuevo.usuarion
+                                  },
+                                  required: true,
+                                  placeholder: "Z123456@santander.com.mx",
+                                  requiredMessage: "El campo email es requerido.",
+                                  validations: {if(regexmatch("^[a-zA-Z][0-9][a-zA-Z0-9._%+-]*@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$", local!emailNuevo),
+                                  {},
+                                  "Solo se pueden registrar email que comiencen con una letra seguido de un número"
+
+                                  ),if(isusernametaken(local!emailNuevo), "Este usuario ya existe", {})
+                                  },
+                                  inputPurpose: "STREET_ADDRESS"
+                                ),
+                                #"SYSTEM_SYSRULES_textField"(
+                                  label: "Nombres:",
+                                  value: local!nombreNuevo,
+                                  saveInto: local!nombreNuevo,
+                                  required: true,
+                                  requiredMessage: "El campo nombre es requerido.",
+                                 
+                                  inputPurpose: "STREET_ADDRESS"
+                                ),
+                                #"SYSTEM_SYSRULES_textField"(
+                                  label: "Apellidos:",
+                                  value: local!ApellidosNuevo,
+                                  saveInto: local!ApellidosNuevo,
+                                  required: true,
+                                  requiredMessage: "El campo apellidos es requerido."
+                                ),
+                                #"SYSTEM_SYSRULES_columnsLayout"(
+                                  columns: {
+                                    #"SYSTEM_SYSRULES_columnLayout"(
+                                      contents: {
+                                        #"SYSTEM_SYSRULES_textField"(
+                                          label: "Expediente",
+                                          value: local!administradorWriteNuevo.usuario,
+                                          saveInto: local!administradorWriteNuevo.usuario,
+                                          required: true,
+                                          requiredMessage: "El campo expediente es requerido."
+                                        )
+                                      }
+                                    )
+                                  },
+                                  marginBelow: "MORE",
+                                  spacing: "DENSE",
+                                  stackWhen: {"TABLET_PORTRAIT", "PHONE"}
+                                ),
+                                #"SYSTEM_SYSRULES_dropdownField_v1"(
+                                  choiceLabels: #"_a-0000e8b9-0989-8000-e5fd-01ef9001ef90_2453274",
+                                  choiceValues: #"_a-0000e8b9-0989-8000-e5fd-01ef9001ef90_2453274",
+                                  label: "Rol",
+                                  placeholder: "--- " &amp; "Select" &amp; " ---",
+                                  value: local!administradorWriteNuevo.tipo,
+                                  saveInto: local!administradorWriteNuevo.tipo,
+                                  searchDisplay: "AUTO",
+                                  required: true,
+                                  requiredMessage: "El campo Rol es requerido."
+                                )
+                              },
+                              divider: "BELOW"
+                            ),
+                            #"SYSTEM_SYSRULES_columnsLayout"(
+                              columns: {
+                                #"SYSTEM_SYSRULES_columnLayout"(
+                                  contents: {
+                                    #"SYSTEM_SYSRULES_ButtonArrayLayout"(
+                                      buttons: {
+                                        #"SYSTEM_SYSRULES_buttonWidget_v1"(
+                                          label: "Cancelar",
+                                          value: false,
+                                          saveInto: {local!mostrarUsuarioNuevo, 
+                                          a!save(local!usuarioNuevo, null),
+                                          a!save(local!emailNuevo, null),
+                                          a!save(local!nombreNuevo, null),
+                                          a!save(local!ApellidosNuevo, null),
+                                          a!save(ri!refreshCount, ri!refreshCount + 1),
+                                      
+                                          a!save(local!administradorWriteNuevo,'type!{urn:com:appian:types}cdo_administradores'())
+
+                                          }
+                                        )
+                                      },
+                                      align: "START"
+                                    )
+                                  }
+                                ),
+                                #"SYSTEM_SYSRULES_columnLayout"(
+                                  contents: {
+                                    #"SYSTEM_SYSRULES_ButtonArrayLayout"(
+                                      buttons: {
+                                        #"SYSTEM_SYSRULES_buttonWidget_v1"(
+                                          label: "Registrar",
+                                          saveInto: {
+                                            a!save(local!administradorWriteNuevo.nombre, concat(local!nombreNuevo, " ", local!ApellidosNuevo)),
+
+
+                                            #"SYSTEM_SYSRULES_startProcess"(processModel:#"_a-0000ec31-ac7e-8000-e69b-01ef9001ef90_10049300",
+                                            processParameters: {
+                                              EnviarJson: local!EnviarJson,
+                                              administradores: local!administradorWriteNuevo
+
+
+                                            },
+                                            onSuccess: {a!save(local!resultado, fv!processInfo.pv.Result),
+                                            a!save(local!showInformationBanner, true),
+                                            if(
+                                              toboolean(fv!processInfo.pv.errorBD) = false,
+                                              {a!save(local!flag, addseconds(now(), 10)),
+                                              a!save(local!succes,fv!processInfo),
+                                              a!save(local!bUser,null),
+                                              a!save(local!bUserT, null),
+                                              a!save(local!usuarioNuevo, null),
+                                              a!save(local!emailNuevo, null),
+                                              a!save(local!nombreNuevo, null),
+                                              a!save(local!ApellidosNuevo, null),
+                                              a!save(ri!refreshCount, ri!refreshCount + 1),
+                                              a!save(local!administradorGuardado, local!administradorWriteNuevo.usuario),
+                                              a!save(local!mostrarSuccess, true),
+                                              a!save(local!administradorWriteNuevo,'type!{urn:com:appian:types}cdo_administradores'())
+
+                                              },
+                                              a!save(local!flag_error, addseconds(now(), 10))
+                                            )
+                                            }
+
+                                            ),
+                                            a!save(local!mostrarUsuarioNuevo, false)
+
+                                          },
+
+
+                                          style: "SOLID",
+                                          loadingIndicator: true,
+                                          validate: true,
+                                          validationGroup: "",
+                                          confirmMessage: "¿Está seguro de agregar este registro?"
+                                        )
+                                      }
+                                    )
+                                  }
+                                )
+                              }
+                            )
+                          },
+                          width: "MEDIUM_PLUS"
+                        )
+                      }
+                    )
+                  }
+                ),
+                /* Additional details content */
+                #"SYSTEM_SYSRULES_columnLayout"(
+                  contents: {},
+                  width: if(
+                    #"SYSTEM_SYSRULES_isPageWidth"("TABLET_PORTRAIT"),
+                    "NARROW_PLUS",
+                    "MEDIUM"
+                  ),
+                  showWhen: not(#"SYSTEM_SYSRULES_isPageWidth"("PHONE"))
+                )
+              },
+              showWhen: local!mostrarUsuarioNuevo
+            )
+          },
+          padding: if(
+            #"SYSTEM_SYSRULES_isPageWidth"("PHONE"),
+            "STANDARD",
+            "NONE"
+          ),
+          marginBelow: "NONE",
+          showBorder: false
+        )
+      },
+      {
 
         #"SYSTEM_SYSRULES_sideBySideLayout"(
           items: {
             #"SYSTEM_SYSRULES_sideBySideItem"(
-              item: #"SYSTEM_SYSRULES_textField"(
-                refreshAfter :"KEYPRESS",
+              item: #"SYSTEM_SYSRULES_pickerFieldUsers"(
                 label: "Usuario N:",
                 labelPosition: "ADJACENT",
+                maxSelections: 1,
                 value: local!administradorWrite.usuarion,
                 saveInto: {
-                  local!administradorWrite.usuarion,
-                  
+                  local!usuarioTecleado,
+                  local!administradorWrite.usuarion
+
                 },
-                validations: {},
-                align: "LEFT"
+                validations: {}
               )
             ),
             #"SYSTEM_SYSRULES_sideBySideItem"(
               item: #"SYSTEM_SYSRULES_textField"(
-                refreshAfter :"KEYPRESS",
                 label: "Expediente:",
                 labelPosition: "ADJACENT",
                 value: local!administradorWrite.usuario,
@@ -212,22 +451,26 @@
                     (save!value)
                   )
                 },
+                refreshAfter :"KEYPRESS",
                 validations: {},
                 align: "LEFT"
               )
             ),
             #"SYSTEM_SYSRULES_sideBySideItem"(
               item: #"SYSTEM_SYSRULES_textField"(
-                refreshAfter :"KEYPRESS",
                 label: "Nombre:",
                 labelPosition: "ADJACENT",
-                value: local!administradorWrite.nombre,
+                
+                value: local!nombresUsuarioTelceado,
                 saveInto: {
+                  a!save(local!nombresUsuarioTelceado, save!value),
+                  
                   a!save(
                     local!administradorWrite.nombre,
                     trim((save!value))
                   )  
                 },
+                refreshAfter :"KEYPRESS",
                 validations: {},
                 align: "LEFT",
                 inputPurpose: "NAME"
@@ -239,31 +482,17 @@
           items: {
             #"SYSTEM_SYSRULES_sideBySideItem"(
               item: #"SYSTEM_SYSRULES_dropdownField_v1"(
+                choiceLabels: #"_a-0000e8b9-0989-8000-e5fd-01ef9001ef90_2453274",
+                choiceValues: #"_a-0000e8b9-0989-8000-e5fd-01ef9001ef90_2453274",
                 label: "Tipo:",
                 labelPosition: "ADJACENT",
                 placeholder: "--- Seleccione un valor ---",
-                choiceLabels: #"_a-0000e8b9-0989-8000-e5fd-01ef9001ef90_2453274",
-                choiceValues: #"_a-0000e8b9-0989-8000-e5fd-01ef9001ef90_2453274",
                 value: local!administradorWrite.tipo,
                 saveInto: {
                   local!administradorWrite.tipo
                 },
                 searchDisplay: "AUTO",
                 validations: {}
-              )
-            ),
-            #"SYSTEM_SYSRULES_sideBySideItem"(
-              item: #"SYSTEM_SYSRULES_textField"(
-                refreshAfter :"KEYPRESS",
-                label: "Password:",
-                labelPosition: "ADJACENT",
-                value: local!administradorWrite.password,
-                saveInto: {
-                  local!administradorWrite.password
-                },
-
-                validations: {},
-                align: "LEFT"
               )
             )
           }
@@ -274,10 +503,9 @@
               contents: {
                 #"SYSTEM_SYSRULES_ButtonArrayLayout"(
                   buttons: {
-                    #"SYSTEM_SYSRULES_ButtonWidget"(
+                    #"SYSTEM_SYSRULES_buttonWidget_v1"(
                       label: "Agregar",
-                      loadingIndicator: true,
-                      icon: "save",
+                      disabled: or(local!existeUsuario, a!isNullOrEmpty(local!administradorWrite.usuarion),a!isNullOrEmpty(local!administradorWrite.usuario),a!isNullOrEmpty(local!nombresUsuarioTelceado), a!isNullOrEmpty(local!administradorWrite.tipo)),
                       saveInto: {
                         #"SYSTEM_SYSRULES_startProcess"(
                           processModel: #"_a-0000e8b9-0989-8000-e5fd-01ef9001ef90_2484911",
@@ -297,12 +525,13 @@
                               a!save(local!bUserT, null),
                               a!save(ri!refreshCount, ri!refreshCount + 1),
                               a!save(local!administradorGuardado, local!administradorWrite.usuario),
+                              a!save(local!usuarioTecleado, null),
                               a!save(local!mostrarSuccess, true),
                               a!save(local!administradorWrite,'type!{urn:com:appian:types}cdo_administradores'())
 
                               },
                               a!save(local!flag_error, addseconds(now(), 10))
-                            ),
+                            )
                             /*a!save(local!succes,fv!processInfo),*/
                             /*a!save(local!bUser,null),*/
                             /*a!save(local!bUserT, null),*/
@@ -315,7 +544,8 @@
                         )
                       },
                       size: "SMALL",
-                      disabled: or(local!existeUsuario, a!isNullOrEmpty(local!administradorWrite.usuarion),a!isNullOrEmpty(local!administradorWrite.usuario),a!isNullOrEmpty(local!administradorWrite.nombre), a!isNullOrEmpty(local!administradorWrite.tipo), a!isNullOrEmpty(local!administradorWrite.password))
+                      icon: "save",
+                      loadingIndicator: true
                     )
                   },
                   align: "CENTER",
@@ -346,7 +576,7 @@
                           null
                         ),
                         if(
-                          a!isNullOrEmpty(local!administradorWrite.nombre),
+                          a!isNullOrEmpty(local!nombresUsuarioTelceado),
                           concat("* Nombre", char(10)),
                           null
                         ),
@@ -354,17 +584,12 @@
                           a!isNullOrEmpty(local!administradorWrite.tipo),
                           concat("* Tipo", char(10)),
                           null
-                        ),
-                        if(
-                          a!isNullOrEmpty(local!administradorWrite.password),
-                          concat("* Password"),
-                          null
                         )
                       ),
                       color: "NEGATIVE"
                     )
                   },
-                  showWhen: or(a!isNullOrEmpty(local!administradorWrite.usuarion),a!isNullOrEmpty(local!administradorWrite.usuario), a!isNullOrEmpty(local!administradorWrite.nombre), a!isNullOrEmpty(local!administradorWrite.tipo), a!isNullOrEmpty(local!administradorWrite.password))
+                  showWhen: or(a!isNullOrEmpty(local!administradorWrite.usuarion),a!isNullOrEmpty(local!administradorWrite.usuario), a!isNullOrEmpty(local!nombresUsuarioTelceado), a!isNullOrEmpty(local!administradorWrite.tipo))
                 )
               }
             ),
@@ -384,13 +609,13 @@
                     ),
                     #"SYSTEM_SYSRULES_ButtonArrayLayout"(
                       buttons: {
-                        #"SYSTEM_SYSRULES_ButtonWidget"(
+                        #"SYSTEM_SYSRULES_buttonWidget_v1"(
                           label: "ACEPTAR",
-                          icon: "check",
+                          style: "SOLID",
                           value: false,
                           saveInto: {{local!mostrarSuccess, local!showInformationBanner}, a!save(local!administradorGuardado, null)},
                           size: "SMALL",
-                          style: "PRIMARY"
+                          icon: "check"
                         )
                       },
                       align: "CENTER"
@@ -408,10 +633,10 @@
             )
           }
         )
-      },
+      }),
       padding: "MORE",
       marginBelow: "MORE"
-    ),
+   ),
    
 
   
@@ -475,7 +700,7 @@
               local!showInformationBanner_eliminar,
               local!showWhen_error_eliminar
             )
-          ),
+          )
         }
       ),
       #"SYSTEM_SYSRULES_columnsLayout"(
@@ -499,17 +724,17 @@
             contents: {
               #"SYSTEM_SYSRULES_ButtonArrayLayout"(
                 buttons: {
-                  #"SYSTEM_SYSRULES_ButtonWidget"(
+                  #"SYSTEM_SYSRULES_buttonWidget_v1"(
                     label: "Buscar",
-                    loadingIndicator: true,
-                    icon: "search",
+                    style : "GHOST",
                     saveInto: {a!save(local!bUser,local!bUserT), a!save(local!editGrid, null),
                     a!save(
                       local!startIndex,
                       1
                     )},
                     size: "SMALL",
-                    style : "DESTRUCTIVE"
+                    icon: "search",
+                    loadingIndicator: true
                   )
                 },
                 align: "START"
@@ -520,11 +745,11 @@
           #"SYSTEM_SYSRULES_columnLayout"(
             contents: {
               #"SYSTEM_SYSRULES_dropdownField_v1"(
+                choiceLabels: #"_a-0000e8b9-0989-8000-e5fd-01ef9001ef90_2453274",
+                choiceValues: #"_a-0000e8b9-0989-8000-e5fd-01ef9001ef90_2453274",
                 label: "Buscar Por Tipo:",
                 labelPosition: "ADJACENT",
                 placeholder: "--- Seleccione un valor ---",
-                choiceLabels: #"_a-0000e8b9-0989-8000-e5fd-01ef9001ef90_2453274",
-                choiceValues: #"_a-0000e8b9-0989-8000-e5fd-01ef9001ef90_2453274",
                 value: local!buscarTipo,
                 saveInto: {
                   local!buscarTipo,
@@ -559,9 +784,9 @@
                   ),
                   #"SYSTEM_SYSRULES_ButtonLayout"(
                     primaryButtons: {
-                      #"SYSTEM_SYSRULES_ButtonWidget"(
+                      #"SYSTEM_SYSRULES_buttonWidget_v1"(
                         label: "Sí, Eliminar",
-                        icon: "trash",
+                        style: "GHOST",
                         saveInto: {
                           #"SYSTEM_SYSRULES_startProcess"(
                             processModel: #"_a-0000e8b9-0989-8000-e5fd-01ef9001ef90_2484911",
@@ -576,7 +801,7 @@
                                 a!save(local!bUser,null),
                                 a!save(local!bUserT,null),
                                 a!save(local!administradorSeleccionado, null),
-                                a!save(ri!refreshCount, ri!refreshCount + 1),
+                                a!save(ri!refreshCount, ri!refreshCount + 1)
                                 
                                 },
                                 a!save(local!flag_error_eliminar, addseconds(now(), 10))
@@ -592,21 +817,21 @@
                           )
                         },
                         size: "SMALL",
-                        style: "DESTRUCTIVE",
+                        icon: "trash",
                         loadingIndicator: true
                       )
                     },
                     secondaryButtons: {
-                      #"SYSTEM_SYSRULES_ButtonWidget"(
+                      #"SYSTEM_SYSRULES_buttonWidget_v1"(
                         label: "Cancelar",
-                        icon: "times",
+                        style: "GHOST",
                         saveInto: {
                           a!save(local!mostrarEliminar, false),
                           a!save(local!editGrid, null),
                           a!save(local!administradorSeleccionado, null)
                         },
                         size: "SMALL",
-                        style: "SECONDARY"
+                        icon: "times"
                       )
                     }
                   )
@@ -627,7 +852,6 @@
           #"SYSTEM_SYSRULES_gridLayoutHeaderCell"(label: "USUARIO", align: "CENTER"),
           #"SYSTEM_SYSRULES_gridLayoutHeaderCell"(label: "NOMBRE", align: "CENTER"),
           #"SYSTEM_SYSRULES_gridLayoutHeaderCell"(label: "TIPO", align: "CENTER"),
-          #"SYSTEM_SYSRULES_gridLayoutHeaderCell"(label: "PASSWORD", align: "CENTER"),
           #"SYSTEM_SYSRULES_gridLayoutHeaderCell"(label: "ACCIONES", align: "CENTER")
         },
         columnConfigs: {
@@ -636,15 +860,15 @@
         },
         rows: {
           #"SYSTEM_SYSRULES_forEach"(
-            items: local!administradoresGrid.data,
+            items: index(local!administradoresGrid,"data", null),
             expression: #"SYSTEM_SYSRULES_gridRowLayout"(
               contents: {
                 #"SYSTEM_SYSRULES_textField"(
-                  refreshAfter:"KEYPRESS",
                   value: local!administradoreEditar[fv!index].usuarion,
                   saveInto: {
                     local!administradoreEditar[fv!index].usuarion
                   },
+                  refreshAfter:"KEYPRESS",
                   readOnly: if(
                     a!isNullOrEmpty(local!editGrid),
                     true,
@@ -658,11 +882,11 @@
                 ),
               
                 #"SYSTEM_SYSRULES_textField"(
-                  refreshAfter:"KEYPRESS",
                   value: local!administradoreEditar[fv!index].usuario,
                   saveInto: {
                     local!administradoreEditar[fv!index].usuario
                   },
+                  refreshAfter:"KEYPRESS",
                   readOnly: if(
                     a!isNullOrEmpty(local!editGrid),
                     true,
@@ -675,11 +899,11 @@
                   align: "CENTER"
                 ),
                 #"SYSTEM_SYSRULES_textField"(
-                  refreshAfter:"KEYPRESS",
                   value: local!administradoreEditar[fv!index].nombre,
                   saveInto: {
                     local!administradoreEditar[fv!index].nombre
                   },
+                  refreshAfter:"KEYPRESS",
                   readOnly: if(
                     a!isNullOrEmpty(local!editGrid),
                     true,
@@ -693,9 +917,9 @@
 
                 ),
                 #"SYSTEM_SYSRULES_dropdownField_v1"(
-                  placeholder: "--- Seleccione un valor ---",
                   choiceLabels: #"_a-0000e8b9-0989-8000-e5fd-01ef9001ef90_2453274",
                   choiceValues: #"_a-0000e8b9-0989-8000-e5fd-01ef9001ef90_2453274",
+                  placeholder: "--- Seleccione un valor ---",
                   value: local!administradoreEditar[fv!index].tipo,
                   saveInto: {
                     local!administradoreEditar[fv!index].tipo
@@ -711,23 +935,6 @@
                     )
                   )
                 ),
-                #"SYSTEM_SYSRULES_textField"(
-                  refreshAfter:"KEYPRESS",
-                  value: local!administradoreEditar[fv!index].password,
-                  saveInto: {
-                    local!administradoreEditar[fv!index].password
-                  },
-                  readOnly: if(
-                    a!isNullOrEmpty(local!editGrid),
-                    true,
-                    if(
-                      local!editGrid = fv!index,
-                      false,
-                      true
-                    )
-                  ),
-                  align: "CENTER"
-                ),
                 #"SYSTEM_SYSRULES_richTextDisplayField"(
                   value: {
                     #"SYSTEM_SYSRULES_richTextIcon"(
@@ -736,7 +943,7 @@
                       link: #"SYSTEM_SYSRULES_dynamicLink"(
                         saveInto: { 
                           a!save(local!editGrid, fv!index),
-                          a!save(local!administradorSeleccionado, 'type!{urn:com:appian:types}cdo_administradores'(idadmon: fv!item.idadmon, usuario: fv!item.usuario, nombre: fv!item.nombre, tipo: fv!item.tipo, password: fv!item.password,usuarion: fv!item.usuarion))
+                          a!save(local!administradorSeleccionado, 'type!{urn:com:appian:types}cdo_administradores'(idadmon: fv!item.idadmon, usuario: fv!item.usuario, nombre: fv!item.nombre, tipo: fv!item.tipo, usuarion: fv!item.usuarion))
                         }
                       ),
                       linkStyle: "STANDALONE",
@@ -789,7 +996,7 @@
                                 a!save(ri!refreshCount, ri!refreshCount + 1)
                                 },
                                 a!save(local!flag_error_actualizar, addseconds(now(), 10))
-                              ),
+                              )
                               /*a!save(local!buscarTipo,null),*/
                               /*a!save(local!bUser,null),*/
                               /*a!save(local!bUserT,null),*/
@@ -841,7 +1048,7 @@
                       link: #"SYSTEM_SYSRULES_dynamicLink"(
                         saveInto: {
                           a!save(local!mostrarEliminar, true),
-                          a!save(local!administradorSeleccionado, 'type!{urn:com:appian:types}cdo_administradores'(idadmon: fv!item.idadmon, usuario: fv!item.usuario, nombre: fv!item.nombre, tipo: fv!item.tipo, password: fv!item.password,usuarion: fv!item.usuarion))
+                          a!save(local!administradorSeleccionado, 'type!{urn:com:appian:types}cdo_administradores'(idadmon: fv!item.idadmon, usuario: fv!item.usuario, nombre: fv!item.nombre, tipo: fv!item.tipo,usuarion: fv!item.usuarion))
                         }
                       ),
                       linkStyle: "STANDALONE",
@@ -996,5 +1203,6 @@
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9450118"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9500620"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9543048"/>
+        <historyInfo versionUuid="_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10135413"/>
     </history>
 </contentHaul>

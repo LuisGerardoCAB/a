@@ -6,11 +6,12 @@
       <xsd:appinfo source="appian.jpa">@Table(name="CDO_MX_AUX_DOCUMENTACION_RECHAZADA")</xsd:appinfo>
       <xsd:appinfo source="http://www.appian.com/ae/types/2009">
         <ns2:Metadata xmlns:ns2="http://www.appian.com/ae/types/2009">
-          <ns2:versionUuid>0000eae5-3c7a-8000-8863-014d98014d98</ns2:versionUuid>
+          <ns2:versionUuid>0000ec70-621b-8000-cf25-014d98014d98</ns2:versionUuid>
           <ns2:history>
             <ns2:historyInfo versionUuid="0000e868-482f-8000-4a55-014d98014d98"/>
             <ns2:historyInfo versionUuid="0000e9b3-40fd-8000-ef25-014d98014d98"/>
             <ns2:historyInfo versionUuid="0000eae5-3c7a-8000-8863-014d98014d98"/>
+            <ns2:historyInfo versionUuid="0000ec70-621b-8000-cf25-014d98014d98"/>
           </ns2:history>
         </ns2:Metadata>
       </xsd:appinfo>
@@ -49,7 +50,7 @@
       </xsd:element>
       <xsd:element name="usuariorechazo" nillable="true" type="xsd:string">
         <xsd:annotation>
-          <xsd:appinfo source="appian.jpa">@Column(name="USUARIORECHAZO", columnDefinition="VARCHAR2(12)")</xsd:appinfo>
+          <xsd:appinfo source="appian.jpa">@Column(name="USUARIORECHAZO", columnDefinition="VARCHAR2(80)")</xsd:appinfo>
         </xsd:annotation>
       </xsd:element>
       <xsd:element name="motivorechazo" nillable="true" type="xsd:string">

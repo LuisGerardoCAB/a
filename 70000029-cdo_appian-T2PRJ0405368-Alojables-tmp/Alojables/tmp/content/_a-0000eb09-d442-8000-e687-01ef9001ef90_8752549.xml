@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
-    <versionUuid>_a-0000ebe7-98ae-8000-e699-01ef9001ef90_9937745</versionUuid>
+    <versionUuid>_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10104394</versionUuid>
     <document>
         <name>CDO_Centros_de_costos</name>
         <uuid>_a-0000eb09-d442-8000-e687-01ef9001ef90_8752549</uuid>
@@ -53,5 +53,6 @@
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9431639"/>
         <historyInfo versionUuid="_a-0000eb9b-4ec6-8000-e68b-01ef9001ef90_9614744"/>
         <historyInfo versionUuid="_a-0000ebe7-98ae-8000-e699-01ef9001ef90_9937745"/>
+        <historyInfo versionUuid="_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10104394"/>
     </history>
 </contentHaul>

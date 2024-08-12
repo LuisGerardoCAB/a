@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
-    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9542905</versionUuid>
+    <versionUuid>_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10135252</versionUuid>
     <interface>
         <name>SCDO_GridExpedientes</name>
         <uuid>_a-0000e878-569a-8000-e5e4-01ef9001ef90_2226531</uuid>
@@ -85,7 +85,6 @@
   local!colorEdit: "#0032E6",
   local!colorDV: "#EC0000",
   /*Color para validaciones y boton eliminar*/
-  local!colorCard: "#CC0000",
   local!colorSave: "#1F8926",
   local!succes,
   local!bUser,
@@ -93,7 +92,7 @@
   local!expedienteGrid: a!refreshVariable(
     value:  #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2114113"(expediente: local!bUser),
     /*refreshAlways: true,*/
-    refreshOnVarChange: {local!bUser,local!bUserT},
+    refreshOnVarChange: {local!bUser,local!bUserT}
     /*refreshOnReferencedVarChange: true,*/
 
   ),
@@ -179,12 +178,9 @@
                             ),
                             #"SYSTEM_SYSRULES_ButtonLayout"(
                               primaryButtons: {
-                                #"SYSTEM_SYSRULES_ButtonWidget"(
+                                #"SYSTEM_SYSRULES_buttonWidget_v1"(
                                   label: "Sí, Eliminar",
-                                  size: "SMALL",
-                                  style: "DESTRUCTIVE",
-                                  icon: "trash",
-                                  loadingIndicator: true,
+                                  style: "GHOST",
                                   saveInto: {
                                     #"SYSTEM_SYSRULES_startProcess"(
                                       processModel: #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2244665",
@@ -207,7 +203,7 @@
                                           },
                                           a!save(local!flag_error_eliminar, addseconds(now(), 10))
                                         ),
-                                        a!save(local!deleteSuccess, false),
+                                        a!save(local!deleteSuccess, false)
                                         /*a!save(local!bUserT,null),*/
                                         /*a!save(local!succes, fv!processInfo),*/
                                         /*a!save(local!deleteSuccess, false),*/
@@ -220,30 +216,33 @@
                                         /*a!save(ri!refreshCount, ri!refreshCount + 1)*/
                                       }
                                     )
-                                  }
+                                  },
+                                  size: "SMALL",
+                                  icon: "trash",
+                                  loadingIndicator: true
                                 )
                               },
                               secondaryButtons: {
-                                #"SYSTEM_SYSRULES_ButtonWidget"(
+                                #"SYSTEM_SYSRULES_buttonWidget_v1"(
                                   label: "Cancelar",
-                                  size: "SMALL",
-                                  style: "SECONDARY",
-                                  icon: "times",
+                                  style: "GHOST",
                                   saveInto: {
                                     a!save(local!deleteSuccess, false),
-                                    a!save(local!expedienteDelete, null),
+                                    a!save(local!expedienteDelete, null)
                                     
-                                  }
+                                  },
+                                  size: "SMALL",
+                                  icon: "times"
                                 )
                               }
                             )
                           },
+                          showWhen: local!deleteSuccess,
                           style: "WARN",
-                          showBorder: false,
-                          showWhen: local!deleteSuccess
+                          showBorder: false
                         )
                       }
-                    ),
+                    )
                   }
                 ),
                 #"SYSTEM_SYSRULES_gridLayout"(
@@ -254,54 +253,41 @@
                     #"SYSTEM_SYSRULES_gridLayoutHeaderCell"(label: "Usuario N", align: "CENTER"),
                     #"SYSTEM_SYSRULES_gridLayoutHeaderCell"(label: "EXPEDIENTE", align: "CENTER"),
                     #"SYSTEM_SYSRULES_gridLayoutHeaderCell"(label: "NOMBRE", align: "CENTER"),
-                    #"SYSTEM_SYSRULES_gridLayoutHeaderCell"(label: "PASSWORD", align: "CENTER"),
                     #"SYSTEM_SYSRULES_gridLayoutHeaderCell"(label: "ACCIONES", align: "CENTER")
                   },
                   columnConfigs: {},
                   rows: {
                     #"SYSTEM_SYSRULES_forEach"(
-                      items: local!expedienteGrid.data,
+                      items: index(local!expedienteGrid,"data",null),
                       expression: #"SYSTEM_SYSRULES_gridRowLayout"(
                         contents: {
                           #"SYSTEM_SYSRULES_textField"(
-                            refreshAfter :"KEYPRESS",
-                            value: local!editTemp.data[fv!index].usuarion,
+                            value: index(index(local!editTemp,"data",null)[fv!index],"usuarion",null),
                             saveInto: {
                               local!editTemp.data[fv!index].usuarion
                             },
+                            refreshAfter :"KEYPRESS",
                             readOnly: not(local!editGrid),
                             align: "CENTER"
                           ),
                           #"SYSTEM_SYSRULES_textField"(
-                            refreshAfter :"KEYPRESS",
-                            value: local!editTemp.data[fv!index].expediente,
+                            value: index(index(local!editTemp,"data",null)[fv!index],"expediente", null),
                             saveInto: {
                               local!editTemp.data[fv!index].expediente
                             },
+                            refreshAfter :"KEYPRESS",
                             readOnly: not(local!editGrid),
                             align: "CENTER"
                           ),
                           #"SYSTEM_SYSRULES_textField"(
-                            refreshAfter :"KEYPRESS",
-                            value: local!editTemp.data[fv!index].nombre,
+                            value: index(index(local!editTemp,"data",null)[fv!index],"nombre", null),
                             saveInto: {
                               a!save(
                                 local!editTemp.data[fv!index].nombre,
                                 trim((save!value))
                               )
                             },
-                            readOnly: not(local!editGrid),
-                            align: "CENTER"
-                          ),
-                          #"SYSTEM_SYSRULES_textField"(
                             refreshAfter :"KEYPRESS",
-                            value: local!editTemp.data[fv!index].fechaingreso,
-                            saveInto: {
-                              a!save(
-                                local!editTemp.data[fv!index].fechaingreso,
-                                trim(cleanwith(save!value, "1234567890"))
-                              )
-                            },
                             readOnly: not(local!editGrid),
                             align: "CENTER"
                           ),
@@ -320,54 +306,45 @@
                                   "* Los siguientes campos están vacíos:",
                                   if(
                                     a!isNullOrEmpty(
-                                      local!editTemp.data[fv!index].usuarion
+                                      index(index(local!editTemp,"data",null)[fv!index],"usuarion", null)
                                     ),
                                     char(10) &amp; "Usuario N  ",
                                     {}
                                   ),
                                   if(
                                     a!isNullOrEmpty(
-                                      local!editTemp.data[fv!index].expediente
+                                      index(local!editTemp,"data",null)[fv!index].expediente
                                     ),
                                     char(10) &amp; "Expediente  ",
                                     {}
                                   ),
                                   if(
-                                    a!isNullOrEmpty(local!editTemp.data[fv!index].nombre),
+                                    a!isNullOrEmpty(index(local!editTemp,"data",null)[fv!index].nombre),
                                     char(10) &amp; "Nombre  ",
-                                    {}
-                                  ),
-                                  if(
-                                    a!isNullOrEmpty(
-                                      local!editTemp.data[fv!index].fechaingreso
-                                    ),
-                                    char(10) &amp; "Password  ",
                                     {}
                                   )
                                 },
                                 showWhen: or(
                                   a!isNullOrEmpty(
-                                    local!editTemp.data[fv!index].usuarion
+                                    index(local!editTemp,"data",null)[fv!index].usuarion
                                   ),
                                   a!isNullOrEmpty(
-                                    local!editTemp.data[fv!index].expediente
+                                    index(local!editTemp,"data",null)[fv!index].expediente
                                   ),
-                                  a!isNullOrEmpty(local!editTemp.data[fv!index].nombre),
-                                  a!isNullOrEmpty(
-                                    local!editTemp.data[fv!index].fechaingreso
-                                  )
+                                  a!isNullOrEmpty(index(local!editTemp,"data",null)[fv!index].nombre)
+                                
                                 ),
                                 color: local!colorDV
                               ),
                               #"SYSTEM_SYSRULES_richTextItem_v1"(
-                                text: char(10) &amp; "El expediente " &amp; local!editTemp.data[fv!index].expediente &amp; " ya existe." &amp; char(10),
+                                text: char(10) &amp; "El expediente " &amp; index(index(local!editTemp,"data",null)[fv!index],"expediente", null) &amp; " ya existe." &amp; char(10),
                                 showWhen: and(
-                                  #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2114113"(
-                                    expediente: local!editTemp.data[fv!index].expediente
-                                  ).totalCount &gt; 0,
-                                  #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2114113"(
-                                    idExpediente: local!editTemp.data[fv!index].idexpediente
-                                  ).data.expediente &lt;&gt; local!editTemp.data[fv!index].expediente
+                                  index(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2114113"(
+                                    expediente: index(index(local!editTemp,"data",null)[fv!index],"expediente", null)
+                                  ),"totalCount", null) &gt; 0,
+                                  index(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2114113"(
+                                    idExpediente: index(index(local!editTemp,"data",null)[fv!index],"idexpediente", null)
+                                  ),"data","expediente", null) &lt;&gt; index(index(local!editTemp,"data",null)[fv!index],"expediente",null)
                                 ),
                                 color: local!colorDV
                               ),
@@ -392,9 +369,8 @@
                                     #"SYSTEM_SYSRULES_startProcess"(
                                       processModel: #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2244665",
                                       processParameters: {
-                                        expediente: local!editTemp.data[fv!index],
+                                        expediente: index(local!editTemp,"data",null)[fv!index],
                                         delete: false,
-                                        codAudit:"CDO_0004",
                                         accion:"actualizó"
                                       },
                                       onSuccess: {
@@ -406,7 +382,7 @@
                                           a!save(local!editGrid, false)
                                           },
                                           a!save(local!flag_error_actualizar, addseconds(now(), 10))
-                                        ),
+                                        )
                                         /*a!save(local!succes, fv!processInfo),*/
                                         /*a!save(local!editGrid, false)*/
                                       }
@@ -417,38 +393,32 @@
                                 showWhen: and(
                                   local!editGrid,
                                   or(
-                                    #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2114113"(
-                                      idExpediente: local!editTemp.data[fv!index].idexpediente
-                                    ).data.usuarion &lt;&gt; local!editTemp.data[fv!index].usuarion,
-                                    #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2114113"(
-                                      idExpediente: local!editTemp.data[fv!index].idexpediente
-                                    ).data.expediente &lt;&gt; local!editTemp.data[fv!index].expediente,
-                                    #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2114113"(
-                                      idExpediente: local!editTemp.data[fv!index].idexpediente
-                                    ).data.nombre &lt;&gt; local!editTemp.data[fv!index].nombre,
-                                    #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2114113"(
-                                      idExpediente: local!editTemp.data[fv!index].idexpediente
-                                    ).data.fechaingreso &lt;&gt; local!editTemp.data[fv!index].fechaingreso
+                                    index(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2114113"(
+                                      idExpediente: index(index(local!editTemp,"data",null)[fv!index],"idexpediente", null)
+                                    ),"data","usuarion", null) &lt;&gt; index(index(local!editTemp,"data",null)[fv!index],"usuarion", null),
+                                    index(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2114113"(
+                                      idExpediente: index(index(local!editTemp,"data",null)[fv!index],"idexpediente", null)
+                                    ),"data", "expediente", null) &lt;&gt; index(index(local!editTemp,"data",null)[fv!index],"expediente", null),
+                                    index(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2114113"(
+                                      idExpediente: index(index(local!editTemp,"data",null)[fv!index],"idexpediente", null)
+                                    ),"data","nombre",null) &lt;&gt; index(index(local!editTemp,"data",null)[fv!index],"nombre", null)
                                   ),
                                   not(
                                     or(
                                       and(
-                                        #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2114113"(
-                                          expediente: local!editTemp.data[fv!index].expediente
-                                        ).totalCount &gt; 0,
-                                        #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2114113"(
-                                          idExpediente: local!editTemp.data[fv!index].idexpediente
-                                        ).data.expediente &lt;&gt; local!editTemp.data[fv!index].expediente
+                                        index(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2114113"(
+                                          expediente: index(index(local!editTemp,"data",null)[fv!index],"expediente", null),
+                                        ),"totalCount",null) &gt; 0,
+                                        index(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2114113"(
+                                          idExpediente: index(index(local!editTemp,"data",null)[fv!index],"idexpediente", null)
+                                        ),"data", "expediente", null) &lt;&gt; index(index(local!editTemp,"data",null)[fv!index],"expediente", null),
                                       ),
-                                      a!isNullOrEmpty(
-                                        local!editTemp.data[fv!index].expediente
+                                      a!isNullOrEmpty(index(index(local!editTemp,"data",null)[fv!index],"expediente", null)
                                       ),
-                                      a!isNullOrEmpty(local!editTemp.data[fv!index].nombre),
+                                      a!isNullOrEmpty(index(index(local!editTemp,"data",null)[fv!index],"nombre", null)),
+                                     
                                       a!isNullOrEmpty(
-                                        local!editTemp.data[fv!index].fechaingreso
-                                      ),
-                                      a!isNullOrEmpty(
-                                        local!editTemp.data[fv!index].usuarion
+                                        index(index(local!editTemp,"data",null)[fv!index],"usuarion", null)
                                       )
                                     )
                                   )
@@ -517,11 +487,11 @@
                       contents: {
                         #"SYSTEM_SYSRULES_ButtonArrayLayout"(
                           buttons: {
-                            #"SYSTEM_SYSRULES_ButtonWidget"(
+                            #"SYSTEM_SYSRULES_buttonWidget_v1"(
                               label: "Buscar",
-                              loadingIndicator: true,
+                              style: "GHOST",
                               saveInto: a!save(local!bUser, local!bUserT),
-                              style: "DESTRUCTIVE"
+                              loadingIndicator: true
                             )
                           },
                           align: "START"
@@ -556,7 +526,7 @@
                 local!showInformationBanner,
                 local!showWhen_error
               )
-            ),
+            )
               }
             ),
             #"SYSTEM_SYSRULES_sectionLayout_v1"(
@@ -570,7 +540,7 @@
                         labelPosition: "ABOVE",
                         value: local!expedienteWrite.usuarion,
                         saveInto: {
-                          local!expedienteWrite.usuarion,
+                          local!expedienteWrite.usuarion
                           
 
                         },
@@ -610,34 +580,29 @@
                       )
                     ),
                     #"SYSTEM_SYSRULES_sideBySideItem"(
-                      item: #"SYSTEM_SYSRULES_textField"(
-                        label: "Password:",
-                        labelPosition: "ABOVE",
-                        value: local!expedienteWrite.fechaingreso,
-                        saveInto: {
-                          a!save(
-                            local!expedienteWrite.fechaingreso,
-                            cleanwith(save!value, "1234567890")
-                          )
-                        },
-                        refreshAfter: "KEYPRESS",
-                        validations: {}
-                      )
-                    ),
-                    #"SYSTEM_SYSRULES_sideBySideItem"(
                       item: #"SYSTEM_SYSRULES_ButtonArrayLayout"(
                         buttons: {
-                          #"SYSTEM_SYSRULES_ButtonWidget"(
+                          #"SYSTEM_SYSRULES_buttonWidget_v1"(
                             label: "Guardar",
-                            loadingIndicator: true,
-                            icon: "save",
+                            disabled: {
+                              or(
+                                #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2114113"(
+                                  expediente: local!expedienteWrite.expediente
+                                ).totalCount &gt; 0,
+                                length(
+                                  split(local!expedienteWrite.expediente, " ")
+                                ) &gt; 1,
+                                a!isNullOrEmpty(local!expedienteWrite.usuarion),
+                                a!isNullOrEmpty(local!expedienteWrite.expediente),
+                                a!isNullOrEmpty(local!expedienteWrite.nombre)
+                              )
+                            },
                             saveInto: {
                               #"SYSTEM_SYSRULES_startProcess"(
                                 processModel: #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2244665",
                                 processParameters: {
                                   expediente: local!expedienteWrite,
                                   delete: false,
-                                  codAudit:"CDO_0006",
                                   accion:"insertó"
                                 },
                                 onSuccess: {
@@ -663,7 +628,7 @@
                                     a!save(local!mostrarSuccess, true)
                                     },
                                     a!save(local!flag_error, addseconds(now(), 10))
-                                  ),
+                                  )
                                   /*a!save(local!succes, fv!processInfo),*/
                                   /*a!save(local!bUser, null),*/
                                   /*a!save(*/
@@ -681,25 +646,13 @@
                                   /*),*/
                                   /*a!save(local!mostrarSuccess, true)*/
                                 }
-                              ),
+                              )
                               
                               
                             },
                             size: "SMALL",
-                            disabled: {
-                              or(
-                                #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2114113"(
-                                  expediente: local!expedienteWrite.expediente
-                                ).totalCount &gt; 0,
-                                length(
-                                  split(local!expedienteWrite.expediente, " ")
-                                ) &gt; 1,
-                                a!isNullOrEmpty(local!expedienteWrite.usuarion),
-                                a!isNullOrEmpty(local!expedienteWrite.expediente),
-                                a!isNullOrEmpty(local!expedienteWrite.nombre),
-                                a!isNullOrEmpty(local!expedienteWrite.fechaingreso)
-                              )
-                            }
+                            icon: "save",
+                            loadingIndicator: true
                           )
                         },
                         align: "START"
@@ -724,16 +677,16 @@
                     ),
                     #"SYSTEM_SYSRULES_ButtonArrayLayout"(
                       buttons: {
-                        #"SYSTEM_SYSRULES_ButtonWidget"(
+                        #"SYSTEM_SYSRULES_buttonWidget_v1"(
                           label: "ACEPTAR",
-                          icon: "check",
+                          style: "SOLID",
                           value: false,
                           saveInto: {
                             {local!mostrarSuccess, local!showInformationBanner},
                             a!save(local!expedienteGuardado, null)
                           },
                           size: "SMALL",
-                          style: "PRIMARY"
+                          icon: "check"
                         )
                       },
                       align: "CENTER"
@@ -773,11 +726,6 @@
                                   a!isNullOrEmpty(local!expedienteWrite.nombre),
                                   char(10) &amp; "Nombre",
                                   {}
-                                ),
-                                if(
-                                  a!isNullOrEmpty(local!expedienteWrite.fechaingreso),
-                                  char(10) &amp; "Password",
-                                  {}
                                 )
                               },
                               color: local!colorDV
@@ -786,8 +734,8 @@
                           showWhen: or(
                             a!isNullOrEmpty(local!expedienteWrite.usuarion),
                             a!isNullOrEmpty(local!expedienteWrite.expediente),
-                            a!isNullOrEmpty(local!expedienteWrite.nombre),
-                            a!isNullOrEmpty(local!expedienteWrite.fechaingreso)
+                            a!isNullOrEmpty(local!expedienteWrite.nombre)
+                            
                           )
                         ),
                         #"SYSTEM_SYSRULES_richTextDisplayField"(
@@ -801,9 +749,9 @@
                             )
                           },
                           showWhen: and(
-                            #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2114113"(
+                            index(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2114113"(
                               expediente: local!expedienteWrite.expediente
-                            ).totalCount &gt; 0,
+                            ),"totalCount", null) &gt; 0,
                             a!isNotNullOrEmpty(local!expedienteWrite.expediente)
                           )
                         ),
@@ -821,64 +769,6 @@
                             split(local!expedienteWrite.expediente, " ")
                           ) &gt; 1
                         )
-                        /*a!cardLayout(*/
-                        /*contents: {*/
-                        /*a!richTextDisplayField(*/
-                        /*labelPosition: "COLLAPSED",*/
-                        /*value: {*/
-                        /*a!richTextIcon(icon: "file-invoice", color: local!colorSave),*/
-                        /*" GUARDAR"*/
-                        /*}*/
-                        /*)*/
-                        /*},*/
-                        /*link: a!dynamicLink(*/
-                        /*saveInto: {*/
-                        /*a!startProcess(*/
-                        /*processModel: cons!SCDO_BD_EXPEDIENTES_PM,*/
-                        /*processParameters: {*/
-                        /*expediente: local!expedienteWrite,*/
-                        /*delete: false*/
-                        /*},*/
-                        /*onSuccess: {*/
-                        /*a!save(*/
-                        /*local!succes,*/
-                        /*fv!processInfo*/
-                        /*),*/
-                        /*a!save(*/
-                        /*local!bUser,*/
-                        /*null*/
-                        /*),*/
-                        /*a!save(*/
-                        /*local!expedienteWrite,*/
-                        /*'type!{urn:com:appian:types}cdo_expedientes'(*/
-                        /*idexpediente: null,*/
-                        /*expediente: local!expedienteWrite.expediente,*/
-                        /*nombre: local!expedienteWrite.nombre,*/
-                        /*fechaingreso: local!expedienteWrite.fechaingreso*/
-                        /*)*/
-                        /*)*/
-                        /*}*/
-                        /*)*/
-                        /*}*/
-                        /*),*/
-                        /*height: "AUTO",*/
-                        /*showWhen: and(*/
-                        /*not(*/
-                        /*rule!SCDO_getExpedienteByFilters(*/
-                        /*expediente: local!expedienteWrite.expediente*/
-                        /*).totalCount &gt; 0*/
-                        /*),*/
-                        /*not(*/
-                        /*length(*/
-                        /*split(local!expedienteWrite.expediente, " ")*/
-                        /*) &gt; 1*/
-                        /*),*/
-                        /*a!isNotNullOrEmpty(local!expedienteWrite.expediente),*/
-                        /*a!isNotNullOrEmpty(local!expedienteWrite.nombre),*/
-                        /*a!isNotNullOrEmpty(local!expedienteWrite.fechaingreso)*/
-                        /*),*/
-                        /*marginBelow: "STANDARD"*/
-                        /*)*/
                         
                       },
                       width: "AUTO"
@@ -954,5 +844,6 @@
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9395700"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9505591"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9542905"/>
+        <historyInfo versionUuid="_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10135252"/>
     </history>
 </contentHaul>

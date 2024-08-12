@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<groupHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_e-0000ec31-ac7e-8000-e698-011e94011e94_8439</versionUuid>
+    <group>
+        <name>SCDO Alert PM</name>
+        <securityMap>SECURITYMAP_TEAM</securityMap>
+        <uuid>_e-0000ec31-ac7e-8000-e698-011e94011e94_8438</uuid>
+        <groupTypeUuid>SYSTEM_GROUP_TYPE_CUSTOM</groupTypeUuid>
+        <parentUuid>_e-0000e867-3fd5-8000-e5e0-011e94011e94_5795</parentUuid>
+        <description>Group with the users to alert about the errors of the process models for CDO</description>
+        <delegatedCreation>false</delegatedCreation>
+        <memberPolicy>MEMBERPOLICY_CLOSED</memberPolicy>
+        <viewingPolicy>VIEWINGPOLICY_LOW</viewingPolicy>
+        <attributes/>
+    </group>
+    <members>
+        <users/>
+        <groups/>
+    </members>
+    <admins>
+        <users>
+            <userUuid>p000002</userUuid>
+        </users>
+        <groups/>
+    </admins>
+    <ruleSet/>
+    <history>
+        <historyInfo versionUuid="_e-0000ec31-ac7e-8000-e698-011e94011e94_8439"/>
+    </history>
+</groupHaul>

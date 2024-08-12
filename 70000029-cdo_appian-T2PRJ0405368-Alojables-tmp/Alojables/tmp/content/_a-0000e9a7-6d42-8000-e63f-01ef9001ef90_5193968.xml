@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
-    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9395379</versionUuid>
+    <versionUuid>_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10131582</versionUuid>
     <interface>
         <name>SCDO_Grid_Registro_Arribo</name>
         <uuid>_a-0000e9a7-6d42-8000-e63f-01ef9001ef90_5193968</uuid>
@@ -62,7 +62,7 @@
   local!eliminar: false,
   local!indiceEliminar,
   local!documentoFisicoEditar: null,
-  local!catalogo_documentos: #"_a-0000e9a7-6d42-8000-e63f-01ef9001ef90_5293346"(paginInfo: #"SYSTEM_SYSRULES_pagingInfo"(1, - 1)),
+  local!catalogo_documentos: #"_a-0000e9a7-6d42-8000-e63f-01ef9001ef90_5293346"(paginInfo: #"SYSTEM_SYSRULES_pagingInfo"(1, 200)),
   local!doctos_fisicos_cdt: a!refreshVariable(
   
  value: #"2b33a461-98c3-4c01-bd41-9136cd18db0c"(
@@ -387,46 +387,34 @@
                     },
                     linkStyle: "STANDALONE",
                     showWhen: {
-                      if(
-                        and(
+                      a!match(
+                        value: and(
                           local!editar[1] = - 1,
                           local!editar[2] = 0,
                           local!eliminar = true
                         ),
-                        false,
-                        if(
-                          and(
-                            local!editar[1] = fv!index,
-                            local!editar[2] = 1,
-                            local!eliminar = true
-                          ),
-                          false,
-                          if(
-                            and(
-                              local!editar[1] &lt;&gt; fv!index,
-                              local!editar[2] = 1,
-                              local!eliminar = true
-                            ),
-                            false,
-                            if(
-                              and(
-                                local!editar[1] = fv!index,
-                                local!editar[2] = 1,
-                                local!eliminar = false
-                              ),
-                              false,
-                              if(
-                                and(
-                                  local!editar[1] &lt;&gt; fv!index,
-                                  local!editar[2] = 1,
-                                  local!eliminar = false
-                                ),
-                                false,
-                                true
-                              )
-                            )
-                          )
-                        )
+                        equals: true(),
+                        then: false(),
+                        whenTrue:  and(
+                          local!editar[1] = fv!index,
+                          local!editar[2] = 1,
+                          local!eliminar = true
+                        ),
+                        then: false(),
+                        whenTrue: and(
+                          local!editar[1] &lt;&gt; fv!index,
+                          local!editar[2] = 1,
+                          local!eliminar = true
+                        ),
+                        then: false(),
+                        whenTrue: 
+                        and(
+                          local!editar[1] &lt;&gt; fv!index,
+                          local!editar[2] = 1,
+                          local!eliminar = false
+                        ),
+                        then: false(),
+                        default: true()
                       )
                     },
                     color: "ACCENT"
@@ -499,21 +487,18 @@
                     ),
                     linkStyle: "STANDALONE",
                     showWhen: {
-                      if(
-                        and(
+                      a!match(
+                        value: and(
                           local!editar[1] = fv!index,
                           local!editar[2] = 1
                         ),
-                        if(
-                          a!isNullOrEmpty(local!documentoFisicoEditar),
-                          false,
-                          if(
-                            local!documentoFisicoEditar &lt;&gt; fv!item,
-                            true,
-                            false
-                          )
-                        ),
-                        false
+                        equals: false(),
+                        then: false(),
+                        whenTrue:  a!isNullOrEmpty(local!documentoFisicoEditar),
+                        then: false(),
+                        whenTrue:  local!documentoFisicoEditar &lt;&gt; fv!item,
+                        then: true(),
+                        default: false()
                       )
                     },
                     color: "POSITIVE"
@@ -532,22 +517,21 @@
                     ),
                     linkStyle: "STANDALONE",
                     showWhen: {
-                      if(
-                        and(
-                          local!editar[1] = - 1,
-                          local!editar[2] = 0,
-                          local!eliminar = false
-                        ),
-                        true,
-                        if(
-                          and(
-                            local!editar[1] = fv!index,
-                            local!editar[2] = 1,
-                            local!eliminar = false
-                          ),
-                          true,
-                          false
-                        )
+                      a!match(value: and(
+                        local!editar[1] = - 1,
+                        local!editar[2] = 0,
+                        local!eliminar = false
+                      ),
+                      equals: true(),
+                      then: true(),
+                      whenTrue: and(
+                        local!editar[1] = fv!index,
+                        local!editar[2] = 1,
+                        local!eliminar = false
+                      ),
+                      then: true(),
+                      default: false()
+                      
                       )
                     },
                     color: "NEGATIVE"
@@ -717,5 +701,6 @@
         <historyInfo versionUuid="_a-0000eaa5-8248-8000-e681-01ef9001ef90_8223324"/>
         <historyInfo versionUuid="_a-0000eb09-d442-8000-e687-01ef9001ef90_8833842"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9395379"/>
+        <historyInfo versionUuid="_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10131582"/>
     </history>
 </contentHaul>

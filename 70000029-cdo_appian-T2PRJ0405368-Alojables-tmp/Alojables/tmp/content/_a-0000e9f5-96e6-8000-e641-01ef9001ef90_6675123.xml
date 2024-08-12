@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
-    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9553709</versionUuid>
+    <versionUuid>_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10121213</versionUuid>
     <rule>
         <name>SCDO_ObtenerUsuariosFaltantes</name>
         <uuid>_a-0000e9f5-96e6-8000-e641-01ef9001ef90_6675123</uuid>
@@ -18,7 +18,7 @@
         <definition>a!localVariables(
   local!reportes: 
   a!refreshVariable(
-  value:#"SYSTEM_SYSRULES_queryEntity_v2"(
+  value: index(#"SYSTEM_SYSRULES_queryEntity_v2"(
     entity: #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_1932909",
     query: #"SYSTEM_SYSRULES_query"(
       aggregation: #"SYSTEM_SYSRULES_queryAggregation"(
@@ -31,10 +31,10 @@
           #"SYSTEM_SYSRULES_queryAggregationColumn"(field: "usuario", isGrouping: true)
         }
       ),
-      pagingInfo: #"SYSTEM_SYSRULES_pagingInfo"(startIndex: 1, batchSize: - 1)
+      pagingInfo: #"SYSTEM_SYSRULES_pagingInfo"(startIndex: 1, batchSize:  5000)
     ),
     fetchTotalCount: true
-  ).data,
+  ),"data", null),
 
   refreshOnVarChange: {ri!refreshCount}
   ),
@@ -48,10 +48,13 @@
       pagingInfo: #"SYSTEM_SYSRULES_pagingInfo"(startIndex: 1, batchSize: - 1)
     ),
     fetchTotalCount: true
-  ).data,"usuarioopics",{}),
+  ),"data","usuarioopics",{}),
 
   refreshOnVarChange: {ri!refreshCount}
   ),
+  
+  
+  
   local!diferencia: 
   a!refreshVariable(
     value: #"_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9534907"(
@@ -154,5 +157,6 @@
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9504901"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9540275"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9553709"/>
+        <historyInfo versionUuid="_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10121213"/>
     </history>
 </contentHaul>

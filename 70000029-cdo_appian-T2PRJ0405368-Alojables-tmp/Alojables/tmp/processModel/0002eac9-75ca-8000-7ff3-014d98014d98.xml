@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <processModelHaul>
-  <versionUuid>0007eb77-a477-8000-aebd-014d98014d98</versionUuid>
+  <versionUuid>0000ec71-e853-8000-cfca-014d98014d98</versionUuid>
   <folderUuid>_g-0000e801-560f-8000-3039-014d98014d98_291</folderUuid>
   <roleMap>
     <role name="ADMIN_OWNER">
@@ -69,11 +69,11 @@
           <string-map>
             <pair>
               <locale country="US" lang="en" variant=""/>
-              <value><![CDATA[SCDO_MOVER_DOCUMENTO_A_DOCUMENTACION_OFICIAL]]></value>
+              <value><![CDATA[=document(documentId: pv!documento, property: "name")&"SCDO_MOVER_DOCUMENTO_A_DOCUMENTACION_OFICIAL"]]></value>
             </pair>
             <pair>
               <locale country="" lang="es" variant=""/>
-              <value><![CDATA[SCDO_MOVER_DOCUMENTO_A_DOCUMENTACION_OFICIAL]]></value>
+              <value><![CDATA[=document(documentId: pv!documento, property: "name")&"SCDO_MOVER_DOCUMENTO_A_DOCUMENTACION_OFICIAL"]]></value>
             </pair>
           </string-map>
         </process-name>
@@ -85,13 +85,18 @@
           <aex/>
         </deadline>
         <pm-notification-settings>
-          <custom-settings>false</custom-settings>
+          <custom-settings>true</custom-settings>
           <notify-initiator>false</notify-initiator>
           <notify-owner>false</notify-owner>
-          <usersandgroups/>
+          <usersandgroups>
+            <people>
+              <type>4096</type>
+              <stringId><![CDATA[_e-0000ec31-ac7e-8000-e698-011e94011e94_8438]]></stringId>
+            </people>
+          </usersandgroups>
           <recipients-exp/>
         </pm-notification-settings>
-        <cleanup-action>3</cleanup-action>
+        <cleanup-action>2</cleanup-action>
         <auto-archive-delay>7</auto-archive-delay>
         <auto-delete-delay>0</auto-delete-delay>
         <timeZoneId><![CDATA[America/Belize]]></timeZoneId>
@@ -390,7 +395,13 @@
           <on-complete-delete-previous-completed>false</on-complete-delete-previous-completed>
           <pre-triggers/>
           <post-triggers/>
-          <event-producers/>
+          <event-producers>
+            <terminate-producer index="0">
+              <persistentId>0001ec5e-30cc-8000-cdc1-014d98014d98</persistentId>
+              <name><![CDATA[Terminate Process_1]]></name>
+              <desc/>
+            </terminate-producer>
+          </event-producers>
           <exception-flow/>
           <label>
             <fontColor>#000000</fontColor>
@@ -425,7 +436,7 @@
               </pair>
               <pair>
                 <locale country="" lang="es" variant=""/>
-                <value/>
+                <value><![CDATA[Move Document]]></value>
               </pair>
             </string-map>
           </fname>
@@ -439,7 +450,7 @@
               </pair>
               <pair>
                 <locale country="" lang="es" variant=""/>
-                <value/>
+                <value><![CDATA[Move Document]]></value>
               </pair>
             </string-map>
           </display>
@@ -683,5 +694,7 @@
   <history>
     <historyInfo versionUuid="0000eac9-7bad-8000-7ffc-014d98014d98"/>
     <historyInfo versionUuid="0007eb77-a477-8000-aebd-014d98014d98"/>
+    <historyInfo versionUuid="0000ec5e-30cd-8000-cdc2-014d98014d98"/>
+    <historyInfo versionUuid="0000ec71-e853-8000-cfca-014d98014d98"/>
   </history>
 </processModelHaul>

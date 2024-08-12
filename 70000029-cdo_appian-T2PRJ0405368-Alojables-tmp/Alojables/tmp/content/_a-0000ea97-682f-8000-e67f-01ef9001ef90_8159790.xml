@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
-    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9386712</versionUuid>
+    <versionUuid>_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10119856</versionUuid>
     <rule>
         <name>SCDO_validar_algun_null_ObtenerReportesExcel</name>
         <uuid>_a-0000ea97-682f-8000-e67f-01ef9001ef90_8159790</uuid>
@@ -16,18 +16,18 @@
             <unlogged>false</unlogged>
         </visibility>
         <definition>a!localVariables(
-  local!totalCount: readexcelsheetpaging(
+  local!totalCount: index(readexcelsheetpaging(
     excelDocument: ri!documento,
     sheetNumber: 0,
-    pagingInfo: #"SYSTEM_SYSRULES_pagingInfo"(1, -1),
+    pagingInfo: #"SYSTEM_SYSRULES_pagingInfo"(1, 0),
     numberOfColumns: 0
-  ).totalCount,
-  local!informacion: readexcelsheetpaging(
+  ),"totalCount", null),
+  local!informacion: index(readexcelsheetpaging(
     excelDocument: ri!documento,
     sheetNumber: 0,
     pagingInfo: #"SYSTEM_SYSRULES_pagingInfo"(1, local!totalCount),
     numberOfColumns: 0
-  ).data,
+  ),"data", null),
   local!operaciones: reject(
     fn!isnull,
     a!flatten(
@@ -146,5 +146,6 @@
     <history>
         <historyInfo versionUuid="_a-0000ea97-682f-8000-e67f-01ef9001ef90_8159802"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9386712"/>
+        <historyInfo versionUuid="_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10119856"/>
     </history>
 </contentHaul>

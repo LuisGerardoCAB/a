@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
-    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9504530</versionUuid>
+    <versionUuid>_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10123832</versionUuid>
     <rule>
         <name>SCDO_getPermisosUByFilters</name>
         <uuid>_a-0000e878-569a-8000-e5e4-01ef9001ef90_2113426</uuid>
@@ -15,9 +15,12 @@
             <system>false</system>
             <unlogged>false</unlogged>
         </visibility>
-        <definition>#"_a-0000e8b9-0989-8000-e5fd-01ef9001ef90_2420859"(
-  dataStoreEntity_dt: #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2113419",
-  queryFilter_any: {
+        <definition> #"SYSTEM_SYSRULES_queryEntity_v2"(
+   entity:  #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2113419",
+   query: #"SYSTEM_SYSRULES_query"(
+     logicalExpression: #"SYSTEM_SYSRULES_queryLogicalExpression"(
+       operator: "AND",
+       filters: {
     #"SYSTEM_SYSRULES_queryFilter"(
       field: "idacceso",
       operator: "=",
@@ -50,15 +53,19 @@
     ),
 
   },
-  selectionColumn_txt: ri!seleccionColumnasList_txt,   
-  pagingInfo_pi: ri!paginInfo_pi,
-  ignoreFiltersWithEmptyValues_bool:true,
-  fetchTotalCount_bool: true()
-)
+  ignoreFiltersWithEmptyValues: true()
+     ),
+     pagingInfo: if(
+       a!isNotNullOrEmpty(ri!paginInfo_pi),
+       ri!paginInfo_pi,
+       #"SYSTEM_SYSRULES_pagingInfo"(
+         startIndex: 1,
+         batchSize: 15000,
+       )
+     )
 
-
-
-
+   )
+ )
 
 
 </definition>
@@ -156,5 +163,6 @@
         <historyInfo versionUuid="_a-0000e9a3-ab27-8000-e63d-01ef9001ef90_4836235"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9386735"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9504530"/>
+        <historyInfo versionUuid="_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10123832"/>
     </history>
 </contentHaul>

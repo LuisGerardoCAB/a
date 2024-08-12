@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
-    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9451500</versionUuid>
+    <versionUuid>_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10122430</versionUuid>
     <rule>
         <name>SCDO_NoReportesSinCC</name>
         <uuid>_a-0000ea22-4ef8-8000-e643-01ef9001ef90_6703025</uuid>
@@ -22,7 +22,7 @@
       query: #"SYSTEM_SYSRULES_query"(
         paginginfo: #"SYSTEM_SYSRULES_pagingInfo"(
           startIndex: 1,
-          batchSize: -1,
+          batchSize: 2000,
         ),
       )
     ),
@@ -62,5 +62,6 @@
         <historyInfo versionUuid="_a-0000ea22-4ef8-8000-e643-01ef9001ef90_6760596"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9386304"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9451500"/>
+        <historyInfo versionUuid="_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10122430"/>
     </history>
 </contentHaul>

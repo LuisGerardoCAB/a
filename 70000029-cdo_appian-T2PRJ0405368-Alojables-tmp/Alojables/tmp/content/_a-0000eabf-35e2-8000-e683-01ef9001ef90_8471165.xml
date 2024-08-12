@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
-    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9386989</versionUuid>
+    <versionUuid>_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10120118</versionUuid>
     <rule>
         <name>SCDO_validarReqAprovUsu</name>
         <uuid>_a-0000eabf-35e2-8000-e683-01ef9001ef90_8471165</uuid>
@@ -18,6 +18,7 @@
         <definition>reject(
   fn!isnull,
   {
+    
     if(
       a!isNullOrEmpty(
         index(
@@ -28,18 +29,7 @@
         )
       ),
       "El campo profile.username es requerido.",
-      if(
-        len(
-          index(
-            ri!requestBody,
-            "profile",
-            "username",
-            {}
-          )
-        ) &gt; 10,
-        "El campo profile.username no puede exceder los 10 caracteres.",
-        null
-      )
+     {}
     ),
     if(
       a!isNullOrEmpty(
@@ -65,6 +55,8 @@
       "El campo profile.lastName es requerido.",
       null
     ),
+    
+    
     if(
       and(
         a!isNotNullOrEmpty(
@@ -200,7 +192,12 @@
       null
     )
   }
-)</definition>
+)
+
+
+
+
+</definition>
         <namedTypedValue>
             <name>requestBody</name>
             <type>
@@ -283,11 +280,105 @@
                     </a:expectedOutput>
                 </a:assertions>
             </el>
+            <el>
+                <a:name>Test case campos requeridos</a:name>
+                <a:ruleInputTestConfigs>
+                    <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="a:Expression">"{
+""profile "": {
+""username "" : ""n475223 "",
+""firstName "" :  ""Usuario de prueba "",
+""lastName ""	: ""CDO "",
+""nickname ""	: "" "",
+""supervisor "" : "" "",
+""title "" : ""  ""},
+""contact "":
+{
+""email "" : ""joserodriguezar@empresaexterna.com.mx "",
+""officePhone "" : ""  "",
+""mobilePhone "" : ""  "",
+""homePhone "" : ""  ""
+},
+
+""location "":
+{
+""address1 "" : ""  "",
+""address2 "" : ""  "",
+""address3 "" : ""  "",
+""city "" : ""  "",
+""state "" : ""  "",
+""zipCode "" : ""  "",
+""country "" : ""  ""
+},
+""customFields "":
+{
+""customField1 "": "" "",
+""customField2 "": "" "",
+""customField3 "": "" "",
+""customField4 "": "" "",
+""customField5 "": "" "",
+""customField6 "": "" "",
+""customField7 "": "" "",
+""customField8 "": "" "",
+""customField9 "": "" "",
+""customField10 "": "" ""
+},
+""group "":[
+{
+""nameGroup "": ""SCDO SAML ""
+},
+{
+""nameGroup "": ""SCDO Users ""
+}
+]
+}"</a:value>
+                    <a:nameRef>requestBody</a:nameRef>
+                    <a:id>1</a:id>
+                </a:ruleInputTestConfigs>
+                <a:assertions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+            </el>
+            <el>
+                <a:name>requestBoby con campos faltantes</a:name>
+                <a:ruleInputTestConfigs>
+                    <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="a:Expression">{
+  profile:
+  {
+    username :"",
+    firstName :"",
+    lastName :"pedro",
+  },
+  contact:
+  {
+    email :"luvvcvcvcvcvcvcvcvcvcvcvcvcvcvcvis.castilloasvcccccccccccccccccccccccccccccccscompany.com.mx",
+  },
+  customFields:
+  {
+    customField1:"", /*Utilizado para la extension*/
+    customField2:"" /*Utilizado para el Cc*/
+  }, group: {'type!{urn:com:appian:types:SCDO}SCDO_Grupos'(
+    nameGroup: "SCDO Todos los Usuarios"
+
+  ),'type!{urn:com:appian:types:SCDO}SCDO_Grupos'(
+    nameGroup: "SCDO Administrators"
+
+  ),'type!{urn:com:appian:types:SCDO}SCDO_Grupos'(
+    nameGroup: "SCDO Users"
+
+  ),
+
+  }
+
+}</a:value>
+                    <a:nameRef>requestBody</a:nameRef>
+                    <a:id>1</a:id>
+                </a:ruleInputTestConfigs>
+                <a:assertions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+            </el>
         </value>
     </typedValue>
     <history>
         <historyInfo versionUuid="_a-0000eabf-35e2-8000-e683-01ef9001ef90_8471171"/>
         <historyInfo versionUuid="_a-0000eae4-5659-8000-e685-01ef9001ef90_8622344"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9386989"/>
+        <historyInfo versionUuid="_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10120118"/>
     </history>
 </contentHaul>

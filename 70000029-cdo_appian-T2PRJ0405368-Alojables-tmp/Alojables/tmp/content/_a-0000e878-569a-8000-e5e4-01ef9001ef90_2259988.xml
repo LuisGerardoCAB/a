@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
-    <versionUuid>_a-0000eb9b-4ec6-8000-e68b-01ef9001ef90_9630884</versionUuid>
+    <versionUuid>_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10137855</versionUuid>
     <interface>
         <name>SCDO_PendienteRev</name>
         <uuid>_a-0000e878-569a-8000-e5e4-01ef9001ef90_2259988</uuid>
@@ -79,9 +79,9 @@
               }
             )
           ),
-          pagingInfo: #"SYSTEM_SYSRULES_pagingInfo"(1,-1)
+          pagingInfo: #"SYSTEM_SYSRULES_pagingInfo"(1,500)
         )
-      ).data,
+      ),"data",
       "idreporte",
       null
     ),
@@ -106,10 +106,10 @@
             instructions: "Seleccione el Segmento",
             placeholder: "--- Selecciona ---",
             choiceLabels: {
-              index(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2233353"(idSegmento: null).data,"segmento",{})
+              index(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2233353"(idSegmento: null),"data","segmento",{})
             },
             choiceValues: {
-              index(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2233353"(idSegmento: null).data,"idsegmento",{})
+              index(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2233353"(idSegmento: null),"data","idsegmento",{})
             },
             value: local!Segmento,
             saveInto: {
@@ -131,10 +131,10 @@
             instructions: "Seleccione la Región",
             placeholder: "--- Selecciona ---",
             choiceLabels: {
-              index(#"_a-0000e8d8-9b98-8000-e605-01ef9001ef90_2872186"(idregion: null).data,"region",{})
+              index(#"_a-0000e8d8-9b98-8000-e605-01ef9001ef90_2872186"(idregion: null),"data","region",{})
             },
             choiceValues: {
-              index(#"_a-0000e8d8-9b98-8000-e605-01ef9001ef90_2872186"(idregion: null).data,"region",{})
+              index(#"_a-0000e8d8-9b98-8000-e605-01ef9001ef90_2872186"(idregion: null),"data","region",{})
             },
             value: local!Region,
             saveInto: {
@@ -153,10 +153,10 @@
             instructions: "Seleccione el Riesgo",
             placeholder: "--- Selecciona ---",
             choiceLabels: {
-              index(#"_a-0000e9f5-96e6-8000-e641-01ef9001ef90_6085096"(idriesgo: null).data,"riesgo",{})
+              index(#"_a-0000e9f5-96e6-8000-e641-01ef9001ef90_6085096"(idriesgo: null),"data","riesgo",{})
             },
             choiceValues: {
-              index(#"_a-0000e9f5-96e6-8000-e641-01ef9001ef90_6085096"(idriesgo: null).data,"idriesgo",{})
+              index(#"_a-0000e9f5-96e6-8000-e641-01ef9001ef90_6085096"(idriesgo: null),"data","idriesgo",{})
             },
             value: local!riesgo,
             saveInto: {
@@ -174,10 +174,10 @@
             instructions: "Seleccione el Centro de Costos",
             placeholder: "--- Selecciona ---",
             choiceLabels: {
-              index(#"_a-0000e8c4-62ba-8000-e603-01ef9001ef90_2682345"(idccostos: null).data,"cc",{})
+              index(#"_a-0000e8c4-62ba-8000-e603-01ef9001ef90_2682345"(idccostos: null),"data","cc",{})
             },
             choiceValues: {
-              index(#"_a-0000e8c4-62ba-8000-e603-01ef9001ef90_2682345"(idccostos: null).data,"idccostos",{})
+              index(#"_a-0000e8c4-62ba-8000-e603-01ef9001ef90_2682345"(idccostos: null),"data","idccostos",{})
             },
             value: local!ccostos,
             saveInto: {
@@ -188,8 +188,10 @@
                 if(
                   a!isNullOrEmpty(local!ccostos),
                   null,
-                  #"_a-0000e8c4-62ba-8000-e603-01ef9001ef90_2682345"(idccostos: local!ccostos).data[1].cc
-                )
+                  index(#"_a-0000e8c4-62ba-8000-e603-01ef9001ef90_2682345"(idccostos: local!ccostos, paginInfo: #"SYSTEM_SYSRULES_pagingInfo"(
+                    startIndex: 1, batchSize: 1
+                  )),"data","cc",null)
+                  )
               ),
               
             },
@@ -248,7 +250,7 @@
           width: "AUTO"
         ),
         #"SYSTEM_SYSRULES_sideBySideItem"(
-          item: #"SYSTEM_SYSRULES_checkboxField"(
+          item: #"SYSTEM_SYSRULES_checkboxField_v1"(
             label: "",
             labelPosition: "ABOVE",
             choiceLabels: { "Obligatorio" },
@@ -295,14 +297,13 @@
               a!save(local!documento, null)
             },
             validations: {
-              if(
-                and(a!isNotNullOrEmpty(local!fechaDrop),a!isNotNullOrEmpty(local!fechaalDrop)),
-                if(
-                   local!fechaDrop &gt; local!fechaalDrop,
-                  "La fecha al debe ser mayor que la fecha de",
-                  ""
-                ),
-                ""
+              a!match(
+                value:  and(a!isNotNullOrEmpty(local!fechaDrop),a!isNotNullOrEmpty(local!fechaalDrop)),
+                equals: false(),
+                then:  "",
+                whenTrue: local!fechaDrop &gt; local!fechaalDrop,
+                then: "La fecha al debe ser mayor que la fecha de",
+                default:  ""
               )
 
             },
@@ -341,14 +342,13 @@
               a!save(local!documento, null)
             },
             validations: {
-              if(
-                and(a!isNotNullOrEmpty(local!fechaDrop),a!isNotNullOrEmpty(local!fechaalDrop)),
-              if(
-                 local!fechaDrop &gt; local!fechaalDrop,
-                "La fecha al debe ser mayor que la fecha de",
-                ""
-              ),
-              ""
+              a!match(
+                value:  and(a!isNotNullOrEmpty(local!fechaDrop),a!isNotNullOrEmpty(local!fechaalDrop)),
+                equals: false(),
+                then:  "",
+                whenTrue: local!fechaDrop &gt; local!fechaalDrop,
+                then: "La fecha al debe ser mayor que la fecha de",
+                default:  ""
               )
               
 
@@ -380,10 +380,10 @@
             instructions: "Seleccione el Usuario",
             placeholder: "--- Selecciona ---",
             choiceLabels: {
-              index(local!usuariosRegistrados.data,"usuarioopics",{})
+              index(local!usuariosRegistrados,"data","usuarioopics",{})
             },
             choiceValues: {
-              index(local!usuariosRegistrados.data,"idusuarioopics",{})
+              index(local!usuariosRegistrados,"data","idusuarioopics",{})
             },
             value: local!UsuarioSeleccionado,
             saveInto: {
@@ -394,9 +394,9 @@
                 if(
                   a!isNullOrEmpty(local!UsuarioSeleccionado),
                   null,
-                  #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2152641"(
+                  index(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2152641"(
                     idUsuarioOpic: local!UsuarioSeleccionado
-                  ).data[1].usuarioopics
+                  ),"data","usuarioopics", null)
                 )
               )
             },
@@ -405,7 +405,7 @@
           width: "AUTO"
         ),
         #"SYSTEM_SYSRULES_sideBySideItem"(
-          item: #"SYSTEM_SYSRULES_checkboxField"(
+          item: #"SYSTEM_SYSRULES_checkboxField_v1"(
             label: "",
             labelPosition: "ABOVE",
             choiceLabels: { "REI" },
@@ -417,7 +417,7 @@
           width: "AUTO"
         ),
         #"SYSTEM_SYSRULES_sideBySideItem"(
-          item: #"SYSTEM_SYSRULES_checkboxField"(
+          item: #"SYSTEM_SYSRULES_checkboxField_v1"(
             label: "",
             labelPosition: "ABOVE",
             choiceLabels: { "No Permitido" },
@@ -432,7 +432,7 @@
           width: "AUTO"
         ),
         #"SYSTEM_SYSRULES_sideBySideItem"(
-          item: #"SYSTEM_SYSRULES_checkboxField"(
+          item: #"SYSTEM_SYSRULES_checkboxField_v1"(
             label: "",
             labelPosition: "ABOVE",
             choiceLabels: { "Llamada Telefonica" },
@@ -451,7 +451,7 @@
     ),
     #"SYSTEM_SYSRULES_ButtonArrayLayout"(
       buttons: {
-        #"SYSTEM_SYSRULES_ButtonWidget"(
+        #"SYSTEM_SYSRULES_buttonWidget_v1"(
           label: "Limpiar",
           saveInto: {
             a!save(
@@ -484,7 +484,7 @@
 
           },
           size: "SMALL",
-          style: "SECONDARY",
+          style: "GHOST",
           loadingIndicator: false,
           showWhen: true
         )
@@ -540,7 +540,7 @@
           contents: {
             #"SYSTEM_SYSRULES_ButtonArrayLayout"(
               buttons: {
-                #"SYSTEM_SYSRULES_ButtonWidget"(
+                #"SYSTEM_SYSRULES_buttonWidget_v1"(
                   icon: "refresh",
                   tooltip: "Actualizar Tabla",
                   saveInto: a!save(
@@ -548,7 +548,7 @@
                     local!refreshCount + 1
                   ),
                   size: "SMALL",
-                  style: "SECONDARY",
+                  style: "GHOST",
                   loadingIndicator: true
                 )
               },
@@ -611,7 +611,7 @@
           contents: {
             #"SYSTEM_SYSRULES_ButtonArrayLayout"(
               buttons: {
-                #"SYSTEM_SYSRULES_ButtonWidget"(
+                #"SYSTEM_SYSRULES_buttonWidget_v1"(
                   label: "Aprobar seleccionados",
                   icon: "check",
                   saveInto: #"SYSTEM_SYSRULES_startProcess"(
@@ -631,7 +631,7 @@
                     }
                   ),
                   size: "SMALL",
-                  style: "NORMAL",
+                  style: "GHOST",
                   disabled: a!isNullOrEmpty(local!selectedRep),
                   loadingIndicator: true,
                   confirmMessage: "Se aceptarán las operaciones seleccionadas sin revisión de documentos . ¿Desea continuar?",
@@ -680,7 +680,7 @@
       )
     ),
     
-    #"SYSTEM_SYSRULES_gridField_v1"(
+    #"SYSTEM_SYSRULES_gridField_v2"(
       labelPosition: "ABOVE",
       data: #"SYSTEM_SYSRULES_queryEntity_v2"(
         entity: #"_a-0000e8c4-62ba-8000-e603-01ef9001ef90_2510382",
@@ -807,7 +807,7 @@
               #"SYSTEM_SYSRULES_queryFilter"(
                 field: "segmento",
                 operator: "=",
-                value: #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2233353"(idSegmento: local!Segmento).data[1].segmento ,
+                value: tostring(index(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2233353"(idSegmento: local!Segmento),"data","segmento", null)),
                 applywhen:a!isNotNullOrEmpty(local!Segmento)
               ),
               #"SYSTEM_SYSRULES_queryFilter"(
@@ -846,7 +846,7 @@
               #"SYSTEM_SYSRULES_queryFilter"(
                 field: "usuario",
                 operator: "=",
-                value: local!Usuario,
+                value: tostring(local!Usuario),
                 applywhen:a!isNotNullOrEmpty(local!Usuario)
               ),
               #"SYSTEM_SYSRULES_queryFilter"(
@@ -864,7 +864,7 @@
               #"SYSTEM_SYSRULES_queryFilter"(
                 field: "cc",
                 operator: "=",
-                value: local!ccostosSeleccionado,
+                value: tostring(local!ccostosSeleccionado),
                 /*applywhen: a!isNotNullOrEmpty(local!REI)*/
                 applywhen: a!isNotNullOrEmpty(local!ccostosSeleccionado)
                 
@@ -1007,9 +1007,32 @@
           label: "Nombre",
           sortField: "nombre",
           value: if(
-            isnull(fv!row.nombre),
-            "NO",
-            fv!row.nombre
+            isnull(index(fv!row, "nombre", null)),
+            "Sin cliente",
+            a!match(
+              value: index(
+                decrypttext(
+                  valueToDecrypt: index(fv!row, "nombre", null),
+                  iv: #"_a-0000ec31-ac7e-8000-e69b-01ef9001ef90_10021470",
+                  scsKey: #"_a-0000ec31-ac7e-8000-e69b-01ef9001ef90_10021476"
+                ),
+                "success",
+                null
+              ),
+              equals: true,
+              then: index(
+                decrypttext( valueToDecrypt:
+                index(fv!row, "nombre", null),
+                iv: #"_a-0000ec31-ac7e-8000-e69b-01ef9001ef90_10021470",
+                scsKey: #"_a-0000ec31-ac7e-8000-e69b-01ef9001ef90_10021476"
+                ),
+                "value",
+                null
+              ),
+              equals: false,
+              then: index(fv!row, "nombre", null),
+              default: "luis"
+            )
           )
         ),
         #"SYSTEM_SYSRULES_gridColumn"(
@@ -1018,7 +1041,8 @@
           value: if(
             isnull(fv!row.monto2),
             "NO",
-            dollar(fv!row.monto2, 2, 0)
+            #"urn:appian:function:v1:a:currency"(isoCode: "USD", value: index(fv!row, "monto2", null),
+            decimalPlaces: 2)
           ),
           align: "END"
         ),
@@ -1058,10 +1082,10 @@
             "NO",
             if(
               a!isNullOrEmpty(
-                #"4abb2c14-ac25-4b4a-a0f6-a11f52071c0b"(usuarioopics: (fv!row.usuario)).data
+                index(#"4abb2c14-ac25-4b4a-a0f6-a11f52071c0b"(usuarioopics: fv!row.usuario),"data", null)
               ),
               "NO",
-              #"4abb2c14-ac25-4b4a-a0f6-a11f52071c0b"(usuarioopics: (fv!row.usuario)).data[1].nombre
+              index(#"4abb2c14-ac25-4b4a-a0f6-a11f52071c0b"(usuarioopics: fv!row.usuario),"data","nombre", null)
             )
           )
         ),
@@ -1109,7 +1133,7 @@
         #"SYSTEM_SYSRULES_gridColumn"(
           label: "Detalle",
           value: #"SYSTEM_SYSRULES_ButtonLayout"(
-            #"SYSTEM_SYSRULES_ButtonWidget"(
+            #"SYSTEM_SYSRULES_buttonWidget_v1"(
               icon: "eye",
               tooltip: "Detalles de operacion",
               value: fv!identifier,
@@ -1212,10 +1236,8 @@
         mostrarDocumentos: local!mostrarDocumentos,
         documentacion: local!documentacion,
         reporte: local!reporteSeleccionado,
-        digitalizados: local!digitalizados,
         refreshCount: local!refreshCount,
         mostrarGrid: local!mostrarGrid,
-        digitalizados_rechazados:local!digitalizados_rechazados
       ),
       {}
     )
@@ -1267,5 +1289,7 @@
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9542709"/>
         <historyInfo versionUuid="_a-0000eb9b-4ec6-8000-e68b-01ef9001ef90_9613045"/>
         <historyInfo versionUuid="_a-0000eb9b-4ec6-8000-e68b-01ef9001ef90_9630884"/>
+        <historyInfo versionUuid="_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10136021"/>
+        <historyInfo versionUuid="_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10137855"/>
     </history>
 </contentHaul>

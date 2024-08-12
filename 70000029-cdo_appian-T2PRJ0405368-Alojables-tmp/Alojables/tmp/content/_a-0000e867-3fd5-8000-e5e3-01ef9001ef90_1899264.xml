@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
-    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9542386</versionUuid>
+    <versionUuid>_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10134824</versionUuid>
     <interface>
         <name>SCDO_Alta_Sucursales</name>
         <uuid>_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1899264</uuid>
@@ -68,15 +68,16 @@
   /*------------*/
   local!refreshCount: 0,
   local!centrosCostos: a!refreshVariable(
-    value: #"_a-0000e8c4-62ba-8000-e603-01ef9001ef90_2682345"(idccostos: null, paginInfo: #"SYSTEM_SYSRULES_pagingInfo"(startIndex: 1, batchSize: -1, sort: #"SYSTEM_SYSRULES_sortInfo"(field: "idccostos", ascending: true))).data,
+    value: index(#"_a-0000e8c4-62ba-8000-e603-01ef9001ef90_2682345"(idccostos: null, 
+    paginInfo: #"SYSTEM_SYSRULES_pagingInfo"(startIndex: 1, batchSize: 2000, sort: #"SYSTEM_SYSRULES_sortInfo"(field: "idccostos", ascending: true))),"data", null),
     /*refreshAlways: true,*/
     refreshOnVarChange: local!refreshCount,
     refreshOnReferencedVarChange: true
   ),
   local!idccostoseleccionado,
   local!centroSeleccionado,
-  local!segmentos: #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2233353"(idSegmento: null).data,
-  local!regiones: #"_a-0000e8d8-9b98-8000-e605-01ef9001ef90_2872186"(idregion: null).data,
+  local!segmentos: index(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2233353"(idSegmento: null),"data", null),
+  local!regiones: index(#"_a-0000e8d8-9b98-8000-e605-01ef9001ef90_2872186"(idregion: null),"data", null),
   local!ccostos,
   local!nombre,
   local!segmento,
@@ -86,10 +87,10 @@
     a!isNullOrEmpty(local!centroSeleccionado),
     false,
     if(
-      a!isNullOrEmpty(#"_a-0000e8d8-9b98-8000-e605-01ef9001ef90_2933354"(ccostos: local!centroSeleccionado.cc)),
+      a!isNullOrEmpty(#"_a-0000e8d8-9b98-8000-e605-01ef9001ef90_2933354"(ccostos: index(local!centroSeleccionado,"cc", null))),
       false,
       if(
-        length(#"_a-0000e8d8-9b98-8000-e605-01ef9001ef90_2933354"(ccostos: local!centroSeleccionado.cc)) &gt; 0,
+        length(#"_a-0000e8d8-9b98-8000-e605-01ef9001ef90_2933354"(ccostos: index(local!centroSeleccionado,"cc", null))) &gt; 0,
         true,
         false
       )
@@ -108,14 +109,14 @@
       /*)*/
     /*)*/
   /*),*/
-  local!centroNuevoUtilizado: if(
-    and(isnull(local!idccostoseleccionado), isnull(local!modificar)),
-    if(
-      a!isNullOrEmpty(#"_a-0000e8c4-62ba-8000-e603-01ef9001ef90_2682345"(cc: local!ccostos).data),
-      false,
-      true
-    ),
-    false
+  local!centroNuevoUtilizado: 
+  a!match(value: and(isnull(local!idccostoseleccionado), isnull(local!modificar)),
+  equals: false(),
+  then: false(),
+  whenTrue: a!isNullOrEmpty(index(#"_a-0000e8c4-62ba-8000-e603-01ef9001ef90_2682345"(cc: local!ccostos),"data", null)),
+  then: false(),
+  default: true()
+  
   ),
   {
     
@@ -214,12 +215,12 @@
           contents: {
             #"SYSTEM_SYSRULES_ButtonArrayLayout"(
               buttons: {
-                #"SYSTEM_SYSRULES_ButtonWidget"(
+                #"SYSTEM_SYSRULES_buttonWidget_v1"(
                   icon: "refresh",
                   tooltip: "Actualizar Centros",
                   saveInto: a!save(local!refreshCount, local!refreshCount +1),
                   size: "SMALL",
-                  style: "SECONDARY"
+                  style: "GHOST"
                 )
               },
               align: "END"
@@ -238,7 +239,8 @@
               value: local!idccostoseleccionado,
               saveInto: {
                 local!idccostoseleccionado,
-                a!save(local!centroSeleccionado, if(a!isNullOrEmpty(local!idccostoseleccionado), null(), #"_a-0000e8c4-62ba-8000-e603-01ef9001ef90_2682345"(idccostos: local!idccostoseleccionado).data[1])),
+                a!save(local!centroSeleccionado, if(a!isNullOrEmpty(local!idccostoseleccionado), null(), 
+                index(#"_a-0000e8c4-62ba-8000-e603-01ef9001ef90_2682345"(idccostos: local!idccostoseleccionado),"data", null))),
                 a!save(local!ccostos, if(a!isNullOrEmpty(local!centroSeleccionado), null, local!centroSeleccionado.cc)),
                 a!save(local!nombre, if(a!isNullOrEmpty(local!centroSeleccionado), null, local!centroSeleccionado.nombre)),
                 a!save(local!segmento, if(a!isNullOrEmpty(local!centroSeleccionado), null, local!centroSeleccionado.idsegmento)),
@@ -253,7 +255,7 @@
         ),
         #"SYSTEM_SYSRULES_columnLayout"(
           contents: {
-            #"SYSTEM_SYSRULES_checkboxField"(
+            #"SYSTEM_SYSRULES_checkboxField_v1"(
               label: "",
               labelPosition: "ABOVE",
               choiceLabels: { "Modificar Centro de Costo" },
@@ -311,7 +313,8 @@
                             if(
                               a!isNullOrEmpty(local!idccostoseleccionado),
                               if(
-                                a!isNullOrEmpty(#"_a-0000e8c4-62ba-8000-e603-01ef9001ef90_2682345"(cc: local!ccostos).data),
+                                a!isNullOrEmpty(
+                                  index(#"_a-0000e8c4-62ba-8000-e603-01ef9001ef90_2682345"(cc: local!ccostos),"data", null)),
                                 {},
                                 "Ya existe este código de centro de costos en la base de datos"
                               ),
@@ -319,7 +322,8 @@
                                 local!ccostos = local!centroSeleccionado.cc,
                                 {},
                                 if(
-                                  a!isNullOrEmpty(#"_a-0000e8c4-62ba-8000-e603-01ef9001ef90_2682345"(cc: local!ccostos).data),
+                                  a!isNullOrEmpty(
+                                    index(#"_a-0000e8c4-62ba-8000-e603-01ef9001ef90_2682345"(cc: local!ccostos),"data", null)),
                                   {},
                                   "Ya existe este código de centro de costos en la base de datos"
                                 )
@@ -334,14 +338,12 @@
                           value: local!nombre,
                           saveInto: local!nombre,
                           refreshAfter: "KEYPRESS",
-                          disabled: if(
-                            a!isNullOrEmpty(local!idccostoseleccionado),
-                            false,
-                            if(
-                              a!isNullOrEmpty(local!modificar),
-                              true,
-                              false
-                            )
+                          disabled: a!match(value:a!isNullOrEmpty(local!idccostoseleccionado),
+                          equals: true, 
+                          then: false(),
+                          whenTrue: a!isNullOrEmpty(local!modificar),
+                          then: true(),
+                          default: false()
                           ),
                           validations: {}
                         ),
@@ -392,7 +394,7 @@
                       contents: {
                         #"SYSTEM_SYSRULES_ButtonArrayLayout"(
                           buttons: {
-                            #"SYSTEM_SYSRULES_ButtonWidget"(
+                            #"SYSTEM_SYSRULES_buttonWidget_v1"(
                               label: "CREAR NUEVO CENTRO DE COSTO",
                               loadingIndicator: true,
                               saveInto: {
@@ -422,7 +424,7 @@
                                   }
                                 )
                               },
-                              style: "DESTRUCTIVE",
+                              style: "GHOST",
                               disabled: or(a!isNotNullOrEmpty(local!idccostoseleccionado), isnull(local!ccostos), isnull(local!nombre), isnull(local!segmento), isnull(local!region), local!centroNuevoUtilizado = true),
                               validationGroup: "crear",
                               confirmHeader: "Se creará el nuevo Centro de Costos " &amp; local!ccostos,
@@ -451,7 +453,7 @@
                 ),
                 #"SYSTEM_SYSRULES_ButtonArrayLayout"(
                   buttons: {
-                    #"SYSTEM_SYSRULES_ButtonWidget"(
+                    #"SYSTEM_SYSRULES_buttonWidget_v1"(
                       label: "Guardar Cambios ",
                       saveInto: {
                         #"SYSTEM_SYSRULES_startProcess"(
@@ -495,7 +497,7 @@
                         )
 
                       },
-                      style: "DESTRUCTIVE",
+                     style: "GHOST",
                       disabled:if(
                         a!isNullOrEmpty(local!idccostoseleccionado),
                         true,
@@ -517,7 +519,7 @@
                       ),
                       confirmMessage: "¿Continuar?"
                     ),
-                    #"SYSTEM_SYSRULES_ButtonWidget"(
+                    #"SYSTEM_SYSRULES_buttonWidget_v1"(
                       label: "Eliminar",
                       saveInto: #"SYSTEM_SYSRULES_startProcess"(
                         processModel: #"_a-0000e928-a819-8000-e60e-01ef9001ef90_3303296",
@@ -551,7 +553,7 @@
                             
                           }
                       ),
-                      style: "DESTRUCTIVE",
+                      style: "GHOST",
                       loadingIndicator: true,
                       disabled: if(
                         a!isNullOrEmpty(local!modificar),
@@ -616,5 +618,6 @@
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9470928"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9508486"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9542386"/>
+        <historyInfo versionUuid="_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10134824"/>
     </history>
 </contentHaul>

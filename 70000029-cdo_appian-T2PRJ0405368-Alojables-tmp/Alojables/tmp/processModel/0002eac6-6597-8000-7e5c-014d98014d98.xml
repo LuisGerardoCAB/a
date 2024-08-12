@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <processModelHaul>
-  <versionUuid>0000eb80-b8a6-8000-b0e4-014d98014d98</versionUuid>
+  <versionUuid>0000ec71-df7f-8000-cfb8-014d98014d98</versionUuid>
   <folderUuid>_g-0000e801-560f-8000-3039-014d98014d98_291</folderUuid>
   <roleMap>
     <role name="ADMIN_OWNER">
@@ -69,11 +69,11 @@
           <string-map>
             <pair>
               <locale country="US" lang="en" variant=""/>
-              <value><![CDATA[SCDO_ELIMINAR_DOCUMENTOS_DE_DOCUMENTACION_OFICIAL]]></value>
+              <value><![CDATA[="SCDO_ELIMINAR_DOCUMENTOS_DE_DOCUMENTACION_OFICIAL" &today()]]></value>
             </pair>
             <pair>
               <locale country="" lang="es" variant=""/>
-              <value><![CDATA[SCDO_ELIMINAR_DOCUMENTOS_DE_DOCUMENTACION_OFICIAL]]></value>
+              <value><![CDATA[="SCDO_ELIMINAR_DOCUMENTOS_DE_DOCUMENTACION_OFICIAL" &today()]]></value>
             </pair>
           </string-map>
         </process-name>
@@ -85,13 +85,18 @@
           <aex/>
         </deadline>
         <pm-notification-settings>
-          <custom-settings>false</custom-settings>
+          <custom-settings>true</custom-settings>
           <notify-initiator>false</notify-initiator>
           <notify-owner>false</notify-owner>
-          <usersandgroups/>
+          <usersandgroups>
+            <people>
+              <type>4096</type>
+              <stringId><![CDATA[_e-0000ec31-ac7e-8000-e698-011e94011e94_8438]]></stringId>
+            </people>
+          </usersandgroups>
           <recipients-exp/>
         </pm-notification-settings>
-        <cleanup-action>3</cleanup-action>
+        <cleanup-action>2</cleanup-action>
         <auto-archive-delay>7</auto-archive-delay>
         <auto-delete-delay>0</auto-delete-delay>
         <timeZoneId><![CDATA[America/Shiprock]]></timeZoneId>
@@ -383,7 +388,13 @@
           <on-complete-delete-previous-completed>false</on-complete-delete-previous-completed>
           <pre-triggers/>
           <post-triggers/>
-          <event-producers/>
+          <event-producers>
+            <terminate-producer index="0">
+              <persistentId>0001ec5e-73e1-8000-cdd8-014d98014d98</persistentId>
+              <name><![CDATA[Terminate Process_1]]></name>
+              <desc/>
+            </terminate-producer>
+          </event-producers>
           <exception-flow/>
           <label>
             <fontColor>#000000</fontColor>
@@ -418,7 +429,7 @@
               </pair>
               <pair>
                 <locale country="" lang="es" variant=""/>
-                <value/>
+                <value><![CDATA[Delete Folder Contents]]></value>
               </pair>
             </string-map>
           </fname>
@@ -432,7 +443,7 @@
               </pair>
               <pair>
                 <locale country="" lang="es" variant=""/>
-                <value/>
+                <value><![CDATA[Delete Folder Contents]]></value>
               </pair>
             </string-map>
           </display>
@@ -654,5 +665,7 @@
     <historyInfo versionUuid="0001eac6-8f64-8000-7e73-014d98014d98"/>
     <historyInfo versionUuid="0001eb77-a479-8000-aebf-014d98014d98"/>
     <historyInfo versionUuid="0000eb80-b8a6-8000-b0e4-014d98014d98"/>
+    <historyInfo versionUuid="0000ec5e-73e2-8000-cdd9-014d98014d98"/>
+    <historyInfo versionUuid="0000ec71-df7f-8000-cfb8-014d98014d98"/>
   </history>
 </processModelHaul>

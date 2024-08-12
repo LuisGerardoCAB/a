@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
-    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9510102</versionUuid>
+    <versionUuid>_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10134277</versionUuid>
     <interface>
         <name>SCDO_RegistroADF</name>
         <uuid>_a-0000e801-560f-8000-e5d9-01ef9001ef90_1721128</uuid>
@@ -36,16 +36,16 @@
   
   
   local!Historial: a!refreshVariable(
-    value: #"_a-0000e9a7-6d42-8000-e63f-01ef9001ef90_5247960"(
-      idTabla_txt: #"_a-0000e9a7-6d42-8000-e63f-01ef9001ef90_5247914",
+    value: index(#"_a-0000e9a7-6d42-8000-e63f-01ef9001ef90_5247960"(
+     
       paginInfo_pi: #"SYSTEM_SYSRULES_pagingInfo"(
         startIndex: 1, 
-        batchSize: -1, 
+        batchSize: 500, 
         sort: #"SYSTEM_SYSRULES_sortInfo"(
           field: "fechaYHora"
         )
       )
-  ).data, 
+  ),"data",null), 
   refreshAlways: true
   ),
   
@@ -66,7 +66,7 @@
       }
     ),
     if(a!isNotNullOrEmpty(local!documentoArriboSeleccionado),
-    #"SYSTEM_SYSRULES_radioButtonField"(
+    #"SYSTEM_SYSRULES_radioButtonField_v1"(
       label: "",
       labelPosition: "ABOVE",
       choiceLabels: {index(local!documentos_adf,"documento",{})},
@@ -154,13 +154,14 @@
     
     #"SYSTEM_SYSRULES_ButtonArrayLayout"(
       buttons: {
-        #"SYSTEM_SYSRULES_ButtonWidget"(
+        #"SYSTEM_SYSRULES_buttonWidget_v1"(
           label: "Guardar",
           saveInto: {
             a!save(
               local!auxiliar,
-              if(a!isNotNullOrEmpty(#"_a-0000e8b2-d897-8000-e5f1-01ef9001ef90_2372887"(contrato:local!numContrato,iddocumento:local!documentoArriboSeleccionado).data),
-              #"_a-0000e8b2-d897-8000-e5f1-01ef9001ef90_2372887"(contrato:local!numContrato,iddocumento:local!documentoArriboSeleccionado).data,
+              if(a!isNotNullOrEmpty(
+                index(#"_a-0000e8b2-d897-8000-e5f1-01ef9001ef90_2372887"(contrato:local!numContrato,iddocumento:local!documentoArriboSeleccionado),"data",null)),
+              index(#"_a-0000e8b2-d897-8000-e5f1-01ef9001ef90_2372887"(contrato:local!numContrato,iddocumento:local!documentoArriboSeleccionado),"data", null),
               null)
 
             ),
@@ -218,7 +219,7 @@
             a!save(local!numContrato, null),
             a!save(local!numADF, null)
           },
-          style: "DESTRUCTIVE",
+          style: "GHOST",
           disabled:or(a!isNullOrEmpty(local!documentoArriboSeleccionado)=true,a!isNullOrEmpty(local!numContrato)=true,a!isNullOrEmpty(local!numADF)=true),
           confirmHeader: "Se realizará un cambio al documento seleccionado",
           confirmMessage: "¿Desea continuar?"
@@ -234,7 +235,7 @@
           contents: {
             #"SYSTEM_SYSRULES_ButtonArrayLayout"(
               buttons: {
-                #"SYSTEM_SYSRULES_ButtonWidget"(
+                #"SYSTEM_SYSRULES_buttonWidget_v1"(
                   label: "",
                   icon: "times",
                   saveInto: {
@@ -275,7 +276,7 @@
           contents: {
             #"SYSTEM_SYSRULES_ButtonArrayLayout"(
               buttons: {
-                #"SYSTEM_SYSRULES_ButtonWidget"(
+                #"SYSTEM_SYSRULES_buttonWidget_v1"(
                   label: "",
                   icon: "times",
                   saveInto: {
@@ -378,5 +379,6 @@
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9390415"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9405440"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9510102"/>
+        <historyInfo versionUuid="_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10134277"/>
     </history>
 </contentHaul>

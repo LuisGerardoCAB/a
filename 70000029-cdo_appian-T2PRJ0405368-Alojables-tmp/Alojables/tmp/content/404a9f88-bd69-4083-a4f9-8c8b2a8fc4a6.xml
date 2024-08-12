@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
-    <versionUuid>_a-0000eb9b-4ec6-8000-e68b-01ef9001ef90_9644283</versionUuid>
+    <versionUuid>_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10123784</versionUuid>
     <rule>
         <name>SCDO_obtenerUsuariosNoAsignados</name>
         <uuid>404a9f88-bd69-4083-a4f9-8c8b2a8fc4a6</uuid>
@@ -43,11 +43,11 @@
             },
             ignorefilterswithemptyvalues: true
           ),
-          paginginfo: #"SYSTEM_SYSRULES_pagingInfo"(startIndex: 1, batchSize: -1, sort: #"SYSTEM_SYSRULES_sortInfo"(field: "idusuarioopics", ascending: true))
+          paginginfo: #"SYSTEM_SYSRULES_pagingInfo"(startIndex: 1, batchSize: 1000, sort: #"SYSTEM_SYSRULES_sortInfo"(field: "idusuarioopics", ascending: true))
         )
       },
       fetchtotalcount: true
-    ).data,"idusuarioopics",{}),
+    ),"data","idusuarioopics",{}),
   ),
   refreshOnVarChange: ri!refreshCount,
   ),
@@ -82,10 +82,10 @@
           ignorefilterswithemptyvalues: true,
         )
       },
-      paginginfo: #"SYSTEM_SYSRULES_pagingInfo"(startIndex: 1, batchSize: -1, sort: #"SYSTEM_SYSRULES_sortInfo"(field: "idusuarioopics", ascending: true)),
+      paginginfo: #"SYSTEM_SYSRULES_pagingInfo"(startIndex: 1, batchSize: 1000, sort: #"SYSTEM_SYSRULES_sortInfo"(field: "idusuarioopics", ascending: true)),
     ),
     fetchtotalcount: true
-  ).data,"idusuarioopics",{})),
+  ),"data","idusuarioopics",{})),
   refreshOnVarChange: ri!refreshCount,
   ),
   local!idusuariosTotales: 
@@ -100,9 +100,9 @@
         field: "idusuarioopics",
         operator: "not null"
       ),
-      paginginfo: #"SYSTEM_SYSRULES_pagingInfo"(startIndex: 1, batchSize: -1, sort: #"SYSTEM_SYSRULES_sortInfo"(field: "idusuarioopics", ascending: true))
+      paginginfo: #"SYSTEM_SYSRULES_pagingInfo"(startIndex: 1, batchSize: 1000, sort: #"SYSTEM_SYSRULES_sortInfo"(field: "idusuarioopics", ascending: true))
     )
-  ).data,"idusuarioopics",{})),
+  ),"data","idusuarioopics",{})),
   local!idusuariosNoRegistrados: 
   #"_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9534907"(
     arreglo_1:local!idusuariosTotales,
@@ -225,5 +225,6 @@
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9493756"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9540226"/>
         <historyInfo versionUuid="_a-0000eb9b-4ec6-8000-e68b-01ef9001ef90_9644283"/>
+        <historyInfo versionUuid="_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10123784"/>
     </history>
 </contentHaul>

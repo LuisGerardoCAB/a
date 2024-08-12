@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
-    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9451289</versionUuid>
+    <versionUuid>_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10120250</versionUuid>
     <rule>
         <name>SCDO_obtenerAdministradorPorUsuarioN</name>
         <uuid>_a-0000eae4-5659-8000-e685-01ef9001ef90_8619011</uuid>
@@ -19,7 +19,7 @@
   local!data: if(
     a!isNullOrEmpty(ri!usuario),
     null(),
-    #"SYSTEM_SYSRULES_queryEntity_v2"(
+    index(#"SYSTEM_SYSRULES_queryEntity_v2"(
       entity: #"_a-0000e8b3-d748-8000-e5f3-01ef9001ef90_2402150",
       query: #"SYSTEM_SYSRULES_query"(
         logicalExpression: #"SYSTEM_SYSRULES_queryLogicalExpression"(
@@ -39,7 +39,7 @@
         )
       ),
       fetchTotalCount: false
-    ).data,
+    ),"data",null)
   ),
   local!data
 )</definition>
@@ -79,9 +79,27 @@
             <groups/>
         </role>
     </roleMap>
+    <typedValue>
+        <type>
+            <name>RuleTestConfig?list</name>
+            <namespace>http://www.appian.com/ae/types/2009</namespace>
+        </type>
+        <value>
+            <el>
+                <a:name>loggeding user</a:name>
+                <a:ruleInputTestConfigs>
+                    <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="a:Expression">loggedInUser()</a:value>
+                    <a:nameRef>usuario</a:nameRef>
+                    <a:id>1</a:id>
+                </a:ruleInputTestConfigs>
+                <a:assertions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+            </el>
+        </value>
+    </typedValue>
     <history>
         <historyInfo versionUuid="_a-0000eae4-5659-8000-e685-01ef9001ef90_8619023"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9386828"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9451289"/>
+        <historyInfo versionUuid="_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10120250"/>
     </history>
 </contentHaul>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
-    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9389772</versionUuid>
+    <versionUuid>_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10129649</versionUuid>
     <interface>
         <name>SCDO_Boton_Exportar_Excel_Reportes_REVISADOS</name>
         <uuid>_a-0000ea61-526a-8000-e65e-01ef9001ef90_7603413</uuid>
@@ -16,10 +16,7 @@
             <unlogged>false</unlogged>
         </visibility>
         <definition>a!localVariables(
-  local!usuariosPorSegmento,
   local!ccostosNoBD,
-  local!centrosPorRegion,
-  local!usuarioSeleccionado,
   /*local!ususariosNoRegistrados:rule!SCDO_obtenerUsuariosNoAsignados(startIndex:1,batchSize:-1),*/
   
   {
@@ -28,7 +25,7 @@
       {
         #"SYSTEM_SYSRULES_ButtonArrayLayout"(
           buttons: {
-            #"SYSTEM_SYSRULES_ButtonWidget"(
+            #"SYSTEM_SYSRULES_buttonWidget_v1"(
               label: "Generar Excel",
               icon: "file-excel-o",
               size: "SMALL",
@@ -42,44 +39,14 @@
                       #"_a-0000e9f5-96e6-8000-e641-01ef9001ef90_6351963"(ccosto: null)
                     ),
                     null,
-                    #"_a-0000e9f5-96e6-8000-e641-01ef9001ef90_6351963"(ccosto: null).cc
+                    index(#"_a-0000e9f5-96e6-8000-e641-01ef9001ef90_6351963"(ccosto: null),"cc", null)
                   )
                 ),
-                /*a!startProcess(*/
-                  /*processModel: cons!SCDO_MODELO_EXPORTAR_EXCEL_REPORTES_PEND_REV,*/
-                  /*processParameters: {*/
-                    /*KeyGrids: ri!keyGrids,*/
-                    /*ccostos: ri!ccostos,*/
-                    /*costosNoBD: ri!costosNoBD,*/
-                    /*centrosPorRegion: ri!centrosPorRegion,*/
-                    /*contrato: ri!contrato,*/
-                    /*fechaDividida: ri!fechaDividida,*/
-                    /*fechal: ri!fechaFin,*/
-                    /*fecha: ri!fechaInicio,*/
-                    /*fechaalDividida: ri!fechaalDividida,*/
-                    /*llamadaTelefonica: ri!llamadaTelefonica,*/
-                    /*noPermitido: ri!noPermitido,*/
-                    /*obligatorio: ri!obligatorio,*/
-                    /*operacion: ri!operacion,*/
-                    /*promotor: ri!promotor,*/
-                    /*region: ri!region,*/
-                    /*riesgo: ri!riesgo,*/
-                    /*tipoReporte: ri!tipoReporte,*/
-                    /*usuario: ri!usuario,*/
-                    /*usuariosRegistrados: ri!usuariosRegistrados*/
-                  /*},*/
-                  /*onSuccess: {*/
-                    /*a!save(*/
-                      /*ri!documento_doc,*/
-                      /*fv!processInfo.pv.documento*/
-                    /*)*/
-                  /*},*/
-                  /*onError: "No se puede generar el EXCEL"*/
-                /*),*/
                 #"SYSTEM_SYSRULES_startProcess"(
                   processModel: #"_a-0000ea61-526a-8000-e65e-01ef9001ef90_7603406",
                   processParameters: {
-                    segmento:if(a!isNotNullOrEmpty(ri!segmento),#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2233353"(idSegmento: ri!segmento).data[1].segmento,null),
+                    segmento:if(a!isNotNullOrEmpty(ri!segmento),
+                    index(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2233353"(idSegmento: ri!segmento),"data","segmento",null), null),
                     keyGrids: ri!keyGrids,
                     ccostos: ri!ccostos,
                     /*ccostosNoDB: ri!costosNoBD,*/
@@ -278,20 +245,6 @@
             </type>
         </namedTypedValue>
         <namedTypedValue>
-            <name>costosNoBD</name>
-            <type>
-                <name>Text?list</name>
-                <namespace>http://www.appian.com/ae/types/2009</namespace>
-            </type>
-        </namedTypedValue>
-        <namedTypedValue>
-            <name>centrosPorRegion</name>
-            <type>
-                <name>Text?list</name>
-                <namespace>http://www.appian.com/ae/types/2009</namespace>
-            </type>
-        </namedTypedValue>
-        <namedTypedValue>
             <name>llamadaTelefonica</name>
             <type>
                 <name>Integer?list</name>
@@ -337,26 +290,12 @@
             <value/>
         </namedTypedValue>
         <namedTypedValue>
-            <name>tipoReporte</name>
-            <type>
-                <name>int</name>
-                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
-            </type>
-        </namedTypedValue>
-        <namedTypedValue>
             <name>usuario</name>
             <type>
                 <name>string</name>
                 <namespace>http://www.w3.org/2001/XMLSchema</namespace>
             </type>
             <value/>
-        </namedTypedValue>
-        <namedTypedValue>
-            <name>usuariosRegistrados</name>
-            <type>
-                <name>Text?list</name>
-                <namespace>http://www.appian.com/ae/types/2009</namespace>
-            </type>
         </namedTypedValue>
         <namedTypedValue>
             <name>riesgo</name>
@@ -426,6 +365,7 @@
                     <a:id>3</a:id>
                 </a:ruleInputTestConfigs>
                 <a:ruleInputTestConfigs>
+                    <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="a:Expression">null</a:value>
                     <a:nameRef>fechaDividida</a:nameRef>
                     <a:id>4</a:id>
                 </a:ruleInputTestConfigs>
@@ -440,71 +380,59 @@
                     <a:id>6</a:id>
                 </a:ruleInputTestConfigs>
                 <a:ruleInputTestConfigs>
+                    <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="a:Expression">null</a:value>
                     <a:nameRef>fechaalDividida</a:nameRef>
                     <a:id>7</a:id>
                 </a:ruleInputTestConfigs>
                 <a:ruleInputTestConfigs>
+                    <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="a:Expression">null</a:value>
                     <a:nameRef>keyGrids</a:nameRef>
                     <a:id>8</a:id>
                 </a:ruleInputTestConfigs>
                 <a:ruleInputTestConfigs>
-                    <a:nameRef>costosNoBD</a:nameRef>
+                    <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="a:Expression">null</a:value>
+                    <a:nameRef>llamadaTelefonica</a:nameRef>
                     <a:id>9</a:id>
                 </a:ruleInputTestConfigs>
                 <a:ruleInputTestConfigs>
-                    <a:nameRef>centrosPorRegion</a:nameRef>
+                    <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="a:Expression">null</a:value>
+                    <a:nameRef>noPermitido</a:nameRef>
                     <a:id>10</a:id>
                 </a:ruleInputTestConfigs>
                 <a:ruleInputTestConfigs>
-                    <a:nameRef>llamadaTelefonica</a:nameRef>
-                    <a:id>11</a:id>
-                </a:ruleInputTestConfigs>
-                <a:ruleInputTestConfigs>
-                    <a:nameRef>noPermitido</a:nameRef>
-                    <a:id>12</a:id>
-                </a:ruleInputTestConfigs>
-                <a:ruleInputTestConfigs>
+                    <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="a:Expression">null</a:value>
                     <a:nameRef>obligatorio</a:nameRef>
-                    <a:id>13</a:id>
+                    <a:id>11</a:id>
                 </a:ruleInputTestConfigs>
                 <a:ruleInputTestConfigs>
                     <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
                     <a:nameRef>operacion</a:nameRef>
-                    <a:id>14</a:id>
+                    <a:id>12</a:id>
                 </a:ruleInputTestConfigs>
                 <a:ruleInputTestConfigs>
                     <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
                     <a:nameRef>promotor</a:nameRef>
-                    <a:id>15</a:id>
+                    <a:id>13</a:id>
                 </a:ruleInputTestConfigs>
                 <a:ruleInputTestConfigs>
                     <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
                     <a:nameRef>region</a:nameRef>
-                    <a:id>16</a:id>
-                </a:ruleInputTestConfigs>
-                <a:ruleInputTestConfigs>
-                    <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="a:Expression">1</a:value>
-                    <a:nameRef>tipoReporte</a:nameRef>
-                    <a:id>17</a:id>
+                    <a:id>14</a:id>
                 </a:ruleInputTestConfigs>
                 <a:ruleInputTestConfigs>
                     <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
                     <a:nameRef>usuario</a:nameRef>
-                    <a:id>18</a:id>
-                </a:ruleInputTestConfigs>
-                <a:ruleInputTestConfigs>
-                    <a:nameRef>usuariosRegistrados</a:nameRef>
-                    <a:id>19</a:id>
+                    <a:id>15</a:id>
                 </a:ruleInputTestConfigs>
                 <a:ruleInputTestConfigs>
                     <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="xsd:int"/>
                     <a:nameRef>riesgo</a:nameRef>
-                    <a:id>20</a:id>
+                    <a:id>16</a:id>
                 </a:ruleInputTestConfigs>
                 <a:ruleInputTestConfigs>
                     <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="xsd:int"/>
                     <a:nameRef>segmento</a:nameRef>
-                    <a:id>21</a:id>
+                    <a:id>17</a:id>
                 </a:ruleInputTestConfigs>
                 <a:assertions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
             </el>
@@ -514,5 +442,6 @@
         <historyInfo versionUuid="_a-0000eaa5-8248-8000-e681-01ef9001ef90_8208302"/>
         <historyInfo versionUuid="_a-0000eae4-5659-8000-e685-01ef9001ef90_8672979"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9389772"/>
+        <historyInfo versionUuid="_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10129649"/>
     </history>
 </contentHaul>

@@ -1,30 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsd:schema targetNamespace="urn:com:appian:types"
   xmlns:tns="urn:com:appian:types" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <xsd:complexType name="V_CDO_Docontrato">
+  <xsd:complexType name="V_CDO_DOCONTRATO">
     <xsd:annotation>
       <xsd:appinfo source="appian.jpa">@Table(name="V_CDO_DOCONTRATO")</xsd:appinfo>
       <xsd:appinfo source="http://www.appian.com/ae/types/2009">
         <ns2:Metadata xmlns:ns2="http://www.appian.com/ae/types/2009">
-          <ns2:versionUuid>0000eb14-f578-8000-9165-014d98014d98</ns2:versionUuid>
+          <ns2:versionUuid>0000eb2f-1a34-8000-9816-014d98014d98</ns2:versionUuid>
           <ns2:history>
-            <ns2:historyInfo versionUuid="0000e99d-6f12-8000-e3cc-014d98014d98"/>
-            <ns2:historyInfo versionUuid="0000eae2-bf2c-8000-8766-014d98014d98"/>
-            <ns2:historyInfo versionUuid="0000eb14-f578-8000-9165-014d98014d98"/>
+            <ns2:historyInfo versionUuid="0000eb2f-1a34-8000-9816-014d98014d98"/>
           </ns2:history>
         </ns2:Metadata>
       </xsd:appinfo>
-      <xsd:documentation><![CDATA[Apunta a la vista V_CDO_DOCONTRATO]]></xsd:documentation>
     </xsd:annotation>
     <xsd:sequence>
       <xsd:element name="numId" nillable="true" type="xsd:int">
         <xsd:annotation>
-          <xsd:appinfo source="appian.jpa">@Column(name="NUM_ID", columnDefinition="NUMBER")</xsd:appinfo>
+          <xsd:appinfo source="appian.jpa">@Id @Column(name="NUM_ID", columnDefinition="NUMBER")</xsd:appinfo>
         </xsd:annotation>
       </xsd:element>
       <xsd:element name="iddocumentacion" nillable="true" type="xsd:int">
         <xsd:annotation>
-          <xsd:appinfo source="appian.jpa">@Id @Column(name="idDocumentacion", nullable=false, columnDefinition="NUMBER")</xsd:appinfo>
+          <xsd:appinfo source="appian.jpa">@Column(name="idDocumentacion", nullable=false, columnDefinition="NUMBER")</xsd:appinfo>
         </xsd:annotation>
       </xsd:element>
       <xsd:element name="contrato" nillable="true" type="xsd:string">
@@ -52,7 +49,7 @@
           <xsd:appinfo source="appian.jpa">@Column(name="Tipo", columnDefinition="VARCHAR2(12)")</xsd:appinfo>
         </xsd:annotation>
       </xsd:element>
-      <xsd:element name="fechacarga" nillable="true" type="xsd:date">
+      <xsd:element name="fechacarga" nillable="true" type="xsd:dateTime">
         <xsd:annotation>
           <xsd:appinfo source="appian.jpa">@Column(name="FechaCarga", columnDefinition="DATE")</xsd:appinfo>
         </xsd:annotation>
@@ -77,7 +74,7 @@
           <xsd:appinfo source="appian.jpa">@Column(name="UsuarioAcepto", columnDefinition="VARCHAR2(25)")</xsd:appinfo>
         </xsd:annotation>
       </xsd:element>
-      <xsd:element name="fechaacepto" nillable="true" type="xsd:date">
+      <xsd:element name="fechaacepto" nillable="true" type="xsd:dateTime">
         <xsd:annotation>
           <xsd:appinfo source="appian.jpa">@Column(name="FechaAcepto", columnDefinition="DATE")</xsd:appinfo>
         </xsd:annotation>

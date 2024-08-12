@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
-    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9554787</versionUuid>
+    <versionUuid>_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10126765</versionUuid>
     <interface>
         <name>SCDO_GridOpics</name>
         <uuid>_a-0000e878-569a-8000-e5e4-01ef9001ef90_2226543</uuid>
@@ -116,8 +116,9 @@
     refreshOnVarChange: ri!refreshCount
   ),
   local!usuariosOpicsEditar: #"SYSTEM_SYSRULES_forEach"(
-    items: local!usuarioOpicGrid.data,
-    expression: 'type!{urn:com:appian:types}cdo_usuariosopics'(idusuarioopics: fv!item.idusuarioopics, usuarioopics: fv!item.usuarioopics, idsegmento: fv!item.idsegmento, extra1: fv!item.extra1, extra2: fv!item.extra2)
+    items: index(local!usuarioOpicGrid,"data",null),
+    expression: 'type!{urn:com:appian:types}cdo_usuariosopics'(idusuarioopics: index(fv!item, "idusuarioopics", null), 
+    usuarioopics: index(fv!item, "usuarioopics", null),  idsegmento: index(fv!item, "idsegmento", null))
   ),
   local!segmentos: 
   a!refreshVariable(
@@ -181,8 +182,8 @@
                   label: "Segmento: ",
                   labelPosition: "ABOVE",
                   placeholder: "--- Seleccione un valor ---",
-                  choiceLabels: index(local!segmentos.data, "segmento", {}),
-                  choiceValues: index(local!segmentos.data, "idsegmento", {}),
+                  choiceLabels: index(local!segmentos,"data", "segmento", {}),
+                  choiceValues: index(local!segmentos,"data", "idsegmento", {}),
                   value: local!usuarioNuevo.idsegmento,
                   saveInto: local!usuarioNuevo.idsegmento,
                   searchDisplay: "AUTO",
@@ -204,7 +205,6 @@
                           processParameters: {
                             usuarioopics: local!usuarioNuevo,
                             delete: false,
-                            codAudit:"CDO_0006",
                             accion:"insertó"
                           },
                           onSuccess: {
@@ -239,9 +239,9 @@
                           true,
                           if(
                             a!isNotNullOrEmpty(
-                              #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2152641"(
-                                usuarioOpic: local!usuarioNuevo.usuarioopics
-                              ).data
+                              index(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2152641"(
+                                usuarioOpic: index(local!usuarioNuevo, "usuarioopics", null)
+                              ),"data",null)
                             ),
                             true,
                             false
@@ -275,9 +275,9 @@
                         a!isNotNullOrEmpty(local!usuarioNuevo.usuarioopics),
                         if(
                           a!isNotNullOrEmpty(
-                            #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2152641"(
+                            index(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2152641"(
                               usuarioOpic: local!usuarioNuevo.usuarioopics
-                            ).data
+                            ),"data", null)
                           ),
                           true,
                           false
@@ -610,19 +610,19 @@
                   },
                   rows: {
                     #"SYSTEM_SYSRULES_forEach"(
-                      items: local!usuarioOpicGrid.data,
+                      items: index(local!usuarioOpicGrid,"data", null),
                       expression: #"SYSTEM_SYSRULES_gridRowLayout"(
                         contents: {
                           #"SYSTEM_SYSRULES_textField"(
-                            value: fv!item.usuarioopics,
+                            value: index(fv!item, "usuarioopics", null), 
                             readOnly: true,
                             align: "CENTER"
                           ),
                           #"SYSTEM_SYSRULES_dropdownField_v1"(
                             placeholder: "--- Seleccione un valor ---",
-                            choiceLabels: index(local!segmentos.data,"segmento",{}),
-                            choiceValues: index(local!segmentos.data,"idsegmento",{}),
-                            value: local!usuariosOpicsEditar[fv!index].idsegmento,
+                            choiceLabels: index(local!segmentos,"data","segmento",{}),
+                            choiceValues: index(local!segmentos,"data","idsegmento",{}),
+                            value: local!usuariosOpicsEditar[fv!index].idsegmento, 
                             saveInto: local!usuariosOpicsEditar[fv!index].idsegmento,
                             searchDisplay: "AUTO",
                             disabled: if(
@@ -639,7 +639,11 @@
                                 link: #"SYSTEM_SYSRULES_dynamicLink"(
                                   saveInto: {
                                     a!save(local!editGrid, fv!index),
-                                    a!save(local!usuarioSeleccionado, 'type!{urn:com:appian:types}cdo_usuariosopics'(idusuarioopics: fv!item.idusuarioopics, usuarioopics: fv!item.usuarioopics, idsegmento: fv!item.idsegmento, extra1: fv!item.extra1, extra2: fv!item.extra2))
+                                    a!save(local!usuarioSeleccionado, 
+                                    'type!{urn:com:appian:types}cdo_usuariosopics'(
+                                      idusuarioopics: index(fv!item, "idusuarioopics", null), 
+                                    usuarioopics: index(fv!item, "usuarioopics", null), 
+                                    idsegmento: index(fv!item, "idsegmento", null)))
                                   }
                                 ),
                                 linkStyle: "STANDALONE",
@@ -674,7 +678,6 @@
                                       processParameters: { 
                                         usuarioopics: local!usuariosOpicsEditar[fv!index], 
                                         delete: false ,
-                                        codAudit:"CDO_0004",
                                         accion:"actualizó"
                                       },
                                       onSuccess: {
@@ -716,7 +719,9 @@
                                   value: true,
                                   saveInto: {
                                     local!mostrarEliminar,
-                                    a!save(local!usuarioSeleccionado, 'type!{urn:com:appian:types}cdo_usuariosopics'(idusuarioopics: fv!item.idusuarioopics, usuarioopics: fv!item.usuarioopics, idsegmento: fv!item.idsegmento, extra1: fv!item.extra1, extra2: fv!item.extra2))
+                                    a!save(local!usuarioSeleccionado, 'type!{urn:com:appian:types}cdo_usuariosopics'(
+                                      idusuarioopics: index(fv!item, "idusuarioopics", null),  usuarioopics: index(fv!item, "usuarioopics", null),  
+                                    idsegmento: index(fv!item, "idsegmento", null)))
                                   }
                                 ),
                                 linkStyle: "STANDALONE",
@@ -915,5 +920,6 @@
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9505988"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9542851"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9554787"/>
+        <historyInfo versionUuid="_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10126765"/>
     </history>
 </contentHaul>

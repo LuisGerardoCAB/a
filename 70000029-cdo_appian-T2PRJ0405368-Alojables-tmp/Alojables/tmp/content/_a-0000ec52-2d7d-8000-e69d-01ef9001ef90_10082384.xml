@@ -1,0 +1,509 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10105752</versionUuid>
+    <rule>
+        <name>SCDO_GENERATE_XLSX_REVISADOS</name>
+        <uuid>_a-0000ec52-2d7d-8000-e69d-01ef9001ef90_10082384</uuid>
+        <description>XSLX REVISADOS</description>
+        <parentUuid>_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1882157</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>a!localVariables(
+  local!query: #"SYSTEM_SYSRULES_queryEntity_v2"(
+    entity: ri!entidad,
+    query: #"SYSTEM_SYSRULES_query"(
+      selection: #"SYSTEM_SYSRULES_querySelection"(
+        columns: {
+          #"SYSTEM_SYSRULES_queryColumn"(
+            field: "obligatorio",
+            alias: "Obligatorio"
+          ),
+          #"SYSTEM_SYSRULES_queryColumn"(field: "mercado", alias: "Mercado"),
+          #"SYSTEM_SYSRULES_queryColumn"(field: "operacion", alias: "Operacion"),
+          #"SYSTEM_SYSRULES_queryColumn"(field: "contrato", alias: "Contrato"),
+          #"SYSTEM_SYSRULES_queryColumn"(field: "nombre", alias: "Nombre"),
+          #"SYSTEM_SYSRULES_queryColumn"(field: "monto2", alias: "Monto"),
+          #"SYSTEM_SYSRULES_queryColumn"(field: "promotor", alias: "Promotor"),
+          #"SYSTEM_SYSRULES_queryColumn"(field: "usuario", alias: "Usuario"),
+          #"SYSTEM_SYSRULES_queryColumn"(
+            field: "nombreusuario",
+            alias: "NombreUsuario"
+          ),
+          #"SYSTEM_SYSRULES_queryColumn"(field: "fechacaptura", alias: "Fecha"),
+          #"SYSTEM_SYSRULES_queryColumn"(field: "riesgo", alias: "Riesgo"),
+          #"SYSTEM_SYSRULES_queryColumn"(field: "segmento", alias: "Segmento"),
+          #"SYSTEM_SYSRULES_queryColumn"(field: "emisora", alias: "Emisora"),
+          #"SYSTEM_SYSRULES_queryColumn"(field: "region", alias: "Región"),
+          #"SYSTEM_SYSRULES_queryColumn"(field: "cc", alias: "CC"),
+          #"SYSTEM_SYSRULES_queryColumn"(field: "extra4", alias: "C-V"),
+          #"SYSTEM_SYSRULES_queryColumn"(
+            field: "observaciones",
+            alias: "Observaciones"
+          ),
+          #"SYSTEM_SYSRULES_queryColumn"(
+            field: "usuarioaprobo",
+            alias: "UsuarioAprobo"
+          ),
+          #"SYSTEM_SYSRULES_queryColumn"(
+            field: "fechaaprobacion",
+            alias: "FechaAprobacion"
+          ),
+          #"SYSTEM_SYSRULES_queryColumn"(field: "tel", alias: "Bitácora"),
+          #"SYSTEM_SYSRULES_queryColumn"(field: "titulo", alias: "Título"),
+          
+        }
+      ),
+      logicalExpression: = #"SYSTEM_SYSRULES_queryLogicalExpression"(
+        operator: "AND",
+        filters: {
+          #"SYSTEM_SYSRULES_queryFilter"(
+            field: "fechacaptura",
+            operator: "=",
+            value: if(
+              and(
+                a!isNotNullOrEmpty(ri!fechaDividida),
+                length(ri!fechaDividida) &gt; 2
+              ),
+              date(
+                tointeger(ri!fechaDividida[3]),
+                tointeger(ri!fechaDividida[2]),
+                tointeger(ri!fechaDividida[1])
+              ),
+              null
+            ),
+            applywhen: and(
+              a!isNullOrEmpty(ri!fechal),
+              a!isNotNullOrEmpty(ri!fecha)
+            )
+          ),
+          #"SYSTEM_SYSRULES_queryFilter"(
+            field: "fechacaptura",
+            operator: "&lt;=",
+            value: if(
+              and(
+                a!isNotNullOrEmpty(ri!fechaalDividida),
+                length(ri!fechaalDividida) &gt; 2
+              ),
+              date(
+                tointeger(ri!fechaalDividida[3]),
+                tointeger(ri!fechaalDividida[2]),
+                tointeger(ri!fechaalDividida[1])
+              ),
+              /*concat(*//*ri!fechaalDividida[1],*//*"/",*//*ri!fechaalDividida[2],*//*"/",*//*mid(ri!fechaalDividida[3], 3, 2)*//*),*/null
+            ),
+            applywhen: and(
+              a!isNotNullOrEmpty(ri!fechal),
+              a!isNullOrEmpty(ri!fecha)
+            )
+          ),
+          if(
+            and(
+              a!isNotNullOrEmpty(ri!fechal),
+              a!isNotNullOrEmpty(ri!fecha)
+            ),
+            if(
+              (ri!fecha) &lt; (ri!fechal),
+              {
+                #"SYSTEM_SYSRULES_queryFilter"(
+                  field: "fechacaptura",
+                  operator: "&lt;=",
+                  value: if(
+                    and(
+                      a!isNotNullOrEmpty(ri!fechaalDividida),
+                      a!isNotNullOrEmpty(ri!fechaDividida),
+                      (ri!fecha) &lt; (ri!fechal),
+                      length(ri!fechaalDividida) &gt; 2
+                    ),
+                    date(
+                      tointeger(ri!fechaalDividida[3]),
+                      tointeger(ri!fechaalDividida[2]),
+                      tointeger(ri!fechaalDividida[1])
+                    ),
+                    /*concat(*//*ri!fechaalDividida[1],*//*"/",*//*ri!fechaalDividida[2],*//*"/",*//*mid(ri!fechaalDividida[3], 3, 2)*//*),*/null
+                  )
+                ),
+                #"SYSTEM_SYSRULES_queryFilter"(
+                  field: "fechacaptura",
+                  operator: "&gt;=",
+                  value: if(
+                    and(
+                      a!isNotNullOrEmpty(ri!fechaDividida),
+                      a!isNotNullOrEmpty(ri!fechaalDividida),
+                      (ri!fecha) &lt; (ri!fechal),
+                      length(ri!fechaDividida) &gt; 2
+                    ),
+                    date(
+                      tointeger(ri!fechaDividida[3]),
+                      tointeger(ri!fechaDividida[2]),
+                      tointeger(ri!fechaDividida[1])
+                    ),
+                    /*concat(*//*ri!fechaDividida[1],*//*"/",*//*ri!fechaDividida[2],*//*"/",*//*mid(ri!fechaDividida[3], 3, 2)*//*),*/null
+                  )
+                )
+              },
+              if(
+                (ri!fecha) = (ri!fechal),
+                {
+                  #"SYSTEM_SYSRULES_queryFilter"(
+                    field: "fechacaptura",
+                    operator: "=",
+                    value: if(
+                      and(
+                        a!isNotNullOrEmpty(ri!fechaDividida),
+                        length(ri!fechaDividida) &gt; 2
+                      ),
+                      date(
+                        tointeger(ri!fechaDividida[3]),
+                        tointeger(ri!fechaDividida[2]),
+                        tointeger(ri!fechaDividida[1])
+                      ),
+                      /*concat(*//*ri!fechaDividida[1],*//*"/",*//*ri!fechaDividida[2],*//*"/",*//*mid(ri!fechaDividida[3], 3, 2)*//*),*/null
+                    )
+                  )
+                },
+                {
+                  #"SYSTEM_SYSRULES_queryFilter"(
+                    field: "fechacaptura",
+                    operator: "&gt;=",
+                    value: if(
+                      and(
+                        a!isNotNullOrEmpty(ri!fechaDividida),
+                        a!isNotNullOrEmpty(ri!fechaalDividida),
+                        (ri!fecha) &gt; (ri!fechal),
+                        length(ri!fechaDividida) &gt; 2
+                      ),
+                      null,
+                      null
+                    )
+                  )
+                }
+              )
+            ),
+            {}
+          ),
+          #"SYSTEM_SYSRULES_queryFilter"(
+            field: "operacion",
+            operator: "=",
+            value: ri!operacion,
+            applywhen: a!isNotNullOrEmpty(ri!operacion)
+          ),
+          #"SYSTEM_SYSRULES_queryFilter"(
+            field: "region",
+            operator: "=",
+            value: ri!region,
+            applywhen: a!isNotNullOrEmpty(ri!region)
+          ),
+          #"SYSTEM_SYSRULES_queryFilter"(
+            field: "segmento",
+            operator: "=",
+            value: ri!segmento,
+            applywhen: a!isNotNullOrEmpty(ri!segmento)
+          ),
+          #"SYSTEM_SYSRULES_queryFilter"(
+            field: "contrato",
+            operator: "=",
+            value: ri!contrato,
+            applywhen: a!isNotNullOrEmpty(ri!contrato)
+          ),
+          #"SYSTEM_SYSRULES_queryFilter"(
+            field: "observaciones",
+            operator: "not null",
+            applywhen: a!isNotNullOrEmpty(ri!keyGrids),
+            
+          ),
+          #"SYSTEM_SYSRULES_queryFilter"(
+            field: "obligatorio",
+            /*operator: "not null",*/operator: "includes",
+            value: "*",
+            applywhen: a!isNotNullOrEmpty(ri!obligatorio)
+          ),
+          /*a!queryFilter(*//*field: "revisado",*//*operator: "=",*//*value: "N"*//*),*/#"SYSTEM_SYSRULES_queryFilter"(
+            field: "usuario",
+            operator: "=",
+            value: ri!usuario,
+            applywhen: a!isNotNullOrEmpty(ri!usuario)
+          ),
+          #"SYSTEM_SYSRULES_queryFilter"(
+            field: "cc",
+            operator: "=",
+            value: ri!ccostos,
+            applywhen: a!isNotNullOrEmpty(ri!ccostos)
+          ),
+          /*a!queryFilter(*//*field: "cc",*//*operator: "not in",*//*value: ri!ccostosNoDB*//*),*/#"SYSTEM_SYSRULES_queryFilter"(
+            field: "promotor",
+            operator: "=",
+            value: ri!promotor,
+            applywhen: a!isNotNullOrEmpty(ri!promotor)
+          ),
+          /*a!queryFilter(*//*field: "cc",*//*operator: "in",*//*value: { ri!centrosPorRegion },*//*applywhen: and(*//*a!isNullOrEmpty(ri!ccostos),*//*a!isNotNullOrEmpty(ri!region)*//*)*//*),*/#"SYSTEM_SYSRULES_queryFilter"(
+            field: "tel",
+            operator: "includes",
+            value: "GRAB",
+            applywhen: a!isNotNullOrEmpty(ri!llamadaTelefonica)
+          ),
+          #"SYSTEM_SYSRULES_queryFilter"(
+            field: "riesgo",
+            operator: "=",
+            value: ri!riesgo,
+            applywhen: a!isNotNullOrEmpty(ri!riesgo)
+          ),
+          #"SYSTEM_SYSRULES_queryFilter"(
+            field: "rechazo",
+            operator: "not null",
+            applywhen: a!isNotNullOrEmpty(ri!noPermitido)
+          )
+        },
+        ignorefilterswithemptyvalues: true
+      ),
+      pagingInfo: #"SYSTEM_SYSRULES_pagingInfo"(startIndex: 1, batchSize: 4999)
+    ),
+    fetchTotalCount: false
+  ),
+ 
+
+  local!header: "Oblig.,Mercado,Operacion,Contrato,Nombre,Monto,Promotor,Usuario,Nombre Usuario,Fecha,Riesgo,Segmento,Emisora,Region,CC,C/V,Observaciones,Usuario Aprobo,Fecha Aprobacion,Bitacora,Titulo",
+  concat(local!header, fn!char(10),
+      tostring(#"SYSTEM_SYSRULES_forEach"(
+        items: index(local!query, "data",null),
+        expression: concat(
+          index(fv!item, "Obligatorio", "Vacio"),
+          ",",
+          index(fv!item, "Mercado", "Vacio"),
+          ",",
+          index(fv!item, "Operacion", "No tiene"),
+          ",",
+          index(fv!item, "Contrato", "No tiene"),
+          ",",
+          a!match(
+            value: index(
+              decrypttext(
+                valueToDecrypt: index(fv!item, "Nombre", null),
+                iv: #"_a-0000ec31-ac7e-8000-e69b-01ef9001ef90_10021470",
+                scsKey: #"_a-0000ec31-ac7e-8000-e69b-01ef9001ef90_10021476"
+              ),
+              "success",
+              null
+            ),
+            equals: true,
+            then: index(
+              decrypttext(
+                valueToDecrypt: index(fv!item, "Nombre", null),
+                iv: #"_a-0000ec31-ac7e-8000-e69b-01ef9001ef90_10021470",
+                scsKey: #"_a-0000ec31-ac7e-8000-e69b-01ef9001ef90_10021476"
+              ),
+              "value",
+              null
+            ),
+            equals: false,
+            then: index(fv!item, "Nombre", null),
+            default: "Sin nombre"
+          ),
+
+
+          ",",
+          index(fv!item, "Monto", "No tiene"),
+          ",",
+          index(fv!item, "Promotor", "No tiene"),
+          ",",
+          index(fv!item, "Usuario", "No tiene"),
+          ",",
+          index(fv!item, "NombreUsuario", "No tiene"),
+          ",",
+          index(fv!item, "Fecha", "No tiene"),
+          ",",
+          index(fv!item, "Riesgo", "No tiene"),
+          ",",
+          index(fv!item, "Segmento", "No tiene"),
+          ",",
+          index(fv!item, "Emisora", "No tiene"),
+          ",",
+          index(fv!item, "Región", "No tiene"),
+          ",",
+          index(fv!item, "CC", "No tiene"),
+          ",",
+          index(fv!item, "C","V", null),
+          ",",
+          index(fv!item, "Observaciones", "No tiene"),
+          ",",
+          index(fv!item, "UsuarioAprobo", "No tiene"),
+          ",",
+          index(fv!item, "FechaAprobacion", "No tiene"),
+          ",",
+          index(fv!item, "Bitácora", "No tiene"),
+          ",",
+          index(fv!item, "Título", "No tiene"),
+          ",",
+          fn!char(10)
+        )
+      ))
+    
+  )
+)</definition>
+        <namedTypedValue>
+            <name>operacion</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>region</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>segmento</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>contrato</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>keyGrids</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>obligatorio</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>usuario</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>ccostos</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>promotor</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>llamadaTelefonica</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>riesgo</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>noPermitido</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>fecha</name>
+            <type>
+                <name>date</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>fechaDividida</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>fechal</name>
+            <type>
+                <name>date</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>fechaalDividida</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>entidad</name>
+            <type>
+                <name>DataStoreEntity</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>legacy</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10105752"/>
+    </history>
+</contentHaul>

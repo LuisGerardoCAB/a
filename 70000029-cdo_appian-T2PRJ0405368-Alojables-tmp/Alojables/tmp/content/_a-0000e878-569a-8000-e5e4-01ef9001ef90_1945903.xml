@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
-    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9506284</versionUuid>
+    <versionUuid>_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10138182</versionUuid>
     <interface>
         <name>SCDO_Documentacion</name>
         <uuid>_a-0000e878-569a-8000-e5e4-01ef9001ef90_1945903</uuid>
@@ -56,10 +56,10 @@
     refreshAlways: true
   ),
   local!segmentos: a!refreshVariable(
-    value: #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2233353"(idSegmento: null).data,
+    value: index(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2233353"(idSegmento: null),"data", null),
     refreshAlways: true
   ),
-  local!segmento: #"_a-0000e968-30a1-8000-e639-01ef9001ef90_4305675"(paginInfo: #"SYSTEM_SYSRULES_pagingInfo"(1, - 1)),
+  local!segmento: #"_a-0000e968-30a1-8000-e639-01ef9001ef90_4305675"(paginInfo: #"SYSTEM_SYSRULES_pagingInfo"(1, 100)),
   local!startIndex: 1,
   local!batchSize: 10,
   local!doctos_segmentos: #"SYSTEM_SYSRULES_queryEntity_v2"(
@@ -92,10 +92,10 @@
     false,
     if(
       a!isNullOrEmpty(
-        #"_a-0000e94c-78eb-8000-e637-01ef9001ef90_4046270"(
+        index(#"_a-0000e94c-78eb-8000-e637-01ef9001ef90_4046270"(
           idsegmento: ri!segmento,
           iddocumento: ri!documento
-        ).data
+        ),"data", null)
       ),
       false,
       true
@@ -113,8 +113,8 @@
                   label: "Documento: ",
                   labelPosition: "ABOVE",
                   placeholder: "--- Selecciona el Documento ---",
-                  choiceLabels: index(local!documentos,"documento",{}),
-                  choiceValues: index(local!documentos,"iddocumento",{}),
+                  choiceLabels: index(local!documentos, "data","documento",{}),
+                  choiceValues: index(local!documentos,"data","iddocumento",{}),
                   value: ri!documento,
                   saveInto: ri!documento,
                   searchDisplay: "AUTO",
@@ -230,8 +230,8 @@
                           "Al documento: ",
                           index(#"_a-0000e982-d80b-8000-e63b-01ef9001ef90_4796242"(iddocumento: ri!documento),"documento",null),
                           " se le asignará el segmento: ",
-                          if(a!isNotNullOrEmpty(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2233353"(idSegmento: ri!segmento).data),
-                          #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2233353"(idSegmento: ri!segmento).data[1].segmento, null
+                          if(a!isNotNullOrEmpty(index(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2233353"(idSegmento: ri!segmento),"data",null)),
+                          index(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2233353"(idSegmento: ri!segmento),"data","segmento",null), null
                           )
                           
                         )
@@ -441,7 +441,7 @@
           #"SYSTEM_SYSRULES_gridLayoutColumnConfig"(width: "ICON")
         },
         rows: #"SYSTEM_SYSRULES_forEach"(
-          items: local!doctos_segmentos.data,
+          items: index(local!doctos_segmentos,"data",null),
           expression: {
             #"SYSTEM_SYSRULES_gridRowLayout"(
               id: fv!index,
@@ -475,8 +475,8 @@
                 ),
                 #"SYSTEM_SYSRULES_textField"(
                   value: 
-                  if(a!isNotNullOrEmpty(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2233353"(idSegmento: fv!item.idsegmento).data),
-                  #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2233353"(idSegmento: fv!item.idsegmento).data[1].segmento,"NO"
+                  if(a!isNotNullOrEmpty(index(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2233353"(idSegmento: fv!item.idsegmento),"data",null)),
+                  index(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2233353"(idSegmento:  fv!item.idsegmento),"data","segmento",null),"NO"
                   ),
                   
                   /*index(*/
@@ -581,7 +581,7 @@
                           ),
                           " ,para el Segmento: ",
                           index(
-                            #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2233353"(idSegmento: fv!item.idsegmento).data,
+                            #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2233353"(idSegmento: fv!item.idsegmento),"data",
                             "segmento",
                             "NO"
                           )
@@ -634,7 +634,7 @@
               #"SYSTEM_SYSRULES_richTextItem_v1"(
                 text: {
                   if(
-                    a!isNullOrEmpty(local!doctos_segmentos.data),
+                    a!isNullOrEmpty(index(local!doctos_segmentos,"data",null)),
                     0,
                     local!startIndex
                   ) &amp; " - " &amp; if(
@@ -744,5 +744,7 @@
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9450352"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9465666"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9506284"/>
+        <historyInfo versionUuid="_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10133830"/>
+        <historyInfo versionUuid="_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10138182"/>
     </history>
 </contentHaul>

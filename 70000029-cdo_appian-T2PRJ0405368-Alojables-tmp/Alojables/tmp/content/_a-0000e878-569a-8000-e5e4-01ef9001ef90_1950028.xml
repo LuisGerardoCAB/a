@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
-    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9505908</versionUuid>
+    <versionUuid>_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10133682</versionUuid>
     <interface>
         <name>SCDO_Sincronizar_Oper</name>
         <uuid>_a-0000e878-569a-8000-e5e4-01ef9001ef90_1950028</uuid>
@@ -66,14 +66,14 @@
         #"SYSTEM_SYSRULES_sideBySideItem"(
           item: #"SYSTEM_SYSRULES_ButtonArrayLayout"(
             buttons: {
-              #"SYSTEM_SYSRULES_ButtonWidget"(
+              #"SYSTEM_SYSRULES_buttonWidget_v1"(
                 label: "Aquí",
                 style: "LINK",
                 saveInto: {
                   #"SYSTEM_SYSRULES_startProcess"(
                     processModel: #"_a-0000e9f5-96e6-8000-e641-01ef9001ef90_6431734",
                     processParameters: {
-                      imagenes_pendientes: local!imagenes_pendientes_cdt.data
+                      imagenes_pendientes: index(local!imagenes_pendientes_cdt,"data", null)
                     },
                     onSuccess: a!save(
                       local!sincronizadas,
@@ -97,7 +97,7 @@
           text: {
             concat(
               "Total de Operaciones antes de proceso: ",
-              local!imagenes_pendientes_cdt.totalCount
+              index(local!imagenes_pendientes_cdt,"totalCount", null)
             )
           },
           size: "MEDIUM"
@@ -135,11 +135,11 @@
           contents: {
             #"SYSTEM_SYSRULES_ButtonArrayLayout"(
               buttons: {
-                #"SYSTEM_SYSRULES_ButtonWidget"(
+                #"SYSTEM_SYSRULES_buttonWidget_v1"(
                   label: "Buscar",
                   loadingIndicator: true,
                   saveInto: { a!save(local!bUser, local!bUserT) },
-                  style: "DESTRUCTIVE"
+                  style: "GHOST"
                 )
               },
               align: "START"
@@ -169,31 +169,33 @@
               expression: #"SYSTEM_SYSRULES_gridRowLayout"(
                 contents: {
                   #"SYSTEM_SYSRULES_textField"(
-                    value: fv!item.deal,
+                    value: index(fv!item,"deal",null),
                     readOnly: true,
                     align: "CENTER"
                   ),
                   #"SYSTEM_SYSRULES_textField"(
-                    value: fv!item.contrato,
+                    value: index(fv!item,"contrato",null),
                     readOnly: true,
                     align: "CENTER"
                   ),
                   #"SYSTEM_SYSRULES_textField"(
-                    value: fv!item.fechacaptura,
+                    value: index(fv!item,"fechacaptura",null),
                     readOnly: true,
                     align: "CENTER"
                   ),
                   #"SYSTEM_SYSRULES_textField"(
-                    value: fv!item.tipo,
+                    value: index(fv!item,"tipo",null),
                     readOnly: true,
                     align: "CENTER"
                   ),
                   #"SYSTEM_SYSRULES_textField"(
                     value: if(
                       a!isNotNullOrEmpty(
-                        #"_a-0000e968-30a1-8000-e639-01ef9001ef90_4493570"(iddocumento: fv!item.iddocumento)
+                        #"_a-0000e968-30a1-8000-e639-01ef9001ef90_4493570"(iddocumento: index(fv!item,"iddocumento",null))
                       ),
-                      #"_a-0000e968-30a1-8000-e639-01ef9001ef90_4493570"(iddocumento: fv!item.iddocumento)[1].documento,
+                      index(#"_a-0000e968-30a1-8000-e639-01ef9001ef90_4493570"(iddocumento: index(fv!item,"iddocumento",null), paginginfo: #"SYSTEM_SYSRULES_pagingInfo"(
+                        startIndex: 1, batchSize: 1
+                      )),"documento", null),
                       ""
                     ),
                     readOnly: true
@@ -336,5 +338,6 @@
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9388934"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9450636"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9505908"/>
+        <historyInfo versionUuid="_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10133682"/>
     </history>
 </contentHaul>

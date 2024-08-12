@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <processModelHaul>
-  <versionUuid>0007eb77-a3f8-8000-aea1-014d98014d98</versionUuid>
+  <versionUuid>0000ec70-c5c4-8000-cf51-014d98014d98</versionUuid>
   <folderUuid>_g-0000e801-560f-8000-3039-014d98014d98_291</folderUuid>
   <roleMap>
     <role name="ADMIN_OWNER">
@@ -56,7 +56,7 @@
           <string-map>
             <pair>
               <locale country="US" lang="en" variant=""/>
-              <value/>
+              <value><![CDATA[Proceso para mostrar la documentacion aprobada de las operaciones revisadas]]></value>
             </pair>
             <pair>
               <locale country="" lang="es" variant=""/>
@@ -69,11 +69,11 @@
           <string-map>
             <pair>
               <locale country="US" lang="en" variant=""/>
-              <value><![CDATA[SCDO_documentacionAprobada]]></value>
+              <value><![CDATA[=now() &"SCDO_documentacionAprobada" ]]></value>
             </pair>
             <pair>
               <locale country="" lang="es" variant=""/>
-              <value><![CDATA[SCDO_documentacionAprobada]]></value>
+              <value><![CDATA[=now() &"SCDO_documentacionAprobada" ]]></value>
             </pair>
           </string-map>
         </process-name>
@@ -85,13 +85,18 @@
           <aex/>
         </deadline>
         <pm-notification-settings>
-          <custom-settings>false</custom-settings>
+          <custom-settings>true</custom-settings>
           <notify-initiator>false</notify-initiator>
           <notify-owner>false</notify-owner>
-          <usersandgroups/>
+          <usersandgroups>
+            <people>
+              <type>4096</type>
+              <stringId><![CDATA[_e-0000ec31-ac7e-8000-e698-011e94011e94_8438]]></stringId>
+            </people>
+          </usersandgroups>
           <recipients-exp/>
         </pm-notification-settings>
-        <cleanup-action>3</cleanup-action>
+        <cleanup-action>2</cleanup-action>
         <auto-archive-delay>7</auto-archive-delay>
         <auto-delete-delay>0</auto-delete-delay>
         <timeZoneId><![CDATA[America/Mexico_City]]></timeZoneId>
@@ -408,7 +413,13 @@
           <on-complete-delete-previous-completed>false</on-complete-delete-previous-completed>
           <pre-triggers/>
           <post-triggers/>
-          <event-producers/>
+          <event-producers>
+            <terminate-producer index="0">
+              <persistentId>0001ec64-8cc3-8000-ce88-014d98014d98</persistentId>
+              <name><![CDATA[Terminate Process_1]]></name>
+              <desc/>
+            </terminate-producer>
+          </event-producers>
           <exception-flow/>
           <label>
             <fontColor>#000000</fontColor>
@@ -539,6 +550,16 @@
                     <typeQName>{urn:com:appian:types}cdo_digitalizados?list</typeQName>
                     <value><![CDATA[pv!documentacion_d]]></value>
                   </ruleInput>
+                  <ruleInput>
+                    <name>reporte_aprobado</name>
+                    <typeQName>{urn:com:appian:types}cdo_reportes_aprobados</typeQName>
+                    <value/>
+                  </ruleInput>
+                  <ruleInput>
+                    <name>mostrarGrid</name>
+                    <typeQName>{http://www.appian.com/ae/types/2009}Boolean</typeQName>
+                    <value/>
+                  </ruleInput>
                 </ruleInputs>
               </interfaceInformation>
               <hiddenSections>16</hiddenSections>
@@ -554,5 +575,7 @@
     <historyInfo versionUuid="0000e9a8-d765-8000-ea9b-014d98014d98"/>
     <historyInfo versionUuid="0000eb06-2309-8000-8ea1-014d98014d98"/>
     <historyInfo versionUuid="0007eb77-a3f8-8000-aea1-014d98014d98"/>
+    <historyInfo versionUuid="0000ec64-8cc4-8000-ce89-014d98014d98"/>
+    <historyInfo versionUuid="0000ec70-c5c4-8000-cf51-014d98014d98"/>
   </history>
 </processModelHaul>

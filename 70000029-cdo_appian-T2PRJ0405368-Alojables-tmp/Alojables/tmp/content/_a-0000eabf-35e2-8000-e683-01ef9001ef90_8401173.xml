@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
-    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9326469</versionUuid>
+    <versionUuid>_a-0000ec31-ac7e-8000-e69b-01ef9001ef90_10019871</versionUuid>
     <outboundIntegration>
         <name>SCDO_obtenerArchivoS3</name>
         <uuid>_a-0000eabf-35e2-8000-e683-01ef9001ef90_8401173</uuid>
@@ -109,7 +109,7 @@ deferredRuleInputs: {
                 </documentConfig>
                 <excludeNullParams xsi:type="xsd:boolean">true</excludeNullParams>
                 <featureVersion xsi:type="xsd:int">1</featureVersion>
-                <timeout xsi:type="xsd:int">10</timeout>
+                <timeout xsi:type="xsd:int">35</timeout>
                 <body xsi:type="xsd:string"/>
                 <flattenedJsonSchema xsi:nil="true" xsi:type="a:Text?list"/>
             </a:Dictionary>
@@ -186,5 +186,6 @@ deferredRuleInputs: {
     <history>
         <historyInfo versionUuid="_a-0000eabf-35e2-8000-e683-01ef9001ef90_8436515"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9326469"/>
+        <historyInfo versionUuid="_a-0000ec31-ac7e-8000-e69b-01ef9001ef90_10019871"/>
     </history>
 </contentHaul>

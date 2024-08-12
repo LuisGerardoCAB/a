@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
-    <versionUuid>_a-0000eb9b-4ec6-8000-e68b-01ef9001ef90_9643619</versionUuid>
+    <versionUuid>_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10123803</versionUuid>
     <rule>
         <name>SCDO_obtenerUsuariosOpicsAsignados</name>
         <uuid>_a-0000ea22-4ef8-8000-e643-01ef9001ef90_6738129</uuid>
@@ -19,7 +19,7 @@
   local!usuariosNoAsignados: a!refreshVariable(
     value: a!flatten(
       index(
-        #"404a9f88-bd69-4083-a4f9-8c8b2a8fc4a6"(startIndex: 1, batchSize: - 1).data,
+        #"404a9f88-bd69-4083-a4f9-8c8b2a8fc4a6"(startIndex: 1, batchSize: 10000),"data",
         "usuarioopics",
         {}
       )
@@ -38,11 +38,11 @@
             ),
             paginginfo: #"SYSTEM_SYSRULES_pagingInfo"(
               startIndex: 1,
-              batchSize: - 1,
+              batchSize: 10000,
               sort: #"SYSTEM_SYSRULES_sortInfo"(field: "usuarioopics", ascending: true)
             )
           )
-        ).data,
+        ),"data",
         "usuarioopics",
         {}
       )
@@ -77,10 +77,10 @@
             idSegmento: ri!idsegmento,
             paginInfo: #"SYSTEM_SYSRULES_pagingInfo"(
               startIndex: 1,
-              batchSize: - 1,
+              batchSize: 10000,
               sort: #"SYSTEM_SYSRULES_sortInfo"(field: "usuarioopics", ascending: true)
             )
-          ).data,
+          ),"data",
           "usuarioopics",
           {}
         )
@@ -143,7 +143,7 @@
       ),
       paginginfo: #"SYSTEM_SYSRULES_pagingInfo"(
         startIndex: 1,
-        batchSize: - 1,
+        batchSize: 10000,
         sort: #"SYSTEM_SYSRULES_sortInfo"(field: "usuarioopics", ascending: true)
       )
     )
@@ -201,5 +201,6 @@
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9493772"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9540131"/>
         <historyInfo versionUuid="_a-0000eb9b-4ec6-8000-e68b-01ef9001ef90_9643619"/>
+        <historyInfo versionUuid="_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10123803"/>
     </history>
 </contentHaul>

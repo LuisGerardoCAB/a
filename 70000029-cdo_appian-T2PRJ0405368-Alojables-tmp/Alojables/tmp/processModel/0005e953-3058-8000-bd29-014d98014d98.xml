@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <processModelHaul>
-  <versionUuid>0002eb8f-54c5-8000-b3fb-014d98014d98</versionUuid>
+  <versionUuid>0000ec71-e633-8000-cfc4-014d98014d98</versionUuid>
   <folderUuid>_g-0000e801-560f-8000-3039-014d98014d98_291</folderUuid>
   <roleMap>
     <role name="ADMIN_OWNER">
@@ -48,7 +48,7 @@
             </pair>
             <pair>
               <locale country="" lang="es" variant=""/>
-              <value/>
+              <value><![CDATA[SCDO_Adicionar_Nueva_Region]]></value>
             </pair>
           </string-map>
         </name>
@@ -60,7 +60,7 @@
             </pair>
             <pair>
               <locale country="" lang="es" variant=""/>
-              <value/>
+              <value><![CDATA[Proceso que adiciona una nueva Región.]]></value>
             </pair>
           </string-map>
         </desc>
@@ -69,11 +69,11 @@
           <string-map>
             <pair>
               <locale country="US" lang="en" variant=""/>
-              <value><![CDATA[SCDO_Adicionar_Nueva_Region]]></value>
+              <value><![CDATA[=pv!region&" SCDO_Adicionar_Nueva_Region"]]></value>
             </pair>
             <pair>
               <locale country="" lang="es" variant=""/>
-              <value/>
+              <value><![CDATA[=pv!region&" SCDO_Adicionar_Nueva_Region"]]></value>
             </pair>
           </string-map>
         </process-name>
@@ -85,15 +85,20 @@
           <aex/>
         </deadline>
         <pm-notification-settings>
-          <custom-settings>false</custom-settings>
+          <custom-settings>true</custom-settings>
           <notify-initiator>false</notify-initiator>
           <notify-owner>false</notify-owner>
-          <usersandgroups/>
+          <usersandgroups>
+            <people>
+              <type>4096</type>
+              <stringId><![CDATA[_e-0000ec31-ac7e-8000-e698-011e94011e94_8438]]></stringId>
+            </people>
+          </usersandgroups>
           <recipients-exp/>
         </pm-notification-settings>
-        <cleanup-action>3</cleanup-action>
+        <cleanup-action>2</cleanup-action>
         <auto-archive-delay>7</auto-archive-delay>
-        <auto-delete-delay>0</auto-delete-delay>
+        <auto-delete-delay>1</auto-delete-delay>
         <timeZoneId><![CDATA[America/Mexico_City]]></timeZoneId>
         <useProcessInitiatorTimeZone>true</useProcessInitiatorTimeZone>
       </meta>
@@ -118,12 +123,6 @@
         </pv>
         <pv name="region">
           <a:value xmlns="" xsi:type="xsd:string"/>
-          <parameter>true</parameter>
-          <required>false</required>
-          <hidden>false</hidden>
-        </pv>
-        <pv name="valortabla">
-          <a:value xmlns="" xsi:type="xsd:int">0</a:value>
           <parameter>true</parameter>
           <required>false</required>
           <hidden>false</hidden>
@@ -414,7 +413,13 @@
           <on-complete-delete-previous-completed>false</on-complete-delete-previous-completed>
           <pre-triggers/>
           <post-triggers/>
-          <event-producers/>
+          <event-producers>
+            <terminate-producer index="0">
+              <persistentId>0001ec5e-544d-8000-cdcc-014d98014d98</persistentId>
+              <name><![CDATA[Terminate Process_1]]></name>
+              <desc/>
+            </terminate-producer>
+          </event-producers>
           <exception-flow/>
           <label>
             <fontColor>#000000</fontColor>
@@ -449,7 +454,7 @@
               </pair>
               <pair>
                 <locale country="" lang="es" variant=""/>
-                <value/>
+                <value><![CDATA[Obtener CDT_Region]]></value>
               </pair>
             </string-map>
           </fname>
@@ -463,7 +468,7 @@
               </pair>
               <pair>
                 <locale country="" lang="es" variant=""/>
-                <value/>
+                <value><![CDATA[Obtener CDT_Region]]></value>
               </pair>
             </string-map>
           </display>
@@ -489,11 +494,11 @@
             <acps/>
             <custom-params/>
             <output-exprs>
-              <el typeFlag="0"><![CDATA[CDT_Region:if(
+              <el typeFlag="0"><![CDATA[CDT_Region:index(if(
   #"_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1882382"(valor_any: pv!idregion),
   null,
   #"_a-0000e8d8-9b98-8000-e605-01ef9001ef90_2872186"(  region :  pv!idregion)
-).data]]></el>
+), "data", null)]]></el>
             </output-exprs>
             <requires-user-interaction>true</requires-user-interaction>
             <run-as>
@@ -569,11 +574,11 @@
             <string-map>
               <pair>
                 <locale country="US" lang="en" variant=""/>
-                <value><![CDATA[Obtener nuevos datos]]></value>
+                <value><![CDATA[get new data]]></value>
               </pair>
               <pair>
                 <locale country="" lang="es" variant=""/>
-                <value/>
+                <value><![CDATA[Obtener nuevos datos]]></value>
               </pair>
             </string-map>
           </fname>
@@ -583,11 +588,11 @@
             <string-map>
               <pair>
                 <locale country="US" lang="en" variant=""/>
-                <value><![CDATA[Obtener nuevos datos]]></value>
+                <value><![CDATA[get new data]]></value>
               </pair>
               <pair>
                 <locale country="" lang="es" variant=""/>
-                <value/>
+                <value><![CDATA[Obtener nuevos datos]]></value>
               </pair>
             </string-map>
           </display>
@@ -615,12 +620,12 @@
             <output-exprs>
               <el typeFlag="0"><![CDATA[CDT_Region.idregion:if(
   #"_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1882382"(valor_any: pv!idregion),
-  pv!CDT_Region.idregion,
+  index(pv!CDT_Region,"idregion",null),
   pv!idregion
 )]]></el>
               <el typeFlag="0"><![CDATA[CDT_Region.region:if(
   #"_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1882382"(valor_any: pv!region),
-  pv!CDT_Region.region,
+  index(pv!CDT_Region,"region",null),
   pv!region
 )]]></el>
             </output-exprs>
@@ -698,11 +703,11 @@
             <string-map>
               <pair>
                 <locale country="US" lang="en" variant=""/>
-                <value><![CDATA[Write to Data Store Entity]]></value>
+                <value><![CDATA[CDO_REGIONES]]></value>
               </pair>
               <pair>
                 <locale country="" lang="es" variant=""/>
-                <value><![CDATA[Write to Data Store Entity]]></value>
+                <value><![CDATA[CDO_REGIONES]]></value>
               </pair>
             </string-map>
           </fname>
@@ -712,11 +717,11 @@
             <string-map>
               <pair>
                 <locale country="US" lang="en" variant=""/>
-                <value><![CDATA[Write to Data Store Entity]]></value>
+                <value><![CDATA[CDO_REGIONES]]></value>
               </pair>
               <pair>
                 <locale country="" lang="es" variant=""/>
-                <value><![CDATA[Write to Data Store Entity]]></value>
+                <value><![CDATA[CDO_REGIONES]]></value>
               </pair>
             </string-map>
           </display>
@@ -925,6 +930,126 @@
           <on-complete-keep-form-data>false</on-complete-keep-form-data>
           <skipNotification>false</skipNotification>
         </node>
+        <node uuid="0001eb8f-54c5-8000-b3fb-014d98014d98">
+          <guiId>5</guiId>
+          <owner/>
+          <icon id="68"/>
+          <picon id="69"/>
+          <fname>
+            <string-map>
+              <pair>
+                <locale country="US" lang="en" variant=""/>
+                <value><![CDATA[OK]]></value>
+              </pair>
+              <pair>
+                <locale country="" lang="es" variant=""/>
+                <value><![CDATA[OK]]></value>
+              </pair>
+            </string-map>
+          </fname>
+          <x>756</x>
+          <y>280</y>
+          <display>
+            <string-map>
+              <pair>
+                <locale country="US" lang="en" variant=""/>
+                <value><![CDATA[OK]]></value>
+              </pair>
+              <pair>
+                <locale country="" lang="es" variant=""/>
+                <value><![CDATA[OK]]></value>
+              </pair>
+            </string-map>
+          </display>
+          <desc>
+            <string-map>
+              <pair>
+                <locale country="US" lang="en" variant=""/>
+                <value/>
+              </pair>
+              <pair>
+                <locale country="" lang="es" variant=""/>
+                <value/>
+              </pair>
+            </string-map>
+          </desc>
+          <notify>false</notify>
+          <confirmation-url/>
+          <lane/>
+          <overrideLaneAssignment>false</overrideLaneAssignment>
+          <ac>
+            <local-id>internal.16</local-id>
+            <name><![CDATA[Unattended Multiple Questions]]></name>
+            <acps/>
+            <custom-params/>
+            <output-exprs>
+              <el typeFlag="0"><![CDATA[error:false]]></el>
+            </output-exprs>
+            <requires-user-interaction>true</requires-user-interaction>
+            <run-as>
+              <performer id="0"/>
+            </run-as>
+            <form-map/>
+            <helper-class/>
+          </ac>
+          <multiple-instance/>
+          <escalations/>
+          <connections>
+            <connection>
+              <guiId>5</guiId>
+              <to>4</to>
+              <toObjectType>ap.gui.Node</toObjectType>
+              <fromAnchor/>
+              <toAnchor/>
+              <showArrowhead>true</showArrowhead>
+              <flowLabel/>
+              <label>
+                <fontColor>#000000</fontColor>
+                <fontFamily>Arial, Helvetica, Sans-Serif</fontFamily>
+                <fontSize>12</fontSize>
+                <bold>false</bold>
+                <italics>false</italics>
+                <underline>false</underline>
+              </label>
+              <associations/>
+              <chained>true</chained>
+              <overridesAssignment>true</overridesAssignment>
+              <synchronizeData>false</synchronizeData>
+            </connection>
+          </connections>
+          <associations/>
+          <target-completion>5.0</target-completion>
+          <target-lag>1.0</target-lag>
+          <attachments/>
+          <notes/>
+          <lingering>false</lingering>
+          <on-create-ignore-if-active>false</on-create-ignore-if-active>
+          <on-create-delete-previous-active>false</on-create-delete-previous-active>
+          <on-complete-delete-previous-completed>false</on-complete-delete-previous-completed>
+          <pre-triggers/>
+          <post-triggers/>
+          <event-producers/>
+          <exception-flow/>
+          <label>
+            <fontColor>#000000</fontColor>
+            <fontFamily>Arial, Helvetica, Sans-Serif</fontFamily>
+            <fontSize>12</fontSize>
+            <bold>false</bold>
+            <italics>false</italics>
+            <underline>false</underline>
+          </label>
+          <deadline>
+            <enabled>false</enabled>
+            <type>0</type>
+            <units>0</units>
+            <rex/>
+            <aex/>
+          </deadline>
+          <allowsBack>false</allowsBack>
+          <refreshDefaultValues>false</refreshDefaultValues>
+          <on-complete-keep-form-data>false</on-complete-keep-form-data>
+          <skipNotification>false</skipNotification>
+        </node>
         <node uuid="0001eace-2a6a-8000-80d7-014d98014d98">
           <guiId>4</guiId>
           <owner/>
@@ -934,7 +1059,7 @@
             <string-map>
               <pair>
                 <locale country="US" lang="en" variant=""/>
-                <value><![CDATA[Subprocess]]></value>
+                <value><![CDATA[Audit]]></value>
               </pair>
               <pair>
                 <locale country="" lang="es" variant=""/>
@@ -948,7 +1073,7 @@
             <string-map>
               <pair>
                 <locale country="US" lang="en" variant=""/>
-                <value><![CDATA[Subprocess]]></value>
+                <value><![CDATA[Audit]]></value>
               </pair>
               <pair>
                 <locale country="" lang="es" variant=""/>
@@ -1247,7 +1372,7 @@
                 <a:customDisplayReference/>
               </acp>
               <acp name="isAsynchronous">
-                <a:value xmlns="" xsi:type="xsd:boolean">false</a:value>
+                <a:value xmlns="" xsi:type="xsd:boolean">true</a:value>
                 <a:local-id>13</a:local-id>
                 <a:expr/>
                 <a:required>1</a:required>
@@ -1529,114 +1654,6 @@
           <on-complete-keep-form-data>false</on-complete-keep-form-data>
           <skipNotification>false</skipNotification>
         </node>
-        <node uuid="0001eb8f-54c5-8000-b3fb-014d98014d98">
-          <guiId>5</guiId>
-          <owner/>
-          <icon id="68"/>
-          <picon id="69"/>
-          <fname>
-            <string-map>
-              <pair>
-                <locale country="US" lang="en" variant=""/>
-                <value><![CDATA[todo ok]]></value>
-              </pair>
-            </string-map>
-          </fname>
-          <x>756</x>
-          <y>280</y>
-          <display>
-            <string-map>
-              <pair>
-                <locale country="US" lang="en" variant=""/>
-                <value><![CDATA[todo ok]]></value>
-              </pair>
-            </string-map>
-          </display>
-          <desc>
-            <string-map>
-              <pair>
-                <locale country="US" lang="en" variant=""/>
-                <value/>
-              </pair>
-            </string-map>
-          </desc>
-          <notify>false</notify>
-          <confirmation-url/>
-          <lane/>
-          <overrideLaneAssignment>false</overrideLaneAssignment>
-          <ac>
-            <local-id>internal.16</local-id>
-            <name><![CDATA[Unattended Multiple Questions]]></name>
-            <acps/>
-            <custom-params/>
-            <output-exprs>
-              <el typeFlag="0"><![CDATA[error:false]]></el>
-            </output-exprs>
-            <requires-user-interaction>true</requires-user-interaction>
-            <run-as>
-              <performer id="0"/>
-            </run-as>
-            <form-map/>
-            <helper-class/>
-          </ac>
-          <multiple-instance/>
-          <escalations/>
-          <connections>
-            <connection>
-              <guiId>5</guiId>
-              <to>4</to>
-              <toObjectType>ap.gui.Node</toObjectType>
-              <fromAnchor/>
-              <toAnchor/>
-              <showArrowhead>true</showArrowhead>
-              <flowLabel/>
-              <label>
-                <fontColor>#000000</fontColor>
-                <fontFamily>Arial, Helvetica, Sans-Serif</fontFamily>
-                <fontSize>12</fontSize>
-                <bold>false</bold>
-                <italics>false</italics>
-                <underline>false</underline>
-              </label>
-              <associations/>
-              <chained>true</chained>
-              <overridesAssignment>true</overridesAssignment>
-              <synchronizeData>false</synchronizeData>
-            </connection>
-          </connections>
-          <associations/>
-          <target-completion>5.0</target-completion>
-          <target-lag>1.0</target-lag>
-          <attachments/>
-          <notes/>
-          <lingering>false</lingering>
-          <on-create-ignore-if-active>false</on-create-ignore-if-active>
-          <on-create-delete-previous-active>false</on-create-delete-previous-active>
-          <on-complete-delete-previous-completed>false</on-complete-delete-previous-completed>
-          <pre-triggers/>
-          <post-triggers/>
-          <event-producers/>
-          <exception-flow/>
-          <label>
-            <fontColor>#000000</fontColor>
-            <fontFamily>Arial, Helvetica, Sans-Serif</fontFamily>
-            <fontSize>12</fontSize>
-            <bold>false</bold>
-            <italics>false</italics>
-            <underline>false</underline>
-          </label>
-          <deadline>
-            <enabled>false</enabled>
-            <type>0</type>
-            <units>0</units>
-            <rex/>
-            <aex/>
-          </deadline>
-          <allowsBack>false</allowsBack>
-          <refreshDefaultValues>false</refreshDefaultValues>
-          <on-complete-keep-form-data>false</on-complete-keep-form-data>
-          <skipNotification>false</skipNotification>
-        </node>
       </nodes>
       <annotations/>
       <lanes/>
@@ -1653,6 +1670,9 @@
               <dynamic-form>
                 <form-elements/>
               </dynamic-form>
+              <uiExpressionForm>
+                <expression/>
+              </uiExpressionForm>
               <hiddenSections>16</hiddenSections>
             </form>
           </form-config>
@@ -1666,6 +1686,9 @@
               <dynamic-form>
                 <form-elements/>
               </dynamic-form>
+              <uiExpressionForm>
+                <expression/>
+              </uiExpressionForm>
               <hiddenSections>16</hiddenSections>
             </form>
           </form-config>
@@ -1680,5 +1703,7 @@
     <historyInfo versionUuid="0000eace-2a6b-8000-80d8-014d98014d98"/>
     <historyInfo versionUuid="0007eb77-a407-8000-aeae-014d98014d98"/>
     <historyInfo versionUuid="0002eb8f-54c5-8000-b3fb-014d98014d98"/>
+    <historyInfo versionUuid="0002ec5e-544d-8000-cdcc-014d98014d98"/>
+    <historyInfo versionUuid="0000ec71-e633-8000-cfc4-014d98014d98"/>
   </history>
 </processModelHaul>

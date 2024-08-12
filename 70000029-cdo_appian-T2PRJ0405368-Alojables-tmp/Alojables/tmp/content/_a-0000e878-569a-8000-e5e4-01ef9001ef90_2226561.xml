@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
-    <versionUuid>_a-0000eb9b-4ec6-8000-e68b-01ef9001ef90_9643433</versionUuid>
+    <versionUuid>_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10119036</versionUuid>
     <interface>
         <name>SCDO_GridSupervisores</name>
         <uuid>_a-0000e878-569a-8000-e5e4-01ef9001ef90_2226561</uuid>
@@ -73,40 +73,48 @@
   local!buscarTipo,
   /*Para Dropdowns de expediente */
   local!cdt_expediente: a!refreshVariable(
-    value: #"SYSTEM_SYSRULES_queryEntity_v2"(
-      entity: #"_a-0000e8b3-d748-8000-e5f3-01ef9001ef90_2402150",
-      query: #"SYSTEM_SYSRULES_query"(
-        logicalexpression: {
-          #"SYSTEM_SYSRULES_queryLogicalExpression"(
-            operator: "OR",
-            filters: {
-              #"SYSTEM_SYSRULES_queryFilter"(
-                field: "tipo",
-                operator: "=",
-                value: "revisor"
-              ),
-              #"SYSTEM_SYSRULES_queryFilter"(
-                field: "tipo",
-                operator: "=",
-                value: "supervisor"
-              )
-            }
+    value: index(
+      #"SYSTEM_SYSRULES_queryEntity_v2"(
+        entity: #"_a-0000e8b3-d748-8000-e5f3-01ef9001ef90_2402150",
+        query: #"SYSTEM_SYSRULES_query"(
+          logicalexpression: {
+            #"SYSTEM_SYSRULES_queryLogicalExpression"(
+              operator: "OR",
+              filters: {
+                #"SYSTEM_SYSRULES_queryFilter"(
+                  field: "tipo",
+                  operator: "=",
+                  value: "revisor"
+                ),
+                #"SYSTEM_SYSRULES_queryFilter"(
+                  field: "tipo",
+                  operator: "=",
+                  value: "supervisor"
+                )
+              }
+            )
+          },
+          paginginfo: #"SYSTEM_SYSRULES_pagingInfo"(
+            startIndex: 1,
+            batchSize: 4999,
+            sort: #"SYSTEM_SYSRULES_sortInfo"(field: "idadmon", ascending: false)
           )
-        },
-        paginginfo: #"SYSTEM_SYSRULES_pagingInfo"(
-          startIndex: 1,
-          batchSize: - 1,
-          sort: #"SYSTEM_SYSRULES_sortInfo"(field: "idadmon", ascending: false)
-        )
+        ),
+        fetchtotalcount: true
       ),
-      fetchtotalcount: true
-    ).data,
+      "data",
+      null
+    ),
     /*refreshAlways: true,*/
     refreshOnVarChange: ri!refreshCount
   ),
   /*Para dropdowns de segmento  */
   local!cdt_segmento: a!refreshVariable(
-    value: #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2233353"(idSegmento: null).data,
+    value: index(
+      #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2233353"(idSegmento: null),
+      "data",
+      null
+    ),
     /*refreshAlways: true*/
     refreshOnVarChange: ri!refreshCount
   ),
@@ -124,35 +132,42 @@
       startIndex: local!startIndex,
       batchSize: local!batchSize,
       tipo: local!buscarTipo,
-      refreshCount:ri!refreshCount
+      refreshCount: ri!refreshCount
     ),
     /*refreshAlways: true,*/
     refreshOnReferencedVarChange: false(),
-    refreshOnVarChange: {ri!refreshCount,local!criterio,local!buscarTipo}
+    refreshOnVarChange: {
+      ri!refreshCount,
+      local!criterio,
+      local!buscarTipo
+    }
   ),
-  local!segmentoUsuarioEditar:
-  if(a!isNotNullOrEmpty(local!segmentosUsuarios),
-  #"SYSTEM_SYSRULES_forEach"(
-    items: local!segmentosUsuarios.data,
-    expression: 'type!{urn:com:appian:types}cdo_segmentosusuario'(
-      idsegusuario: fv!item.idsegusuario,
-      idadmon: fv!item.idadmon,
-      idsegmento: fv!item.idsegmento
-    )
+  local!segmentoUsuarioEditar: if(
+    a!isNotNullOrEmpty(local!segmentosUsuarios),
+    #"SYSTEM_SYSRULES_forEach"(
+      items: index(local!segmentosUsuarios, "data", null),
+      expression: 'type!{urn:com:appian:types}cdo_segmentosusuario'(
+        idsegusuario: index(fv!item,"idsegusuario", null),
+        idadmon: index(fv!item,"idadmon", null),
+        idsegmento: index(fv!item,"idsegmento", null)
+      )
+    ),
+    null
   ),
-  null
-  ),
-  
   local!existeSupervisorSegmento: if(
     and(
       a!isNotNullOrEmpty(ri!idadmon),
       a!isNotNullOrEmpty(ri!idsegmento)
     ),
     a!isNotNullOrEmpty(
-      #"_a-0000e982-d80b-8000-e63b-01ef9001ef90_4555231"(
-        idadmon: ri!idadmon,
-        idsegmento: ri!idsegmento
-      ).data
+      index(
+        #"_a-0000e982-d80b-8000-e63b-01ef9001ef90_4555231"(
+          idadmon: ri!idadmon,
+          idsegmento: ri!idsegmento
+        ),
+        "data",
+        null
+      )
     ),
     false
   ),
@@ -166,10 +181,14 @@
       local!segmentoUsuarioSeleccionado = local!segmentoUsuarioEditar[local!editGrid],
       false,
       a!isNotNullOrEmpty(
-        #"_a-0000e982-d80b-8000-e63b-01ef9001ef90_4555231"(
-          idadmon: local!segmentoUsuarioEditar[local!editGrid].idadmon,
-          idsegmento: local!segmentoUsuarioEditar[local!editGrid].idsegmento
-        ).data
+        index(
+          #"_a-0000e982-d80b-8000-e63b-01ef9001ef90_4555231"(
+            idadmon: index(local!segmentoUsuarioEditar[local!editGrid],"idadmon", null),
+            idsegmento: index(local!segmentoUsuarioEditar[local!editGrid],"idsegmento",null)
+          ),
+          "data",
+          null
+        )
       )
     )
   ),
@@ -197,7 +216,7 @@
                 local!showWhen_error
               )
             ),
-
+            
           }
         ),
         #"SYSTEM_SYSRULES_columnLayout"(
@@ -207,10 +226,7 @@
                 #"SYSTEM_SYSRULES_ButtonWidget"(
                   icon: "refresh",
                   /*tooltip: "Actualizar Tabla",*/
-                  saveInto: a!save(
-                    ri!refreshCount,
-                    ri!refreshCount + 1
-                  ),
+                  saveInto: a!save(ri!refreshCount, ri!refreshCount + 1),
                   size: "SMALL",
                   style: "SECONDARY",
                   loadingIndicator: true
@@ -228,8 +244,8 @@
                 label: "Usuario:",
                 labelPosition: "ABOVE",
                 placeholder: "--- Seleccione un usuario---",
-                choiceLabels: index(local!cdt_expediente,"nombre",{}),
-                choiceValues: index(local!cdt_expediente,"idadmon",{}),
+                choiceLabels: index(local!cdt_expediente, "nombre", {}),
+                choiceValues: index(local!cdt_expediente, "idadmon", {}),
                 value: ri!idadmon,
                 saveInto: ri!idadmon,
                 searchDisplay: "AUTO",
@@ -241,8 +257,8 @@
                 label: "Segmento:",
                 labelPosition: "ABOVE",
                 placeholder: "--- Seleccione un segmento ---",
-                choiceLabels: index(local!cdt_segmento,"segmento",{}),
-                choiceValues: index(local!cdt_segmento,"idsegmento",{}),
+                choiceLabels: index(local!cdt_segmento, "segmento", {}),
+                choiceValues: index(local!cdt_segmento, "idsegmento", {}),
                 value: ri!idsegmento,
                 saveInto: ri!idsegmento,
                 searchDisplay: "AUTO",
@@ -266,26 +282,37 @@
                           a!save(local!showInformationBanner, true),
                           if(
                             toboolean(fv!processInfo.pv.error) = false,
-                            {a!save(local!flag, addseconds(now(), 10)),
-                            a!save(
-                              local!usuarioSeleccionado,
-                              index(#"_a-0000e8b3-d748-8000-e5f3-01ef9001ef90_2402181"(idAdmon: ri!idadmon).data,"usuario",null)
-                            ),
-                            a!save(
-                              local!segmentoSeleccionadoNuevo,
-                              index(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2233353"(idSegmento: ri!idsegmento).data,"segmento",null)
-                            ),
-                            a!save(ri!idadmon, null()),
-                            a!save(local!criterio,null),
-                            a!save(local!criterioT,null),
-                            a!save(local!buscarTipo,null),
-                            a!save(ri!idsegmento, null()),
-                            a!save(ri!refreshCount, ri!refreshCount + 1),
-                            a!save(local!mostrarSuccess, true)
+                            {
+                              a!save(local!flag, addseconds(now(), 10)),
+                              a!save(
+                                local!usuarioSeleccionado,
+                                index(
+                                  #"_a-0000e8b3-d748-8000-e5f3-01ef9001ef90_2402181"(idAdmon: ri!idadmon),
+                                  "data",
+                                  "usuario",
+                                  null
+                                )
+                              ),
+                              a!save(
+                                local!segmentoSeleccionadoNuevo,
+                                index(
+                                  #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2233353"(idSegmento: ri!idsegmento),
+                                  "data",
+                                  "segmento",
+                                  null
+                                )
+                              ),
+                              a!save(ri!idadmon, null()),
+                              a!save(local!criterio, null),
+                              a!save(local!criterioT, null),
+                              a!save(local!buscarTipo, null),
+                              a!save(ri!idsegmento, null()),
+                              a!save(ri!refreshCount, ri!refreshCount + 1),
+                              a!save(local!mostrarSuccess, true)
                             },
                             a!save(local!flag_error, addseconds(now(), 10))
                           ),
-
+                          
                         }
                       )
                     },
@@ -472,7 +499,7 @@
                     local!showWhen_error_eliminar
                   )
                 ),
-
+                
               }
             ),
             #"SYSTEM_SYSRULES_columnsLayout"(
@@ -482,7 +509,6 @@
                     #"SYSTEM_SYSRULES_textField"(
                       label: "Buscar por Usuario: ",
                       labelPosition: "ADJACENT",
-
                       value: local!criterioT,
                       saveInto: {
                         local!criterioT,
@@ -504,7 +530,7 @@
                           saveInto: {
                             a!save(local!criterio, (local!criterioT)),
                             a!save(ri!refreshCount, ri!refreshCount + 1),
-                            a!save(local!startIndex,1)
+                            a!save(local!startIndex, 1)
                           },
                           size: "SMALL",
                           style: "PRIMARY"
@@ -527,7 +553,7 @@
                         local!buscarTipo,
                         a!save(local!editGrid, null),
                         a!save(ri!refreshCount, ri!refreshCount + 1),
-                        a!save(local!startIndex,1)
+                        a!save(local!startIndex, 1)
                       },
                       searchDisplay: "AUTO",
                       validations: {}
@@ -559,13 +585,23 @@
                             #"SYSTEM_SYSRULES_richTextItem_v1"(
                               text: concat(
                                 "¿ Está seguro que desea quitar al usuario: ",
-                                index(#"_a-0000e8b3-d748-8000-e5f3-01ef9001ef90_2402181"(
-                                  idAdmon: local!segmentoUsuarioSeleccionado.idadmon
-                                ).data[1],"nombre",null),
+                                index(
+                                  #"_a-0000e8b3-d748-8000-e5f3-01ef9001ef90_2402181"(
+                                    idAdmon: local!segmentoUsuarioSeleccionado.idadmon
+                                  ),
+                                  "data",
+                                  "nombre",
+                                  null
+                                ),
                                 " del segmento: ",
-                                index(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2233353"(
-                                  idSegmento: local!segmentoUsuarioSeleccionado.idsegmento
-                                ).data[1],"segmento",null),
+                                index(
+                                  #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2233353"(
+                                    idSegmento: local!segmentoUsuarioSeleccionado.idsegmento
+                                  ),
+                                  "data",
+                                  "segmento",
+                                  null
+                                ),
                                 " ?"
                               ),
                               color: "NEGATIVE"
@@ -592,18 +628,18 @@
                                     ),
                                     if(
                                       toboolean(fv!processInfo.pv.error) = false,
-                                      { a!save(
-                                        local!flag_eliminar,
-                                        addseconds(now(), 10)
-                                      ),
-                                      a!save(local!criterio,null),
-                                      a!save(local!criterioT,null),
-                                      a!save(local!buscarTipo,null),
-                                      a!save(local!editGrid, null),
-                                      a!save(local!indexEliminar, null),
-                                      a!save(local!segmentoUsuarioSeleccionado, null),
-
-                                      a!save(ri!refreshCount, ri!refreshCount + 1)
+                                      {
+                                        a!save(
+                                          local!flag_eliminar,
+                                          addseconds(now(), 10)
+                                        ),
+                                        a!save(local!criterio, null),
+                                        a!save(local!criterioT, null),
+                                        a!save(local!buscarTipo, null),
+                                        a!save(local!editGrid, null),
+                                        a!save(local!indexEliminar, null),
+                                        a!save(local!segmentoUsuarioSeleccionado, null),
+                                        a!save(ri!refreshCount, ri!refreshCount + 1)
                                       },
                                       a!save(
                                         local!flag_error_eliminar,
@@ -611,7 +647,7 @@
                                       )
                                     ),
                                     a!save(local!mostrarEliminar, false),
-                                   
+                                    
                                   }
                                 )
                               },
@@ -649,11 +685,12 @@
               },
               showWhen: local!mostrarEliminar
             ),
-           
             #"SYSTEM_SYSRULES_gridLayout"(
               label: "Tabla de Relación Usuario-Segmento",
               labelPosition: "ABOVE",
-              totalCount: length(local!segmentosUsuarios.data),
+              totalCount: length(
+                index(local!segmentosUsuarios, "data", null)
+              ),
               headerCells: {
                 #"SYSTEM_SYSRULES_gridLayoutHeaderCell"(label: "UsuarioN", align: "CENTER"),
                 #"SYSTEM_SYSRULES_gridLayoutHeaderCell"(label: "Usuario", align: "CENTER"),
@@ -670,71 +707,75 @@
               rows: {
                 {
                   #"SYSTEM_SYSRULES_forEach"(
-                    items:if(a!isNotNullOrEmpty(local!segmentosUsuarios),local!segmentosUsuarios.data,null),
+                    items: if(
+                      a!isNotNullOrEmpty(local!segmentosUsuarios),
+                      index(local!segmentosUsuarios, "data", null),
+                      null
+                    ),
                     expression: #"SYSTEM_SYSRULES_gridRowLayout"(
                       contents: {
                         #"SYSTEM_SYSRULES_textField"(
-                          value: if(
-                            a!isNullOrEmpty(
-                              #"_a-0000e8b3-d748-8000-e5f3-01ef9001ef90_2402181"(idAdmon: fv!item.idadmon).data
-                            ),
-                            "NO",
-                            #"_a-0000e8b3-d748-8000-e5f3-01ef9001ef90_2402181"(idAdmon: fv!item.idadmon).data[1].usuarion
+                          value: index(
+                            #"_a-0000e8b3-d748-8000-e5f3-01ef9001ef90_2402181"(idAdmon: index(fv!item,"idadmon", null)),
+                            "data",
+                            "usuarion",
+                            "NO"
                           ),
                           readOnly: true,
                           align: "CENTER"
                         ),
                         #"SYSTEM_SYSRULES_textField"(
-                          value: if(
-                            a!isNullOrEmpty(
-                              #"_a-0000e8b3-d748-8000-e5f3-01ef9001ef90_2402181"(idAdmon: fv!item.idadmon).data
-                            ),
-                            "NO",
-                            #"_a-0000e8b3-d748-8000-e5f3-01ef9001ef90_2402181"(idAdmon: fv!item.idadmon).data[1].usuario
+                          value: index(
+                            #"_a-0000e8b3-d748-8000-e5f3-01ef9001ef90_2402181"(idAdmon: index(fv!item,"idadmon", null)),
+                              "data",
+                              "usuario",
+                             "NO"
+                            
                           ),
                           readOnly: true,
                           align: "CENTER"
                         ),
                         #"SYSTEM_SYSRULES_textField"(
-                          value: if(
-                            a!isNullOrEmpty(
-                              #"_a-0000e8b3-d748-8000-e5f3-01ef9001ef90_2402181"(idAdmon: fv!item.idadmon).data
-                            ),
-                            "NO",
-                            #"_a-0000e8b3-d748-8000-e5f3-01ef9001ef90_2402181"(idAdmon: fv!item.idadmon).data[1].nombre
+                          value: 
+                            index(
+                              #"_a-0000e8b3-d748-8000-e5f3-01ef9001ef90_2402181"(idAdmon: index(fv!item,"idadmon", null)),
+                              "data",
+                              "nombre",
+                             "NO"
+                            
                           ),
                           readOnly: true,
                           align: "CENTER"
                         ),
                         #"SYSTEM_SYSRULES_textField"(
-                          value: if(
-                            a!isNullOrEmpty(
-                              #"_a-0000e8b3-d748-8000-e5f3-01ef9001ef90_2402181"(idAdmon: fv!item.idadmon).data
+                          value: 
+                            index(
+                              #"_a-0000e8b3-d748-8000-e5f3-01ef9001ef90_2402181"(idAdmon: index(fv!item,"idadmon", null)),
+                              "data",
+                              "tipo",
+                              "NO"
                             ),
-                            "NO",
-                            #"_a-0000e8b3-d748-8000-e5f3-01ef9001ef90_2402181"(idAdmon: fv!item.idadmon).data[1].tipo
-                          ),
                           readOnly: true,
                           align: "CENTER"
                         ),
                         #"SYSTEM_SYSRULES_textField"(
-                          value: if(
-                            a!isNullOrEmpty(
-                              #"_a-0000e8b3-d748-8000-e5f3-01ef9001ef90_2402181"(idAdmon: fv!item.idadmon).data
-                            ),
-                            "NO",
-                            #"_a-0000e8b3-d748-8000-e5f3-01ef9001ef90_2402181"(idAdmon: fv!item.idadmon).data[1].password
+                          value: 
+                            index(
+                              #"_a-0000e8b3-d748-8000-e5f3-01ef9001ef90_2402181"(idAdmon: index(fv!item,"idadmon", null)),
+                              "data",
+                              "password",
+                              "NO"
                           ),
                           readOnly: true,
                           align: "CENTER"
                         ),
                         #"SYSTEM_SYSRULES_dropdownField_v1"(
-                          placeholder: "--- Seleccione el segmento ---",
-                          choiceLabels: index(local!cdt_segmento,"segmento",{}),
-                          choiceValues: index(local!cdt_segmento,"idsegmento",{}),
-                          value: local!segmentoUsuarioEditar[fv!index].idsegmento,
+                          placeholder: "--- Seleccione el segmentow ---",
+                          choiceLabels: index(local!cdt_segmento, "segmento", {}),
+                          choiceValues: index(local!cdt_segmento, "idsegmento", {}),
+                          value: index(local!segmentoUsuarioEditar[fv!index],"idsegmento", null),
                           saveInto: {
-                            local!segmentoUsuarioEditar[fv!index].idsegmento
+                            index(local!segmentoUsuarioEditar[fv!index],"idsegmento",null)
                           },
                           searchDisplay: "AUTO",
                           disabled: {
@@ -763,9 +804,9 @@
                                   a!save(
                                     local!segmentoUsuarioSeleccionado,
                                     'type!{urn:com:appian:types}cdo_segmentosusuario'(
-                                      idsegusuario: fv!item.idsegusuario,
-                                      idadmon: fv!item.idadmon,
-                                      idsegmento: fv!item.idsegmento
+                                      idsegusuario: index(fv!item,"idsegusuario", null),
+                                      idadmon: index(fv!item,"idadmon", null),
+                                      idsegmento: index(fv!item,"idsegmento", null)
                                     )
                                   )
                                 }
@@ -843,16 +884,17 @@
                                       ),
                                       if(
                                         toboolean(fv!processInfo.pv.error) = false,
-                                        {a!save(
-                                          local!flag_actualizar,
-                                          addseconds(now(), 10)
-                                        ),
-                                        a!save(local!criterio,null),
-                                        a!save(local!criterioT,null),
-                                        a!save(local!buscarTipo,null),
-                                        a!save(local!succes, fv!processInfo),
-                                        a!save(local!editGrid, null),
-                                        a!save(ri!refreshCount, ri!refreshCount + 1)
+                                        {
+                                          a!save(
+                                            local!flag_actualizar,
+                                            addseconds(now(), 10)
+                                          ),
+                                          a!save(local!criterio, null),
+                                          a!save(local!criterioT, null),
+                                          a!save(local!buscarTipo, null),
+                                          a!save(local!succes, fv!processInfo),
+                                          a!save(local!editGrid, null),
+                                          a!save(ri!refreshCount, ri!refreshCount + 1)
                                         },
                                         a!save(
                                           local!flag_error_actualizar,
@@ -864,6 +906,7 @@
                                       /*a!save(local!succes, fv!processInfo),*/
                                       /*a!save(local!editGrid, null),*/
                                       /*a!save(ri!refreshCount, ri!refreshCount + 1)*/
+                                      
                                     }
                                   )
                                 }
@@ -894,9 +937,9 @@
                                   a!save(
                                     local!segmentoUsuarioSeleccionado,
                                     'type!{urn:com:appian:types}cdo_segmentosusuario'(
-                                      idsegusuario: fv!item.idsegusuario,
-                                      idadmon: fv!item.idadmon,
-                                      idsegmento: fv!item.idsegmento
+                                      idsegusuario: index(fv!item,"idsegusuario", null),
+                                      idadmon: index(fv!item,"idadmon", null),
+                                      idsegmento: index(fv!item,"idsegmento", null)
                                     )
                                   ),
                                   a!save(local!mostrarEliminar, true)
@@ -998,10 +1041,10 @@
                       a!save(
                         local!startIndex,
                         tointeger(
-                          local!segmentosUsuarios.totalCount - 4
-                          /*tointeger(*/
-                            /*right(local!segmentosUsuarios.totalCount)*/
+                          local!segmentosUsuarios.totalCount - 4/*tointeger(*/
+                          /*right(local!segmentosUsuarios.totalCount)*/
                           /*) + 1*/
+                          
                         )
                       )
                     },
@@ -1082,5 +1125,6 @@
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9541716"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9552597"/>
         <historyInfo versionUuid="_a-0000eb9b-4ec6-8000-e68b-01ef9001ef90_9643433"/>
+        <historyInfo versionUuid="_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10119036"/>
     </history>
 </contentHaul>

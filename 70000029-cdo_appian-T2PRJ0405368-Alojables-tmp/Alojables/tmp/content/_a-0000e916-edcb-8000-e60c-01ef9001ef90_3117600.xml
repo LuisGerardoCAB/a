@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
-    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9393361</versionUuid>
+    <versionUuid>_a-0000ec52-2d7d-8000-e69d-01ef9001ef90_10082528</versionUuid>
     <constant>
         <name>SCDO_CDT_DIGITALIZADOS</name>
         <uuid>_a-0000e916-edcb-8000-e60c-01ef9001ef90_3117600</uuid>
@@ -54,5 +54,6 @@
         <historyInfo versionUuid="_a-0000e916-edcb-8000-e60c-01ef9001ef90_3117605"/>
         <historyInfo versionUuid="_a-0000e9a7-6d42-8000-e63f-01ef9001ef90_5933018"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9393361"/>
+        <historyInfo versionUuid="_a-0000ec52-2d7d-8000-e69d-01ef9001ef90_10082528"/>
     </history>
 </contentHaul>

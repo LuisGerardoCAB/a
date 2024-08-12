@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
-    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9391188</versionUuid>
+    <versionUuid>_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10106861</versionUuid>
     <interface>
         <name>SCDO_TXT_ERROR_LINEAS</name>
         <uuid>_a-0000eaa5-8248-8000-e681-01ef9001ef90_8193482</uuid>
@@ -16,88 +16,104 @@
             <unlogged>false</unlogged>
         </visibility>
         <definition>a!localVariables(
-  
-  
-  {
-    #"SYSTEM_SYSRULES_columnsLayout"(
-      columns: {
-        #"SYSTEM_SYSRULES_columnLayout"(
-
-        ),
-        #"SYSTEM_SYSRULES_columnLayout"(
-          contents: {
-            #"SYSTEM_SYSRULES_cardLayout"(
-              height: "AUTO",
-              style: "ERROR",
-              padding: "LESS",
-              shape: "ROUNDED",
-              contents: {
-                #"SYSTEM_SYSRULES_richTextDisplayField"(
-                  align: "CENTER",
-                  value: {
-                    #"SYSTEM_SYSRULES_richTextItem_v1"(
-                      text: "ERROR",
-                      color: "NEGATIVE",
-                      size: "LARGE",
-                      style: "STRONG"
-                    ),
-                  }
-                ),
-                #"SYSTEM_SYSRULES_richTextDisplayField"(
-                  align: "CENTER",
-                  value: {
-                    #"SYSTEM_SYSRULES_richTextItem_v1"(
-                      text: concat("Existe algún error en la estructura de las líneas verticales del .txt cargado.", char(10), 
-                      
-                      "Verifique las líneas que separan cada campo",char(10),
-                      "que se encuentran en el .txt"
+  a!match(
+    value: ri!NumeroError,
+    equals: 1,
+    then: {
+      #"SYSTEM_SYSRULES_columnsLayout"(
+        columns: {
+          #"SYSTEM_SYSRULES_columnLayout"(),
+          #"SYSTEM_SYSRULES_columnLayout"(
+            contents: {
+              #"SYSTEM_SYSRULES_cardLayout"(
+                height: "AUTO",
+                style: "ERROR",
+                padding: "LESS",
+                shape: "ROUNDED",
+                contents: {
+                  #"SYSTEM_SYSRULES_richTextDisplayField"(
+                    align: "CENTER",
+                    value: {
+                      #"SYSTEM_SYSRULES_richTextItem_v1"(
+                        text: "ERROR",
+                        color: "NEGATIVE",
+                        size: "LARGE",
+                        style: "STRONG"
                       ),
-                      style: "STRONG",
-                      size: "STANDARD"
-                    )
-                  }
-                ),
-                #"SYSTEM_SYSRULES_richTextDisplayField"(
-                  align: "CENTER",
-                  value: {
-                    #"SYSTEM_SYSRULES_richTextItem_v1"(
-                      text: "Descargue y verifique su .txt aqui",
-                      link: {
-                        #"SYSTEM_SYSRULES_documentDownloadLink"(
-                          document: ri!documentoSubido
-                        )
-                      }
-                    )
-                  }
-                ),
-                #"SYSTEM_SYSRULES_ButtonArrayLayout"(
-                  align: "CENTER",
-                  buttons: {
-                    #"SYSTEM_SYSRULES_ButtonWidget"(
-                      label: "CErrar",
-                      style: "SECONDARY",
-                      value: false,
-                      submit: true
-                    )
-                  }
-                )
-              }
-            )
-          }
-        ),
-        #"SYSTEM_SYSRULES_columnLayout"(
-
-        )
-      }
-    ),
-  }
-  
+                      
+                    }
+                  ),
+                  #"SYSTEM_SYSRULES_richTextDisplayField"(
+                    align: "CENTER",
+                    value: {
+                      #"SYSTEM_SYSRULES_richTextItem_v1"(
+                        text: concat(
+                          "Existe algún error en la estructura de las líneas verticales del .txt cargado.",
+                          char(10),
+                          "Verifique las líneas que separan cada campo",
+                          char(10),
+                          "que se encuentran en el .txt"
+                        ),
+                        style: "STRONG",
+                        size: "STANDARD"
+                      )
+                    }
+                  ),
+                  #"SYSTEM_SYSRULES_richTextDisplayField"(
+                    align: "CENTER",
+                    value: {
+                      #"SYSTEM_SYSRULES_richTextItem_v1"(
+                        text: "Descargue y verifique su .txt aqui",
+                        link: {
+                          #"SYSTEM_SYSRULES_documentDownloadLink"(document: ri!documentoSubido)
+                        }
+                      )
+                    }
+                  ),
+                  #"SYSTEM_SYSRULES_ButtonArrayLayout"(
+                    align: "CENTER",
+                    buttons: {
+                      #"SYSTEM_SYSRULES_ButtonWidget"(
+                        label: "CErrar",
+                        style: "SECONDARY",
+                        value: false,
+                        submit: true
+                      )
+                    }
+                  )
+                }
+              )
+            }
+          ),
+          #"SYSTEM_SYSRULES_columnLayout"()
+        }
+      ),
+      
+    },
+    equals: 2,
+    then: #"_a-0000eaa5-8248-8000-e681-01ef9001ef90_8193495"(documentoSubido: ri!documentoSubido),
+    equals: 3,
+    then: #"_a-0000eaa5-8248-8000-e681-01ef9001ef90_8193508"(documentoSubido: ri!documentoSubido),
+    equals: 4,
+    then:#"_a-0000eaa5-8248-8000-e681-01ef9001ef90_8193521"(documentoSubido: ri!documentoSubido),
+    equals: 5,
+    then: #"_a-0000eaa5-8248-8000-e681-01ef9001ef90_8194005"(documentoSubido: ri!documentoSubido),
+    default: #"_a-0000eaa5-8248-8000-e681-01ef9001ef90_8193495"(documentoSubido: ri!documentoSubido),
+    
+  )
 )</definition>
         <namedTypedValue>
             <name>documentoSubido</name>
             <type>
                 <name>CollaborationDocument</name>
                 <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>NumeroError</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
             </type>
         </namedTypedValue>
         <preferredEditor>interface</preferredEditor>
@@ -133,5 +149,6 @@
     <history>
         <historyInfo versionUuid="_a-0000eaa5-8248-8000-e681-01ef9001ef90_8193494"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9391188"/>
+        <historyInfo versionUuid="_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10106861"/>
     </history>
 </contentHaul>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
-    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9386754</versionUuid>
+    <versionUuid>_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10119926</versionUuid>
     <rule>
         <name>SCDO_COMPROBAR_CONTRATOS_EXISTEN_DOCUMENTACION</name>
         <uuid>_a-0000eaa5-8248-8000-e681-01ef9001ef90_8239361</uuid>
@@ -22,10 +22,10 @@
       items: ri!contratos,
       expression: if(
         a!isNotNullOrEmpty(
-          #"_a-0000e8b2-d897-8000-e5f1-01ef9001ef90_2372887"(
+          index(#"_a-0000e8b2-d897-8000-e5f1-01ef9001ef90_2372887"(
             contrato: fv!item,
             iddocumento: ri!iddocumento
-          ).data
+          ),"data",null),
         ),
         true,
         null
@@ -88,5 +88,6 @@
     <history>
         <historyInfo versionUuid="_a-0000eaa5-8248-8000-e681-01ef9001ef90_8240622"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9386754"/>
+        <historyInfo versionUuid="_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10119926"/>
     </history>
 </contentHaul>

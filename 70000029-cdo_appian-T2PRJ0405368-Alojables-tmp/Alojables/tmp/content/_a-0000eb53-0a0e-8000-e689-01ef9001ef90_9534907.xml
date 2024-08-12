@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
-    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9534919</versionUuid>
+    <versionUuid>_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10121188</versionUuid>
     <rule>
         <name>SCDO_DIFFERENCE_3_ARREGLOS</name>
         <uuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9534907</uuid>
@@ -16,62 +16,56 @@
             <unlogged>false</unlogged>
         </visibility>
         <definition>a!localVariables(
-  local!devolver: 
-  if(
-    and(
+  local!devolverMatch: a!match(
+    value: and(
       a!isNullOrEmpty(ri!arreglo_1),
       a!isNullOrEmpty(ri!arreglo_2),
-      a!isNullOrEmpty(ri!arreglo_3),),
-      null,
-      if(
-        and(
-          a!isNullOrEmpty(ri!arreglo_1),
-          a!isNullOrEmpty(ri!arreglo_2)
-        ),
-        ri!arreglo_3,
-        if(
-          and(
-            a!isNullOrEmpty(ri!arreglo_1),
-            a!isNullOrEmpty(ri!arreglo_3)
-          ),
-          ri!arreglo_2,
-          if(
-            and(
-              a!isNullOrEmpty(ri!arreglo_2),
-              a!isNullOrEmpty(ri!arreglo_3)
-            ),
-            ri!arreglo_1,
-            if(and(
-              a!isNullOrEmpty(ri!arreglo_1),
-              and(
-                a!isNotNullOrEmpty(ri!arreglo_2),
-                a!isNotNullOrEmpty(ri!arreglo_3)
-              )),
-              difference(ri!arreglo_2, ri!arreglo_3),
-              if(and(
-                a!isNullOrEmpty(ri!arreglo_2),
-                and(
-                  a!isNotNullOrEmpty(ri!arreglo_1),
-                  a!isNotNullOrEmpty(ri!arreglo_3)
-                )),
-                difference(ri!arreglo_1, ri!arreglo_3),
-                if(and(
-                  a!isNullOrEmpty(ri!arreglo_3),
-                  and(
-                    a!isNotNullOrEmpty(ri!arreglo_1),
-                    a!isNotNullOrEmpty(ri!arreglo_2)
-                  )),
-                  difference(ri!arreglo_1, ri!arreglo_2),
-                  difference(ri!arreglo_1, ri!arreglo_2, ri!arreglo_3)
-                )
-              )
-            )
-          )
-        )
+      a!isNullOrEmpty(ri!arreglo_3)
+    ),
+    equals: true(),
+    then: null,
+    whenTrue: and(
+      a!isNullOrEmpty(ri!arreglo_1),
+      a!isNullOrEmpty(ri!arreglo_2)
+    ),
+    then: ri!arreglo_3,
+    whenTrue: and(
+      a!isNullOrEmpty(ri!arreglo_1),
+      a!isNullOrEmpty(ri!arreglo_3)
+    ),
+    then: ri!arreglo_2,
+    whenTrue: and(
+      a!isNullOrEmpty(ri!arreglo_2),
+      a!isNullOrEmpty(ri!arreglo_3)
+    ),
+    then: ri!arreglo_1,
+    whenTrue: and(
+      a!isNullOrEmpty(ri!arreglo_1),
+      and(
+        a!isNotNullOrEmpty(ri!arreglo_2),
+        a!isNotNullOrEmpty(ri!arreglo_3)
       )
-    
+    ),
+    then: difference(ri!arreglo_2, ri!arreglo_3),
+    whenTrue: and(
+      a!isNullOrEmpty(ri!arreglo_2),
+      and(
+        a!isNotNullOrEmpty(ri!arreglo_1),
+        a!isNotNullOrEmpty(ri!arreglo_3)
+      )
+    ),
+    then: difference(ri!arreglo_1, ri!arreglo_3),
+    whenTrue: and(
+      a!isNullOrEmpty(ri!arreglo_3),
+      and(
+        a!isNotNullOrEmpty(ri!arreglo_1),
+        a!isNotNullOrEmpty(ri!arreglo_2)
+      )
+    ),
+    then: difference(ri!arreglo_1, ri!arreglo_2),
+    default: difference(ri!arreglo_1, ri!arreglo_2, ri!arreglo_3)
   ),
-  local!devolver
+  local!devolverMatch
 )</definition>
         <namedTypedValue>
             <name>arreglo_1</name>
@@ -123,7 +117,35 @@
             <groups/>
         </role>
     </roleMap>
+    <typedValue>
+        <type>
+            <name>RuleTestConfig?list</name>
+            <namespace>http://www.appian.com/ae/types/2009</namespace>
+        </type>
+        <value>
+            <el>
+                <a:name>nunca compara 3 arreglos, solo </a:name>
+                <a:ruleInputTestConfigs>
+                    <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="a:Expression">{1,2,3,4,3,33}</a:value>
+                    <a:nameRef>arreglo_1</a:nameRef>
+                    <a:id>1</a:id>
+                </a:ruleInputTestConfigs>
+                <a:ruleInputTestConfigs>
+                    <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="a:Expression">{1,2,3}</a:value>
+                    <a:nameRef>arreglo_2</a:nameRef>
+                    <a:id>2</a:id>
+                </a:ruleInputTestConfigs>
+                <a:ruleInputTestConfigs>
+                    <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="a:Expression">{12,21}</a:value>
+                    <a:nameRef>arreglo_3</a:nameRef>
+                    <a:id>3</a:id>
+                </a:ruleInputTestConfigs>
+                <a:assertions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+            </el>
+        </value>
+    </typedValue>
     <history>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9534919"/>
+        <historyInfo versionUuid="_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10121188"/>
     </history>
 </contentHaul>

@@ -6,10 +6,11 @@
       <xsd:appinfo source="appian.jpa">@Table(name="CDO_MX_AUX_USUARIOSOPICS")</xsd:appinfo>
       <xsd:appinfo source="http://www.appian.com/ae/types/2009">
         <ns2:Metadata xmlns:ns2="http://www.appian.com/ae/types/2009">
-          <ns2:versionUuid>0000eae3-fb1d-8000-87c6-014d98014d98</ns2:versionUuid>
+          <ns2:versionUuid>0000ec5f-61db-8000-ce16-014d98014d98</ns2:versionUuid>
           <ns2:history>
             <ns2:historyInfo versionUuid="0000e8b8-9b2f-8000-6dc5-014d98014d98"/>
             <ns2:historyInfo versionUuid="0000eae3-fb1d-8000-87c6-014d98014d98"/>
+            <ns2:historyInfo versionUuid="0000ec5f-61db-8000-ce16-014d98014d98"/>
           </ns2:history>
         </ns2:Metadata>
       </xsd:appinfo>
@@ -29,16 +30,6 @@
       <xsd:element name="idsegmento" nillable="true" type="xsd:int">
         <xsd:annotation>
           <xsd:appinfo source="appian.jpa">@Column(name="IDSEGMENTO", nullable=false, columnDefinition="NUMBER")</xsd:appinfo>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="extra1" nillable="true" type="xsd:string">
-        <xsd:annotation>
-          <xsd:appinfo source="appian.jpa">@Column(name="EXTRA1", columnDefinition="VARCHAR2(50)")</xsd:appinfo>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="extra2" nillable="true" type="xsd:string">
-        <xsd:annotation>
-          <xsd:appinfo source="appian.jpa">@Column(name="EXTRA2", columnDefinition="VARCHAR2(50)")</xsd:appinfo>
         </xsd:annotation>
       </xsd:element>
     </xsd:sequence>

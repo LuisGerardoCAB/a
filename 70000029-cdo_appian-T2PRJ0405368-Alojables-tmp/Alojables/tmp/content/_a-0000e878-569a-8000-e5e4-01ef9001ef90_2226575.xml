@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
-    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9554595</versionUuid>
+    <versionUuid>_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10136358</versionUuid>
     <interface>
         <name>SCDO_GridUNoAsignados</name>
         <uuid>_a-0000e878-569a-8000-e5e4-01ef9001ef90_2226575</uuid>
@@ -54,7 +54,7 @@
   local!startIndex: 1,
   local!batchSize: 5,
   local!cdt_expediente: a!refreshVariable(
-    value: #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2114113"(idexpediente: null).data,
+    value: index(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2114113"(idexpediente: null),"data", null),
     /*refreshAlways: true,*/
     refreshOnVarChange: ri!refreshCount,
 
@@ -370,7 +370,7 @@
             #"SYSTEM_SYSRULES_gridLayoutColumnConfig"(width: "ICON")
           },
           rows: #"SYSTEM_SYSRULES_forEach"(
-            items: local!usuariosNoAsignados.data,
+            items: index(local!usuariosNoAsignados,"data", null),
             expression: {
               #"SYSTEM_SYSRULES_gridRowLayout"(
                 id: fv!item.idusuarioopics,
@@ -386,8 +386,9 @@
                     align: "CENTER"
                   ),
                   #"SYSTEM_SYSRULES_textField"(
-                    value:if(a!isNotNullOrEmpty(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2233353"(idSegmento: fv!item.idsegmento).data),
-                    #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2233353"(idSegmento: fv!item.idsegmento).data[1].segmento,"-") ,
+                    value:if(a!isNotNullOrEmpty(
+                      index(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2233353"(idSegmento: fv!item.idsegmento),"data",null)),
+                    index(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2233353"(idSegmento: fv!item.idsegmento),"data","segmento", null), "-") ,
                     readOnly: true,
                     align: "CENTER"
                   ),
@@ -395,7 +396,7 @@
                     placeholder: "Seleccione el expediente",
                     choiceLabels: { index(local!cdt_expediente,"nombre",{}) },
                     choiceValues: { index(local!cdt_expediente,"idexpediente",{}) },
-                    value: local!permisosUsuarios[fv!index].idexpediente,
+                    value: index(local!permisosUsuarios[fv!index],"idexpediente", null),
                     saveInto: local!permisosUsuarios[fv!index].idexpediente,
                     disabled: if(
                       a!isNullOrEmpty(local!editGrid),
@@ -410,7 +411,7 @@
                     placeholder: "Seleccione el acceso",
                     choiceLabels: #"_a-0000e982-d80b-8000-e63b-01ef9001ef90_4612988",
                     choiceValues: #"_a-0000e982-d80b-8000-e63b-01ef9001ef90_4612988",
-                    value: local!permisosUsuarios[fv!index].tipoacceso,
+                    value: index(local!permisosUsuarios[fv!index],"tipoacceso", null),
                     saveInto: local!permisosUsuarios[fv!index].tipoacceso,
                     disabled: if(
                       a!isNullOrEmpty(local!editGrid),
@@ -521,9 +522,6 @@
                           a!isNullOrEmpty(local!editGrid),
                           false,
                           and(
-                            a!isNotNullOrEmpty(
-                              local!permisosUsuarios[fv!index].idexpediente
-                            ),
                             a!isNotNullOrEmpty(
                               local!permisosUsuarios[fv!index].idexpediente
                             ),
@@ -703,5 +701,6 @@
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9508928"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9541931"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9554595"/>
+        <historyInfo versionUuid="_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10136358"/>
     </history>
 </contentHaul>

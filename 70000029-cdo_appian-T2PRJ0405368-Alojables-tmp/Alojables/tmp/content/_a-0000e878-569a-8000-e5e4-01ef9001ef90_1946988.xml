@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
-    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9510127</versionUuid>
+    <versionUuid>_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10134308</versionUuid>
     <interface>
         <name>SCDO_Doc_Catalogo</name>
         <uuid>_a-0000e878-569a-8000-e5e4-01ef9001ef90_1946988</uuid>
@@ -16,7 +16,7 @@
             <unlogged>false</unlogged>
         </visibility>
         <definition>a!localVariables(
-  local!opcionMenuSeleccionada: #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_1946976"()[1],
+  local!opcionMenuSeleccionada: index(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_1946976"(), 1,null),
   local!indiceMenuSeleccionado: 1,
   local!documento,
   local!segmento,
@@ -37,14 +37,14 @@
             indiceSeleccionado_int: local!indiceMenuSeleccionado
           ),
           if(
-            local!opcionMenuSeleccionada.titulo = #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_1946756"[1],
+            local!opcionMenuSeleccionada.titulo = index(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_1946756", 1, null),
             #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_1945903"(
               documento: local!documento,
               segmento: local!segmento,
              
             ),
             choose(
-              local!opcionMenuSeleccionada.titulo = #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_1946756"[2],
+              local!opcionMenuSeleccionada.titulo = index(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_1946756", 2, null),
               #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_1946556"(
                 documento: local!documento,
                 tipo: local!tipo,
@@ -108,10 +108,7 @@
             <el>
                 <a:name/>
                 <a:ruleInputTestConfigs>
-                    <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="a:Expression">#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2233353"(
-  seleccionColumnas: {"segmento", "idsegmento"}
-
-).data</a:value>
+                    <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="a:Expression">#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2233353"(paginInfo: null).data</a:value>
                     <a:nameRef>segmento_cdt</a:nameRef>
                     <a:id>1</a:id>
                 </a:ruleInputTestConfigs>
@@ -125,5 +122,6 @@
         <historyInfo versionUuid="_a-0000eb09-d442-8000-e687-01ef9001ef90_8793881"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9391233"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9510127"/>
+        <historyInfo versionUuid="_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10134308"/>
     </history>
 </contentHaul>

@@ -6,11 +6,12 @@
       <xsd:appinfo source="appian.jpa">@Table(name="CDO_MX_MAE_ADMINISTRADORES")</xsd:appinfo>
       <xsd:appinfo source="http://www.appian.com/ae/types/2009">
         <ns2:Metadata xmlns:ns2="http://www.appian.com/ae/types/2009">
-          <ns2:versionUuid>0000eb19-f1cd-8000-919c-014d98014d98</ns2:versionUuid>
+          <ns2:versionUuid>0000ec4f-c8db-8000-cc3a-014d98014d98</ns2:versionUuid>
           <ns2:history>
             <ns2:historyInfo versionUuid="0000e8c1-d118-8000-71a0-014d98014d98"/>
             <ns2:historyInfo versionUuid="0000ead7-a10b-8000-83ad-014d98014d98"/>
             <ns2:historyInfo versionUuid="0000eb19-f1cd-8000-919c-014d98014d98"/>
+            <ns2:historyInfo versionUuid="0000ec4f-c8db-8000-cc3a-014d98014d98"/>
           </ns2:history>
         </ns2:Metadata>
       </xsd:appinfo>
@@ -44,7 +45,7 @@
       </xsd:element>
       <xsd:element name="usuarion" nillable="true" type="xsd:string">
         <xsd:annotation>
-          <xsd:appinfo source="appian.jpa">@Column(name="USUARION", columnDefinition="VARCHAR2(12)")</xsd:appinfo>
+          <xsd:appinfo source="appian.jpa">@Column(name="USUARION", columnDefinition="VARCHAR2(80)")</xsd:appinfo>
         </xsd:annotation>
       </xsd:element>
     </xsd:sequence>

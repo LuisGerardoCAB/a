@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
-    <versionUuid>_a-0000eb9b-4ec6-8000-e68b-01ef9001ef90_9589194</versionUuid>
+    <versionUuid>_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10137489</versionUuid>
     <interface>
         <name>SCDO_DocumentacionC</name>
         <uuid>_a-0000e878-569a-8000-e5e4-01ef9001ef90_2260035</uuid>
@@ -33,15 +33,16 @@
   local!fecha,
   local!estado,
   local!refreshCount: 0,
-  local!documentos: #"_a-0000e8d8-9b98-8000-e605-01ef9001ef90_2694147"(documentaa: "CONTRATO").data,
+  local!documentos: index(#"_a-0000e8d8-9b98-8000-e605-01ef9001ef90_2694147"(documentaa: "CONTRATO"),"data", null),
   local!iddocumento,
   local!estadocc,
   /*local!documento,*/
   {
     #"SYSTEM_SYSRULES_ButtonArrayLayout"(
       buttons: {
-        #"SYSTEM_SYSRULES_ButtonWidget"(
+        #"SYSTEM_SYSRULES_buttonWidget_v1"(
           label: "Limpiar",
+          style: "GHOST",
           saveInto: {
             a!save(
               {
@@ -61,8 +62,7 @@
               },
               null
             )
-          },
-          style: "DESTRUCTIVE"
+          }
         )
       },
       align: "START"
@@ -71,11 +71,11 @@
       items: {
         #"SYSTEM_SYSRULES_sideBySideItem"(
           item: #"SYSTEM_SYSRULES_dropdownField_v1"(
+            choiceLabels: { "Pendiente", "Aceptado" },
+            choiceValues: { "P", "A" },
             label: "Estado",
             labelPosition: "ABOVE",
             placeholder: "--- Select a Value ---",
-            choiceLabels: { "Pendiente", "Aceptado" },
-            choiceValues: { "P", "A" },
             value: local!estado,
             saveInto: { local!estado, a!save(local!doc, null) },
             searchDisplay: "AUTO",
@@ -85,9 +85,6 @@
         ),
         #"SYSTEM_SYSRULES_sideBySideItem"(
           item: #"SYSTEM_SYSRULES_dropdownField_v1"(
-            label: "Estado CC",
-            labelPosition: "ABOVE",
-            placeholder: "--- Select a Value ---",
             choiceLabels: {
               "VIGENTE",
               "VIGENTE POR REVISAR",
@@ -98,6 +95,9 @@
               "VIGENTE POR REVISAR",
               "IRREGULAR FALTA CPI"
             },
+            label: "Estado CC",
+            labelPosition: "ABOVE",
+            placeholder: "--- Select a Value ---",
             value: local!estadocc,
             saveInto: { local!estadocc, a!save(local!doc, null) },
             searchDisplay: "AUTO",
@@ -106,11 +106,11 @@
         ),
         #"SYSTEM_SYSRULES_sideBySideItem"(
           item: #"SYSTEM_SYSRULES_dropdownField_v1"(
+            choiceLabels:index( local!documentos,"documento",{}),
+            choiceValues: index(local!documentos,"iddocumento",{}),
             label: "Documento",
             labelPosition: "ABOVE",
             placeholder: "--- Select a Value ---",
-            choiceLabels:index( local!documentos,"documento",{}),
-            choiceValues: index(local!documentos,"iddocumento",{}),
             value: local!iddocumento,
             saveInto: {
               local!iddocumento,
@@ -121,7 +121,7 @@
           )
         ),
         #"SYSTEM_SYSRULES_sideBySideItem"(
-          item: #"SYSTEM_SYSRULES_checkboxField"(
+          item: #"SYSTEM_SYSRULES_checkboxField_v1"(
             label: "",
             labelPosition: "ABOVE",
             choiceLabels: { "Imagen" },
@@ -205,16 +205,15 @@
               a!save(local!doc, null)
             },
             validations: {
-              if(
-                and(a!isNotNullOrEmpty(local!fechaDrop),a!isNotNullOrEmpty(local!fechaalDrop)),
-                if(
-                   local!fechaDrop &gt; local!fechaalDrop,
-                  "La fecha al debe ser mayor que la fecha de",
-                  ""
-                ),
-                ""
+              a!match(
+                value:  and(a!isNotNullOrEmpty(local!fechaDrop),a!isNotNullOrEmpty(local!fechaalDrop)),
+                equals: false(),
+                then:  "",
+                whenTrue: local!fechaDrop &gt; local!fechaalDrop,
+                then: "La fecha al debe ser mayor que la fecha de",
+                default:  ""
               )
-            },
+            }
           ),
           width: "AUTO"
         ),
@@ -245,14 +244,13 @@
               a!save(local!doc, null)
             },
             validations: {
-              if(
-                and(a!isNotNullOrEmpty(local!fechaDrop),a!isNotNullOrEmpty(local!fechaalDrop)),
-                if(
-                  local!fechaDrop &gt; local!fechaalDrop,
-                  "La fecha al debe ser mayor que la fecha de",
-                  ""
-                ),
-                ""
+              a!match(
+                value:  and(a!isNotNullOrEmpty(local!fechaDrop),a!isNotNullOrEmpty(local!fechaalDrop)),
+                equals: false(),
+                then:  "",
+                whenTrue: local!fechaDrop &gt; local!fechaalDrop,
+                then: "La fecha al debe ser mayor que la fecha de",
+                default:  ""
               )
             },
             align: "LEFT"
@@ -298,8 +296,9 @@
           contents: {
             #"SYSTEM_SYSRULES_ButtonArrayLayout"(
               buttons: {
-                #"SYSTEM_SYSRULES_ButtonWidget"(
+                #"SYSTEM_SYSRULES_buttonWidget_v1"(
                   label: "Rechazar",
+                  style: "GHOST",
                   saveInto: {
                     #"SYSTEM_SYSRULES_startProcess"(
                       processModel: #"_a-0000e982-d80b-8000-e63b-01ef9001ef90_4795736",
@@ -335,7 +334,6 @@
                     a!save(local!ver_motivo, false),
                     a!save(local!motivo_rechazo, null)
                   },
-                  style: "NORMAL",
                   loadingIndicator: true
                 )
               },
@@ -343,13 +341,13 @@
             ),
             #"SYSTEM_SYSRULES_ButtonArrayLayout"(
               buttons: {
-                #"SYSTEM_SYSRULES_ButtonWidget"(
+                #"SYSTEM_SYSRULES_buttonWidget_v1"(
                   label: "Cancelar",
+                  style: "GHOST",
                   saveInto: {
                     a!save(local!ver_motivo, false),
                     a!save(local!motivo_rechazo, null)
-                  },
-                  style: "NORMAL"
+                  }
                 )
               },
               align: "START"
@@ -363,7 +361,7 @@
       columns: {
         #"SYSTEM_SYSRULES_columnLayout"(
           contents: {
-            #"SYSTEM_SYSRULES_gridField_v1"(
+            #"SYSTEM_SYSRULES_gridField_v2"(
               label: "Tabla de solo lectura",
               labelPosition: "ABOVE",
               data: #"SYSTEM_SYSRULES_queryEntity_v2"(
@@ -577,7 +575,30 @@
                   value: if(
                     a!isNullOrEmpty(fv!row.cliente),
                     "-",
-                    fv!row.cliente
+                    a!match(
+    value: index(
+      decrypttext(
+        valueToDecrypt: index(fv!row, "cliente", null),
+        iv: #"_a-0000ec31-ac7e-8000-e69b-01ef9001ef90_10021470",
+        scsKey: #"_a-0000ec31-ac7e-8000-e69b-01ef9001ef90_10021476"
+      ),
+      "success",
+      null
+    ),
+    equals: true,
+    then: index(
+      decrypttext( valueToDecrypt:
+      index(fv!row, "cliente", null),
+      iv: #"_a-0000ec31-ac7e-8000-e69b-01ef9001ef90_10021470",
+      scsKey: #"_a-0000ec31-ac7e-8000-e69b-01ef9001ef90_10021476"
+      ),
+      "value",
+      null
+    ),
+    equals: false,
+    then: index(fv!row, "cliente", null),
+    default: "-"
+  )
                   ),
                   align: "CENTER"
                 ),
@@ -761,14 +782,14 @@
 
                                      true
 
-                                   ),
+                                   )
 
 
                                  }
-                               ),
+                               )
 
                              }
-                           ), 
+                           ) 
 
 
                          },
@@ -779,14 +800,14 @@
                        "",
                        if(and(local!busque,a!isNotNullOrEmpty(local!documento_descargar)),
                        #"SYSTEM_SYSRULES_richTextIcon"(
-                         caption:"Descargar documento.",
                          icon: "download",
+                         caption:"Descargar documento.",
                          link:{
 
                            #"SYSTEM_SYSRULES_documentDownloadLink"(
                              document: local!documento_descargar
 
-                           ), 
+                           ) 
 
 
                          },
@@ -794,8 +815,8 @@
                          linkStyle: "STANDALONE"
                        ),
                        #"SYSTEM_SYSRULES_richTextIcon"(
-                         caption:"Ha ocurrido un error al obtener el documento.",
                          icon: "exclamation",
+                         caption:"Ha ocurrido un error al obtener el documento.",
 
 
                          linkStyle: "STANDALONE"
@@ -805,7 +826,7 @@
                        
 
                      }
-                   ),
+                   )
                  ),
                   
                  
@@ -817,8 +838,8 @@
                     fv!row.Estado = "P",
                     #"SYSTEM_SYSRULES_ButtonArrayLayout"(
                       buttons: {
-                        #"SYSTEM_SYSRULES_ButtonWidget"(
-                          icon: "check-circle",
+                        #"SYSTEM_SYSRULES_buttonWidget_v1"(
+                          style: "LINK",
                           saveInto: {
                             #"SYSTEM_SYSRULES_startProcess"(
                               processModel: #"_a-0000e982-d80b-8000-e63b-01ef9001ef90_4795736",
@@ -826,7 +847,8 @@
                                 decisionFinal: true,
                                 cancel: false,
                                 decisionGrid2: "Aceptar",
-                                documentacion: #"_a-0000e8b2-d897-8000-e5f1-01ef9001ef90_2372887"(iddocumentacion: fv!row.Iddocumentacion).data[1],
+                                documentacion: index(#"_a-0000e8b2-d897-8000-e5f1-01ef9001ef90_2372887"(iddocumentacion: fv!row.Iddocumentacion, paginInfo: 
+                                #"SYSTEM_SYSRULES_pagingInfo"(startIndex: 1, batchSize: 1)),"data", null),
 
                               },
                               onSuccess: {
@@ -844,11 +866,11 @@
                             )
                           },
                           size: "SMALL",
-                          style: "LINK",
-                          loadingIndicator: true,
                           confirmHeader: "¿Está seguro de que desea aceptar esta documentación del contrato: " &amp; fv!row.Contrato &amp; "?",
                           confirmButtonLabel: "Si, Aceptar",
-                          cancelButtonLabel: "Cancelar"
+                          cancelButtonLabel: "Cancelar",
+                          icon: "check-circle",
+                          loadingIndicator: true
                         )
                       },
                       align: "CENTER"
@@ -863,13 +885,13 @@
                     fv!row.Estado = "P",
                     #"SYSTEM_SYSRULES_ButtonArrayLayout"(
                       buttons: {
-                        #"SYSTEM_SYSRULES_ButtonWidget"(
-                          icon: "times",
+                        #"SYSTEM_SYSRULES_buttonWidget_v1"(
+                          style: "LINK",
                           saveInto: {
                             a!save(local!ver_motivo, true),
                             a!save(
                               local!documento_rechazo,
-                              #"_a-0000e8b2-d897-8000-e5f1-01ef9001ef90_2372887"(iddocumentacion: fv!row.Iddocumentacion).data[1]
+                              index(#"_a-0000e8b2-d897-8000-e5f1-01ef9001ef90_2372887"(iddocumentacion: fv!row.Iddocumentacion), "data", null)
                             ),
                             a!save(
                               local!docs_actualizar,
@@ -886,11 +908,11 @@
 
                           },
                           size: "SMALL",
-                          style: "LINK",
-                          loadingIndicator: true,
                           confirmHeader: "¿Está seguro de que desea rechazar esta documentación del contrato: " &amp; fv!row.Contrato &amp; "?",
                           confirmButtonLabel: "Si, Rechazar",
-                          cancelButtonLabel: "Cancelar"
+                          cancelButtonLabel: "Cancelar",
+                          icon: "times",
+                          loadingIndicator: true
                         )
                       },
                       align: "CENTER"
@@ -954,5 +976,7 @@
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9465523"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9499093"/>
         <historyInfo versionUuid="_a-0000eb9b-4ec6-8000-e68b-01ef9001ef90_9589194"/>
+        <historyInfo versionUuid="_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10132536"/>
+        <historyInfo versionUuid="_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10137489"/>
     </history>
 </contentHaul>

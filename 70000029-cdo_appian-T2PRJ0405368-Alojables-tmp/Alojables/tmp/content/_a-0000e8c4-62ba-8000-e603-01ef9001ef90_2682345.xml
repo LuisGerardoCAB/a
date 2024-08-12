@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
-    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9386663</versionUuid>
+    <versionUuid>_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10123070</versionUuid>
     <rule>
         <name>SCDO_getCentroCostoByFilters</name>
         <uuid>_a-0000e8c4-62ba-8000-e603-01ef9001ef90_2682345</uuid>
@@ -15,9 +15,12 @@
             <system>false</system>
             <unlogged>false</unlogged>
         </visibility>
-        <definition>#"_a-0000e8b9-0989-8000-e5fd-01ef9001ef90_2420859"(
-  dataStoreEntity_dt: #"_a-0000e8b2-d897-8000-e5f1-01ef9001ef90_2379550",
-  queryFilter_any: {
+        <definition> #"SYSTEM_SYSRULES_queryEntity_v2"(
+   entity:  #"_a-0000e8b2-d897-8000-e5f1-01ef9001ef90_2379550",
+   query: #"SYSTEM_SYSRULES_query"(
+     logicalExpression: #"SYSTEM_SYSRULES_queryLogicalExpression"(
+       operator: "AND",
+       filters: {
     #"SYSTEM_SYSRULES_queryFilter"(
       field: "idccostos",
       operator: "=",
@@ -55,20 +58,18 @@
       applyWhen: isnull(ri!idzona) &lt;&gt; true
     )
   },
-  /*pagingInfo_pi: if(*/
-    /*not(isnull(ri!paginInfo)),*/
-    /*ri!paginInfo,*/
-    /*a!pagingInfo(*/
-      /*startIndex: 1,*/
-      /*batchSize: -1,*/
-      /*sort: a!sortInfo(field: "cc", ascending: true())*/
-    /*)*/
-  /*),*/
- 
-  selectionColumn_txt: ri!seleccionColumnas,   
-  pagingInfo_pi: ri!paginInfo,
-  ignoreFiltersWithEmptyValues_bool:true,
-  fetchTotalCount_bool: true()
+  
+  ignoreFiltersWithEmptyValues: true()
+     ),
+     pagingInfo: if(
+       a!isNotNullOrEmpty(ri!paginInfo),
+       ri!paginInfo,
+       #"SYSTEM_SYSRULES_pagingInfo"(
+         startIndex: 1,
+         batchSize: 2000,
+       )
+     )
+ )
 )
 
 
@@ -126,13 +127,6 @@
                 <namespace>http://www.appian.com/ae/types/2009</namespace>
             </type>
         </namedTypedValue>
-        <namedTypedValue>
-            <name>seleccionColumnas</name>
-            <type>
-                <name>Text?list</name>
-                <namespace>http://www.appian.com/ae/types/2009</namespace>
-            </type>
-        </namedTypedValue>
         <preferredEditor>legacy</preferredEditor>
         <offlineEnabled>false</offlineEnabled>
     </rule>
@@ -167,5 +161,6 @@
         <historyInfo versionUuid="_a-0000e9a7-6d42-8000-e63f-01ef9001ef90_4874118"/>
         <historyInfo versionUuid="_a-0000eb09-d442-8000-e687-01ef9001ef90_8860075"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9386663"/>
+        <historyInfo versionUuid="_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10123070"/>
     </history>
 </contentHaul>

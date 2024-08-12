@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
-    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9451579</versionUuid>
+    <versionUuid>_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10122473</versionUuid>
     <rule>
         <name>SCDO_getRiesgoByFilters</name>
         <uuid>_a-0000e9f5-96e6-8000-e641-01ef9001ef90_6085096</uuid>
@@ -41,7 +41,7 @@
     ),
     pagingInfo: #"SYSTEM_SYSRULES_pagingInfo"(
       startIndex: 1,
-      batchSize: -1
+      batchSize: 10
     )
   ),
   fetchTotalCount: false
@@ -101,5 +101,6 @@
         <historyInfo versionUuid="_a-0000e9f5-96e6-8000-e641-01ef9001ef90_6085193"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9386036"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9451579"/>
+        <historyInfo versionUuid="_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10122473"/>
     </history>
 </contentHaul>

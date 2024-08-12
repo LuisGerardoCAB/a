@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
-    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9527101</versionUuid>
+    <versionUuid>_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10134471</versionUuid>
     <interface>
         <name>SCDO_Sucursales_Pendientes</name>
         <uuid>_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1898923</uuid>
@@ -19,8 +19,8 @@
   local!eliminar: false,
   local!editGrid: -1,
 
-  local!segmento: #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2233353"(idSegmento: null).data,
-  local!region: #"_a-0000e8d8-9b98-8000-e605-01ef9001ef90_2872186"(idregion: null).data,
+  local!segmento: index(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2233353"(idSegmento: null),"data", null),
+  local!region: index(#"_a-0000e8d8-9b98-8000-e605-01ef9001ef90_2872186"(idregion: null),"data", null),
   local!ccosto,
   local!ccostoBuscar,
   local!refreshCount: 0,
@@ -83,7 +83,7 @@
                 ),
                 #"SYSTEM_SYSRULES_ButtonLayout"(
                   primaryButtons: {
-                    #"SYSTEM_SYSRULES_ButtonWidget"(
+                    #"SYSTEM_SYSRULES_buttonWidget_v1"(
                       label: "Eliminar",
                       icon: "times",
                       tooltip: "Eliminar",
@@ -112,7 +112,7 @@
                     )
                   },
                   secondaryButtons: {
-                    #"SYSTEM_SYSRULES_ButtonWidget"(
+                    #"SYSTEM_SYSRULES_buttonWidget_v1"(
                       label: "cancelar",
                       icon: "times",
                       tooltip: "Cancelar",
@@ -123,7 +123,7 @@
                       },
                       size: "SMALL",
                       width: "MINIMIZE",
-                      style: "SECONDARY"
+                      style: "GHOST"
                     )
                   }
                 ),
@@ -158,11 +158,11 @@
             #"SYSTEM_SYSRULES_ButtonArrayLayout"(
               align: "START",
               buttons: {
-                #"SYSTEM_SYSRULES_ButtonWidget"(
+                #"SYSTEM_SYSRULES_buttonWidget_v1"(
                   label: "Buscar",
                   icon: "search",
                   size: "SMALL",
-                  style: "PRIMARY",
+                  style: "GHOST",
                   loadingIndicator: true,
                   /*disabled: a!isNullOrEmpty(local!centrocostoNoregistrados),*/
                   saveInto: {
@@ -188,9 +188,9 @@
             contents: {
               #"SYSTEM_SYSRULES_ButtonArrayLayout"(
                 buttons: {
-                  #"SYSTEM_SYSRULES_ButtonWidget"(
+                  #"SYSTEM_SYSRULES_buttonWidget_v1"(
                     icon: "refresh",
-                    style: "SECONDARY",
+                    style: "GHOST",
                     size: "SMALL",
                     saveInto: a!save(local!refreshCount, local!refreshCount +1),
                     loadingIndicator: true,
@@ -220,12 +220,12 @@
                     #"SYSTEM_SYSRULES_gridRowLayout"(
                       contents: {
                         #"SYSTEM_SYSRULES_textField"(
-                          value: fv!item.cc,
+                          value: index(fv!item, "cc", null),
                           readOnly: true,
                           align: "CENTER"
                         ),
                         #"SYSTEM_SYSRULES_textField"(
-                          value: fv!item.nombre, 
+                          value: index(fv!item, "nombre", null), 
                           saveInto: {
                             a!save(
                               fv!item.nombre,(save!value)
@@ -238,7 +238,7 @@
                             placeholder: "Seleccione el segmento",
                             choiceLabels: { index(local!segmento,"segmento",{}) },
                             choiceValues: { index(local!segmento,"idsegmento",{}) },
-                            value: fv!item.idsegmento,
+                            value: index(fv!item, "idsegmento", null),
                             saveInto: fv!item.idsegmento,
                             searchDisplay: "AUTO",
                             disabled: not(local!editGrid = fv!index)
@@ -248,7 +248,7 @@
                             placeholder: "Seleccione la region",
                             choiceLabels: { index(local!region,"region",{}) },
                             choiceValues: { index(local!region,"idregion") },
-                            value: fv!item.idregion,
+                            value: index(fv!item,"idregion", null),
                             saveInto: fv!item.idregion,
                             disabled: not(local!editGrid = fv!index)
                           ),
@@ -288,7 +288,9 @@
                                     #"SYSTEM_SYSRULES_startProcess"(
                                       processModel: #"_a-0000e982-d80b-8000-e63b-01ef9001ef90_4737218",
                                       processParameters: { 
-                                        centrocosto: 'type!{urn:com:appian:types}cdo_centroscostos'(cc: fv!item.cc, idsegmento: fv!item.idsegmento, idregion: fv!item.idregion, nombre: fv!item.nombre), 
+                                        centrocosto: 'type!{urn:com:appian:types}cdo_centroscostos'(cc: index(fv!item, "cc", null), 
+                                        idsegmento: index(fv!item, "idsegmento", null), 
+                                        idregion: index(fv!item, "idregion",null), nombre: index(fv!item, "nombre", null)), 
                                         delete: false 
                                       },
                                       onSuccess: {
@@ -309,7 +311,8 @@
                                 link: #"SYSTEM_SYSRULES_dynamicLink"(
                                   saveInto: {
                                     a!save(local!eliminar,true),
-                                    a!save(local!centroSeleccionado, 'type!{urn:com:appian:types}cdo_centroscostos'(cc: fv!item.cc, idsegmento: fv!item.idsegmento, idregion: fv!item.idregion, nombre: fv!item.nombre))
+                                    a!save(local!centroSeleccionado, 'type!{urn:com:appian:types}cdo_centroscostos'(cc: fv!item.cc,
+                                    idsegmento: fv!item.idsegmento, idregion: fv!item.idregion, nombre: fv!item.nombre))
                                   }
                                 ),
                                 showWhen: if(local!editGrid = -1, true, if(local!editGrid &lt;&gt; fv!index, false, true)),
@@ -388,5 +391,6 @@
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9391653"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9470112"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9527101"/>
+        <historyInfo versionUuid="_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10134471"/>
     </history>
 </contentHaul>

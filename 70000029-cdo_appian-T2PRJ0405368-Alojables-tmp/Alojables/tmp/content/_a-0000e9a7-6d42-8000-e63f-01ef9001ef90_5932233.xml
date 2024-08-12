@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
-    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9510143</versionUuid>
+    <versionUuid>_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10114235</versionUuid>
     <rule>
         <name>SCDO_llenarDigitalizadosODocumentacionDadoReportes</name>
         <uuid>_a-0000e9a7-6d42-8000-e63f-01ef9001ef90_5932233</uuid>
@@ -27,7 +27,7 @@
           contrato: fv!item.contrato,
           iddocumento: ri!idDocumento,
           nombreimagen: ri!nombreImagen,
-          estado: "P",
+          estado: if(a!isNullOrEmpty(ri!estado),"P", ri!estado),
           fechaacepto: "",
           usuarioacepto: "",
           operacion: fv!item.operacion,
@@ -44,7 +44,7 @@
           ),
          
           cc: fv!item.ccostos,
-          estado: "P",
+          estado: if(a!isNullOrEmpty(ri!estado),"P", ri!estado),
           usuarioacepto: "",
           fechaacepto: "",
           observacion: "",
@@ -58,12 +58,8 @@
           cliente: fv!item.nombre,
           br2: "",
           buc: "",
-          pb: "",
-          folio: "",
-          conveniencia: "",
-          sucursal: "",
-          trader: "",
-          amib: ""
+         
+        
         )
       )
       
@@ -114,6 +110,14 @@
                 <namespace>http://www.w3.org/2001/XMLSchema</namespace>
             </type>
         </namedTypedValue>
+        <namedTypedValue>
+            <name>estado</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
         <preferredEditor>legacy</preferredEditor>
         <offlineEnabled>false</offlineEnabled>
     </rule>
@@ -148,5 +152,6 @@
         <historyInfo versionUuid="_a-0000eaa5-8248-8000-e681-01ef9001ef90_8226735"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9386823"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9510143"/>
+        <historyInfo versionUuid="_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10114235"/>
     </history>
 </contentHaul>

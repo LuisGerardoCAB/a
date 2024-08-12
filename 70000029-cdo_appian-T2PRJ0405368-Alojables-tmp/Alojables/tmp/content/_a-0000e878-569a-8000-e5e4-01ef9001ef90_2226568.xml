@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
-    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9553942</versionUuid>
+    <versionUuid>_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10136411</versionUuid>
     <interface>
         <name>SCDO_GridUFaltantes</name>
         <uuid>_a-0000e878-569a-8000-e5e4-01ef9001ef90_2226568</uuid>
@@ -23,10 +23,7 @@
   
   /*correcto_actualizar*/
   local!flag_actualizar: now(),
-  local!showWhen_actualizar: a!refreshVariable(
-    value: now() &lt; local!flag_actualizar,
-    refreshInterval: 0.5
-  ),
+  
   /*-----*/
   /*error_actualizasr*/
   local!flag_error_actualizar: now(),
@@ -68,10 +65,9 @@
 /*),*/
 
   local!segmentoWrite,
-  local!segmento: #"_a-0000e968-30a1-8000-e639-01ef9001ef90_4305675"(paginInfo: #"SYSTEM_SYSRULES_pagingInfo"(1, - 1)),
+  local!segmento: #"_a-0000e968-30a1-8000-e639-01ef9001ef90_4305675"(paginInfo: #"SYSTEM_SYSRULES_pagingInfo"(1, 100)),
   local!colorEdit: "#0032E6",
   local!colorDV: "#EC0000",
-  local!colorCard: "#CC0000",
   local!colorSave: "#1F8926",
   /*local!segmentos: rule!SCDO_getSegmentoByFilters(idSegmento: null).data,*/
   local!editGrid: - 1,
@@ -114,7 +110,7 @@
         #"SYSTEM_SYSRULES_columnLayout"(contents: {
   #"SYSTEM_SYSRULES_ButtonArrayLayout"(
     buttons: {
-      #"SYSTEM_SYSRULES_ButtonWidget"(
+      #"SYSTEM_SYSRULES_buttonWidget_v1"(
         label: "Buscar",
         icon: "search",
         saveInto: {
@@ -122,7 +118,7 @@
           a!save(ri!refreshCount,ri!refreshCount+1)
         
         },
-        style: "NORMAL",
+        style: "GHOST",
         loadingIndicator: true
       )
     },
@@ -195,7 +191,7 @@
                   ),
                   #"SYSTEM_SYSRULES_ButtonLayout"(
                     primaryButtons: {
-                      #"SYSTEM_SYSRULES_ButtonWidget"(
+                      #"SYSTEM_SYSRULES_buttonWidget_v1"(
                         label: "Sí, Eliminar",
                         icon: "trash",
                         saveInto: {
@@ -203,7 +199,7 @@
                             processModel: #"_a-0000ea22-4ef8-8000-e643-01ef9001ef90_6714648",
                             processParameters: {
                               ids_reportes: 
-                              #"SYSTEM_SYSRULES_queryEntity_v2"(
+                              index(#"SYSTEM_SYSRULES_queryEntity_v2"(
                                 entity: #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_1932909",
                                 query: #"SYSTEM_SYSRULES_query"(
                                   selection: #"SYSTEM_SYSRULES_querySelection"(
@@ -223,7 +219,7 @@
                                   pagingInfo: #"SYSTEM_SYSRULES_pagingInfo"(startIndex: 1, batchSize: - 1)
                                 ),
                                 fetchTotalCount: true
-                              ).data.idreporte
+                              ),"data","idreporte", null)
                             },
                             onSuccess: {
                               a!save(
@@ -260,12 +256,12 @@
                           )
                         },
                         size: "SMALL",
-                        style: "DESTRUCTIVE",
+                        style: "GHOST",
                         loadingIndicator: true
                       )
                     },
                     secondaryButtons: {
-                      #"SYSTEM_SYSRULES_ButtonWidget"(
+                      #"SYSTEM_SYSRULES_buttonWidget_v1"(
                         label: "Cancelar",
                         icon: "times",
                         saveInto: {
@@ -273,7 +269,7 @@
                           a!save(local!userSuccess, null)
                         },
                         size: "SMALL",
-                        style: "SECONDARY"
+                        style: "GHOST"
                       )
                     }
                   )
@@ -543,5 +539,6 @@
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9466025"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9497372"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9553942"/>
+        <historyInfo versionUuid="_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10136411"/>
     </history>
 </contentHaul>

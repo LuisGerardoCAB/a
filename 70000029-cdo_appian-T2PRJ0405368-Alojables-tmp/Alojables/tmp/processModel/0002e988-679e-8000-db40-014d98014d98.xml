@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <processModelHaul>
-  <versionUuid>0005eb77-a478-8000-aebe-014d98014d98</versionUuid>
+  <versionUuid>0000ec71-e8d9-8000-cfcc-014d98014d98</versionUuid>
   <folderUuid>_g-0000e801-560f-8000-3039-014d98014d98_291</folderUuid>
   <roleMap>
     <role name="ADMIN_OWNER">
@@ -48,7 +48,7 @@
             </pair>
             <pair>
               <locale country="" lang="es" variant=""/>
-              <value/>
+              <value><![CDATA[SCDO_Adicionar_Supervisor]]></value>
             </pair>
           </string-map>
         </name>
@@ -60,7 +60,7 @@
             </pair>
             <pair>
               <locale country="" lang="es" variant=""/>
-              <value/>
+              <value><![CDATA[Proceso que crea un nuevo supervisor.]]></value>
             </pair>
           </string-map>
         </desc>
@@ -69,11 +69,11 @@
           <string-map>
             <pair>
               <locale country="US" lang="en" variant=""/>
-              <value><![CDATA[SCDO_Adicionar_Supervisor]]></value>
+              <value><![CDATA[=pv!admin &"SCDO_Adicionar_Supervisor"]]></value>
             </pair>
             <pair>
               <locale country="" lang="es" variant=""/>
-              <value/>
+              <value><![CDATA[=pv!admin &"SCDO_Adicionar_Supervisor"]]></value>
             </pair>
           </string-map>
         </process-name>
@@ -85,15 +85,20 @@
           <aex/>
         </deadline>
         <pm-notification-settings>
-          <custom-settings>false</custom-settings>
+          <custom-settings>true</custom-settings>
           <notify-initiator>false</notify-initiator>
           <notify-owner>false</notify-owner>
-          <usersandgroups/>
+          <usersandgroups>
+            <people>
+              <type>4096</type>
+              <stringId><![CDATA[_e-0000ec31-ac7e-8000-e698-011e94011e94_8438]]></stringId>
+            </people>
+          </usersandgroups>
           <recipients-exp/>
         </pm-notification-settings>
-        <cleanup-action>3</cleanup-action>
+        <cleanup-action>2</cleanup-action>
         <auto-archive-delay>7</auto-archive-delay>
-        <auto-delete-delay>0</auto-delete-delay>
+        <auto-delete-delay>1</auto-delete-delay>
         <timeZoneId><![CDATA[America/Mexico_City]]></timeZoneId>
         <useProcessInitiatorTimeZone>true</useProcessInitiatorTimeZone>
       </meta>
@@ -242,34 +247,34 @@
           <on-complete-keep-form-data>false</on-complete-keep-form-data>
           <skipNotification>false</skipNotification>
         </node>
-        <node uuid="0001e988-679e-8000-db40-014d98014d98">
-          <guiId>1</guiId>
+        <node uuid="0001e9b0-7895-8000-ed9e-014d98014d98">
+          <guiId>3</guiId>
           <owner/>
-          <icon id="51"/>
-          <picon id="0"/>
+          <icon id="68"/>
+          <picon id="69"/>
           <fname>
             <string-map>
               <pair>
                 <locale country="US" lang="en" variant=""/>
-                <value><![CDATA[End Node]]></value>
+                <value><![CDATA[Create segmento usuario]]></value>
               </pair>
               <pair>
                 <locale country="" lang="es" variant=""/>
-                <value><![CDATA[End Node]]></value>
+                <value><![CDATA[Crear Segmento Usuario]]></value>
               </pair>
             </string-map>
           </fname>
-          <x>784</x>
+          <x>308</x>
           <y>140</y>
           <display>
             <string-map>
               <pair>
                 <locale country="US" lang="en" variant=""/>
-                <value><![CDATA[End Node]]></value>
+                <value><![CDATA[Create segmento usuario]]></value>
               </pair>
               <pair>
                 <locale country="" lang="es" variant=""/>
-                <value><![CDATA[End Node]]></value>
+                <value><![CDATA[Crear Segmento Usuario]]></value>
               </pair>
             </string-map>
           </display>
@@ -290,103 +295,16 @@
           <lane>0</lane>
           <overrideLaneAssignment>false</overrideLaneAssignment>
           <ac>
-            <local-id>core.1</local-id>
-            <name><![CDATA[End Node]]></name>
-            <acps>
-              <acp name="pmID">
-                <a:value xsi:nil="true" xsi:type="a:ProcessModel"/>
-                <a:local-id>0</a:local-id>
-                <a:expr/>
-                <a:required>0</a:required>
-                <a:editable>0</a:editable>
-                <a:assign-to-pv/>
-                <a:input-to-activity-class>true</a:input-to-activity-class>
-                <a:hidden-from-designer>false</a:hidden-from-designer>
-                <a:generated>false</a:generated>
-                <a:enumeration/>
-                <a:customDisplayReference/>
-              </acp>
-              <acp name="inMap">
-                <a:value xsi:nil="true" xsi:type="a:Bean?list"/>
-                <a:local-id>1</a:local-id>
-                <a:expr/>
-                <a:required>0</a:required>
-                <a:editable>1</a:editable>
-                <a:assign-to-pv/>
-                <a:input-to-activity-class>true</a:input-to-activity-class>
-                <a:hidden-from-designer>false</a:hidden-from-designer>
-                <a:generated>false</a:generated>
-                <a:enumeration/>
-                <a:customDisplayReference/>
-              </acp>
-              <acp name="procInheritsPriority">
-                <a:value xmlns="" xsi:type="xsd:int">1</a:value>
-                <a:local-id>5</a:local-id>
-                <a:expr/>
-                <a:required>0</a:required>
-                <a:editable>1</a:editable>
-                <a:assign-to-pv/>
-                <a:input-to-activity-class>false</a:input-to-activity-class>
-                <a:hidden-from-designer>false</a:hidden-from-designer>
-                <a:generated>false</a:generated>
-                <a:enumeration/>
-                <a:customDisplayReference/>
-              </acp>
-              <acp name="pmUUID">
-                <a:value xsi:nil="true" xsi:type="xsd:string"/>
-                <a:local-id>6</a:local-id>
-                <a:expr/>
-                <a:required>0</a:required>
-                <a:editable>1</a:editable>
-                <a:assign-to-pv/>
-                <a:input-to-activity-class>true</a:input-to-activity-class>
-                <a:hidden-from-designer>false</a:hidden-from-designer>
-                <a:generated>false</a:generated>
-                <a:enumeration/>
-                <a:customDisplayReference/>
-              </acp>
-              <acp name="isAsynchronous">
-                <a:value xmlns="" xsi:type="xsd:boolean">true</a:value>
-                <a:local-id>7</a:local-id>
-                <a:expr/>
-                <a:required>1</a:required>
-                <a:editable>0</a:editable>
-                <a:assign-to-pv/>
-                <a:input-to-activity-class>true</a:input-to-activity-class>
-                <a:hidden-from-designer>true</a:hidden-from-designer>
-                <a:generated>false</a:generated>
-                <a:enumeration/>
-                <a:customDisplayReference/>
-              </acp>
-              <acp name="isTransparent">
-                <a:value xmlns="" xsi:type="xsd:boolean">true</a:value>
-                <a:local-id>14</a:local-id>
-                <a:expr/>
-                <a:required>1</a:required>
-                <a:editable>1</a:editable>
-                <a:assign-to-pv/>
-                <a:input-to-activity-class>true</a:input-to-activity-class>
-                <a:hidden-from-designer>true</a:hidden-from-designer>
-                <a:generated>false</a:generated>
-                <a:enumeration/>
-                <a:customDisplayReference/>
-              </acp>
-              <acp name="inheritSecurity">
-                <a:value xmlns="" xsi:type="xsd:boolean">false</a:value>
-                <a:local-id>15</a:local-id>
-                <a:expr/>
-                <a:required>1</a:required>
-                <a:editable>1</a:editable>
-                <a:assign-to-pv/>
-                <a:input-to-activity-class>true</a:input-to-activity-class>
-                <a:hidden-from-designer>true</a:hidden-from-designer>
-                <a:generated>false</a:generated>
-                <a:enumeration/>
-                <a:customDisplayReference/>
-              </acp>
-            </acps>
+            <local-id>internal.16</local-id>
+            <name><![CDATA[Unattended Multiple Questions]]></name>
+            <acps/>
             <custom-params/>
-            <output-exprs/>
+            <output-exprs>
+              <el typeFlag="0"><![CDATA[cdt_segmentousuario:'type!{urn:com:appian:types}cdo_segmentosusuario'(
+    idadmon: pv!admin, 
+    idsegmento: pv!idsegmento
+)]]></el>
+            </output-exprs>
             <requires-user-interaction>true</requires-user-interaction>
             <run-as>
               <performer id="0"/>
@@ -396,7 +314,29 @@
           </ac>
           <multiple-instance/>
           <escalations/>
-          <connections/>
+          <connections>
+            <connection>
+              <guiId>3</guiId>
+              <to>4</to>
+              <toObjectType>ap.gui.Node</toObjectType>
+              <fromAnchor/>
+              <toAnchor/>
+              <showArrowhead>true</showArrowhead>
+              <flowLabel/>
+              <label>
+                <fontColor>#000000</fontColor>
+                <fontFamily>Arial, Helvetica, Sans-Serif</fontFamily>
+                <fontSize>12</fontSize>
+                <bold>false</bold>
+                <italics>false</italics>
+                <underline>false</underline>
+              </label>
+              <associations/>
+              <chained>true</chained>
+              <overridesAssignment>true</overridesAssignment>
+              <synchronizeData>false</synchronizeData>
+            </connection>
+          </connections>
           <associations/>
           <target-completion>5.0</target-completion>
           <target-lag>1.0</target-lag>
@@ -439,7 +379,7 @@
             <string-map>
               <pair>
                 <locale country="US" lang="en" variant=""/>
-                <value><![CDATA[Write to Data Store Entity]]></value>
+                <value><![CDATA[cdo_segmentosusuarios]]></value>
               </pair>
               <pair>
                 <locale country="" lang="es" variant=""/>
@@ -453,7 +393,7 @@
             <string-map>
               <pair>
                 <locale country="US" lang="en" variant=""/>
-                <value><![CDATA[Write to Data Store Entity]]></value>
+                <value><![CDATA[cdo_segmentosusuarios]]></value>
               </pair>
               <pair>
                 <locale country="" lang="es" variant=""/>
@@ -668,8 +608,8 @@
           <on-complete-keep-form-data>false</on-complete-keep-form-data>
           <skipNotification>false</skipNotification>
         </node>
-        <node uuid="0001e9b0-7895-8000-ed9e-014d98014d98">
-          <guiId>3</guiId>
+        <node uuid="0001eb1a-2094-8000-91aa-014d98014d98">
+          <guiId>5</guiId>
           <owner/>
           <icon id="68"/>
           <picon id="69"/>
@@ -677,25 +617,25 @@
             <string-map>
               <pair>
                 <locale country="US" lang="en" variant=""/>
-                <value><![CDATA[Script Task]]></value>
+                <value><![CDATA[ok]]></value>
               </pair>
               <pair>
                 <locale country="" lang="es" variant=""/>
-                <value><![CDATA[Crear Segmento Usuario]]></value>
+                <value><![CDATA[todo ok]]></value>
               </pair>
             </string-map>
           </fname>
-          <x>308</x>
+          <x>560</x>
           <y>140</y>
           <display>
             <string-map>
               <pair>
                 <locale country="US" lang="en" variant=""/>
-                <value><![CDATA[Script Task]]></value>
+                <value><![CDATA[ok]]></value>
               </pair>
               <pair>
                 <locale country="" lang="es" variant=""/>
-                <value><![CDATA[Crear Segmento Usuario]]></value>
+                <value><![CDATA[todo ok]]></value>
               </pair>
             </string-map>
           </display>
@@ -721,10 +661,7 @@
             <acps/>
             <custom-params/>
             <output-exprs>
-              <el typeFlag="0"><![CDATA[cdt_segmentousuario:'type!{urn:com:appian:types}cdo_segmentosusuario'(
-    idadmon: pv!admin, 
-    idsegmento: pv!idsegmento
-)]]></el>
+              <el typeFlag="0"><![CDATA[error:false]]></el>
             </output-exprs>
             <requires-user-interaction>true</requires-user-interaction>
             <run-as>
@@ -737,8 +674,8 @@
           <escalations/>
           <connections>
             <connection>
-              <guiId>3</guiId>
-              <to>4</to>
+              <guiId>5</guiId>
+              <to>2</to>
               <toObjectType>ap.gui.Node</toObjectType>
               <fromAnchor/>
               <toAnchor/>
@@ -800,7 +737,7 @@
             <string-map>
               <pair>
                 <locale country="US" lang="en" variant=""/>
-                <value><![CDATA[Subprocess]]></value>
+                <value><![CDATA[Audit]]></value>
               </pair>
               <pair>
                 <locale country="" lang="es" variant=""/>
@@ -814,7 +751,7 @@
             <string-map>
               <pair>
                 <locale country="US" lang="en" variant=""/>
-                <value><![CDATA[Subprocess]]></value>
+                <value><![CDATA[Audit]]></value>
               </pair>
               <pair>
                 <locale country="" lang="es" variant=""/>
@@ -1395,34 +1332,34 @@
           <on-complete-keep-form-data>false</on-complete-keep-form-data>
           <skipNotification>false</skipNotification>
         </node>
-        <node uuid="0001eb1a-2094-8000-91aa-014d98014d98">
-          <guiId>5</guiId>
+        <node uuid="0001e988-679e-8000-db40-014d98014d98">
+          <guiId>1</guiId>
           <owner/>
-          <icon id="68"/>
-          <picon id="69"/>
+          <icon id="51"/>
+          <picon id="0"/>
           <fname>
             <string-map>
               <pair>
                 <locale country="US" lang="en" variant=""/>
-                <value><![CDATA[Script Task]]></value>
+                <value><![CDATA[End Node]]></value>
               </pair>
               <pair>
                 <locale country="" lang="es" variant=""/>
-                <value><![CDATA[todo ok]]></value>
+                <value><![CDATA[End Node]]></value>
               </pair>
             </string-map>
           </fname>
-          <x>560</x>
+          <x>784</x>
           <y>140</y>
           <display>
             <string-map>
               <pair>
                 <locale country="US" lang="en" variant=""/>
-                <value><![CDATA[Script Task]]></value>
+                <value><![CDATA[End Node]]></value>
               </pair>
               <pair>
                 <locale country="" lang="es" variant=""/>
-                <value><![CDATA[todo ok]]></value>
+                <value><![CDATA[End Node]]></value>
               </pair>
             </string-map>
           </display>
@@ -1432,6 +1369,10 @@
                 <locale country="US" lang="en" variant=""/>
                 <value/>
               </pair>
+              <pair>
+                <locale country="" lang="es" variant=""/>
+                <value/>
+              </pair>
             </string-map>
           </desc>
           <notify>false</notify>
@@ -1439,13 +1380,103 @@
           <lane>0</lane>
           <overrideLaneAssignment>false</overrideLaneAssignment>
           <ac>
-            <local-id>internal.16</local-id>
-            <name><![CDATA[Unattended Multiple Questions]]></name>
-            <acps/>
+            <local-id>core.1</local-id>
+            <name><![CDATA[End Node]]></name>
+            <acps>
+              <acp name="pmID">
+                <a:value xsi:nil="true" xsi:type="a:ProcessModel"/>
+                <a:local-id>0</a:local-id>
+                <a:expr/>
+                <a:required>0</a:required>
+                <a:editable>0</a:editable>
+                <a:assign-to-pv/>
+                <a:input-to-activity-class>true</a:input-to-activity-class>
+                <a:hidden-from-designer>false</a:hidden-from-designer>
+                <a:generated>false</a:generated>
+                <a:enumeration/>
+                <a:customDisplayReference/>
+              </acp>
+              <acp name="inMap">
+                <a:value xsi:nil="true" xsi:type="a:Bean?list"/>
+                <a:local-id>1</a:local-id>
+                <a:expr/>
+                <a:required>0</a:required>
+                <a:editable>1</a:editable>
+                <a:assign-to-pv/>
+                <a:input-to-activity-class>true</a:input-to-activity-class>
+                <a:hidden-from-designer>false</a:hidden-from-designer>
+                <a:generated>false</a:generated>
+                <a:enumeration/>
+                <a:customDisplayReference/>
+              </acp>
+              <acp name="procInheritsPriority">
+                <a:value xmlns="" xsi:type="xsd:int">1</a:value>
+                <a:local-id>5</a:local-id>
+                <a:expr/>
+                <a:required>0</a:required>
+                <a:editable>1</a:editable>
+                <a:assign-to-pv/>
+                <a:input-to-activity-class>false</a:input-to-activity-class>
+                <a:hidden-from-designer>false</a:hidden-from-designer>
+                <a:generated>false</a:generated>
+                <a:enumeration/>
+                <a:customDisplayReference/>
+              </acp>
+              <acp name="pmUUID">
+                <a:value xsi:nil="true" xsi:type="xsd:string"/>
+                <a:local-id>6</a:local-id>
+                <a:expr/>
+                <a:required>0</a:required>
+                <a:editable>1</a:editable>
+                <a:assign-to-pv/>
+                <a:input-to-activity-class>true</a:input-to-activity-class>
+                <a:hidden-from-designer>false</a:hidden-from-designer>
+                <a:generated>false</a:generated>
+                <a:enumeration/>
+                <a:customDisplayReference/>
+              </acp>
+              <acp name="isAsynchronous">
+                <a:value xmlns="" xsi:type="xsd:boolean">true</a:value>
+                <a:local-id>7</a:local-id>
+                <a:expr/>
+                <a:required>1</a:required>
+                <a:editable>0</a:editable>
+                <a:assign-to-pv/>
+                <a:input-to-activity-class>true</a:input-to-activity-class>
+                <a:hidden-from-designer>true</a:hidden-from-designer>
+                <a:generated>false</a:generated>
+                <a:enumeration/>
+                <a:customDisplayReference/>
+              </acp>
+              <acp name="isTransparent">
+                <a:value xmlns="" xsi:type="xsd:boolean">true</a:value>
+                <a:local-id>14</a:local-id>
+                <a:expr/>
+                <a:required>1</a:required>
+                <a:editable>1</a:editable>
+                <a:assign-to-pv/>
+                <a:input-to-activity-class>true</a:input-to-activity-class>
+                <a:hidden-from-designer>true</a:hidden-from-designer>
+                <a:generated>false</a:generated>
+                <a:enumeration/>
+                <a:customDisplayReference/>
+              </acp>
+              <acp name="inheritSecurity">
+                <a:value xmlns="" xsi:type="xsd:boolean">false</a:value>
+                <a:local-id>15</a:local-id>
+                <a:expr/>
+                <a:required>1</a:required>
+                <a:editable>1</a:editable>
+                <a:assign-to-pv/>
+                <a:input-to-activity-class>true</a:input-to-activity-class>
+                <a:hidden-from-designer>true</a:hidden-from-designer>
+                <a:generated>false</a:generated>
+                <a:enumeration/>
+                <a:customDisplayReference/>
+              </acp>
+            </acps>
             <custom-params/>
-            <output-exprs>
-              <el typeFlag="0"><![CDATA[error:false]]></el>
-            </output-exprs>
+            <output-exprs/>
             <requires-user-interaction>true</requires-user-interaction>
             <run-as>
               <performer id="0"/>
@@ -1455,29 +1486,7 @@
           </ac>
           <multiple-instance/>
           <escalations/>
-          <connections>
-            <connection>
-              <guiId>5</guiId>
-              <to>2</to>
-              <toObjectType>ap.gui.Node</toObjectType>
-              <fromAnchor/>
-              <toAnchor/>
-              <showArrowhead>true</showArrowhead>
-              <flowLabel/>
-              <label>
-                <fontColor>#000000</fontColor>
-                <fontFamily>Arial, Helvetica, Sans-Serif</fontFamily>
-                <fontSize>12</fontSize>
-                <bold>false</bold>
-                <italics>false</italics>
-                <underline>false</underline>
-              </label>
-              <associations/>
-              <chained>true</chained>
-              <overridesAssignment>true</overridesAssignment>
-              <synchronizeData>false</synchronizeData>
-            </connection>
-          </connections>
+          <connections/>
           <associations/>
           <target-completion>5.0</target-completion>
           <target-lag>1.0</target-lag>
@@ -1489,7 +1498,13 @@
           <on-complete-delete-previous-completed>false</on-complete-delete-previous-completed>
           <pre-triggers/>
           <post-triggers/>
-          <event-producers/>
+          <event-producers>
+            <terminate-producer index="0">
+              <persistentId>0001ec71-e8d8-8000-cfcb-014d98014d98</persistentId>
+              <name><![CDATA[Terminate Process_1]]></name>
+              <desc/>
+            </terminate-producer>
+          </event-producers>
           <exception-flow/>
           <label>
             <fontColor>#000000</fontColor>
@@ -1572,5 +1587,7 @@
     <historyInfo versionUuid="0002eace-7838-8000-810f-014d98014d98"/>
     <historyInfo versionUuid="0000eb1a-2095-8000-91ab-014d98014d98"/>
     <historyInfo versionUuid="0005eb77-a478-8000-aebe-014d98014d98"/>
+    <historyInfo versionUuid="0001ec5e-2e11-8000-cdbf-014d98014d98"/>
+    <historyInfo versionUuid="0000ec71-e8d9-8000-cfcc-014d98014d98"/>
   </history>
 </processModelHaul>

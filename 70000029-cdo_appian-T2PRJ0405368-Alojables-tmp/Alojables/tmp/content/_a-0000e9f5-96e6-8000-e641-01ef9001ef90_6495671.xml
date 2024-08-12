@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
-    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9451433</versionUuid>
+    <versionUuid>_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10122368</versionUuid>
     <rule>
         <name>SCDO_obtenerDigitalizadosPendienteYAprobadaPorContratoOperacion</name>
         <uuid>_a-0000e9f5-96e6-8000-e641-01ef9001ef90_6495671</uuid>
@@ -16,7 +16,7 @@
             <unlogged>false</unlogged>
         </visibility>
         <definition>a!localVariables(
-  local!data: #"SYSTEM_SYSRULES_queryEntity_v2"(
+  local!data: index(#"SYSTEM_SYSRULES_queryEntity_v2"(
     entity: #"_a-0000e916-edcb-8000-e60c-01ef9001ef90_3117600",
     query: #"SYSTEM_SYSRULES_query"(
       logicalExpression: #"SYSTEM_SYSRULES_queryLogicalExpression"(
@@ -54,7 +54,7 @@
       )
     ),
     fetchTotalCount: false
-  ).data,
+  ),"data", null),
   local!data
 )</definition>
         <namedTypedValue>
@@ -114,5 +114,6 @@
         <historyInfo versionUuid="_a-0000eb09-d442-8000-e687-01ef9001ef90_8818378"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9386409"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9451433"/>
+        <historyInfo versionUuid="_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10122368"/>
     </history>
 </contentHaul>

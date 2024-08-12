@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
-    <versionUuid>_a-0000eb9b-4ec6-8000-e68b-01ef9001ef90_9635309</versionUuid>
+    <versionUuid>_a-0000ec52-2d7d-8000-e69d-01ef9001ef90_10100194</versionUuid>
     <document>
         <name>SCDO_Plantilla_Reporte_Operaciones_NEW</name>
         <uuid>_a-0000ea7b-6ff1-8000-e67d-01ef9001ef90_7832801</uuid>
@@ -52,5 +52,6 @@
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9181124"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9393103"/>
         <historyInfo versionUuid="_a-0000eb9b-4ec6-8000-e68b-01ef9001ef90_9635309"/>
+        <historyInfo versionUuid="_a-0000ec52-2d7d-8000-e69d-01ef9001ef90_10100194"/>
     </history>
 </contentHaul>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
-    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9386756</versionUuid>
+    <versionUuid>_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10119943</versionUuid>
     <rule>
         <name>SCDO_EXTRAER_CONTRATOS_EXCEL</name>
         <uuid>_a-0000eaa5-8248-8000-e681-01ef9001ef90_8239395</uuid>
@@ -16,18 +16,18 @@
             <unlogged>false</unlogged>
         </visibility>
         <definition>a!localVariables(
-  local!totalCount: readexcelsheetpaging(
+  local!totalCount: index(readexcelsheetpaging(
     excelDocument: ri!documento,
     sheetNumber: 0,
-    pagingInfo: #"SYSTEM_SYSRULES_pagingInfo"(1, -1),
+    pagingInfo: #"SYSTEM_SYSRULES_pagingInfo"(1, 0),
     numberOfColumns: 0
-  ).totalCount,
-  local!informacion: readexcelsheetpaging(
+  ),"totalCount", null),
+  local!informacion: index(readexcelsheetpaging(
     excelDocument: ri!documento,
     sheetNumber: 0,
     pagingInfo: #"SYSTEM_SYSRULES_pagingInfo"(1, local!totalCount),
     numberOfColumns: 0
-  ).data,
+  ),"data",null),
   
   local!contratos: reject(
     fn!isnull,
@@ -39,24 +39,45 @@
             fv!index = 1,
             null(),
             if(
-              a!isNullOrEmpty(fv!item.values[1]),
+              a!isNullOrEmpty(index(fv!item, "values", null)[1]),
               null,
-              fv!item.values[1]
-              /*if(*/
-              /*len(fv!item.values[ri!posExcelContrato]) &lt; 11,*/
-              /*rule!SCDO_insertarCerosParaContrato(contrato: fv!item.values[ri!posExcelContrato], ceros: 11 - len(fv!item.values[ri!posExcelContrato])),*/
-              /*fv!item.values[ri!posExcelContrato]*/
-              /*)*/
+              index(fv!item, "values", null)[1]
+             
             )
           )
         }
       )
     ),
   ),
-  if( length(local!contratos)=local!totalCount-1,
-  local!contratos,
+  local!adfs: reject(
+    fn!isnull,
+    a!flatten(
+      #"SYSTEM_SYSRULES_forEach"(
+        items: local!informacion,
+        expression: {
+          if(
+            fv!index = 1,
+            null(),
+            if(
+              a!isNullOrEmpty(index(fv!item, "values", null)[2]),
+              null,
+              index(fv!item, "values", null)[2]
+
+            )
+          )
+        }
+      )
+    ),
+  ),
+ local!mapa:if( 
+    and(
+      length(local!contratos)=local!totalCount-1,
+    length(local!contratos) = length(local!adfs)),
+  {a!map(contratos: local!contratos),a!map(adfs:local!adfs)},
   null
-  )
+  ),
+  local!mapa
+  
   
 )</definition>
         <namedTypedValue>
@@ -98,5 +119,6 @@
     <history>
         <historyInfo versionUuid="_a-0000eaa5-8248-8000-e681-01ef9001ef90_8240602"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9386756"/>
+        <historyInfo versionUuid="_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10119943"/>
     </history>
 </contentHaul>

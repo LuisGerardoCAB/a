@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <dataStoreHaul xmlns:a="http://www.appian.com/ae/types/2009">
-    <versionUuid>_a-0000ebe7-98ae-8000-e699-01ef9001ef90_9946356</versionUuid>
+    <versionUuid>_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10142479</versionUuid>
     <dataStore>
         <uuid>_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1836197</uuid>
         <name>SCDO_DataStore</name>
@@ -18,11 +18,6 @@
                 <uuid>2a76f0a4-2870-4368-9dc8-0554183c0d61</uuid>
                 <name>cdo_avisos</name>
                 <type>{urn:com:appian:types}cdo_avisos</type>
-            </entity>
-            <entity>
-                <uuid>ef2651b0-a5d9-4ebb-935f-b0dd68d537c8</uuid>
-                <name>cdo_bitacoracargas</name>
-                <type>{urn:com:appian:types}cdo_bitacoracargas</type>
             </entity>
             <entity>
                 <uuid>4ac4f305-73fc-4779-af0a-069e3e073d36</uuid>
@@ -113,11 +108,6 @@
                 <uuid>7d48843b-b627-462f-9395-b2031e54160e</uuid>
                 <name>cdo_digitalizados_rechazados_auditoria</name>
                 <type>{urn:com:appian:types}cdo_digitalizados_rechazados_auditoria</type>
-            </entity>
-            <entity>
-                <uuid>6ef3521f-f09f-4514-8b20-7d41554971d3</uuid>
-                <name>V_CDO_NoDocumental</name>
-                <type>{urn:com:appian:types}V_CDO_NoDocumental</type>
             </entity>
             <entity>
                 <uuid>c64b152c-1e9b-404f-a675-0f89658f973e</uuid>
@@ -294,6 +284,11 @@
                 <name>V_CDO_DOCONTRATO_ULTIMO</name>
                 <type>{urn:com:appian:types}V_CDO_DOCONTRATO_ULTIMO</type>
             </entity>
+            <entity>
+                <uuid>ebac4965-356c-4954-8e97-bfad3eb23294</uuid>
+                <name>V_CDO_MX_TIPO_DOCUMENTOS_DIGITALIZADOS</name>
+                <type>{urn:com:appian:types}V_CDO_MX_TIPO_DOCUMENTOS_DIGITALIZADOS</type>
+            </entity>
         </entities>
     </dataStore>
     <isPublished>true</isPublished>
@@ -346,5 +341,7 @@
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9514340"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9527324"/>
         <historyInfo versionUuid="_a-0000ebe7-98ae-8000-e699-01ef9001ef90_9946356"/>
+        <historyInfo versionUuid="_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10114812"/>
+        <historyInfo versionUuid="_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10142479"/>
     </history>
 </dataStoreHaul>

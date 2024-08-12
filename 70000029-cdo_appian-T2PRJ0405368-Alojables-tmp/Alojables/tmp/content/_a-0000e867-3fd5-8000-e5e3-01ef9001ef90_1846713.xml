@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
-    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9396424</versionUuid>
+    <versionUuid>_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10131709</versionUuid>
     <interface>
         <name>SCDO_Reverso_Ope_Doc</name>
         <uuid>_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1846713</uuid>
@@ -36,7 +36,11 @@
   local!documentosDelContrato: if(
     a!isNullOrEmpty(local!contrato),
     null,
-    #"_a-0000e8b2-d897-8000-e5f1-01ef9001ef90_2372887"(contrato: local!contrato, estado: "A").data
+    index(
+      #"_a-0000e8b2-d897-8000-e5f1-01ef9001ef90_2372887"(contrato: local!contrato, estado: "A"),
+      "data",
+      null
+    )
   ),
   {
     #"SYSTEM_SYSRULES_sectionLayout_v1"(
@@ -68,7 +72,7 @@
                 local!showWhen_error
               )
             ),
-
+            
           }
         )
       }
@@ -111,7 +115,11 @@
             #"SYSTEM_SYSRULES_gridField_v1"(
               label: "Tabla con los Documentos Aprobados del Contrato:",
               data: local!documentosDelContrato,
-              emptyGridMessage: if(a!isNullOrEmpty(local!contrato), "Ingrese un contrato para que se obeserven los documentos de este", "No se encontraron documentos para este contrato"),
+              emptyGridMessage: if(
+                a!isNullOrEmpty(local!contrato),
+                "Ingrese un contrato para que se obeserven los documentos de este",
+                "No se encontraron documentos para este contrato"
+              ),
               columns: {
                 #"SYSTEM_SYSRULES_gridColumn"(
                   label: "Reversar",
@@ -123,26 +131,37 @@
                         saveInto: {
                           #"SYSTEM_SYSRULES_startProcess"(
                             processModel: #"_a-0000e8d8-9b98-8000-e605-01ef9001ef90_3020878",
-                            processParameters: {
-                              cdt_documentacion: fv!row
-                            },
+                            processParameters: { cdt_documentacion: fv!row },
                             onSuccess: {
                               a!save(local!showInformationBanner, true),
                               if(
                                 toboolean(fv!processInfo.pv.error) = false,
-                                {a!save(local!flag, addseconds(now(), 10)),
-                                a!save(local!documentosDelContrato, #"_a-0000e8b2-d897-8000-e5f1-01ef9001ef90_2372887"(contrato: local!contrato, estado: "A").data),
-
+                                {
+                                  a!save(local!flag, addseconds(now(), 10)),
+                                  a!save(
+                                    local!documentosDelContrato,
+                                    index(
+                                      #"_a-0000e8b2-d897-8000-e5f1-01ef9001ef90_2372887"(contrato: local!contrato, estado: "A"),
+                                      "data",
+                                      null
+                                    )
+                                  ),
+                                  
                                 },
                                 a!save(local!flag_error, addseconds(now(), 10))
                               )
-
                             }
                           ),
+                          
                         },
                         style: "DESTRUCTIVE",
                         size: "SMALL",
-                        confirmHeader: concat( "Se modificará el documento aprobado: ", fv!row.nomdocumento," del contrato: ", local!contrato),
+                        confirmHeader: concat(
+                          "Se modificará el documento aprobado: ",
+                          index(fv!row, "nomdocumento", null),
+                          " del contrato: ",
+                          local!contrato
+                        ),
                         confirmMessage: "¿Continuar?"
                       )
                     },
@@ -153,63 +172,138 @@
                 ),
                 #"SYSTEM_SYSRULES_gridColumn"(
                   label: "Id",
-                  value: if(a!isNullOrEmpty(local!documentosDelContrato), "NO", fv!row.iddocumentacion),
+                  value: if(
+                    a!isNullOrEmpty(local!documentosDelContrato),
+                    "NO",
+                    index(fv!row, "iddocumentacion", null)
+                  ),
                   align: "CENTER",
                   width: "NARROW",
+                  
                 ),
                 #"SYSTEM_SYSRULES_gridColumn"(
                   label: "Nombre de Archivo",
-                  value: if(a!isNullOrEmpty(local!documentosDelContrato), "NO", fv!row.nomdocumento),
+                  value: if(
+                    a!isNullOrEmpty(local!documentosDelContrato),
+                    "NO",
+                    index(fv!row, "nomdocumento", null)
+                  ),
                   align: "CENTER",
                   width: "MEDIUM_PLUS",
+                  
                 ),
                 #"SYSTEM_SYSRULES_gridColumn"(
                   label: "Documento",
-                  value: if(a!isNullOrEmpty(#"_a-0000e968-30a1-8000-e639-01ef9001ef90_4493570"(iddocumento: fv!row.iddocumento)), "NO", #"_a-0000e968-30a1-8000-e639-01ef9001ef90_4493570"(iddocumento: fv!row.iddocumento).documento),
+                  value: if(
+                    a!isNullOrEmpty(
+                      #"_a-0000e968-30a1-8000-e639-01ef9001ef90_4493570"(
+                        iddocumento: index(fv!row, "iddocumento", null)
+                      )
+                    ),
+                    "NO",
+                    index(
+                      #"_a-0000e968-30a1-8000-e639-01ef9001ef90_4493570"(
+                        iddocumento: index(fv!row, "iddocumento", null)
+                      ),
+                      "documento",
+                      null
+                    )
+                  ),
                   align: "CENTER",
+                  
                 ),
                 #"SYSTEM_SYSRULES_gridColumn"(
                   label: "Tipo Documento",
-                  value: if(a!isNullOrEmpty(#"_a-0000e968-30a1-8000-e639-01ef9001ef90_4493570"(iddocumento: fv!row.iddocumento)),"NO" ,#"_a-0000e968-30a1-8000-e639-01ef9001ef90_4493570"(iddocumento: fv!row.iddocumento)[1].documentaa),
+                  value: if(
+                    a!isNullOrEmpty(
+                      #"_a-0000e968-30a1-8000-e639-01ef9001ef90_4493570"(
+                        iddocumento: index(fv!row, "iddocumento", null)
+                      )
+                    ),
+                    "NO",
+                    index(
+                      #"_a-0000e968-30a1-8000-e639-01ef9001ef90_4493570"(
+                        iddocumento: index(fv!row, "iddocumento", null),
+                        paginginfo: #"SYSTEM_SYSRULES_pagingInfo"(startIndex: 1, batchSize: 1)
+                      ),
+                      "documentaa",
+                      null
+                    )
+                  ),
                   align: "CENTER",
                   width: "MEDIUM"
                 ),
                 #"SYSTEM_SYSRULES_gridColumn"(
                   label: "Estado",
-                  value: if(a!isNullOrEmpty(local!documentosDelContrato), "NO", fv!row.estado),
+                  value: if(
+                    a!isNullOrEmpty(local!documentosDelContrato),
+                    "NO",
+                    index(fv!row, "estado", null)
+                  ),
                   align: "CENTER",
                   width: "NARROW",
+                  
                 ),
                 #"SYSTEM_SYSRULES_gridColumn"(
                   label: "Usuario Carga",
-                  value: if(a!isNullOrEmpty(local!documentosDelContrato), "NO", fv!row.usuariocargo),
+                  value: if(
+                    a!isNullOrEmpty(local!documentosDelContrato),
+                    "NO",
+                    index(fv!row, "usuariocargo", null)
+                  ),
                   align: "CENTER",
                   width: "AUTO",
+                  
                 ),
                 #"SYSTEM_SYSRULES_gridColumn"(
                   label: "Fecha Carga",
-                  value: if(a!isNullOrEmpty(local!documentosDelContrato), "NO", fv!row.fechacarga),
+                  value: if(
+                    a!isNullOrEmpty(local!documentosDelContrato),
+                    "NO",
+                    index(fv!row, "fechacarga", null)
+                  ),
                   align: "CENTER",
                   width: "AUTO",
+                  
                 ),
                 #"SYSTEM_SYSRULES_gridColumn"(
                   label: "Usuario Acepto",
-                  value: if(a!isNullOrEmpty(local!documentosDelContrato), "NO", if(fv!row.estado = "A", fv!row.usuarioacepto, "NO")),
+                  value: if(
+                    a!isNullOrEmpty(local!documentosDelContrato),
+                    "NO",
+                    if(
+                      index(fv!row, "estado", null) = "A",
+                      index(fv!row, "usuarioacepto", null),
+                      "NO"
+                    )
+                  ),
                   align: "CENTER",
                   width: "AUTO",
+                  
                 ),
                 #"SYSTEM_SYSRULES_gridColumn"(
                   label: "Fecha Acepto",
-                  value: if(a!isNullOrEmpty(local!documentosDelContrato), "NO", if(fv!row.estado = "A", fv!row.fechaacepto, "NO")),
+                  value: if(
+                    a!isNullOrEmpty(local!documentosDelContrato),
+                    "NO",
+                    if(
+                      index(fv!row, "estado", null) = "A",
+                      index(fv!row, "fechaacepto", null),
+                      "NO"
+                    )
+                  ),
                   align: "CENTER",
                   width: "AUTO",
+                  
                 ),
+                
               }
             )
           }
         )
       }
     ),
+    
   }
 )</definition>
         <preferredEditor>interface</preferredEditor>
@@ -247,5 +341,6 @@
         <historyInfo versionUuid="_a-0000e9f5-96e6-8000-e641-01ef9001ef90_6337213"/>
         <historyInfo versionUuid="_a-0000eb09-d442-8000-e687-01ef9001ef90_8782539"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9396424"/>
+        <historyInfo versionUuid="_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10131709"/>
     </history>
 </contentHaul>

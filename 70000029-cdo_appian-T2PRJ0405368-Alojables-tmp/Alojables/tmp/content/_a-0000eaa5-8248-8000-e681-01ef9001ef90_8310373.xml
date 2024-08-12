@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
-    <versionUuid>_a-0000eb9b-4ec6-8000-e68b-01ef9001ef90_9646962</versionUuid>
+    <versionUuid>_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10124427</versionUuid>
     <interface>
         <name>SCDO_Documento_Ejecutivo_Seguimiento</name>
         <uuid>_a-0000eaa5-8248-8000-e681-01ef9001ef90_8310373</uuid>
@@ -40,15 +40,15 @@
     a!isNullOrEmpty(
       #"_a-0000e968-30a1-8000-e639-01ef9001ef90_4493495"(
         idsegmento: ri!ejecutivo.idsegmento,
-        pagingInfo: #"SYSTEM_SYSRULES_pagingInfo"(startIndex: 1, batchSize: - 1)
+        pagingInfo: #"SYSTEM_SYSRULES_pagingInfo"(startIndex: 1, batchSize: 500)
       )
     ),
     null,
     #"_a-0000e968-30a1-8000-e639-01ef9001ef90_4493570"(
-      idsDocumentos: #"_a-0000e968-30a1-8000-e639-01ef9001ef90_4493495"(
+      idsDocumentos: index(#"_a-0000e968-30a1-8000-e639-01ef9001ef90_4493495"(
         idsegmento: ri!ejecutivo.idsegmento,
-        pagingInfo: #"SYSTEM_SYSRULES_pagingInfo"(startIndex: 1, batchSize: - 1)
-      ).iddocumento
+        pagingInfo: #"SYSTEM_SYSRULES_pagingInfo"(startIndex: 1, batchSize: 500)
+      ),"iddocumento",null)
     )
   ),
   /* Se obtienen los catalogos que documentan a los contratos y a ADF */
@@ -61,10 +61,10 @@
         items: local!catalogoDelSegmento,
         expression: if(
           and(
-            fv!item.documentaa = "CONTRATO",
+            index(fv!item,"documentaa",null) = "CONTRATO",
             if(
-              a!isNotNullOrEmpty(fv!item.adf),
-              tointeger(fv!item.adf) &lt;&gt; 1,
+              a!isNotNullOrEmpty(index(fv!item,"adf",null)),
+tointeger(index(fv!item,"adf",null)) &lt;&gt; 1,
               true
             )
           ),
@@ -83,8 +83,8 @@
         items: local!catalogoDelSegmento,
         expression: if(
           and(
-            fv!item.documentaa = "CONTRATO",
-            a!isNotNullOrEmpty(fv!item.adf) = 1
+index(fv!item,"documentaa",null) = "CONTRATO",
+a!isNotNullOrEmpty(index(fv!item,"adf",null)) = 1
           ),
           fv!item,
           null
@@ -107,22 +107,22 @@
   local!adfsAceptadosDocumentacion: if(
     a!isNullOrEmpty(local!catDocADFGeneral),
     {},
-    #"_a-0000e8b2-d897-8000-e5f1-01ef9001ef90_2372887"(
+    index(#"_a-0000e8b2-d897-8000-e5f1-01ef9001ef90_2372887"(
       contrato: ri!contrato,
       idsDocumentos: local!catDocADFGeneral.iddocumento,
       estado: "A",
       usuariocargo: ri!ejecutivo.usuarioopics
-    ).data
+    ), "data",null)
   ),
   local!adfsEstanEnDocumentacion: if(
     a!isNullOrEmpty(local!catDocADFGeneral),
     {},
-    #"_a-0000e8b2-d897-8000-e5f1-01ef9001ef90_2372887"(
+    index(#"_a-0000e8b2-d897-8000-e5f1-01ef9001ef90_2372887"(
       contrato: ri!contrato,
       idsDocumentos: local!catDocADFGeneral.iddocumento,
       estado: "P",
       usuariocargo: ri!ejecutivo.usuarioopics
-    ).data
+    ),"data", null)
   ),
   local!catDocParaADFEstanEnDocumentacion: if(
     a!isNullOrEmpty(local!adfsEstanEnDocumentacion),
@@ -136,7 +136,7 @@
             tointeger(
               local!adfsEstanEnDocumentacion.iddocumento
             ),
-            tointeger(fv!item.iddocumento)/*fv!item*/
+tointeger(index(fv!item,"iddocumento",null))/*fv!item*/
 
           ),
           fv!item,
@@ -157,7 +157,7 @@
             tointeger(
               local!adfsAceptadosDocumentacion.iddocumento
             ),
-            tointeger(fv!item.iddocumento)/*fv!item*/
+tointeger(index(fv!item,"iddocumento",null))/*fv!item*/
 
           ),
           fv!item,
@@ -176,7 +176,7 @@
         expression: if(
           contains(
             tointeger(local!adfsAceptados.iddocumento),
-            tointeger(fv!item.iddocumento)/*fv!item*/
+tointeger(index(fv!item,"iddocumento",null))/*fv!item*/
 
           ),
           fv!item,
@@ -194,12 +194,12 @@
       fn!isnull,
       a!flatten(
        
-        #"_a-0000e8b2-d897-8000-e5f1-01ef9001ef90_2372887"(
+        index(#"_a-0000e8b2-d897-8000-e5f1-01ef9001ef90_2372887"(
           contrato: ri!contrato,
           idsDocumentos: local!catDocContratoGeneral.iddocumento,
           usuariocargo: ri!ejecutivo.usuarioopics,
           estado: "P"
-        ).data,
+        ),"data", null)
      
 
       )
@@ -209,12 +209,12 @@
   local!documentacionAceptados: if(
     a!isNullOrEmpty(local!catDocContratoGeneral),
     null,
-    #"_a-0000e8b2-d897-8000-e5f1-01ef9001ef90_2372887"(
+    index(#"_a-0000e8b2-d897-8000-e5f1-01ef9001ef90_2372887"(
       contrato: ri!contrato,
       idsDocumentos: local!catDocContratoGeneral.iddocumento,
       estado: "A",
       usuariocargo: ri!ejecutivo.usuarioopics
-    ).data
+    ),"data",null)
   ),
   local!catDocAceptadosDeContrato: if(
     a!isNullOrEmpty(local!documentacionAceptados),
@@ -226,7 +226,7 @@
         expression: if(
           contains(
             local!documentacionAceptados.iddocumento,
-            fv!item.iddocumento
+index(fv!item,"iddocumento",null)
           ),
           fv!item,
           null
@@ -245,7 +245,7 @@
         expression: if(
           contains(
             local!documentacionExistente.iddocumento,
-            fv!item.iddocumento
+index(fv!item,"iddocumento",null)
           ),
           fv!item,
           null
@@ -452,20 +452,17 @@
                    
                     choiceLabels: #"SYSTEM_SYSRULES_forEach"(
                       local!catDocParaADFAceptado,
-                      if(a!isNotNullOrEmpty(local!catDocParaADFAceptadoDocumentacion),
-                      if(
-                        contains(
+                      a!match(
+                        value: a!isNotNullOrEmpty(local!catDocParaADFAceptadoDocumentacion),
+                        equals: false(),
+                        then: index(fv!item,"documento",null) &amp; " - " &amp; "📜",
+                        whenTrue: contains(
                           local!catDocParaADFAceptadoDocumentacion,
                           fv!item
                         ),
-                        fv!item.documento &amp; " - " &amp; "(Aceptado)" &amp; " - " &amp; "📜",
-                        fv!item.documento &amp; " - " &amp; "📜",
-
-                      ),
-                      fv!item.documento &amp; " - " &amp; "📜",
-                      )
-                    
-                    ),
+                        then: index(fv!item,"documento",null) &amp; " - " &amp; "(Aceptado)" &amp; " - " &amp; "📜",
+                        default: index(fv!item,"documento",null) &amp; " - " &amp; "📜",
+                      ) ),
                     choiceValues: local!catDocParaADFAceptado.iddocumento,
                     value: local!documentoAceptadoADF,
                     saveInto: local!documentoAceptadoADF,
@@ -500,7 +497,7 @@
                     choiceLabels: #"SYSTEM_SYSRULES_forEach"(
                       local!solo_aceptados_no_adf,
 
-                      fv!item.documento &amp; " - " &amp; "(Aceptado)"
+index(fv!item,"documento",null) &amp; " - " &amp; "(Aceptado)"
 
                     )
                     ,
@@ -590,7 +587,7 @@
                                       items: /*local!catDocAceptadosDeContrato*/local!aceptados_generales,
                                       expression: #"SYSTEM_SYSRULES_richTextDisplayField"(
                                         value: {
-                                          #"SYSTEM_SYSRULES_richTextItem_v1"(text: concat(fv!item.documento, " ")),
+#"SYSTEM_SYSRULES_richTextItem_v1"(text: concat(index(fv!item,"documento",null), " ")),
                                           #"SYSTEM_SYSRULES_richTextIcon"(
                                             icon: "check-circle",
                                             caption: "Mostrar Detalles",
@@ -600,7 +597,7 @@
                                                 local!verDetallesAceptado,
                                                 a!save(
                                                   local!idDocumentoSeleccionado,
-                                                  fv!item.iddocumento
+index(fv!item,"iddocumento",null)
                                                 ),
                                                 a!save(
                                                   local!documentoRechazadoSeleccionado,
@@ -614,7 +611,7 @@
                                                       #"SYSTEM_SYSRULES_forEach"(
                                                         items: /*local!documentacionAceptados*/local!documentos_aceptados,
                                                         expression: if(
-                                                          tointeger(fv!item.iddocumento) = local!idDocumentoSeleccionado,
+tointeger(index(fv!item,"iddocumento",null)) = local!idDocumentoSeleccionado,
                                                           fv!item,
                                                           null
                                                         )
@@ -658,8 +655,8 @@
                                 #"SYSTEM_SYSRULES_forEach"(
                                   items: local!catalogoDelSegmento,
                                   expression: if(
-                                    tointeger(fv!item.iddocumento) = local!idDocumentoSeleccionado,
-                                    fv!item.documento,
+tointeger(index(fv!item,"iddocumento",null)) = local!idDocumentoSeleccionado,
+index(fv!item,"documento",null),
                                     null
                                   )
                                 )
@@ -1039,5 +1036,6 @@
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9535502"/>
         <historyInfo versionUuid="_a-0000eb9b-4ec6-8000-e68b-01ef9001ef90_9619833"/>
         <historyInfo versionUuid="_a-0000eb9b-4ec6-8000-e68b-01ef9001ef90_9646962"/>
+        <historyInfo versionUuid="_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10124427"/>
     </history>
 </contentHaul>

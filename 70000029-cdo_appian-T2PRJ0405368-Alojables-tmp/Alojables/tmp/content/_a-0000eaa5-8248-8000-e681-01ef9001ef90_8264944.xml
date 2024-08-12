@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
-    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9386952</versionUuid>
+    <versionUuid>_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10120077</versionUuid>
     <rule>
         <name>SCDO_ACTUALIZAR_DOCUMENTACION_RECHAZADA_ID_DOC_1</name>
         <uuid>_a-0000eaa5-8248-8000-e681-01ef9001ef90_8264944</uuid>
@@ -16,73 +16,55 @@
             <unlogged>false</unlogged>
         </visibility>
         <definition>a!localVariables(
-  local!datos: if(a!isNotNullOrEmpty(ri!lista),ri!lista,null),
-  
-  
-  
-  local!devolver:  if(a!isNotNullOrEmpty(local!datos),
- #"SYSTEM_SYSRULES_forEach"(
-   items: local!datos,
-    expression: 'type!{urn:com:appian:types}scdo_documentacion'(
-      iddocumentacion: fv!item.iddocumentacion,
-      nomdocumento:ri!nomdocumento,
-      /*document(ri!documento,"name")ri!nomdocumento*/
-      /*concat(*/
-        /*ri!contrato,*/
-        /*"_",*/
-        /*ri!usuario,*/
-        /*"_idDocumento_1",*/
-        /*"_",*/
-        /*text(now(), "yyyy-MM-dd hh:mm:ss")*/
-      /*),*/
-      /*concat(ri!contrato,"_",ri!usuario,"_",text(now(), "yyyy-MM-dd hh:mm:ss")),*/
-      iddocumento: 1,
-      fechacarga:text(now(), "yyyy-MM-dd hh:mm:ss"),
-      usuariocargo:ri!usuario,
-      cc: if(a!isNotNullOrEmpty(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2152641"(usuarioOpic :ri!usuario).data),
-      tostring(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2152641"(usuarioOpic :ri!usuario).data.idsegmento),null),
-      estado:"P",
-      contrato:ri!contrato, 
-      tipo:"CONT",
-      usuarioacepto:fv!item.usuarioacepto,
-      fechaacepto:fv!item.fechaacepto,
-      observacion:fv!item.observacion,
-      br:fv!item.br,
-      opendate:fv!item.opendate,
-      cost:fv!item.cost,
-
-     trad:fv!item.trad, 
-     castdsc:fv!item.castdsc, 
-     profile:fv!item.profile,
-     max:fv!item.max, 
-     canal:fv!item.canal, 
-     cliente:fv!item.cliente, 
-     br2:fv!item.br2, 
-     buc:fv!item.buc, 
-     pb:fv!item.pb, 
-     folio:fv!item.folio, 
-     conveniencia:fv!item.conveniencia, 
-     sucursal:fv!item.sucursal, 
-     trader:fv!item.trader, 
-     amib:fv!item.amib
-
-     
-
-    )
+  local!datos: if(
+    a!isNotNullOrEmpty(ri!lista),
+    ri!lista,
+    null
   ),
-  null
+  local!devolver: if(
+    a!isNotNullOrEmpty(local!datos),
+    #"SYSTEM_SYSRULES_forEach"(
+      items: local!datos,
+      expression: 'type!{urn:com:appian:types}scdo_documentacion'(
+        iddocumentacion: index(fv!item, "iddocumentacion",null),
+        nomdocumento: ri!nomdocumento,
+       
+        iddocumento: 1,
+        fechacarga: text(now(), "yyyy-MM-dd hh:mm:ss"),
+        usuariocargo: ri!usuario,
+        cc: if(
+          a!isNotNullOrEmpty(
+            index(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2152641"(usuarioOpic: ri!usuario),"data",null),
+          ),
+          tostring(
+            index(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2152641"(usuarioOpic: ri!usuario),"data","idsegmento",null)
+          ),
+          null
+        ),
+        estado: "P",
+        contrato: ri!contrato,
+        tipo: "CONT",
+        usuarioacepto: index(fv!item, "usuarioacepto",null),
+        fechaacepto: index(fv!item, "fechaacepto",null),
+        observacion: index(fv!item, "observacion",null),
+        br: index(fv!item, "br",null),
+        opendate: index(fv!item, "opendate",null),
+        cost: index(fv!item, "cost",null),
+        trad: index(fv!item, "trad",null),
+        castdsc: index(fv!item, "castdsc",null),
+        profile: index(fv!item, "profile",null),
+        max: index(fv!item, "max",null),
+        canal: index(fv!item, "canal",null),
+        cliente: index(fv!item, "cliente",null),
+        br2: index(fv!item, "br2",null),
+        buc: index(fv!item, "buc",null)
+        
+      )
+    ),
+    null
   ),
   local!devolver
-  
-  
 )</definition>
-        <namedTypedValue>
-            <name>documento</name>
-            <type>
-                <name>CollaborationDocument</name>
-                <namespace>http://www.appian.com/ae/types/2009</namespace>
-            </type>
-        </namedTypedValue>
         <namedTypedValue>
             <name>usuario</name>
             <type>
@@ -147,5 +129,6 @@
         <historyInfo versionUuid="_a-0000eaa5-8248-8000-e681-01ef9001ef90_8275540"/>
         <historyInfo versionUuid="_a-0000eabf-35e2-8000-e683-01ef9001ef90_8427080"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9386952"/>
+        <historyInfo versionUuid="_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10120077"/>
     </history>
 </contentHaul>

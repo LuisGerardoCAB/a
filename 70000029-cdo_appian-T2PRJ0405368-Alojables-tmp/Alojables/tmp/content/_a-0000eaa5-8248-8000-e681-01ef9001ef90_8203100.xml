@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
-    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9385834</versionUuid>
+    <versionUuid>_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10124109</versionUuid>
     <rule>
         <name>SCDO_FORMATO_HORA</name>
         <uuid>_a-0000eaa5-8248-8000-e681-01ef9001ef90_8203100</uuid>
@@ -55,51 +55,33 @@
     "9",
 
   },
-  /*local!recorrer:if(*/
-  /*a!isNotNullOrEmpty(ri!texto),*/
-  /*a!forEach(*/
-  /*items:enumerate(len(ri!texto)),*/
-  /*expression: */
-  /*if(contains(local!arreglo,charat(ri!texto,fv!index)),false,true)*/
-  /*),*/
-  /*null*/
-  /**/
-  /*),*/
-  local!respuesta: if(
-    a!isNotNullOrEmpty(ri!texto),
-    if(
-      contains(
-        local!arreglo,
-        concat(charat(ri!texto, 1), charat(ri!texto, 2))
-      ),
-      if(
-        charat(ri!texto, 3) = ":",
-        if(
-          and(
-            contains(local!numeros, charat(ri!texto, 4)),
-            contains(local!numeros, charat(ri!texto, 5))
-          ),
-          if(
-            charat(ri!texto, 6) = ":",
-            if(
-              and(
-                contains(local!numeros, charat(ri!texto, 7)),
-                contains(local!numeros, charat(ri!texto, 8))
-              ),
-              false,
-              true
-            ),
-            true
-          ),
-          true
-        ),
-        true
-      ),
-      true
+  local!matchPrueba: a!match(
+    value: a!isNotNullOrEmpty(ri!texto),
+    equals: false(),
+    then: false(),
+    whenTrue: and( a!isNotNullOrEmpty(ri!texto),
+    contains(
+      local!arreglo,
+      concat(charat(ri!texto, 1), charat(ri!texto, 2))
     ),
-    false
+    charat(ri!texto, 3) = ":",
+    and(
+      contains(local!numeros, charat(ri!texto, 4)),
+      contains(local!numeros, charat(ri!texto, 5))
+    ),
+    charat(ri!texto, 6) = ":",
+    and(
+      contains(local!numeros, charat(ri!texto, 7)),
+      contains(local!numeros, charat(ri!texto, 8))
+    ),
+    
+    ),
+    then: false(),
+    default: true()
+    
+    
   ),
-  local!respuesta
+  local!matchPrueba
 )</definition>
         <namedTypedValue>
             <name>texto</name>
@@ -142,5 +124,6 @@
         <historyInfo versionUuid="_a-0000eaa5-8248-8000-e681-01ef9001ef90_8223046"/>
         <historyInfo versionUuid="_a-0000eb09-d442-8000-e687-01ef9001ef90_8836725"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9385834"/>
+        <historyInfo versionUuid="_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10124109"/>
     </history>
 </contentHaul>

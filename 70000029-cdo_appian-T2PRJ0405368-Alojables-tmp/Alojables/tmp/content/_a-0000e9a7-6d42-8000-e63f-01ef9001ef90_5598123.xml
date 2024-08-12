@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
-    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9469495</versionUuid>
+    <versionUuid>_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10131999</versionUuid>
     <interface>
         <name>SCDO_CorreccionDatosReportesAprobadosPorOperacion</name>
         <uuid>_a-0000e9a7-6d42-8000-e63f-01ef9001ef90_5598123</uuid>
@@ -214,10 +214,16 @@
             #"SYSTEM_SYSRULES_textField"(
               refreshAfter:"KEYPRESS",
               label: "Riesgo",
-              value: if(a!isNotNullOrEmpty(fv!item.riesgo),
-              if(fv!item.riesgo=1,"R.ALTO",
-              if(fv!item.riesgo=2,"R.MEDIO","R.BAJO"))
-              ,"Sin Riesgo"),
+              value: a!match(
+                value: a!isNotNullOrEmpty(fv!item.riesgo),
+                equals: false(),
+                then: "Sin Riesgo",
+                whenTrue: fv!item.riesgo=1,
+                then: "R.ALTO",
+                whenTrue: fv!item.riesgo=2,
+                then: "R.MEDIO",
+                default: "R.BAJO"
+              ),
               /*saveInto: fv!item.riesgo,*/
               readOnly: true,
               /*disabled: */
@@ -270,10 +276,23 @@
               choiceValues:{
                 index(ri!usuariosopics,"idusuarioopics",{}), "Sin Promotor"
               },
-              value: if(isnull(fv!item.promotor), "Sin Promotor", if(a!isNullOrEmpty(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2152641"(usuarioOpic: fv!item.promotor).data), "Sin Promotor", #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2152641"(usuarioOpic: fv!item.promotor).data[1].idusuarioopics)),
+              value: a!match(value: isnull(fv!item.promotor), 
+              equals: true(),
+              then: "Sin Promotor", 
+              whenTrue: a!isNullOrEmpty(
+                index(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2152641"(usuarioOpic: fv!item.promotor),"data",null)),
+                then:"Sin Promotor", 
+                default: index(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2152641"(usuarioOpic: fv!item.promotor),"data","idusuarioopics", null)  ), 
+              
+/*              */
+              /*if(isnull(fv!item.promotor), "Sin Promotor", */
+              /*if(a!isNullOrEmpty(*/
+                /*index(rule!SCDO_getUsuariosOPByFilters(usuarioOpic: fv!item.promotor),"data",null)), "Sin Promotor", */
+                /*index(rule!SCDO_getUsuariosOPByFilters(usuarioOpic: fv!item.promotor),"data","idusuarioopics", null))),*/
               saveInto: {
                 local!idusuarioopics1,
-                a!save(fv!item.promotor, #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2152641"(idUsuarioOpic: local!idusuarioopics1).data[1].usuarioopics)
+                a!save(fv!item.promotor, index(
+                  #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2152641"(idUsuarioOpic: local!idusuarioopics1),"data","usuarioopics",null))
               },
               disabled: {
                 if(
@@ -338,11 +357,11 @@
               choiceValues:{
                 index(ri!usuariosopics,"idusuarioopics",{})
               },
-              value: if(a!isNotNullOrEmpty(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2152641"(usuarioOpic:  fv!item.usuario).data),#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2152641"(usuarioOpic:  fv!item.usuario).data[1].idusuarioopics,null),
+              value: if(a!isNotNullOrEmpty(index(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2152641"(usuarioOpic:  fv!item.usuario),"data",null)),index(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2152641"(usuarioOpic:  fv!item.usuario),"data","idusuarioopics",null),null),
               /*value: rule!SCDO_getUsuariosOPByFilters(usuarioOpic:  fv!item.usuario).data[1].idusuarioopics,*/
               saveInto: {
                 local!idusuarioopics2,
-                a!save(fv!item.usuario, #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2152641"(idUsuarioOpic:  local!idusuarioopics2).data[1].usuarioopics),
+                a!save(fv!item.usuario, index(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2152641"(idUsuarioOpic:  local!idusuarioopics2),"data","usuarioopics",null)),
                 a!save(local!ejecutivo, #"4abb2c14-ac25-4b4a-a0f6-a11f52071c0b"(usuarioopics: fv!item.usuario)),
                 a!save(local!supervisor, #"_a-0000e982-d80b-8000-e63b-01ef9001ef90_4617772"(usuario: fv!item.usuario)),
                 a!save(local!administrador, #"_a-0000e8b3-d748-8000-e5f3-01ef9001ef90_2402181"(usuario: fv!item.usuario))
@@ -358,14 +377,16 @@
             #"SYSTEM_SYSRULES_textField"(
               refreshAfter:"KEYPRESS",
               label:"Nom-Usu",
-              value: if(
-                a!isNullOrEmpty(#"4abb2c14-ac25-4b4a-a0f6-a11f52071c0b"(usuarioopics: fv!item.usuario).data),
-                if(
-                  a!isNullOrEmpty(#"_a-0000e982-d80b-8000-e63b-01ef9001ef90_4617772"(usuario: fv!item.usuario).data),
-                  if(a!isNullOrEmpty( #"_a-0000e8b3-d748-8000-e5f3-01ef9001ef90_2402181"(usuario: fv!item.usuario).data)," ", #"_a-0000e8b3-d748-8000-e5f3-01ef9001ef90_2402181"(usuario: fv!item.usuario).data[1].nombre),(usuario: fv!item.usuario).data[1].nombre
-                ),
-               
-                #"4abb2c14-ac25-4b4a-a0f6-a11f52071c0b"(usuarioopics: fv!item.usuario).data[1].nombre
+              value: a!match(
+                value:  a!isNullOrEmpty(index(#"4abb2c14-ac25-4b4a-a0f6-a11f52071c0b"(usuarioopics: fv!item.usuario),"data",null)),
+                equals: false, 
+                then: index(#"4abb2c14-ac25-4b4a-a0f6-a11f52071c0b"(usuarioopics: fv!item.usuario),"data","nombre",null),
+                whenTrue: a!isNotNullOrEmpty(index(#"_a-0000e982-d80b-8000-e63b-01ef9001ef90_4617772"(usuario: fv!item.usuario),"data",null)),
+                
+                then: "-", 
+                whenTrue: a!isNullOrEmpty( index(#"_a-0000e8b3-d748-8000-e5f3-01ef9001ef90_2402181"(usuario: fv!item.usuario),"data",null)),
+                then: " ", 
+                default:  index(#"_a-0000e8b3-d748-8000-e5f3-01ef9001ef90_2402181"(usuario: fv!item.usuario),"data","nombre",null),
               ),
               readOnly: {
                 true
@@ -376,8 +397,9 @@
             #"SYSTEM_SYSRULES_textField"(
               refreshAfter:"KEYPRESS",
               label: "Segmento",
-              value: if(a!isNotNullOrEmpty( #"4abb2c14-ac25-4b4a-a0f6-a11f52071c0b"(usuarioopics: fv!item.usuario).data),
-              #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2233353"(idSegmento: #"4abb2c14-ac25-4b4a-a0f6-a11f52071c0b"(usuarioopics: fv!item.usuario).data[1].idsegmento).data[1].segmento
+              value: if(a!isNotNullOrEmpty( index(#"4abb2c14-ac25-4b4a-a0f6-a11f52071c0b"(usuarioopics: fv!item.usuario),"data",null)),
+              index(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2233353"(idSegmento: index(#"4abb2c14-ac25-4b4a-a0f6-a11f52071c0b"(usuarioopics: fv!item.usuario),"data","idsegmento",null))
+              ,"data","segmento", null)
               ,null),
               
               saveInto: fv!item.segmento,
@@ -387,7 +409,30 @@
             #"SYSTEM_SYSRULES_textField"(
               refreshAfter:"KEYPRESS",
               label:"Nom-Cliente",
-              value: fv!item.nombre,
+              value:   a!match(
+                value: index(
+                  decrypttext(
+                    valueToDecrypt: index(fv!item, "nombre", null),
+                    iv: #"_a-0000ec31-ac7e-8000-e69b-01ef9001ef90_10021470",
+                    scsKey: #"_a-0000ec31-ac7e-8000-e69b-01ef9001ef90_10021476"
+                  ),
+                  "success",
+                  null
+                ),
+                equals: true,
+                then: index(
+                  decrypttext( valueToDecrypt:
+                  index(fv!item, "nombre", null),
+                  iv: #"_a-0000ec31-ac7e-8000-e69b-01ef9001ef90_10021470",
+                  scsKey: #"_a-0000ec31-ac7e-8000-e69b-01ef9001ef90_10021476"
+                  ),
+                  "value",
+                  null
+                ),
+                equals: false,
+                then: index(fv!item, "nombre", null),
+                default: "Sin nombre"
+              ),
               saveInto: fv!item.nombre,
               readOnly: {
                 if(
@@ -476,10 +521,10 @@
               label: "Centro de Costo",
               choiceLabels: index(ri!centroCostos,"cc",{}),
               choiceValues: index(ri!centroCostos,"idccostos",{}),
-              value: #"_a-0000e8c4-62ba-8000-e603-01ef9001ef90_2682345"(cc: fv!item.ccostos).data[1].idccostos,
+              value: index(#"_a-0000e8c4-62ba-8000-e603-01ef9001ef90_2682345"(cc: fv!item.ccostos, paginInfo: #"SYSTEM_SYSRULES_pagingInfo"(startIndex: 1, batchSize: 1)),"data","idccostos",null),
               saveInto: {
                 local!idcentrocostos,
-                a!save(fv!item.ccostos, #"_a-0000e8c4-62ba-8000-e603-01ef9001ef90_2682345"(idccostos: local!idcentrocostos).data[1].cc)
+                a!save(fv!item.ccostos, index(#"_a-0000e8c4-62ba-8000-e603-01ef9001ef90_2682345"(idccostos: local!idcentrocostos),"data","cc",null))
               },
               disabled: {
                 if(
@@ -582,10 +627,13 @@
               choiceLabels: index(ri!usuariosopics,"usuarioopics",{})
               ,
               choiceValues: index(ri!usuariosopics,"idusuarioopics",{}),
-              value: if(a!isNullOrEmpty(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2152641"(usuarioOpic:  fv!item.usuarioreviso).data), null, #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2152641"(usuarioOpic:  fv!item.usuarioreviso).data[1].idusuarioopics),
+              value: if(a!isNullOrEmpty(index(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2152641"(usuarioOpic:  fv!item.usuarioreviso),"data",null)), null, 
+              index(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2152641"(usuarioOpic:  fv!item.usuarioreviso,  paginInfo: #"SYSTEM_SYSRULES_pagingInfo"(startIndex: 1, batchSize: 1)),"data",
+              "idusuarioopics",null)),
               saveInto: {
                 local!idusuarioopics3,
-                a!save(fv!item.usuario, #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2152641"(idUsuarioOpic:  local!idusuarioopics3).data[1].usuarioopics)
+                a!save(fv!item.usuario, 
+                index(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2152641"(idUsuarioOpic:  local!idusuarioopics3),"data","usuarioopics", null))
               },
               disabled:true
               /*{*/
@@ -772,18 +820,16 @@
                   ),
                   linkStyle: "STANDALONE",
                   showWhen: {
-                    if(
-                      and(local!editar[1] = -1, local!editar[2] = 0, local!mostrarConfirmacion = false, local!mostrarExportacion = false),
-                      true,
-                      if(
-                        and(not(local!editar[1] = fv!index), local!editar[2] =1),
-                        false,
-                        if(
-                          and(local!editar[1] = fv!index, local!editar[2] = 1),
-                          false,
-                          if( or(local!mostrarConfirmacion = true, local!mostrarExportacion = true), false, true)
-                        )
-                      )
+                    a!match(value:  and(local!editar[1] = -1, local!editar[2] = 0, local!mostrarConfirmacion = false, local!mostrarExportacion = false),
+                    equals: true(),
+                    then: true(),
+                    whenTrue: and(not(local!editar[1] = fv!index), local!editar[2] =1),
+                    then: false(),
+                    whenTrue:  and(local!editar[1] = fv!index, local!editar[2] = 1),
+                    then: false,
+                    whenTrue: or(local!mostrarConfirmacion = true, local!mostrarExportacion = true),
+                    then: false(),
+                    default: true()
                     )
                   },
                   color: "POSITIVE"
@@ -834,24 +880,22 @@
                         #"_a-0000eaa5-8248-8000-e681-01ef9001ef90_8203100"(texto:fv!item.horacaptura)=false,
                         local!editar[1] = fv!index, 
                         local!editar[2] = 1,
-                        if(
-                          a!isnullOrEmpty(local!operacionEditar),
-                          false,
-                          if(
-                            or(
-                              a!isnullOrEmpty(fv!item.promotor),
-                              a!isnullOrEmpty(fv!item.usuario),
-                              a!isnullOrEmpty(fv!item.operacion),
-                              a!isnullOrEmpty(fv!item.contrato),
-                              a!isnullOrEmpty(fv!item.nombre),
-                              
-                            ),
-                            false,
-                            or(
-                              not(local!operacionEditar = fv!item)
-                            )
-                          )
-                        )
+                        a!match(value:  a!isnullOrEmpty(local!operacionEditar),
+                        equals: true(),
+                        then: false(),
+                        whenTrue: or(
+                          a!isnullOrEmpty(fv!item.promotor),
+                          a!isnullOrEmpty(fv!item.usuario),
+                          a!isnullOrEmpty(fv!item.operacion),
+                          a!isnullOrEmpty(fv!item.contrato),
+                          a!isnullOrEmpty(fv!item.nombre),
+
+                        ),
+                        then: false(), 
+                        default: or(
+                          not(local!operacionEditar = fv!item)
+                        ))
+                       
                       ),
                       true,
                       false
@@ -1106,7 +1150,7 @@
             <el>
                 <a:name/>
                 <a:ruleInputTestConfigs>
-                    <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="a:Expression">#"_a-0000e8d8-9b98-8000-e605-01ef9001ef90_2873730"(operacion: 3784921)</a:value>
+                    <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="a:Expression">#"_a-0000e8d8-9b98-8000-e605-01ef9001ef90_2873730"(operacion: 81)</a:value>
                     <a:nameRef>operacionesReportesAprobados</a:nameRef>
                     <a:id>1</a:id>
                 </a:ruleInputTestConfigs>
@@ -1121,7 +1165,7 @@
                     <a:id>3</a:id>
                 </a:ruleInputTestConfigs>
                 <a:ruleInputTestConfigs>
-                    <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="a:Expression">#"_a-0000e94c-78eb-8000-e637-01ef9001ef90_3874604"(idccostos: null).data</a:value>
+                    <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="a:Expression">#"_a-0000e8c4-62ba-8000-e603-01ef9001ef90_2682345"(idccostos: null).data</a:value>
                     <a:nameRef>centroCostos</a:nameRef>
                     <a:id>4</a:id>
                 </a:ruleInputTestConfigs>
@@ -1135,5 +1179,6 @@
         <historyInfo versionUuid="_a-0000eb09-d442-8000-e687-01ef9001ef90_8844764"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9392217"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9469495"/>
+        <historyInfo versionUuid="_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10131999"/>
     </history>
 </contentHaul>

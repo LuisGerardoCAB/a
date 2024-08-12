@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
-    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9386533</versionUuid>
+    <versionUuid>_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10122700</versionUuid>
     <rule>
         <name>SCDO_LLENAR_IMAGENES_PENDIENTES_TXT</name>
         <uuid>_a-0000eaa5-8248-8000-e681-01ef9001ef90_8334724</uuid>
@@ -22,7 +22,7 @@
     expression:
     {
       a!localVariables(
-        local!auxiliar:#"_a-0000e982-d80b-8000-e63b-01ef9001ef90_4679254"(deal:fv!item.operacion,contrato:fv!item.contrato).data,
+        local!auxiliar:index(#"_a-0000e982-d80b-8000-e63b-01ef9001ef90_4679254"(deal:fv!item.operacion,contrato:fv!item.contrato),"data",null),
         if(a!isNotNullOrEmpty(local!auxiliar),
 
          local!auxiliar,
@@ -78,5 +78,6 @@ local!devolver,
     <history>
         <historyInfo versionUuid="_a-0000eaa5-8248-8000-e681-01ef9001ef90_8334742"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9386533"/>
+        <historyInfo versionUuid="_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10122700"/>
     </history>
 </contentHaul>

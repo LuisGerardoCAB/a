@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
-    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9451400</versionUuid>
+    <versionUuid>_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10122276</versionUuid>
     <rule>
         <name>SCDO_ObtenerDocumentacionRechazada</name>
         <uuid>_a-0000e982-d80b-8000-e63b-01ef9001ef90_4763710</uuid>
@@ -15,7 +15,7 @@
             <system>false</system>
             <unlogged>false</unlogged>
         </visibility>
-        <definition>#"SYSTEM_SYSRULES_queryEntity_v2"(
+        <definition>index(#"SYSTEM_SYSRULES_queryEntity_v2"(
   entity: #"_a-0000e982-d80b-8000-e63b-01ef9001ef90_4749061",
   query: #"SYSTEM_SYSRULES_query"(
     logicalExpression: #"SYSTEM_SYSRULES_queryLogicalExpression"(
@@ -54,7 +54,7 @@
     )
   ),
   fetchTotalCount: false
-).data</definition>
+),"data",null)</definition>
         <namedTypedValue>
             <name>contrato</name>
             <type>
@@ -126,5 +126,6 @@
         <historyInfo versionUuid="_a-0000eaa5-8248-8000-e681-01ef9001ef90_8227275"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9386456"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9451400"/>
+        <historyInfo versionUuid="_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10122276"/>
     </history>
 </contentHaul>

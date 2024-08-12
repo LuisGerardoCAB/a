@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
-    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9388994</versionUuid>
+    <versionUuid>_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10129525</versionUuid>
     <interface>
         <name>SCDO_Ejecutivo_LLamada</name>
         <uuid>_a-0000e968-30a1-8000-e639-01ef9001ef90_4429544</uuid>
@@ -103,7 +103,6 @@
                               esImagenPendiente: ri!esImagenPendiente,
                               deal: ri!deal,
                               contrato: ri!contrato,
-                              tipo: "OBS",
                               ejecutivo: ri!ejecutivo
                             },
                             onSuccess: {
@@ -245,5 +244,6 @@
     <history>
         <historyInfo versionUuid="_a-0000ea2e-319c-8000-e644-01ef9001ef90_6815386"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9388994"/>
+        <historyInfo versionUuid="_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10129525"/>
     </history>
 </contentHaul>

@@ -1,31 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsd:schema targetNamespace="urn:com:appian:types"
   xmlns:tns="urn:com:appian:types" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <xsd:complexType name="V_CDO_NoDocumental">
+  <xsd:complexType name="V_CDO_NODOCUMENTAL">
     <xsd:annotation>
       <xsd:appinfo source="appian.jpa">@Table(name="V_CDO_NODOCUMENTAL")</xsd:appinfo>
       <xsd:appinfo source="http://www.appian.com/ae/types/2009">
         <ns2:Metadata xmlns:ns2="http://www.appian.com/ae/types/2009">
-          <ns2:versionUuid>0000eafe-3bd4-8000-8dd7-014d98014d98</ns2:versionUuid>
+          <ns2:versionUuid>0000eb2f-27f3-8000-9838-014d98014d98</ns2:versionUuid>
           <ns2:history>
-            <ns2:historyInfo versionUuid="0000e8c4-84c4-8000-7315-014d98014d98"/>
-            <ns2:historyInfo versionUuid="0000ea77-900c-8000-5f3f-014d98014d98"/>
-            <ns2:historyInfo versionUuid="0000eae2-c82a-8000-8771-014d98014d98"/>
-            <ns2:historyInfo versionUuid="0000eafe-3bd4-8000-8dd7-014d98014d98"/>
+            <ns2:historyInfo versionUuid="0000eb2f-27f3-8000-9838-014d98014d98"/>
           </ns2:history>
         </ns2:Metadata>
       </xsd:appinfo>
-      <xsd:documentation><![CDATA[Data Type que apunta a la vista V_CDO_NODOCUMENTAL]]></xsd:documentation>
     </xsd:annotation>
     <xsd:sequence>
       <xsd:element name="id" nillable="true" type="xsd:int">
         <xsd:annotation>
-          <xsd:appinfo source="appian.jpa">@Column(name="ID", columnDefinition="NUMBER")</xsd:appinfo>
+          <xsd:appinfo source="appian.jpa">@Id @Column(name="ID", columnDefinition="NUMBER")</xsd:appinfo>
         </xsd:annotation>
       </xsd:element>
       <xsd:element name="idreporte" nillable="true" type="xsd:int">
         <xsd:annotation>
-          <xsd:appinfo source="appian.jpa">@Id @Column(name="idReporte", nullable=false, columnDefinition="NUMBER")</xsd:appinfo>
+          <xsd:appinfo source="appian.jpa">@Column(name="idReporte", nullable=false, columnDefinition="NUMBER")</xsd:appinfo>
         </xsd:annotation>
       </xsd:element>
       <xsd:element name="mercado" nillable="true" type="xsd:string">
@@ -100,7 +96,7 @@
       </xsd:element>
       <xsd:element name="tel" nillable="true" type="xsd:string">
         <xsd:annotation>
-          <xsd:appinfo source="appian.jpa">@Column(name="TEL", columnDefinition="CHAR(1)")</xsd:appinfo>
+          <xsd:appinfo source="appian.jpa">@Column(name="TEL", columnDefinition="VARCHAR2(4000)")</xsd:appinfo>
         </xsd:annotation>
       </xsd:element>
       <xsd:element name="observaciones" nillable="true" type="xsd:string">

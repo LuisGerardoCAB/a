@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
-    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9508829</versionUuid>
+    <versionUuid>_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10134131</versionUuid>
     <interface>
         <name>SCDO_TraspasoEntreUsuario</name>
         <uuid>_a-0000e9a7-6d42-8000-e63f-01ef9001ef90_5248696</uuid>
@@ -18,8 +18,8 @@
         <definition>a!localVariables(
   
   local!ejecutivos: #"4abb2c14-ac25-4b4a-a0f6-a11f52071c0b"(idacceso: null),
-  local!nombreActual:if(a!isNotNullOrEmpty(#"4abb2c14-ac25-4b4a-a0f6-a11f52071c0b"(usuarioopics: ri!reporte.usuario).data),
-  #"4abb2c14-ac25-4b4a-a0f6-a11f52071c0b"(usuarioopics: ri!reporte.usuario).data[1].nombre,null
+  local!nombreActual:if(a!isNotNullOrEmpty(index(#"4abb2c14-ac25-4b4a-a0f6-a11f52071c0b"(usuarioopics: ri!reporte.usuario),"data",null)),
+  index(#"4abb2c14-ac25-4b4a-a0f6-a11f52071c0b"(usuarioopics: ri!reporte.usuario, paginInfo: #"SYSTEM_SYSRULES_pagingInfo"(startIndex: 1, batchSize: 1)),"data","nombre",null),null
   ) ,
   local!usuarioActual: ri!reporte.usuario,
   local!usuario,
@@ -73,9 +73,11 @@
                           #"SYSTEM_SYSRULES_textField"(
                             label: "Segmento:",
                             labelPosition: "ABOVE",
-                            value:if(isnull(ri!reporte.usuario), "-", #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2233353"(idSegmento: 
-                            if(a!isNotNullOrEmpty(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2152641"(usuarioOpic: ri!reporte.usuario).data),
-                            #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2152641"(usuarioOpic: ri!reporte.usuario).data[1].idsegmento,0)).data[1].segmento
+                            value: 
+                            if(isnull(ri!reporte.usuario), "-", index(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2233353"(idSegmento: 
+                            if(
+                              a!isNotNullOrEmpty(index(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2152641"(usuarioOpic: ri!reporte.usuario),"data", null)),
+                            index(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2152641"(usuarioOpic: ri!reporte.usuario),"data","idsegmento", null),0)),"data","segmento", null)
                             ),
                             refreshAfter: "UNFOCUS",
                             readOnly: true,
@@ -114,8 +116,8 @@
                             label: "Usuario",
                             labelPosition: "ABOVE",
                             placeholder: "---Seleccione un Usuario---",
-                            choiceLabels: index(local!ejecutivos.data,"nombre",{}),
-                            choiceValues: index(local!ejecutivos.data,"idacceso",{}),
+                            choiceLabels: index(local!ejecutivos,"data","nombre",{}),
+                            choiceValues: index(local!ejecutivos,"data","idacceso",{}),
                             value: local!id_ejecutivo,
                             saveInto: {
                               local!id_ejecutivo,
@@ -124,7 +126,8 @@
                                 if(
                                   a!isNullOrEmpty(local!id_ejecutivo),
                                   null(),
-                                  #"4abb2c14-ac25-4b4a-a0f6-a11f52071c0b"(idacceso: local!id_ejecutivo).data[1].usuarioopics)
+                                  index(#"4abb2c14-ac25-4b4a-a0f6-a11f52071c0b"(idacceso: local!id_ejecutivo, paginInfo: #"SYSTEM_SYSRULES_pagingInfo"(startIndex: 1,
+                                  batchSize: 1)),"data","usuarioopics", null))
                                 )
                             },
                             searchDisplay: "ON",
@@ -140,7 +143,11 @@
                           #"SYSTEM_SYSRULES_textField"(
                             label: "Segmento:",
                             labelPosition: "ABOVE",
-                            value:if(isnull(local!usuario), "-", #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2233353"(idSegmento: #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2152641"(usuarioOpic: local!usuario).data[1].idsegmento).data[1].segmento),
+                            value:if(isnull(local!usuario), "-", 
+                            index(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2233353"(idSegmento: 
+                            index(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2152641"(usuarioOpic: local!usuario),"data","idsegmento", null),
+                            paginInfo: #"SYSTEM_SYSRULES_pagingInfo"(startIndex: 1, batchSize: 1))
+                            ,"data","segmento", null)),
                             refreshAfter: "UNFOCUS",
                             readOnly: true,
                             validations: {}
@@ -227,7 +234,7 @@
       ),
       #"SYSTEM_SYSRULES_ButtonLayout"(
         primaryButtons: {
-          #"SYSTEM_SYSRULES_ButtonWidget"(
+          #"SYSTEM_SYSRULES_buttonWidget_v1"(
             label: "Traspasar",
             disabled:or( a!isNullOrEmpty(local!id_ejecutivo),ri!reporte.usuario=local!usuario),
             saveInto: {
@@ -264,7 +271,7 @@
               )
             },  
             submit: true,
-            style: "PRIMARY",
+            style: "SOLID",
             loadingIndicator: true,
             confirmHeader: "¿Está seguro de que se desea hacer este traspaso?",
             confirmButtonLabel: "Sí, confirmar",
@@ -272,7 +279,7 @@
           )
         },
         secondaryButtons: {
-          #"SYSTEM_SYSRULES_ButtonWidget"(
+          #"SYSTEM_SYSRULES_buttonWidget_v1"(
             label: "Cancelar",
             loadingIndicator: true,
             value: false,
@@ -283,7 +290,7 @@
               a!save(local!id_ejecutivo, null)
             },
             submit: true,
-            style: "NORMAL",
+            style: "GHOST",
             validate: false
           )
         }
@@ -410,5 +417,6 @@
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9389351"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9470678"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9508829"/>
+        <historyInfo versionUuid="_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10134131"/>
     </history>
 </contentHaul>

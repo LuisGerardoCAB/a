@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
-    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9392143</versionUuid>
+    <versionUuid>_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10131466</versionUuid>
     <interface>
         <name>SCDO_Menu_Panel</name>
         <uuid>_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1847102</uuid>
@@ -35,58 +35,43 @@
         ),
         #"SYSTEM_SYSRULES_columnLayout"(
           contents: {
-            if(
-              local!opcionMenuSeleccionada.titulo = #"_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1836153"[1],
-              #"_a-0000e9f5-96e6-8000-e641-01ef9001ef90_6270996"()
-              ,
-              if(
-                local!opcionMenuSeleccionada.titulo = #"_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1836153"[2],
-                  #"_a-0000e9f5-96e6-8000-e641-01ef9001ef90_6016288"(),
-                if(
-                  local!opcionMenuSeleccionada.titulo = #"_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1836153"[3],
-                  #"_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1897130"(),
-                  if(
-                    local!opcionMenuSeleccionada.titulo = #"_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1836153"[4],
-                    #"_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1899600"(),
-                    if(
-                      local!opcionMenuSeleccionada.titulo = #"_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1836153"[5],
-                      #"_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1906472"(
-                        region: local!region,
-                        modificar: local!modificar
-                      ),
-                      if(
-                        local!opcionMenuSeleccionada.titulo = #"_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1836153"[6],
-                        #"_a-0000e94c-78eb-8000-e637-01ef9001ef90_4002782"(
-                          idadmon: ri!idadmon,
-                          idsegmento: ri!idsegmento
-                        ),
-                      if(
-                        local!opcionMenuSeleccionada.titulo = #"_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1836153"[7],
-                        #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_1946988"(
-                          segmento_cdt: local!segmento
-                        ),
-                        if(
-                          local!opcionMenuSeleccionada.titulo = #"_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1836153"[8],
-                          #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_1950234"(),
-                          if(
-                            local!opcionMenuSeleccionada.titulo = #"_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1836153"[10],
-                            #"_a-0000e9a7-6d42-8000-e63f-01ef9001ef90_5215091"(),
-                        choose(
-                          local!opcionMenuSeleccionada.titulo = #"_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1836153"[9],
-                          {
-                            #"_a-0000e9a7-6d42-8000-e63f-01ef9001ef90_5939823"()
-                          }
-                         
-                         )
-                         )
-                        )
-                      )
-                    )
-                  )
-                )
+            a!match(
+              value: local!opcionMenuSeleccionada.titulo = #"_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1836153"[1],
+              equals: true(),
+              then:  #"_a-0000e9f5-96e6-8000-e641-01ef9001ef90_6270996"(),
+              whenTrue:  local!opcionMenuSeleccionada.titulo = #"_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1836153"[2],
+              then: #"_a-0000e9f5-96e6-8000-e641-01ef9001ef90_6016288"(),
+              whenTrue:  local!opcionMenuSeleccionada.titulo = #"_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1836153"[3],
+              then: #"_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1897130"(),
+              whenTrue: local!opcionMenuSeleccionada.titulo = #"_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1836153"[4],
+              then: #"_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1899600"(),
+              whenTrue: local!opcionMenuSeleccionada.titulo = #"_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1836153"[5],
+              then: #"_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1906472"(
+                region: local!region,
+                modificar: local!modificar
+              ),
+              whenTrue: local!opcionMenuSeleccionada.titulo = #"_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1836153"[6],
+              then: #"_a-0000e94c-78eb-8000-e637-01ef9001ef90_4002782"(
+                idadmon: ri!idadmon,
+                idsegmento: ri!idsegmento
+              ),
+              whenTrue:  local!opcionMenuSeleccionada.titulo = #"_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1836153"[7],
+              then: #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_1946988"(
+                segmento_cdt: local!segmento
+              ),
+              whenTrue: local!opcionMenuSeleccionada.titulo = #"_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1836153"[8],
+              then: #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_1950234"(),
+              whenTrue: local!opcionMenuSeleccionada.titulo = #"_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1836153"[10],
+              then: #"_a-0000e9a7-6d42-8000-e63f-01ef9001ef90_5215091"(),
+              default:  choose(
+                local!opcionMenuSeleccionada.titulo = #"_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1836153"[9],
+                {
+                  #"_a-0000e9a7-6d42-8000-e63f-01ef9001ef90_5939823"()
+                }
+
               )
             )
-           )
+            
           },
           width: "AUTO"
         )
@@ -157,5 +142,6 @@
         <historyInfo versionUuid="_a-0000e94c-78eb-8000-e637-01ef9001ef90_3804396"/>
         <historyInfo versionUuid="_a-0000ea3c-477e-8000-e648-01ef9001ef90_7231417"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9392143"/>
+        <historyInfo versionUuid="_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10131466"/>
     </history>
 </contentHaul>

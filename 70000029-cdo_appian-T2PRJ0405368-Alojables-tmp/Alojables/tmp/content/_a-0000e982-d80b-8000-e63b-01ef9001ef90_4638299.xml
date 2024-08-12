@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
-    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9388732</versionUuid>
+    <versionUuid>_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10129478</versionUuid>
     <interface>
         <name>SCDO_SegmentoE</name>
         <uuid>_a-0000e982-d80b-8000-e63b-01ef9001ef90_4638299</uuid>
@@ -56,13 +56,13 @@
                         value: {
                           if(
                             a!isNotNullOrEmpty(ri!ejecutivo),
-                            ri!ejecutivo.expediente,
+                           index(ri!ejecutivo, "expediente", null),
                             if(
                               a!isNotNullOrEmpty(ri!admon),
-                              ri!admon.usuario,
+                              index(ri!admon, "usuario", null),
                               if(
                                 a!isNotNullOrEmpty(ri!supervisor),
-                                ri!supervisor.usuario,
+                                index(ri!supervisor, "usuario", null),
                                 "Sin expediente"
                               )
                               
@@ -104,13 +104,13 @@
                   value: {
                     if(
                       a!isNotNullOrEmpty(ri!ejecutivo),
-                      ri!ejecutivo.nombre,
+                      index(ri!ejecutivo, "nombre", null),
                       if(
                         a!isNotNullOrEmpty(ri!supervisor),
-                        ri!supervisor.nombre,
+                        index(ri!supervisor, "nombre", null),
                         if(
                           a!isNotNullOrEmpty(ri!admon),
-                          ri!admon.nombre,
+                          index(ri!admon, "nombre", null),
                           "Sin Usuario"
                         )
                       )
@@ -136,13 +136,14 @@
                     value: {
                       if(
                         a!isNotNullOrEmpty(ri!ejecutivo),
-                        #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2233353"(idSegmento: ri!ejecutivo.idsegmento).data.segmento,
+                        index(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2233353"(idSegmento:index(ri!ejecutivo, "idsegmento", null)),
+                        "data","segmento", null),
                         if(
                           a!isNotNullOrEmpty(ri!supervisor),
-                          ri!supervisor.segmento,
+                          index(ri!supervisor, "segmento", null),
                           if(
                             a!isNotNullOrEmpty(ri!admon),
-                            ri!admon.tipo,
+                            index(ri!admon, "tipo", null),
                             "Nada que mostrar"
                           )
                         )
@@ -160,7 +161,7 @@
                     value: {
                       if(
                         a!isNotNullOrEmpty(ri!admon),
-                        ri!admon.tipo,
+                        index(ri!admon, "tipo", null),
                         "Sin Tipo Usuario"
                       )
                     },
@@ -241,5 +242,6 @@
         <historyInfo versionUuid="_a-0000ea2e-319c-8000-e644-01ef9001ef90_6808394"/>
         <historyInfo versionUuid="_a-0000eabf-35e2-8000-e683-01ef9001ef90_8452093"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9388732"/>
+        <historyInfo versionUuid="_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10129478"/>
     </history>
 </contentHaul>

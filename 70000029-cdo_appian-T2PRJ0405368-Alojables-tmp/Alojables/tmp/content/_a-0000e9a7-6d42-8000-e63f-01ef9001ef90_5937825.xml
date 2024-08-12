@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
-    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9388223</versionUuid>
+    <versionUuid>_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10118444</versionUuid>
     <interface>
         <name>SCDO_detallesCargaMasivaDoc</name>
         <uuid>_a-0000e9a7-6d42-8000-e63f-01ef9001ef90_5937825</uuid>
@@ -98,31 +98,47 @@
                           "Total de Operaciones Correctas: ",
                           #"SYSTEM_SYSRULES_richTextItem_v1"(
                             text: if(
-                              and(a!isNullOrEmpty(ri!reportes),a!isNullOrEmpty(ri!reportesAprobados)),
+                              and(a!isNullOrEmpty(ri!reportes),a!isNullOrEmpty(ri!reportesAprobados), 
+                              a!isNullOrEmpty(ri!contratos)
+                              ),
                               0,
+                              if(and(a!isNullOrEmpty(ri!reportes),a!isNullOrEmpty(ri!reportesAprobados),
+                              a!isNotNullOrEmpty(ri!contratos)),
+                              length(ri!contratos),
                               length(ri!reportes) + length(ri!reportesAprobados)
-                            ),
+                            )),
                             style: { "STRONG" }
                           ),
                           char(10),
                           "Erróneos: ",
                           #"SYSTEM_SYSRULES_richTextItem_v1"(
                             text: if(
-                              isnull(ri!reportes),
+                              and(isnull(ri!reportes) ,a!isNullOrEmpty(ri!reportesAprobados), 
+                              a!isNullOrEmpty(ri!contratos)),
                               if(
                                 a!isNullOrEmpty(ri!totalCount),
                                 0,
                                 ri!totalCount - 1
                               ),
+                             if(a!isNotNullOrEmpty(ri!contratos),
+                             if(
+                               ( (ri!totalCount - 1) - (
+                                 length(ri!contratos)
+                               ))&lt;0,
+                               0,
+                               ( (ri!totalCount - 1) - (
+                                 length(ri!contratos) 
+                               ))
+                             ),
                               if(
                                 ( (ri!totalCount - 1) - (
                                   length(ri!reportes) + length(ri!reportesAprobados)
                                 ))&lt;0,
                                 0,
                                 ( (ri!totalCount - 1) - (
-                                  length(ri!reportes) + length(ri!reportesAprobados)
+                                  length(ri!reportes) + length(ri!reportesAprobados) 
                                 ))
-                              )
+                              ))
                               /*(ri!totalCount - 1) - (*/
                                 /*length(ri!reportes) + length(ri!reportesAprobados)*/
                               /*)*/
@@ -151,7 +167,30 @@
                       value: fv!row.operacion
                     ),
                     #"SYSTEM_SYSRULES_gridColumn"(label: "Contrato", value: fv!row.contrato),
-                    #"SYSTEM_SYSRULES_gridColumn"(label: "Nombre", value: fv!row.nombre),
+                    #"SYSTEM_SYSRULES_gridColumn"(label: "Nombre", value: a!match(
+                      value: index(
+                        decrypttext(
+                          valueToDecrypt: index(fv!row, "nombre", null),
+                          iv: #"_a-0000ec31-ac7e-8000-e69b-01ef9001ef90_10021470",
+                          scsKey: #"_a-0000ec31-ac7e-8000-e69b-01ef9001ef90_10021476"
+                        ),
+                        "success",
+                        null
+                      ),
+                      equals: true,
+                      then: index(
+                        decrypttext( valueToDecrypt:
+                        index(fv!row, "nombre", null),
+                        iv: #"_a-0000ec31-ac7e-8000-e69b-01ef9001ef90_10021470",
+                        scsKey: #"_a-0000ec31-ac7e-8000-e69b-01ef9001ef90_10021476"
+                        ),
+                        "value",
+                        null
+                      ),
+                      equals: false,
+                      then: index(fv!row, "nombre", null),
+                      default: "Sin nombre"
+                    )),
                     #"SYSTEM_SYSRULES_gridColumn"(label: "Emisora", value: fv!row.emisora),
                     #"SYSTEM_SYSRULES_gridColumn"(label: "Monto", value: fv!row.monto),
                     #"SYSTEM_SYSRULES_gridColumn"(label: "Promotor", value: fv!row.promotor),
@@ -190,7 +229,30 @@
                       value: fv!row.operacion
                     ),
                     #"SYSTEM_SYSRULES_gridColumn"(label: "Contrato", value: fv!row.contrato),
-                    #"SYSTEM_SYSRULES_gridColumn"(label: "Nombre", value: fv!row.nombre),
+                    #"SYSTEM_SYSRULES_gridColumn"(label: "Nombre", value:  a!match(
+                      value: index(
+                        decrypttext(
+                          valueToDecrypt: index(fv!row, "nombre", null),
+                          iv: #"_a-0000ec31-ac7e-8000-e69b-01ef9001ef90_10021470",
+                          scsKey: #"_a-0000ec31-ac7e-8000-e69b-01ef9001ef90_10021476"
+                        ),
+                        "success",
+                        null
+                      ),
+                      equals: true,
+                      then: index(
+                        decrypttext( valueToDecrypt:
+                        index(fv!row, "nombre", null),
+                        iv: #"_a-0000ec31-ac7e-8000-e69b-01ef9001ef90_10021470",
+                        scsKey: #"_a-0000ec31-ac7e-8000-e69b-01ef9001ef90_10021476"
+                        ),
+                        "value",
+                        null
+                      ),
+                      equals: false,
+                      then: index(fv!row, "nombre", null),
+                      default: "luis"
+                    )),
                     #"SYSTEM_SYSRULES_gridColumn"(label: "Emisora", value: fv!row.emisora),
                     #"SYSTEM_SYSRULES_gridColumn"(label: "Monto", value: fv!row.monto),
                     #"SYSTEM_SYSRULES_gridColumn"(label: "Promotor", value: fv!row.promotor),
@@ -292,6 +354,13 @@
                 <namespace>http://www.w3.org/2001/XMLSchema</namespace>
             </type>
         </namedTypedValue>
+        <namedTypedValue>
+            <name>contratos</name>
+            <type>
+                <name>V_CDO_DOCONTRATO_ULTIMO?list</name>
+                <namespace>urn:com:appian:types</namespace>
+            </type>
+        </namedTypedValue>
         <preferredEditor>interface</preferredEditor>
         <offlineEnabled>false</offlineEnabled>
         <isCustom>false</isCustom>
@@ -326,5 +395,6 @@
         <historyInfo versionUuid="_a-0000ea22-4ef8-8000-e643-01ef9001ef90_6778374"/>
         <historyInfo versionUuid="_a-0000eaa5-8248-8000-e681-01ef9001ef90_8232481"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9388223"/>
+        <historyInfo versionUuid="_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10118444"/>
     </history>
 </contentHaul>

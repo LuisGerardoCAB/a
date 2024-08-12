@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
-    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9451379</versionUuid>
+    <versionUuid>_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10122190</versionUuid>
     <rule>
         <name>SCDO_obtenerSupervisorPorUsuario</name>
         <uuid>_a-0000e982-d80b-8000-e63b-01ef9001ef90_4746760</uuid>
@@ -19,21 +19,19 @@
   local!data: if(
     a!isNullOrEmpty(ri!usuario),
     null(),
-    #"SYSTEM_SYSRULES_queryEntity_v2"(
+    index(#"SYSTEM_SYSRULES_queryEntity_v2"(
       entity: #"_a-0000e982-d80b-8000-e63b-01ef9001ef90_4621838",
       query: #"SYSTEM_SYSRULES_query"(
+        selection: #"SYSTEM_SYSRULES_querySelection"(columns: #"SYSTEM_SYSRULES_queryColumn"(
+          field: "usuarion"
+        )),
         logicalExpression: #"SYSTEM_SYSRULES_queryLogicalExpression"(
           operator: "AND",
           filters: {
             #"SYSTEM_SYSRULES_queryFilter"(
               field: "usuarion",
               operator: "=",
-              value: (user(ri!usuario, "username"))
-            ),
-            #"SYSTEM_SYSRULES_queryFilter"(
-              field: "segmento",
-              operator: "=",
-              value: ri!segmento,
+              value: user(ri!usuario, "username")
             )
           },
           ignoreFiltersWithEmptyValues: true
@@ -44,7 +42,7 @@
         )
       ),
       fetchTotalCount: false
-    ).data,
+    ),"data", null)
   ),
   local!data
 )</definition>
@@ -54,14 +52,6 @@
                 <name>User</name>
                 <namespace>http://www.appian.com/ae/types/2009</namespace>
             </type>
-        </namedTypedValue>
-        <namedTypedValue>
-            <name>segmento</name>
-            <type>
-                <name>string</name>
-                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
-            </type>
-            <value/>
         </namedTypedValue>
         <preferredEditor>legacy</preferredEditor>
         <offlineEnabled>false</offlineEnabled>
@@ -97,5 +87,6 @@
         <historyInfo versionUuid="_a-0000eae4-5659-8000-e685-01ef9001ef90_8619783"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9386480"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9451379"/>
+        <historyInfo versionUuid="_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10122190"/>
     </history>
 </contentHaul>

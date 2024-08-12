@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
-    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9505768</versionUuid>
+    <versionUuid>_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10123551</versionUuid>
     <rule>
         <name>SCDO_getSegmentoByFilters</name>
         <uuid>_a-0000e878-569a-8000-e5e4-01ef9001ef90_2233353</uuid>
@@ -15,9 +15,12 @@
             <system>false</system>
             <unlogged>false</unlogged>
         </visibility>
-        <definition>#"_a-0000e8b9-0989-8000-e5fd-01ef9001ef90_2420859"(
-  dataStoreEntity_dt: #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2233345",
-  queryFilter_any: {
+        <definition> #"SYSTEM_SYSRULES_queryEntity_v2"(
+   entity: #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2233345",
+   query: #"SYSTEM_SYSRULES_query"(
+     logicalExpression: #"SYSTEM_SYSRULES_queryLogicalExpression"(
+       operator: "AND",
+       filters: {
     #"SYSTEM_SYSRULES_queryFilter"(
       field: "idsegmento",
       operator: "=",
@@ -29,21 +32,25 @@
       value: ri!segmento
     )
   },
- 
-  pagingInfo_pi: if(
-    not(isnull(ri!paginInfo)),
-    ri!paginInfo,
-    #"SYSTEM_SYSRULES_pagingInfo"(
-      startIndex: 1,
-      batchSize: 50,
-      sort: #"SYSTEM_SYSRULES_sortInfo"(field: "segmento", ascending: true())
-    )
-  ),
-  selectionColumn_txt: ri!seleccionColumnas,
-  /*pagingInfo_pi: ri!paginInfo,*/
-  ignoreFiltersWithEmptyValues_bool: true,
-  fetchTotalCount_bool: true
-)</definition>
+  ignoreFiltersWithEmptyValues: true()
+     ),
+     pagingInfo: if(
+       a!isNotNullOrEmpty(ri!paginInfo),
+       ri!paginInfo,
+       #"SYSTEM_SYSRULES_pagingInfo"(
+         startIndex: 1,
+         batchSize: 50,
+         sort: #"SYSTEM_SYSRULES_sortInfo"(field: "segmento", ascending: true())
+       )
+     )
+
+   ),
+   fetchTotalCount: true()
+ )
+
+
+
+</definition>
         <namedTypedValue>
             <name>idSegmento</name>
             <type>
@@ -63,13 +70,6 @@
             <name>paginInfo</name>
             <type>
                 <name>PagingInfo</name>
-                <namespace>http://www.appian.com/ae/types/2009</namespace>
-            </type>
-        </namedTypedValue>
-        <namedTypedValue>
-            <name>seleccionColumnas</name>
-            <type>
-                <name>Text?list</name>
                 <namespace>http://www.appian.com/ae/types/2009</namespace>
             </type>
         </namedTypedValue>
@@ -108,5 +108,6 @@
         <historyInfo versionUuid="_a-0000eb09-d442-8000-e687-01ef9001ef90_8837692"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9386880"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9505768"/>
+        <historyInfo versionUuid="_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10123551"/>
     </history>
 </contentHaul>

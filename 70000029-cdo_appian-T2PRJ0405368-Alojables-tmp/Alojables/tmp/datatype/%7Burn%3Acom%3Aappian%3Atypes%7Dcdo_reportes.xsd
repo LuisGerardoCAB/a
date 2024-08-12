@@ -6,10 +6,11 @@
       <xsd:appinfo source="appian.jpa">@Table(name="CDO_MX_AUX_REPORTES")</xsd:appinfo>
       <xsd:appinfo source="http://www.appian.com/ae/types/2009">
         <ns2:Metadata xmlns:ns2="http://www.appian.com/ae/types/2009">
-          <ns2:versionUuid>0000eae3-fa7b-8000-87c2-014d98014d98</ns2:versionUuid>
+          <ns2:versionUuid>0000ec3f-18e5-8000-ca70-014d98014d98</ns2:versionUuid>
           <ns2:history>
             <ns2:historyInfo versionUuid="0000e8d8-54fc-8000-7d63-014d98014d98"/>
             <ns2:historyInfo versionUuid="0000eae3-fa7b-8000-87c2-014d98014d98"/>
+            <ns2:historyInfo versionUuid="0000ec3f-18e5-8000-ca70-014d98014d98"/>
           </ns2:history>
         </ns2:Metadata>
       </xsd:appinfo>

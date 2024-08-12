@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
-    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9450888</versionUuid>
+    <versionUuid>_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10120231</versionUuid>
     <rule>
         <name>SCDO_getTotalElementosNoDocumentalLLamada</name>
         <uuid>_a-0000ea6a-8274-8000-e661-01ef9001ef90_7630209</uuid>
@@ -15,7 +15,7 @@
             <system>false</system>
             <unlogged>false</unlogged>
         </visibility>
-        <definition>#"SYSTEM_SYSRULES_queryEntity_v2"(
+        <definition>index(#"SYSTEM_SYSRULES_queryEntity_v2"(
   entity: #"_a-0000e8c4-62ba-8000-e603-01ef9001ef90_2511091",
   query: #"SYSTEM_SYSRULES_query"(
     pagingInfo: #"SYSTEM_SYSRULES_pagingInfo"(
@@ -28,7 +28,7 @@
     )
   ),
   fetchTotalCount: true
-).totalCount</definition>
+),"totalCount",null)</definition>
         <preferredEditor>legacy</preferredEditor>
         <offlineEnabled>false</offlineEnabled>
     </rule>
@@ -63,5 +63,6 @@
         <historyInfo versionUuid="_a-0000eabf-35e2-8000-e683-01ef9001ef90_8468463"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9386848"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9450888"/>
+        <historyInfo versionUuid="_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10120231"/>
     </history>
 </contentHaul>

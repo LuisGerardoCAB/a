@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
-    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9445944</versionUuid>
+    <versionUuid>_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10120129</versionUuid>
     <rule>
         <name>SCDO_getTotalElementosPendienteRev</name>
         <uuid>_a-0000ea65-3c45-8000-e65f-01ef9001ef90_7626720</uuid>
@@ -15,7 +15,7 @@
             <system>false</system>
             <unlogged>false</unlogged>
         </visibility>
-        <definition>#"SYSTEM_SYSRULES_queryEntity_v2"(
+        <definition>index(#"SYSTEM_SYSRULES_queryEntity_v2"(
   entity: #"_a-0000e8c4-62ba-8000-e603-01ef9001ef90_2510382",
   query: #"SYSTEM_SYSRULES_query"(
     pagingInfo: #"SYSTEM_SYSRULES_pagingInfo"(
@@ -28,7 +28,7 @@
     )
   ),
   fetchTotalCount: true
-).totalCount</definition>
+),"totalCount",null)</definition>
         <preferredEditor>legacy</preferredEditor>
         <offlineEnabled>false</offlineEnabled>
     </rule>
@@ -63,5 +63,6 @@
         <historyInfo versionUuid="_a-0000eabf-35e2-8000-e683-01ef9001ef90_8468472"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9386844"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9445944"/>
+        <historyInfo versionUuid="_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10120129"/>
     </history>
 </contentHaul>

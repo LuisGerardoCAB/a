@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
-    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9451572</versionUuid>
+    <versionUuid>_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10122460</versionUuid>
     <rule>
         <name>SCDO_obtenerCatalagosDocumentosByFilters</name>
         <uuid>_a-0000e982-d80b-8000-e63b-01ef9001ef90_4796242</uuid>
@@ -15,8 +15,7 @@
             <system>false</system>
             <unlogged>false</unlogged>
         </visibility>
-        <definition>a!localVariables(
- /* local!data:*/ #"SYSTEM_SYSRULES_queryEntity_v2"(
+        <definition> #"SYSTEM_SYSRULES_queryEntity_v2"(
     entity: #"_a-0000e8d8-9b98-8000-e605-01ef9001ef90_2694251",
     query: #"SYSTEM_SYSRULES_query"(
       logicalExpression: #"SYSTEM_SYSRULES_queryLogicalExpression"(
@@ -63,14 +62,12 @@
       ),
       paginginfo: #"SYSTEM_SYSRULES_pagingInfo"(
         startIndex: 1,
-        batchSize: -1
+        batchSize: 200
       )
     ),
     fetchTotalCount: false,
     
-  ).data,
-  /*local!data*/
-)</definition>
+  )</definition>
         <namedTypedValue>
             <name>iddocumento</name>
             <type>
@@ -158,5 +155,6 @@
         <historyInfo versionUuid="_a-0000eb09-d442-8000-e687-01ef9001ef90_8808093"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9386052"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9451572"/>
+        <historyInfo versionUuid="_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10122460"/>
     </history>
 </contentHaul>

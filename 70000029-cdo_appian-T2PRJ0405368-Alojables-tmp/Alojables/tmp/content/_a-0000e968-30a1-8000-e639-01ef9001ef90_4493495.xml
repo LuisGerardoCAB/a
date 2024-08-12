@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
-    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9450794</versionUuid>
+    <versionUuid>_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10111154</versionUuid>
     <rule>
         <name>SCDO_getcdo_doctos_segmento</name>
         <uuid>_a-0000e968-30a1-8000-e639-01ef9001ef90_4493495</uuid>
@@ -15,7 +15,7 @@
             <system>false</system>
             <unlogged>false</unlogged>
         </visibility>
-        <definition>#"SYSTEM_SYSRULES_queryEntity_v2"(
+        <definition>index(#"SYSTEM_SYSRULES_queryEntity_v2"(
   entity: #"_a-0000e94c-78eb-8000-e637-01ef9001ef90_4046282",
   query: #"SYSTEM_SYSRULES_query"(
     logicalexpression: #"SYSTEM_SYSRULES_queryLogicalExpression"(
@@ -33,13 +33,13 @@
       a!isNullOrEmpty(ri!pagingInfo),
       #"SYSTEM_SYSRULES_pagingInfo"(
         startIndex: 1,
-        batchSize: -1
+        batchSize: 500
       ),
       ri!pagingInfo
     )
   ),
   fetchTotalCount: false
-).data</definition>
+), "data", null)</definition>
         <namedTypedValue>
             <name>idsegmento</name>
             <type>
@@ -89,5 +89,6 @@
         <historyInfo versionUuid="_a-0000eae4-5659-8000-e685-01ef9001ef90_8695506"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9386579"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9450794"/>
+        <historyInfo versionUuid="_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10111154"/>
     </history>
 </contentHaul>

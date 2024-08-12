@@ -6,11 +6,12 @@
       <xsd:appinfo source="appian.jpa">@Table(name="CDO_MX_MAE_EXPEDIENTES")</xsd:appinfo>
       <xsd:appinfo source="http://www.appian.com/ae/types/2009">
         <ns2:Metadata xmlns:ns2="http://www.appian.com/ae/types/2009">
-          <ns2:versionUuid>0000eb19-f13e-8000-9198-014d98014d98</ns2:versionUuid>
+          <ns2:versionUuid>0000ec5f-61c1-8000-ce12-014d98014d98</ns2:versionUuid>
           <ns2:history>
             <ns2:historyInfo versionUuid="0000e8a7-85f3-8000-6336-014d98014d98"/>
             <ns2:historyInfo versionUuid="0000ead7-a09e-8000-83a9-014d98014d98"/>
             <ns2:historyInfo versionUuid="0000eb19-f13e-8000-9198-014d98014d98"/>
+            <ns2:historyInfo versionUuid="0000ec5f-61c1-8000-ce12-014d98014d98"/>
           </ns2:history>
         </ns2:Metadata>
       </xsd:appinfo>
@@ -32,29 +33,9 @@
           <xsd:appinfo source="appian.jpa">@Column(name="NOMBRE", columnDefinition="VARCHAR2(60)")</xsd:appinfo>
         </xsd:annotation>
       </xsd:element>
-      <xsd:element name="fechaingreso" nillable="true" type="xsd:string">
-        <xsd:annotation>
-          <xsd:appinfo source="appian.jpa">@Column(name="FECHAINGRESO", columnDefinition="VARCHAR2(25)")</xsd:appinfo>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="extra1" nillable="true" type="xsd:string">
-        <xsd:annotation>
-          <xsd:appinfo source="appian.jpa">@Column(name="EXTRA1", columnDefinition="VARCHAR2(50)")</xsd:appinfo>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="extra2" nillable="true" type="xsd:string">
-        <xsd:annotation>
-          <xsd:appinfo source="appian.jpa">@Column(name="EXTRA2", columnDefinition="VARCHAR2(50)")</xsd:appinfo>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="correo" nillable="true" type="xsd:string">
-        <xsd:annotation>
-          <xsd:appinfo source="appian.jpa">@Column(name="CORREO", columnDefinition="VARCHAR2(80)")</xsd:appinfo>
-        </xsd:annotation>
-      </xsd:element>
       <xsd:element name="usuarion" nillable="true" type="xsd:string">
         <xsd:annotation>
-          <xsd:appinfo source="appian.jpa">@Column(name="USUARION", columnDefinition="VARCHAR2(12)")</xsd:appinfo>
+          <xsd:appinfo source="appian.jpa">@Column(name="USUARION", columnDefinition="VARCHAR2(80)")</xsd:appinfo>
         </xsd:annotation>
       </xsd:element>
     </xsd:sequence>

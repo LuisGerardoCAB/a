@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <processModelHaul>
-  <versionUuid>0003eb77-a3fa-8000-aea3-014d98014d98</versionUuid>
+  <versionUuid>0000ec71-d9c9-8000-cf9c-014d98014d98</versionUuid>
   <folderUuid>_g-0000e801-560f-8000-3039-014d98014d98_291</folderUuid>
   <roleMap>
     <role name="ADMIN_OWNER">
@@ -69,11 +69,11 @@
           <string-map>
             <pair>
               <locale country="US" lang="en" variant=""/>
-              <value><![CDATA[SCDO_generarExcelModificacionesArribosADF]]></value>
+              <value><![CDATA[="SCDO_generarExcelModificacionesArribosADF - "&today()]]></value>
             </pair>
             <pair>
               <locale country="" lang="es" variant=""/>
-              <value><![CDATA[SCDO_generarExcelModificacionesArribosADF]]></value>
+              <value><![CDATA[="SCDO_generarExcelModificacionesArribosADF - "&today()]]></value>
             </pair>
           </string-map>
         </process-name>
@@ -85,13 +85,18 @@
           <aex/>
         </deadline>
         <pm-notification-settings>
-          <custom-settings>false</custom-settings>
+          <custom-settings>true</custom-settings>
           <notify-initiator>false</notify-initiator>
           <notify-owner>false</notify-owner>
-          <usersandgroups/>
+          <usersandgroups>
+            <people>
+              <type>4096</type>
+              <stringId><![CDATA[_e-0000ec31-ac7e-8000-e698-011e94011e94_8438]]></stringId>
+            </people>
+          </usersandgroups>
           <recipients-exp/>
         </pm-notification-settings>
-        <cleanup-action>3</cleanup-action>
+        <cleanup-action>2</cleanup-action>
         <auto-archive-delay>7</auto-archive-delay>
         <auto-delete-delay>0</auto-delete-delay>
         <timeZoneId><![CDATA[America/Shiprock]]></timeZoneId>
@@ -390,7 +395,13 @@
           <on-complete-delete-previous-completed>false</on-complete-delete-previous-completed>
           <pre-triggers/>
           <post-triggers/>
-          <event-producers/>
+          <event-producers>
+            <terminate-producer index="0">
+              <persistentId>0001ec5f-6922-8000-ce22-014d98014d98</persistentId>
+              <name><![CDATA[Terminate Process_1]]></name>
+              <desc/>
+            </terminate-producer>
+          </event-producers>
           <exception-flow/>
           <label>
             <fontColor>#000000</fontColor>
@@ -421,11 +432,11 @@
             <string-map>
               <pair>
                 <locale country="US" lang="en" variant=""/>
-                <value><![CDATA[Export Data Store Entity to Excel]]></value>
+                <value><![CDATA[CDO_MX_AUX_MODIFICACIONES_RA]]></value>
               </pair>
               <pair>
                 <locale country="" lang="es" variant=""/>
-                <value/>
+                <value><![CDATA[CDO_MX_AUX_MODIFICACIONES_RA]]></value>
               </pair>
             </string-map>
           </fname>
@@ -435,11 +446,11 @@
             <string-map>
               <pair>
                 <locale country="US" lang="en" variant=""/>
-                <value><![CDATA[Export Data Store Entity to Excel]]></value>
+                <value><![CDATA[CDO_MX_AUX_MODIFICACIONES_RA]]></value>
               </pair>
               <pair>
                 <locale country="" lang="es" variant=""/>
-                <value/>
+                <value><![CDATA[CDO_MX_AUX_MODIFICACIONES_RA]]></value>
               </pair>
             </string-map>
           </display>
@@ -786,11 +797,11 @@
             <string-map>
               <pair>
                 <locale country="US" lang="en" variant=""/>
-                <value><![CDATA[Subprocess]]></value>
+                <value><![CDATA[Audit]]></value>
               </pair>
               <pair>
                 <locale country="" lang="es" variant=""/>
-                <value/>
+                <value><![CDATA[Audit]]></value>
               </pair>
             </string-map>
           </fname>
@@ -800,11 +811,11 @@
             <string-map>
               <pair>
                 <locale country="US" lang="en" variant=""/>
-                <value><![CDATA[Subprocess]]></value>
+                <value><![CDATA[Audit]]></value>
               </pair>
               <pair>
                 <locale country="" lang="es" variant=""/>
-                <value/>
+                <value><![CDATA[Audit]]></value>
               </pair>
             </string-map>
           </display>
@@ -1443,5 +1454,7 @@
     <historyInfo versionUuid="0000eaa1-6761-8000-7368-014d98014d98"/>
     <historyInfo versionUuid="0000eacb-022e-8000-80b7-014d98014d98"/>
     <historyInfo versionUuid="0003eb77-a3fa-8000-aea3-014d98014d98"/>
+    <historyInfo versionUuid="0002ec5f-6922-8000-ce22-014d98014d98"/>
+    <historyInfo versionUuid="0000ec71-d9c9-8000-cf9c-014d98014d98"/>
   </history>
 </processModelHaul>

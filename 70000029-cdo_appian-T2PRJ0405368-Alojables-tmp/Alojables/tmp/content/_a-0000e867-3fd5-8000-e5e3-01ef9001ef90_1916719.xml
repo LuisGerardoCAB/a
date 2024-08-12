@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
-    <versionUuid>_a-0000eb9b-4ec6-8000-e68b-01ef9001ef90_9647413</versionUuid>
+    <versionUuid>_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10125062</versionUuid>
     <interface>
         <name>SCDO_Documento_Ejecutivo</name>
         <uuid>_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1916719</uuid>
@@ -25,9 +25,9 @@
   ),
   local!documentacion_a_modificar_id_doc_1: if(
     a!isNotNullOrEmpty(
-      #"_a-0000e8b2-d897-8000-e5f1-01ef9001ef90_2372887"(contrato: ri!contrato, iddocumento: 1).data
+      index(#"_a-0000e8b2-d897-8000-e5f1-01ef9001ef90_2372887"(contrato: ri!contrato, iddocumento: 1),"data",null)
     ),
-    #"_a-0000e8b2-d897-8000-e5f1-01ef9001ef90_2372887"(contrato: ri!contrato, iddocumento: 1).data,
+    index(#"_a-0000e8b2-d897-8000-e5f1-01ef9001ef90_2372887"(contrato: ri!contrato, iddocumento: 1),"data", null),
     null
   ),
   local!documentacion_a_eliminar_id_doc_1: if(
@@ -43,15 +43,15 @@
     a!isNullOrEmpty(
       #"_a-0000e968-30a1-8000-e639-01ef9001ef90_4493495"(
         idsegmento: ri!ejecutivo.idsegmento,
-        pagingInfo: #"SYSTEM_SYSRULES_pagingInfo"(startIndex: 1, batchSize: - 1)
+        pagingInfo: #"SYSTEM_SYSRULES_pagingInfo"(startIndex: 1, batchSize: 500)
       )
     ),
     null,
     #"_a-0000e968-30a1-8000-e639-01ef9001ef90_4493570"(
-      idsDocumentos: #"_a-0000e968-30a1-8000-e639-01ef9001ef90_4493495"(
+      idsDocumentos: index(#"_a-0000e968-30a1-8000-e639-01ef9001ef90_4493495"(
         idsegmento: ri!ejecutivo.idsegmento,
-        pagingInfo: #"SYSTEM_SYSRULES_pagingInfo"(startIndex: 1, batchSize: - 1)
-      ).iddocumento
+        pagingInfo: #"SYSTEM_SYSRULES_pagingInfo"(startIndex: 1, batchSize: 500)
+      ),"iddocumento",null)
     ),
 
   ),
@@ -66,10 +66,10 @@
         items: local!catalogoDelSegmento,
         expression: if(
           and(
-            fv!item.documentaa = "CONTRATO",
+            index(fv!item,"documentaa",null) = "CONTRATO",
             if(
-              a!isNotNullOrEmpty(fv!item.adf),
-              tointeger(fv!item.adf) &lt;&gt; 1,
+              a!isNotNullOrEmpty(index(fv!item,"adf",null)),
+              tointeger(index(fv!item,"adf",null)) &lt;&gt; 1,
               true
             )
           ),
@@ -90,9 +90,9 @@
         items: local!catalogoDelSegmento,
         expression: if(
           and(
-            fv!item.documentaa = "CONTRATO",
-            a!isNotNullOrEmpty(fv!item.adf),
-            tointeger(fv!item.adf) = 1
+            index(fv!item,"documentaa",null) = "CONTRATO",
+            a!isNotNullOrEmpty(index(fv!item,"adf",null)),
+            tointeger(index(fv!item,"adf",null)) = 1
           ),
           fv!item,
           null
@@ -110,7 +110,7 @@
       #"SYSTEM_SYSRULES_forEach"(
         items: local!catalogoDelSegmento,
         expression: if(
-          fv!item.documentaa = "OPERACION",
+          index(fv!item,"documentaa",null) = "OPERACION",
           fv!item,
           null
         )
@@ -364,11 +364,9 @@
                           #"SYSTEM_SYSRULES_startProcess"(
                             processModel: #"_a-0000e9a7-6d42-8000-e63f-01ef9001ef90_4876425",
                             processParameters: {
-                              nombre_documento: local!nombre_documento,
-                              documento: local!documento,
+                              nombre_documento: local!nombre_documento,  
                               contrato: ri!contrato,
-                              ipremota: "",
-                              observacion: local!observacion,
+                              ipremota: "", 
                               operacion: local!deal,
                               idsDocumentosPorContrato: if(
                                 and(
@@ -393,7 +391,6 @@
                               ),
                               lista_documentacion_a_modificar_id_doc_1: local!documentacion_a_modificar_id_doc_1,
                               lista_documentacion_a_eliminar_id_doc_1: local!documentacion_a_eliminar_id_doc_1,
-                              idDocumentoAppian: local!documento,
                               ejecutivo: ri!ejecutivo,
 
                             },
@@ -418,25 +415,27 @@
                       loadingIndicator: true,
                       icon: "save",
                       disabled: {
-                        if(
-                          or(
-                            and(
-                              a!isNullOrEmpty(local!documentoADF),
-                              a!isNullOrEmpty(local!documentocontrato),
-                              a!isNullOrEmpty(local!documentoperacion)
-                            ),
-                            a!isNotNullOrEmpty(local!activo)
+                        a!match(value:  or(
+                          and(
+                            a!isNullOrEmpty(local!documentoADF),
+                            a!isNullOrEmpty(local!documentocontrato),
+                            a!isNullOrEmpty(local!documentoperacion)
                           ),
-                          true,
-                          if(
-                            or(
-                              a!isNullOrEmpty(local!documento),
-                              a!isNullOrEmpty(local!deal)
-                            ),
-                            true,
-                            false
-                          )
+                          a!isNotNullOrEmpty(local!activo)
+                        ),equals: true(),
+                        then: true(),
+                        whenTrue: or(
+                          a!isNullOrEmpty(local!documento),
+                          a!isNullOrEmpty(local!deal)
+                        ),
+                        then: true(),
+                        default: false()
+                        
                         )
+                        
+                        
+                        
+                     
                       }
                     )
                   },
@@ -600,5 +599,6 @@
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9533184"/>
         <historyInfo versionUuid="_a-0000eb9b-4ec6-8000-e68b-01ef9001ef90_9620178"/>
         <historyInfo versionUuid="_a-0000eb9b-4ec6-8000-e68b-01ef9001ef90_9647413"/>
+        <historyInfo versionUuid="_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10125062"/>
     </history>
 </contentHaul>

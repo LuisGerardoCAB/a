@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10118506</versionUuid>
+    <rule>
+        <name>SCDO_RellenarDocumentacionContratos</name>
+        <uuid>_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10115730</uuid>
+        <description>Regla de expresión que permite guardar documentacion de contratos</description>
+        <parentUuid>_a-0000e9a3-ab27-8000-e63d-01ef9001ef90_4829216</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>a!localVariables(
+  
+  local!digitalizadosODocumentacion: #"SYSTEM_SYSRULES_forEach"(
+    items: ri!contratos,
+    expression: {
+        'type!{urn:com:appian:types}scdo_documentacion'(
+          contrato: index(fv!item, "contrato", null),
+          nomdocumento: ri!nombreImagen,
+          iddocumento: ri!idDocumento,
+          tipo: "CONT",
+          fechacarga: text(now(), "yyyy-MM-dd hh:mm:ss"),
+          usuariocargo: ri!usuarioCargo,
+          cc: index(fv!item, "ccostos", null),
+          estado: if(a!isNullOrEmpty(ri!estado),"P", ri!estado),
+          cliente: index(fv!item, "nombre",null),
+    
+        )
+      
+      
+    }
+  ),
+  local!digitalizadosODocumentacion
+)</definition>
+        <namedTypedValue>
+            <name>idDocumento</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>nombreImagen</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>esdigitalizado</name>
+            <type>
+                <name>boolean</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>usuarioCargo</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>estado</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>contratos</name>
+            <type>
+                <name>V_CDO_DOCONTRATO_ULTIMO?list</name>
+                <namespace>urn:com:appian:types</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>legacy</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10118506"/>
+    </history>
+</contentHaul>

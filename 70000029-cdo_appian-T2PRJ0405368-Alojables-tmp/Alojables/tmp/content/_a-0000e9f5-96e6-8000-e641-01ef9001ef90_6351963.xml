@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
-    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9451482</versionUuid>
+    <versionUuid>_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10122419</versionUuid>
     <rule>
         <name>SCDO_obtenerCentroCostosNoRegistrados</name>
         <uuid>_a-0000e9f5-96e6-8000-e641-01ef9001ef90_6351963</uuid>
@@ -18,7 +18,7 @@
         <definition>a!localVariables(
   local!centrosNoBD: a!refreshVariable(
     value: a!flatten(
-      #"SYSTEM_SYSRULES_queryEntity_v2"(
+      index(#"SYSTEM_SYSRULES_queryEntity_v2"(
         entity: #"_a-0000e9f5-96e6-8000-e641-01ef9001ef90_6396770",
         query: #"SYSTEM_SYSRULES_query"(
           logicalexpression: {
@@ -36,14 +36,14 @@
           },
           paginginfo: #"SYSTEM_SYSRULES_pagingInfo"(
             startIndex: 1,
-            batchSize: -1,
+            batchSize: 2000,
             sort: #"SYSTEM_SYSRULES_sortInfo"(
               field: "ccostos",
               ascending: true
             )
           ),
         )
-      ).data,
+      ),"data", null)
     ),
     refreshAlways: true,
     refreshOnVarChange: ri!refreshCount,
@@ -52,7 +52,7 @@
   local!centros: #"SYSTEM_SYSRULES_forEach"(
     items: local!centrosNoBD,
     expression: 'type!{urn:com:appian:types}cdo_centroscostos'(
-      cc: fv!item.ccostos,
+      cc: index(fv!item,"ccostos", null),
       nombre: null,
       idregion: null,
       idsegmento: null,
@@ -108,5 +108,6 @@
         <historyInfo versionUuid="_a-0000ea2e-319c-8000-e644-01ef9001ef90_6793066"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9386361"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9451482"/>
+        <historyInfo versionUuid="_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10122419"/>
     </history>
 </contentHaul>

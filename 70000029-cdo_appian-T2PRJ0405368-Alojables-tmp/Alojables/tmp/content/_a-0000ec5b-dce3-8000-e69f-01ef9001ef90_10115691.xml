@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10141681</versionUuid>
+    <rule>
+        <name>SCDO_validarObtenerContratosExcel</name>
+        <uuid>_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10115691</uuid>
+        <description>Regla de expresión para obtener los datos de los contratos dados un excel y el iddocumento
+</description>
+        <parentUuid>_a-0000e9a3-ab27-8000-e63d-01ef9001ef90_4829216</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>a!localVariables(
+  local!totalCount: index(readexcelsheetpaging(
+    excelDocument: ri!documento,
+    sheetNumber: 0,
+    pagingInfo: #"SYSTEM_SYSRULES_pagingInfo"(1, 0),
+    numberOfColumns: 0
+  ), "totalCount", null),
+  local!informacion: index(readexcelsheetpaging(
+    excelDocument: ri!documento,
+    sheetNumber: 0,
+    pagingInfo: #"SYSTEM_SYSRULES_pagingInfo"(1, local!totalCount),
+    numberOfColumns: 0
+  ),"data", null),
+
+  
+  local!contratos: reject(
+    fn!isnull,
+    a!flatten(
+      #"SYSTEM_SYSRULES_forEach"(
+        items: local!informacion,
+        expression: {
+          a!match(
+            value: fv!index = 1,
+            equals: true, 
+            then: null(),
+            whenTrue: a!isNullOrEmpty(fv!item.values[ri!posExcelContrato]),
+            then: null(),
+            default:  fv!item.values[ri!posExcelContrato]
+          )
+        }
+      )
+    ),
+  ),
+  local!reportes: reject(
+      fn!isnull,
+      a!flatten(
+        #"SYSTEM_SYSRULES_forEach"(
+          items: enumerate(local!totalCount - 1),
+          expression: {
+            if(
+              a!isNullOrEmpty(ri!segmento),
+              if(
+                index(
+                  #"1d1af6c3-8696-4760-9eb4-03d0e7ff293b"(contrato: local!contratos[fv!index], iddocumento: ri!iddocumento, pagingInfo: 
+                  #"SYSTEM_SYSRULES_pagingInfo"(startIndex: 1, batchSize: 0)), "totalCount", null)&lt;&gt;0,
+                  null,
+                index(#"1d1af6c3-8696-4760-9eb4-03d0e7ff293b"(contrato: local!contratos[fv!index], pagingInfo: 
+                #"SYSTEM_SYSRULES_pagingInfo"(startIndex: 1, batchSize: 1)), "data", null),
+              
+              ),
+              reject(
+                fn!isnull,
+                a!flatten(
+                  #"SYSTEM_SYSRULES_forEach"(
+                    items:   #"1d1af6c3-8696-4760-9eb4-03d0e7ff293b"(contrato: local!contratos[fv!index], iddocumento: ri!iddocumento, pagingInfo: 
+                    #"SYSTEM_SYSRULES_pagingInfo"(startIndex: 1, batchSize: 1)),
+                    expression: {
+                      if(
+                        a!isNullOrEmpty(
+                          index(#"4abb2c14-ac25-4b4a-a0f6-a11f52071c0b"(usuarioopics: index(fv!item,"usuariocargo",null)),"data", null)),
+                        null,
+                        if(
+                          tointeger(
+                            index(#"4abb2c14-ac25-4b4a-a0f6-a11f52071c0b"(usuarioopics: index(fv!item,"usuariocargo",null)),"data","idsegmento", null)) = ri!segmento,
+                          fv!item,
+                          null
+                        )
+                      )
+                    }
+                  )
+                )
+              )
+            )
+          }
+        ),
+      )
+    ),
+    
+ 
+  if(a!isNotNullOrEmpty(local!reportes),
+  union(local!reportes,local!reportes),
+  local!reportes
+  )
+ 
+  
+
+  
+)</definition>
+        <namedTypedValue>
+            <name>documento</name>
+            <type>
+                <name>CollaborationDocument</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>posExcelContrato</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>segmento</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>iddocumento</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>legacy</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10116705"/>
+        <historyInfo versionUuid="_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10141681"/>
+    </history>
+</contentHaul>

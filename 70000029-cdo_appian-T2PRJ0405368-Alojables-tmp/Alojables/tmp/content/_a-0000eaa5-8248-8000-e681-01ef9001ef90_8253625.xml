@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
-    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9386966</versionUuid>
+    <versionUuid>_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10120096</versionUuid>
     <rule>
         <name>SCDO_LENAR_DATOS_PARA_INSERTAR</name>
         <uuid>_a-0000eaa5-8248-8000-e681-01ef9001ef90_8253625</uuid>
@@ -16,29 +16,25 @@
             <unlogged>false</unlogged>
         </visibility>
         <definition>a!localVariables(
-  local!datos:#"SYSTEM_SYSRULES_forEach"(
+  local!datos: #"SYSTEM_SYSRULES_forEach"(
     items: ri!ids_documento,
     expression: 'type!{urn:com:appian:types}scdo_documentacion'(
-      contrato:ri!contrato,
-      nomdocumento:ri!nomdocumento,/*document(ri!documento,"name")ri!nomdocumento*/
-      /*concat(*/
-        /*ri!contrato,*/
-        /*"_",*/
-        /*ri!usuario,*/
-        /*"_idDocumento",*/
-        /*"_",*/
-        /*fv!item,*/
-        /*"_",*/
-        /*text(now(), "yyyy-MM-dd hh:mm:ss")*/
-      /*),*/
-      /*concat(ri!contrato,"_",ri!usuario,"_",text(now(), "yyyy-MM-dd hh:mm:ss")),*/
+      contrato: ri!contrato,
+      nomdocumento: ri!nomdocumento,
       iddocumento: fv!item,
       tipo: "CONT",
       fechacarga: text(now(), "yyyy-MM-dd hh:mm:ss"),
       usuariocargo: ri!usuario,
-      cc:if(a!isNotNullOrEmpty(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2152641"(usuarioOpic :ri!usuario).data),
-      tostring(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2152641"(usuarioOpic :ri!usuario).data.idsegmento),null),
-      estado:"P",
+      cc: if(
+        a!isNotNullOrEmpty(
+          index(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2152641"(usuarioOpic: ri!usuario),"data",null),
+        ),
+        tostring(
+          index(#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2152641"(usuarioOpic: ri!usuario),"data","idsegmento",null)
+        ),
+        null
+      ),
+      estado: "P",
       
     )
   ),
@@ -58,13 +54,6 @@
                 <namespace>http://www.w3.org/2001/XMLSchema</namespace>
             </type>
             <value/>
-        </namedTypedValue>
-        <namedTypedValue>
-            <name>documento</name>
-            <type>
-                <name>CollaborationDocument</name>
-                <namespace>http://www.appian.com/ae/types/2009</namespace>
-            </type>
         </namedTypedValue>
         <namedTypedValue>
             <name>usuario</name>
@@ -115,5 +104,6 @@
         <historyInfo versionUuid="_a-0000eaa5-8248-8000-e681-01ef9001ef90_8271659"/>
         <historyInfo versionUuid="_a-0000eabf-35e2-8000-e683-01ef9001ef90_8427112"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9386966"/>
+        <historyInfo versionUuid="_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10120096"/>
     </history>
 </contentHaul>

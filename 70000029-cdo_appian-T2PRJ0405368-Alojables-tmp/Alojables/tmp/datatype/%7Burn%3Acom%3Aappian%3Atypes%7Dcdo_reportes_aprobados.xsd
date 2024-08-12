@@ -6,11 +6,12 @@
       <xsd:appinfo source="appian.jpa">@Table(name="CDO_MX_AUX_REPORTES_APROBADOS")</xsd:appinfo>
       <xsd:appinfo source="http://www.appian.com/ae/types/2009">
         <ns2:Metadata xmlns:ns2="http://www.appian.com/ae/types/2009">
-          <ns2:versionUuid>0000eb1c-9cf2-8000-9238-014d98014d98</ns2:versionUuid>
+          <ns2:versionUuid>0000ec70-616e-8000-cf21-014d98014d98</ns2:versionUuid>
           <ns2:history>
             <ns2:historyInfo versionUuid="0000e868-4c7e-8000-4a7c-014d98014d98"/>
             <ns2:historyInfo versionUuid="0000ea34-1d03-8000-31cf-014d98014d98"/>
             <ns2:historyInfo versionUuid="0000eb1c-9cf2-8000-9238-014d98014d98"/>
+            <ns2:historyInfo versionUuid="0000ec70-616e-8000-cf21-014d98014d98"/>
           </ns2:history>
         </ns2:Metadata>
       </xsd:appinfo>
@@ -19,7 +20,7 @@
     <xsd:sequence>
       <xsd:element name="idreporte" nillable="true" type="xsd:int">
         <xsd:annotation>
-          <xsd:appinfo source="appian.jpa">@Id @Column(name="IDREPORTE", nullable=false, unique=false, columnDefinition="NUMBER") </xsd:appinfo>
+          <xsd:appinfo source="appian.jpa">@Id @Column(name="IDREPORTE", nullable=false, unique=false, columnDefinition="NUMBER")</xsd:appinfo>
         </xsd:annotation>
       </xsd:element>
       <xsd:element name="mercado" nillable="true" type="xsd:string">
@@ -119,7 +120,7 @@
       </xsd:element>
       <xsd:element name="usuarioaprobo" nillable="true" type="xsd:string">
         <xsd:annotation>
-          <xsd:appinfo source="appian.jpa">@Column(name="USUARIOAPROBO", columnDefinition="VARCHAR2(16)")</xsd:appinfo>
+          <xsd:appinfo source="appian.jpa">@Column(name="USUARIOAPROBO", columnDefinition="VARCHAR2(80)")</xsd:appinfo>
         </xsd:annotation>
       </xsd:element>
       <xsd:element name="fechaaprobacion" nillable="true" type="xsd:string">

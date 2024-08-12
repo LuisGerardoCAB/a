@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
-    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9504571</versionUuid>
+    <versionUuid>_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10122063</versionUuid>
     <rule>
         <name>SCDO_DocumentoFiltrodocumento</name>
         <uuid>_a-0000e8d8-9b98-8000-e605-01ef9001ef90_2694147</uuid>
@@ -15,55 +15,55 @@
             <system>false</system>
             <unlogged>false</unlogged>
         </visibility>
-        <definition>#"_a-0000e8b9-0989-8000-e5fd-01ef9001ef90_2420859"(
-  dataStoreEntity_dt: #"_a-0000e8d8-9b98-8000-e605-01ef9001ef90_2694251",
-  selectionColumn_txt: ri!selectionColumn_txt,
-  queryFilter_any: {
-    #"SYSTEM_SYSRULES_queryFilter"(
-      field: "iddocumento",
-      operator: "=",
-      value: ri!iddocumento,
-      applyWhen: isnull(ri!iddocumento) &lt;&gt; true
+        <definition>#"SYSTEM_SYSRULES_queryEntity_v2"(
+  entity: #"_a-0000e8d8-9b98-8000-e605-01ef9001ef90_2694251",
+  query: #"SYSTEM_SYSRULES_query"(
+    logicalExpression: #"SYSTEM_SYSRULES_queryLogicalExpression"(
+      operator: "AND",
+      filters: {
+        #"SYSTEM_SYSRULES_queryFilter"(
+          field: "iddocumento",
+          operator: "=",
+          value: ri!iddocumento,
+          applyWhen: isnull(ri!iddocumento) &lt;&gt; true
+        ),
+        #"SYSTEM_SYSRULES_queryFilter"(
+          field: "documento",
+          operator: "=",
+          value: ri!documento,
+          applyWhen: isnull(ri!documento) &lt;&gt; true
+        ),
+        #"SYSTEM_SYSRULES_queryFilter"(
+          field: "documentaa",
+          operator: "=",
+          value: ri!documentaa,
+          applyWhen: isnull(ri!documentaa) &lt;&gt; true
+        ),
+
+        #"SYSTEM_SYSRULES_queryFilter"(
+          field: "idsegmento",
+          operator: "=",
+          value: ri!idsegmento,
+          applyWhen: isnull(ri!idsegmento) &lt;&gt; true
+        ),
+        #"SYSTEM_SYSRULES_queryFilter"(
+          field: "orden",
+          operator: "=",
+          value: ri!orden,
+          applyWhen: isnull(ri!orden) &lt;&gt; true
+        ),
+        #"SYSTEM_SYSRULES_queryFilter"(
+          field: "descripcion",
+          operator: "=",
+          value: ri!descripcion,
+          applyWhen: isnull(ri!descripcion) &lt;&gt; true
+        )
+      }
     ),
-    #"SYSTEM_SYSRULES_queryFilter"(
-      field: "documento",
-      operator: "=",
-      value: ri!documento,
-      applyWhen: isnull(ri!documento) &lt;&gt; true
-    ),
-    #"SYSTEM_SYSRULES_queryFilter"(
-      field: "documentaa",
-      operator: "=",
-      value: ri!documentaa,
-      applyWhen: isnull(ri!documentaa) &lt;&gt; true
-    ),
-    
-    #"SYSTEM_SYSRULES_queryFilter"(
-      field: "idsegmento",
-      operator: "=",
-      value: ri!idsegmento,
-      applyWhen: isnull(ri!idsegmento) &lt;&gt; true
-    ),
-    #"SYSTEM_SYSRULES_queryFilter"(
-      field: "orden",
-      operator: "=",
-      value: ri!orden,
-      applyWhen: isnull(ri!orden) &lt;&gt; true
-    ),
-    #"SYSTEM_SYSRULES_queryFilter"(
-      field: "descripcion",
-      operator: "=",
-      value: ri!descripcion,
-      applyWhen: isnull(ri!descripcion) &lt;&gt; true
-    )
-  },
-  pagingInfo_pi: ri!paginInfo,
-  ignoreFiltersWithEmptyValues_bool: true,
-  fetchTotalCount_bool: true()
+    pagingInfo: if(a!isNullOrEmpty(ri!paginInfo), #"SYSTEM_SYSRULES_pagingInfo"(startIndex: 1, batchSize: 500), ri!paginInfo)    
+  ),
+  fetchTotalCount: true()
 )
-
-
-
 </definition>
         <namedTypedValue>
             <name>paginInfo</name>
@@ -159,5 +159,6 @@
         <historyInfo versionUuid="_a-0000e9a3-ab27-8000-e63d-01ef9001ef90_4829084"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9386635"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9504571"/>
+        <historyInfo versionUuid="_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10122063"/>
     </history>
 </contentHaul>

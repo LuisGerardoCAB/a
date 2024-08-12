@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
-    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9505793</versionUuid>
+    <versionUuid>_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10123498</versionUuid>
     <rule>
         <name>SCDO_getUsuariosOPByFilters</name>
         <uuid>_a-0000e878-569a-8000-e5e4-01ef9001ef90_2152641</uuid>
@@ -15,9 +15,12 @@
             <system>false</system>
             <unlogged>false</unlogged>
         </visibility>
-        <definition>#"_a-0000e8b9-0989-8000-e5fd-01ef9001ef90_2420859"(
-  dataStoreEntity_dt: #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2114138",
-  queryFilter_any: {
+        <definition> #"SYSTEM_SYSRULES_queryEntity_v2"(
+   entity: #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_2114138",
+   query: #"SYSTEM_SYSRULES_query"(
+     logicalExpression: #"SYSTEM_SYSRULES_queryLogicalExpression"(
+       operator: "AND",
+       filters: {
     #"SYSTEM_SYSRULES_queryFilter"(
       field: "idusuarioopics",
       operator: "=",
@@ -53,21 +56,20 @@
       applyWhen: isnull(ri!Extra2) &lt;&gt; true
     ),
   },
-  pagingInfo_pi: if(
-    not(isnull(ri!paginInfo)),
-    ri!paginInfo,
-    #"SYSTEM_SYSRULES_pagingInfo"(
-      startIndex: 1,
-      batchSize: -1,
-      sort: #"SYSTEM_SYSRULES_sortInfo"(field: "usuarioopics", ascending: true())
-    )
-  ),
-  
-  selectionColumn_txt: ri!seleccionColumnas,   
-  /*pagingInfo_pi: ri!paginInfo,*/
-  ignoreFiltersWithEmptyValues_bool:true,
-  fetchTotalCount_bool: true
-)
+  ignoreFiltersWithEmptyValues: true()
+     ),
+     pagingInfo: if(
+       a!isNotNullOrEmpty(ri!paginInfo),
+       ri!paginInfo,
+       #"SYSTEM_SYSRULES_pagingInfo"(
+         startIndex: 1,
+         batchSize: 15000,
+         sort: #"SYSTEM_SYSRULES_sortInfo"(field: "usuarioopics", ascending: true())
+       )
+     )
+
+   )
+ )
 </definition>
         <namedTypedValue>
             <name>idUsuarioOpic</name>
@@ -156,5 +158,6 @@
         <historyInfo versionUuid="_a-0000e9f5-96e6-8000-e641-01ef9001ef90_6089447"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9385889"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9505793"/>
+        <historyInfo versionUuid="_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10123498"/>
     </history>
 </contentHaul>

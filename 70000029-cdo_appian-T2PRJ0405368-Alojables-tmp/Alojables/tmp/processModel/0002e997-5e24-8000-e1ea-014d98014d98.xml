@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <processModelHaul>
-  <versionUuid>0001eb77-a3f7-8000-aea0-014d98014d98</versionUuid>
+  <versionUuid>0000ec70-962c-8000-cf40-014d98014d98</versionUuid>
   <folderUuid>_g-0000e801-560f-8000-3039-014d98014d98_291</folderUuid>
   <roleMap>
     <role name="ADMIN_OWNER">
@@ -46,12 +46,20 @@
               <locale country="US" lang="en" variant=""/>
               <value><![CDATA[SCDO_Asignar_Segmento]]></value>
             </pair>
+            <pair>
+              <locale country="" lang="es" variant=""/>
+              <value><![CDATA[SCDO_Asignar_Segmento]]></value>
+            </pair>
           </string-map>
         </name>
         <desc>
           <string-map>
             <pair>
               <locale country="US" lang="en" variant=""/>
+              <value><![CDATA[Se asigna segmento a usuario dentro de interfaz]]></value>
+            </pair>
+            <pair>
+              <locale country="" lang="es" variant=""/>
               <value><![CDATA[Se asigna segmento a usuario dentro de interfaz]]></value>
             </pair>
           </string-map>
@@ -61,7 +69,11 @@
           <string-map>
             <pair>
               <locale country="US" lang="en" variant=""/>
-              <value><![CDATA[SCDO_Asignar_Segmento]]></value>
+              <value><![CDATA[=now() &" SCDO_Asignar_Segmento"]]></value>
+            </pair>
+            <pair>
+              <locale country="" lang="es" variant=""/>
+              <value><![CDATA[=now() &" SCDO_Asignar_Segmento"]]></value>
             </pair>
           </string-map>
         </process-name>
@@ -73,13 +85,18 @@
           <aex/>
         </deadline>
         <pm-notification-settings>
-          <custom-settings>false</custom-settings>
+          <custom-settings>true</custom-settings>
           <notify-initiator>false</notify-initiator>
           <notify-owner>false</notify-owner>
-          <usersandgroups/>
+          <usersandgroups>
+            <people>
+              <type>4096</type>
+              <stringId><![CDATA[_e-0000ec31-ac7e-8000-e698-011e94011e94_8438]]></stringId>
+            </people>
+          </usersandgroups>
           <recipients-exp/>
         </pm-notification-settings>
-        <cleanup-action>3</cleanup-action>
+        <cleanup-action>2</cleanup-action>
         <auto-archive-delay>7</auto-archive-delay>
         <auto-delete-delay>0</auto-delete-delay>
         <timeZoneId><![CDATA[America/Mexico_City]]></timeZoneId>
@@ -95,17 +112,25 @@
           <fname>
             <string-map>
               <pair>
-                <locale/>
+                <locale country="US" lang="en" variant=""/>
+                <value><![CDATA[Start Node]]></value>
+              </pair>
+              <pair>
+                <locale country="" lang="es" variant=""/>
                 <value><![CDATA[Start Node]]></value>
               </pair>
             </string-map>
           </fname>
-          <x>100</x>
-          <y>275</y>
+          <x>112</x>
+          <y>280</y>
           <display>
             <string-map>
               <pair>
-                <locale/>
+                <locale country="US" lang="en" variant=""/>
+                <value><![CDATA[Start Node]]></value>
+              </pair>
+              <pair>
+                <locale country="" lang="es" variant=""/>
                 <value><![CDATA[Start Node]]></value>
               </pair>
             </string-map>
@@ -113,7 +138,11 @@
           <desc>
             <string-map>
               <pair>
-                <locale/>
+                <locale country="US" lang="en" variant=""/>
+                <value/>
+              </pair>
+              <pair>
+                <locale country="" lang="es" variant=""/>
                 <value/>
               </pair>
             </string-map>
@@ -201,17 +230,25 @@
           <fname>
             <string-map>
               <pair>
-                <locale/>
+                <locale country="US" lang="en" variant=""/>
+                <value><![CDATA[End Node]]></value>
+              </pair>
+              <pair>
+                <locale country="" lang="es" variant=""/>
                 <value><![CDATA[End Node]]></value>
               </pair>
             </string-map>
           </fname>
-          <x>800</x>
-          <y>275</y>
+          <x>812</x>
+          <y>280</y>
           <display>
             <string-map>
               <pair>
-                <locale/>
+                <locale country="US" lang="en" variant=""/>
+                <value><![CDATA[End Node]]></value>
+              </pair>
+              <pair>
+                <locale country="" lang="es" variant=""/>
                 <value><![CDATA[End Node]]></value>
               </pair>
             </string-map>
@@ -219,7 +256,11 @@
           <desc>
             <string-map>
               <pair>
-                <locale/>
+                <locale country="US" lang="en" variant=""/>
+                <value/>
+              </pair>
+              <pair>
+                <locale country="" lang="es" variant=""/>
                 <value/>
               </pair>
             </string-map>
@@ -262,7 +303,7 @@
                 <a:value xmlns="" xsi:type="xsd:int">1</a:value>
                 <a:local-id>5</a:local-id>
                 <a:expr/>
-                <a:required>1</a:required>
+                <a:required>0</a:required>
                 <a:editable>1</a:editable>
                 <a:assign-to-pv/>
                 <a:input-to-activity-class>false</a:input-to-activity-class>
@@ -347,7 +388,13 @@
           <on-complete-delete-previous-completed>false</on-complete-delete-previous-completed>
           <pre-triggers/>
           <post-triggers/>
-          <event-producers/>
+          <event-producers>
+            <terminate-producer index="0">
+              <persistentId>0001ec70-962b-8000-cf3f-014d98014d98</persistentId>
+              <name><![CDATA[Terminate Process_1]]></name>
+              <desc/>
+            </terminate-producer>
+          </event-producers>
           <exception-flow/>
           <label>
             <fontColor>#000000</fontColor>
@@ -375,7 +422,34 @@
       <attachments/>
       <notes/>
       <priority id="1"/>
-      <form-map/>
+      <form-map>
+        <pair>
+          <locale country="" lang="es" variant=""/>
+          <form-config>
+            <form>
+              <type>3</type>
+              <enabled>false</enabled>
+              <dynamic-form>
+                <form-elements/>
+              </dynamic-form>
+              <hiddenSections>16</hiddenSections>
+            </form>
+          </form-config>
+        </pair>
+        <pair>
+          <locale country="US" lang="en" variant=""/>
+          <form-config>
+            <form>
+              <type>3</type>
+              <enabled>true</enabled>
+              <dynamic-form>
+                <form-elements/>
+              </dynamic-form>
+              <hiddenSections>16</hiddenSections>
+            </form>
+          </form-config>
+        </pair>
+      </form-map>
       <isPublic>false</isPublic>
     </pm>
   </process_model_port>
@@ -383,5 +457,7 @@
   <history>
     <historyInfo versionUuid="0001e997-5e54-8000-e1ec-014d98014d98"/>
     <historyInfo versionUuid="0001eb77-a3f7-8000-aea0-014d98014d98"/>
+    <historyInfo versionUuid="0000ec64-8d23-8000-ce8b-014d98014d98"/>
+    <historyInfo versionUuid="0000ec70-962c-8000-cf40-014d98014d98"/>
   </history>
 </processModelHaul>

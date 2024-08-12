@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <processModelHaul>
-  <versionUuid>0001eba3-4db9-8000-b76b-014d98014d98</versionUuid>
+  <versionUuid>0000ec71-ec44-8000-cfd6-014d98014d98</versionUuid>
   <folderUuid>_g-0000e801-560f-8000-3039-014d98014d98_291</folderUuid>
   <roleMap>
     <role name="ADMIN_OWNER">
@@ -69,11 +69,11 @@
           <string-map>
             <pair>
               <locale country="US" lang="en" variant=""/>
-              <value><![CDATA[SCDO_exportarExcelNoDocumental]]></value>
+              <value><![CDATA[=concat("SCDO_exportarExcelNoDocumental", now())]]></value>
             </pair>
             <pair>
               <locale country="" lang="es" variant=""/>
-              <value><![CDATA[SCDO_exportarExcelNoDocumental]]></value>
+              <value><![CDATA[=concat("SCDO_exportarExcelNoDocumental", now())]]></value>
             </pair>
           </string-map>
         </process-name>
@@ -85,19 +85,30 @@
           <aex/>
         </deadline>
         <pm-notification-settings>
-          <custom-settings>false</custom-settings>
+          <custom-settings>true</custom-settings>
           <notify-initiator>false</notify-initiator>
           <notify-owner>false</notify-owner>
-          <usersandgroups/>
+          <usersandgroups>
+            <people>
+              <type>4096</type>
+              <stringId><![CDATA[_e-0000ec31-ac7e-8000-e698-011e94011e94_8438]]></stringId>
+            </people>
+          </usersandgroups>
           <recipients-exp/>
         </pm-notification-settings>
-        <cleanup-action>3</cleanup-action>
+        <cleanup-action>2</cleanup-action>
         <auto-archive-delay>7</auto-archive-delay>
-        <auto-delete-delay>0</auto-delete-delay>
+        <auto-delete-delay>1</auto-delete-delay>
         <timeZoneId><![CDATA[America/Mexico_City]]></timeZoneId>
         <useProcessInitiatorTimeZone>true</useProcessInitiatorTimeZone>
       </meta>
       <pvs>
+        <pv name="Entidad">
+          <a:value xsi:nil="true" xsi:type="a:DataStoreEntity"/>
+          <parameter>false</parameter>
+          <required>false</required>
+          <hidden>false</hidden>
+        </pv>
         <pv name="es_aprobado">
           <a:value xsi:nil="true" xsi:type="xsd:boolean"/>
           <parameter>true</parameter>
@@ -153,8 +164,8 @@
               </pair>
             </string-map>
           </fname>
-          <x>168</x>
-          <y>168</y>
+          <x>140</x>
+          <y>224</y>
           <display>
             <string-map>
               <pair>
@@ -200,11 +211,11 @@
           <escalations/>
           <connections>
             <connection>
-              <guiId>1</guiId>
-              <to>3</to>
+              <guiId>8</guiId>
+              <to>6</to>
               <toObjectType>ap.gui.Node</toObjectType>
-              <fromAnchor/>
-              <toAnchor/>
+              <fromAnchor>1</fromAnchor>
+              <toAnchor>3</toAnchor>
               <showArrowhead>true</showArrowhead>
               <flowLabel/>
               <label>
@@ -271,8 +282,8 @@
               </pair>
             </string-map>
           </fname>
-          <x>868</x>
-          <y>168</y>
+          <x>1064</x>
+          <y>224</y>
           <display>
             <string-map>
               <pair>
@@ -420,6 +431,138 @@
           <on-complete-delete-previous-completed>false</on-complete-delete-previous-completed>
           <pre-triggers/>
           <post-triggers/>
+          <event-producers>
+            <terminate-producer index="0">
+              <persistentId>0001ec56-69bc-8000-cd4a-014d98014d98</persistentId>
+              <name><![CDATA[Terminate Process_1]]></name>
+              <desc/>
+            </terminate-producer>
+          </event-producers>
+          <exception-flow/>
+          <label>
+            <fontColor>#000000</fontColor>
+            <fontFamily>Arial, Helvetica, Sans-Serif</fontFamily>
+            <fontSize>12</fontSize>
+            <bold>false</bold>
+            <italics>false</italics>
+            <underline>false</underline>
+          </label>
+          <deadline>
+            <enabled>false</enabled>
+            <type>0</type>
+            <units>0</units>
+            <rex/>
+            <aex/>
+          </deadline>
+          <allowsBack>false</allowsBack>
+          <refreshDefaultValues>false</refreshDefaultValues>
+          <on-complete-keep-form-data>false</on-complete-keep-form-data>
+          <skipNotification>false</skipNotification>
+        </node>
+        <node uuid="0001ec57-edd0-8000-cd83-014d98014d98">
+          <guiId>6</guiId>
+          <owner/>
+          <icon id="68"/>
+          <picon id="69"/>
+          <fname>
+            <string-map>
+              <pair>
+                <locale country="US" lang="en" variant=""/>
+                <value><![CDATA[set type of report]]></value>
+              </pair>
+              <pair>
+                <locale country="" lang="es" variant=""/>
+                <value><![CDATA[Tipo de Reporte]]></value>
+              </pair>
+            </string-map>
+          </fname>
+          <x>392</x>
+          <y>224</y>
+          <display>
+            <string-map>
+              <pair>
+                <locale country="US" lang="en" variant=""/>
+                <value><![CDATA[set type of report]]></value>
+              </pair>
+              <pair>
+                <locale country="" lang="es" variant=""/>
+                <value><![CDATA[Tipo de Reporte]]></value>
+              </pair>
+            </string-map>
+          </display>
+          <desc>
+            <string-map>
+              <pair>
+                <locale country="US" lang="en" variant=""/>
+                <value/>
+              </pair>
+              <pair>
+                <locale country="" lang="es" variant=""/>
+                <value/>
+              </pair>
+            </string-map>
+          </desc>
+          <notify>false</notify>
+          <confirmation-url/>
+          <lane>0</lane>
+          <overrideLaneAssignment>false</overrideLaneAssignment>
+          <ac>
+            <local-id>internal.16</local-id>
+            <name><![CDATA[Unattended Multiple Questions]]></name>
+            <acps/>
+            <custom-params/>
+            <output-exprs>
+              <el typeFlag="0"><![CDATA[Entidad:a!match(value: pv!es_aprobado,
+equals: true,
+then: #"_a-0000e8d8-9b98-8000-e605-01ef9001ef90_2735521",
+equals: false,
+then: #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_1932909",
+default: #"_a-0000e878-569a-8000-e5e4-01ef9001ef90_1932909"
+)]]></el>
+            </output-exprs>
+            <requires-user-interaction>true</requires-user-interaction>
+            <run-as>
+              <performer id="0"/>
+            </run-as>
+            <form-map/>
+            <helper-class/>
+          </ac>
+          <multiple-instance/>
+          <escalations/>
+          <connections>
+            <connection>
+              <guiId>1</guiId>
+              <to>2</to>
+              <toObjectType>ap.gui.Node</toObjectType>
+              <fromAnchor/>
+              <toAnchor/>
+              <showArrowhead>true</showArrowhead>
+              <flowLabel/>
+              <label>
+                <fontColor>#000000</fontColor>
+                <fontFamily>Arial, Helvetica, Sans-Serif</fontFamily>
+                <fontSize>12</fontSize>
+                <bold>false</bold>
+                <italics>false</italics>
+                <underline>false</underline>
+              </label>
+              <associations/>
+              <chained>true</chained>
+              <overridesAssignment>true</overridesAssignment>
+              <synchronizeData>false</synchronizeData>
+            </connection>
+          </connections>
+          <associations/>
+          <target-completion>5.0</target-completion>
+          <target-lag>1.0</target-lag>
+          <attachments/>
+          <notes/>
+          <lingering>false</lingering>
+          <on-create-ignore-if-active>false</on-create-ignore-if-active>
+          <on-create-delete-previous-active>false</on-create-delete-previous-active>
+          <on-complete-delete-previous-completed>false</on-complete-delete-previous-completed>
+          <pre-triggers/>
+          <post-triggers/>
           <event-producers/>
           <exception-flow/>
           <label>
@@ -442,8 +585,8 @@
           <on-complete-keep-form-data>false</on-complete-keep-form-data>
           <skipNotification>false</skipNotification>
         </node>
-        <node uuid="0001e9da-795d-8000-0525-014d98014d98">
-          <guiId>3</guiId>
+        <node uuid="0002ec5b-55af-8000-cd8b-014d98014d98">
+          <guiId>2</guiId>
           <owner/>
           <icon id="58"/>
           <picon id="59"/>
@@ -451,25 +594,25 @@
             <string-map>
               <pair>
                 <locale country="US" lang="en" variant=""/>
-                <value><![CDATA[XOR]]></value>
+                <value><![CDATA[Type Reporte?]]></value>
               </pair>
               <pair>
                 <locale country="" lang="es" variant=""/>
-                <value><![CDATA[es aprobado?]]></value>
+                <value><![CDATA[Tipo Reporte?]]></value>
               </pair>
             </string-map>
           </fname>
-          <x>336</x>
-          <y>168</y>
+          <x>532</x>
+          <y>224</y>
           <display>
             <string-map>
               <pair>
                 <locale country="US" lang="en" variant=""/>
-                <value><![CDATA[XOR]]></value>
+                <value><![CDATA[Type Reporte?]]></value>
               </pair>
               <pair>
                 <locale country="" lang="es" variant=""/>
-                <value><![CDATA[es aprobado?]]></value>
+                <value><![CDATA[Tipo Reporte?]]></value>
               </pair>
             </string-map>
           </display>
@@ -494,7 +637,7 @@
             <name><![CDATA[XOR]]></name>
             <acps>
               <acp name="defaultNode">
-                <a:value xmlns="" xsi:type="xsd:int">2</a:value>
+                <a:value xmlns="" xsi:type="xsd:int">3</a:value>
                 <a:local-id>0</a:local-id>
                 <a:expr/>
                 <a:required>1</a:required>
@@ -515,7 +658,7 @@
                           <a:acp name="expression">
                             <a:value xsi:nil="true" xsi:type="xsd:boolean"/>
                             <a:local-id>3</a:local-id>
-                            <a:expr><![CDATA[=if(pv!es_aprobado, true, false)]]></a:expr>
+                            <a:expr><![CDATA[=pv!es_aprobado]]></a:expr>
                             <a:required>0</a:required>
                             <a:editable>1</a:editable>
                             <a:assign-to-pv/>
@@ -526,7 +669,7 @@
                             <a:customDisplayReference/>
                           </a:acp>
                           <a:acp name="node">
-                            <a:value xsi:type="xsd:int">7</a:value>
+                            <a:value xsi:type="xsd:int">8</a:value>
                             <a:local-id>4</a:local-id>
                             <a:expr/>
                             <a:required>0</a:required>
@@ -539,7 +682,7 @@
                             <a:customDisplayReference/>
                           </a:acp>
                           <a:acp name="label">
-                            <a:value xsi:type="xsd:string">exportar reporte aprobado</a:value>
+                            <a:value xsi:nil="true" xsi:type="xsd:string"/>
                             <a:local-id>5</a:local-id>
                             <a:expr/>
                             <a:required>0</a:required>
@@ -617,13 +760,13 @@
           <escalations/>
           <connections>
             <connection>
-              <guiId>3</guiId>
-              <to>2</to>
+              <guiId>2</guiId>
+              <to>8</to>
               <toObjectType>ap.gui.Node</toObjectType>
               <fromAnchor/>
               <toAnchor/>
               <showArrowhead>true</showArrowhead>
-              <flowLabel><![CDATA[exportar reporte]]></flowLabel>
+              <flowLabel/>
               <label>
                 <fontColor>#000000</fontColor>
                 <fontFamily>Arial, Helvetica, Sans-Serif</fontFamily>
@@ -638,13 +781,13 @@
               <synchronizeData>false</synchronizeData>
             </connection>
             <connection>
-              <guiId>8</guiId>
-              <to>7</to>
+              <guiId>4</guiId>
+              <to>3</to>
               <toObjectType>ap.gui.Node</toObjectType>
               <fromAnchor>0</fromAnchor>
               <toAnchor>3</toAnchor>
               <showArrowhead>true</showArrowhead>
-              <flowLabel><![CDATA[exportar reporte aprobado]]></flowLabel>
+              <flowLabel/>
               <label>
                 <fontColor>#000000</fontColor>
                 <fontFamily>Arial, Helvetica, Sans-Serif</fontFamily>
@@ -692,34 +835,34 @@
           <on-complete-keep-form-data>false</on-complete-keep-form-data>
           <skipNotification>false</skipNotification>
         </node>
-        <node uuid="0001eace-332e-8000-80e3-014d98014d98">
-          <guiId>4</guiId>
+        <node uuid="0001ec5b-55af-8000-cd8b-014d98014d98">
+          <guiId>3</guiId>
           <owner/>
-          <icon id="60"/>
-          <picon id="61"/>
+          <icon id="86"/>
+          <picon id="86"/>
           <fname>
             <string-map>
               <pair>
                 <locale country="US" lang="en" variant=""/>
-                <value><![CDATA[Subprocess]]></value>
+                <value><![CDATA[XLSX REPORTES]]></value>
               </pair>
               <pair>
                 <locale country="" lang="es" variant=""/>
-                <value><![CDATA[pistas RA]]></value>
+                <value><![CDATA[XLSX REPORTES]]></value>
               </pair>
             </string-map>
           </fname>
-          <x>756</x>
-          <y>56</y>
+          <x>700</x>
+          <y>112</y>
           <display>
             <string-map>
               <pair>
                 <locale country="US" lang="en" variant=""/>
-                <value><![CDATA[Subprocess]]></value>
+                <value><![CDATA[XLSX REPORTES]]></value>
               </pair>
               <pair>
                 <locale country="" lang="es" variant=""/>
-                <value><![CDATA[pistas RA]]></value>
+                <value><![CDATA[XLSX REPORTES]]></value>
               </pair>
             </string-map>
           </display>
@@ -740,15 +883,43 @@
           <lane>0</lane>
           <overrideLaneAssignment>false</overrideLaneAssignment>
           <ac>
-            <local-id>internal.38</local-id>
-            <name><![CDATA[SUB_PROC]]></name>
+            <local-id>internal.texttemplatemerge601</local-id>
+            <name><![CDATA[Generate Text]]></name>
             <acps>
-              <acp name="Instructions">
+              <acp name="BodyTemplate">
+                <a:value
+                  a:id="_a-0000ec31-ac7e-8000-e69b-01ef9001ef90_10030587"
+                  xmlns="" xsi:type="a:CollaborationDocument"/>
+                <a:local-id>bodytemplate</a:local-id>
+                <a:expr/>
+                <a:required>1</a:required>
+                <a:editable>1</a:editable>
+                <a:assign-to-pv/>
+                <a:input-to-activity-class>true</a:input-to-activity-class>
+                <a:hidden-from-designer>true</a:hidden-from-designer>
+                <a:generated>false</a:generated>
+                <a:enumeration/>
+                <a:customDisplayReference/>
+              </acp>
+              <acp name="CreateNewDoc">
+                <a:value xmlns="" xsi:type="xsd:boolean">true</a:value>
+                <a:local-id>createnewdoc</a:local-id>
+                <a:expr/>
+                <a:required>1</a:required>
+                <a:editable>1</a:editable>
+                <a:assign-to-pv/>
+                <a:input-to-activity-class>true</a:input-to-activity-class>
+                <a:hidden-from-designer>true</a:hidden-from-designer>
+                <a:generated>false</a:generated>
+                <a:enumeration/>
+                <a:customDisplayReference/>
+              </acp>
+              <acp name="NewDocName">
                 <a:value xsi:nil="true" xsi:type="xsd:string"/>
-                <a:local-id>0</a:local-id>
-                <a:expr/>
+                <a:local-id>newdocname</a:local-id>
+                <a:expr><![CDATA[="Actualizacion"&loggedInUser()]]></a:expr>
                 <a:required>0</a:required>
-                <a:editable>0</a:editable>
+                <a:editable>1</a:editable>
                 <a:assign-to-pv/>
                 <a:input-to-activity-class>true</a:input-to-activity-class>
                 <a:hidden-from-designer>true</a:hidden-from-designer>
@@ -756,482 +927,99 @@
                 <a:enumeration/>
                 <a:customDisplayReference/>
               </acp>
-              <acp name="pmID">
-                <a:value a:id="0008eac2-912e-8000-7df7-014d98014d98"
-                  xmlns="" xsi:type="a:ProcessModel"/>
-                <a:local-id>1</a:local-id>
-                <a:expr/>
-                <a:required>1</a:required>
-                <a:editable>0</a:editable>
-                <a:assign-to-pv/>
-                <a:input-to-activity-class>true</a:input-to-activity-class>
-                <a:hidden-from-designer>true</a:hidden-from-designer>
-                <a:generated>false</a:generated>
-                <a:enumeration/>
-                <a:customDisplayReference/>
-              </acp>
-              <acp name="inMap">
-                <a:value xmlns="" xsi:type="a:Bean?list">
-                  <a:acps>
-                    <a:acp name="oneInputMap">
-                      <a:value xsi:type="a:Bean">
-                        <a:acps>
-                          <a:acp name="sppn">
-                            <a:value xsi:type="xsd:string">codAudit</a:value>
-                            <a:local-id>4</a:local-id>
-                            <a:expr/>
-                            <a:required>1</a:required>
-                            <a:editable>0</a:editable>
-                            <a:assign-to-pv/>
-                            <a:input-to-activity-class>true</a:input-to-activity-class>
-                            <a:hidden-from-designer>false</a:hidden-from-designer>
-                            <a:generated>false</a:generated>
-                            <a:enumeration/>
-                            <a:customDisplayReference/>
-                          </a:acp>
-                          <a:acp name="sppv">
-                            <a:value xsi:nil="true" xsi:type="xsd:string"/>
-                            <a:local-id>5</a:local-id>
-                            <a:expr><![CDATA[="CDO_0002"]]></a:expr>
-                            <a:required>0</a:required>
-                            <a:editable>1</a:editable>
-                            <a:assign-to-pv/>
-                            <a:input-to-activity-class>true</a:input-to-activity-class>
-                            <a:hidden-from-designer>false</a:hidden-from-designer>
-                            <a:generated>false</a:generated>
-                            <a:enumeration/>
-                            <a:customDisplayReference/>
-                          </a:acp>
-                        </a:acps>
-                      </a:value>
-                      <a:local-id>3</a:local-id>
-                      <a:expr/>
-                      <a:required>1</a:required>
-                      <a:editable>1</a:editable>
-                      <a:assign-to-pv/>
-                      <a:input-to-activity-class>true</a:input-to-activity-class>
-                      <a:hidden-from-designer>false</a:hidden-from-designer>
-                      <a:generated>false</a:generated>
-                      <a:enumeration/>
-                      <a:customDisplayReference/>
-                    </a:acp>
-                    <a:acp name="oneInputMap">
-                      <a:value xsi:type="a:Bean">
-                        <a:acps>
-                          <a:acp name="sppn">
-                            <a:value xsi:type="xsd:string">infoAditional</a:value>
-                            <a:local-id>4</a:local-id>
-                            <a:expr/>
-                            <a:required>1</a:required>
-                            <a:editable>0</a:editable>
-                            <a:assign-to-pv/>
-                            <a:input-to-activity-class>true</a:input-to-activity-class>
-                            <a:hidden-from-designer>false</a:hidden-from-designer>
-                            <a:generated>false</a:generated>
-                            <a:enumeration/>
-                            <a:customDisplayReference/>
-                          </a:acp>
-                          <a:acp name="sppv">
-                            <a:value xsi:nil="true" xsi:type="xsd:string"/>
-                            <a:local-id>5</a:local-id>
-                            <a:expr><![CDATA[="SCDO_OBTENER_DOCUMENTO_DEL_OBJECT_STORAGE"]]></a:expr>
-                            <a:required>0</a:required>
-                            <a:editable>1</a:editable>
-                            <a:assign-to-pv/>
-                            <a:input-to-activity-class>true</a:input-to-activity-class>
-                            <a:hidden-from-designer>false</a:hidden-from-designer>
-                            <a:generated>false</a:generated>
-                            <a:enumeration/>
-                            <a:customDisplayReference/>
-                          </a:acp>
-                        </a:acps>
-                      </a:value>
-                      <a:local-id>3</a:local-id>
-                      <a:expr/>
-                      <a:required>1</a:required>
-                      <a:editable>1</a:editable>
-                      <a:assign-to-pv/>
-                      <a:input-to-activity-class>true</a:input-to-activity-class>
-                      <a:hidden-from-designer>false</a:hidden-from-designer>
-                      <a:generated>false</a:generated>
-                      <a:enumeration/>
-                      <a:customDisplayReference/>
-                    </a:acp>
-                    <a:acp name="oneInputMap">
-                      <a:value xsi:type="a:Bean">
-                        <a:acps>
-                          <a:acp name="sppn">
-                            <a:value xsi:type="xsd:string">nameAudit</a:value>
-                            <a:local-id>4</a:local-id>
-                            <a:expr/>
-                            <a:required>1</a:required>
-                            <a:editable>0</a:editable>
-                            <a:assign-to-pv/>
-                            <a:input-to-activity-class>true</a:input-to-activity-class>
-                            <a:hidden-from-designer>false</a:hidden-from-designer>
-                            <a:generated>false</a:generated>
-                            <a:enumeration/>
-                            <a:customDisplayReference/>
-                          </a:acp>
-                          <a:acp name="sppv">
-                            <a:value xsi:nil="true" xsi:type="xsd:string"/>
-                            <a:local-id>5</a:local-id>
-                            <a:expr><![CDATA[="SCDO_exportarExcelNoDocumental"]]></a:expr>
-                            <a:required>0</a:required>
-                            <a:editable>1</a:editable>
-                            <a:assign-to-pv/>
-                            <a:input-to-activity-class>true</a:input-to-activity-class>
-                            <a:hidden-from-designer>false</a:hidden-from-designer>
-                            <a:generated>false</a:generated>
-                            <a:enumeration/>
-                            <a:customDisplayReference/>
-                          </a:acp>
-                        </a:acps>
-                      </a:value>
-                      <a:local-id>3</a:local-id>
-                      <a:expr/>
-                      <a:required>1</a:required>
-                      <a:editable>1</a:editable>
-                      <a:assign-to-pv/>
-                      <a:input-to-activity-class>true</a:input-to-activity-class>
-                      <a:hidden-from-designer>false</a:hidden-from-designer>
-                      <a:generated>false</a:generated>
-                      <a:enumeration/>
-                      <a:customDisplayReference/>
-                    </a:acp>
-                    <a:acp name="oneInputMap">
-                      <a:value xsi:type="a:Bean">
-                        <a:acps>
-                          <a:acp name="sppn">
-                            <a:value xsi:type="xsd:string">resultAudit</a:value>
-                            <a:local-id>4</a:local-id>
-                            <a:expr/>
-                            <a:required>1</a:required>
-                            <a:editable>0</a:editable>
-                            <a:assign-to-pv/>
-                            <a:input-to-activity-class>true</a:input-to-activity-class>
-                            <a:hidden-from-designer>false</a:hidden-from-designer>
-                            <a:generated>false</a:generated>
-                            <a:enumeration/>
-                            <a:customDisplayReference/>
-                          </a:acp>
-                          <a:acp name="sppv">
-                            <a:value xsi:nil="true" xsi:type="xsd:string"/>
-                            <a:local-id>5</a:local-id>
-                            <a:expr><![CDATA[=concat("Se generó el Reporte: ",document(pv!excel,"name") ," en el apartado Panel de Control/Mantenimiento/Correción de Datos"," a petición del usuario: ",upper(user(loggedInUser(), "username")),
-", con fecha: ", text(now(), "yyyy-MM-dd hh:mm:ss")
-)
-]]></a:expr>
-                            <a:required>0</a:required>
-                            <a:editable>1</a:editable>
-                            <a:assign-to-pv/>
-                            <a:input-to-activity-class>true</a:input-to-activity-class>
-                            <a:hidden-from-designer>false</a:hidden-from-designer>
-                            <a:generated>false</a:generated>
-                            <a:enumeration/>
-                            <a:customDisplayReference/>
-                          </a:acp>
-                        </a:acps>
-                      </a:value>
-                      <a:local-id>3</a:local-id>
-                      <a:expr/>
-                      <a:required>1</a:required>
-                      <a:editable>1</a:editable>
-                      <a:assign-to-pv/>
-                      <a:input-to-activity-class>true</a:input-to-activity-class>
-                      <a:hidden-from-designer>false</a:hidden-from-designer>
-                      <a:generated>false</a:generated>
-                      <a:enumeration/>
-                      <a:customDisplayReference/>
-                    </a:acp>
-                  </a:acps>
-                </a:value>
-                <a:local-id>2</a:local-id>
+              <acp name="NewDocDesc">
+                <a:value xsi:nil="true" xsi:type="xsd:string"/>
+                <a:local-id>newdocdesc</a:local-id>
                 <a:expr/>
                 <a:required>0</a:required>
                 <a:editable>1</a:editable>
                 <a:assign-to-pv/>
                 <a:input-to-activity-class>true</a:input-to-activity-class>
-                <a:hidden-from-designer>false</a:hidden-from-designer>
+                <a:hidden-from-designer>true</a:hidden-from-designer>
                 <a:generated>false</a:generated>
                 <a:enumeration/>
                 <a:customDisplayReference/>
               </acp>
-              <acp name="outMap">
-                <a:value xsi:nil="true" xsi:type="a:Bean?list"/>
-                <a:local-id>6</a:local-id>
+              <acp name="SaveInFolder">
+                <a:value
+                  a:id="_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1899585"
+                  xmlns="" xsi:type="a:CollaborationFolder"/>
+                <a:local-id>saveinfolder</a:local-id>
                 <a:expr/>
                 <a:required>0</a:required>
-                <a:editable>0</a:editable>
+                <a:editable>1</a:editable>
                 <a:assign-to-pv/>
-                <a:input-to-activity-class>false</a:input-to-activity-class>
-                <a:hidden-from-designer>false</a:hidden-from-designer>
+                <a:input-to-activity-class>true</a:input-to-activity-class>
+                <a:hidden-from-designer>true</a:hidden-from-designer>
                 <a:generated>false</a:generated>
                 <a:enumeration/>
                 <a:customDisplayReference/>
               </acp>
-              <acp name="subProcessID">
-                <a:value xsi:nil="true" xsi:type="xsd:int"/>
-                <a:local-id>10</a:local-id>
+              <acp name="DocToReplace">
+                <a:value
+                  a:id="_a-0000ec31-ac7e-8000-e69b-01ef9001ef90_10030587"
+                  xmlns="" xsi:type="a:CollaborationDocument"/>
+                <a:local-id>doctoreplace</a:local-id>
                 <a:expr/>
                 <a:required>0</a:required>
-                <a:editable>0</a:editable>
+                <a:editable>1</a:editable>
                 <a:assign-to-pv/>
-                <a:input-to-activity-class>false</a:input-to-activity-class>
-                <a:hidden-from-designer>false</a:hidden-from-designer>
+                <a:input-to-activity-class>true</a:input-to-activity-class>
+                <a:hidden-from-designer>true</a:hidden-from-designer>
                 <a:generated>false</a:generated>
                 <a:enumeration/>
                 <a:customDisplayReference/>
               </acp>
-              <acp name="procInheritsPriority">
-                <a:value xmlns="" xsi:type="xsd:int">1</a:value>
-                <a:local-id>11</a:local-id>
+              <acp name="RuntimeBodyTemplate">
+                <a:value xsi:nil="true" xsi:type="a:CollaborationDocument"/>
+                <a:local-id>runtimebodytemplate</a:local-id>
+                <a:expr/>
+                <a:required>0</a:required>
+                <a:editable>1</a:editable>
+                <a:assign-to-pv/>
+                <a:input-to-activity-class>true</a:input-to-activity-class>
+                <a:hidden-from-designer>true</a:hidden-from-designer>
+                <a:generated>false</a:generated>
+                <a:enumeration/>
+                <a:customDisplayReference/>
+              </acp>
+              <acp name="NewDocument">
+                <a:value xsi:nil="true" xsi:type="a:CollaborationDocument"/>
+                <a:local-id>newdocument</a:local-id>
                 <a:expr/>
                 <a:required>0</a:required>
                 <a:editable>1</a:editable>
                 <a:assign-to-pv/>
                 <a:input-to-activity-class>false</a:input-to-activity-class>
                 <a:hidden-from-designer>false</a:hidden-from-designer>
-                <a:generated>false</a:generated>
-                <a:enumeration/>
-                <a:customDisplayReference/>
-              </acp>
-              <acp name="pmUUID">
-                <a:value xmlns="" xsi:type="xsd:string">0008eac2-912e-8000-7df7-014d98014d98</a:value>
-                <a:local-id>12</a:local-id>
-                <a:expr/>
-                <a:required>0</a:required>
-                <a:editable>1</a:editable>
-                <a:assign-to-pv/>
-                <a:input-to-activity-class>true</a:input-to-activity-class>
-                <a:hidden-from-designer>true</a:hidden-from-designer>
-                <a:generated>false</a:generated>
-                <a:enumeration/>
-                <a:customDisplayReference/>
-              </acp>
-              <acp name="isAsynchronous">
-                <a:value xmlns="" xsi:type="xsd:boolean">false</a:value>
-                <a:local-id>13</a:local-id>
-                <a:expr/>
-                <a:required>1</a:required>
-                <a:editable>1</a:editable>
-                <a:assign-to-pv/>
-                <a:input-to-activity-class>true</a:input-to-activity-class>
-                <a:hidden-from-designer>true</a:hidden-from-designer>
-                <a:generated>false</a:generated>
-                <a:enumeration/>
-                <a:customDisplayReference/>
-              </acp>
-              <acp name="isTransparent">
-                <a:value xmlns="" xsi:type="xsd:boolean">false</a:value>
-                <a:local-id>14</a:local-id>
-                <a:expr/>
-                <a:required>1</a:required>
-                <a:editable>1</a:editable>
-                <a:assign-to-pv/>
-                <a:input-to-activity-class>true</a:input-to-activity-class>
-                <a:hidden-from-designer>true</a:hidden-from-designer>
-                <a:generated>false</a:generated>
-                <a:enumeration/>
-                <a:customDisplayReference/>
-              </acp>
-              <acp name="inheritSecurity">
-                <a:value xmlns="" xsi:type="xsd:boolean">false</a:value>
-                <a:local-id>15</a:local-id>
-                <a:expr/>
-                <a:required>1</a:required>
-                <a:editable>1</a:editable>
-                <a:assign-to-pv/>
-                <a:input-to-activity-class>true</a:input-to-activity-class>
-                <a:hidden-from-designer>true</a:hidden-from-designer>
-                <a:generated>false</a:generated>
-                <a:enumeration/>
-                <a:customDisplayReference/>
-              </acp>
-              <acp name="chainsInto">
-                <a:value xmlns="" xsi:type="xsd:boolean">false</a:value>
-                <a:local-id>16</a:local-id>
-                <a:expr/>
-                <a:required>1</a:required>
-                <a:editable>1</a:editable>
-                <a:assign-to-pv/>
-                <a:input-to-activity-class>true</a:input-to-activity-class>
-                <a:hidden-from-designer>true</a:hidden-from-designer>
                 <a:generated>false</a:generated>
                 <a:enumeration/>
                 <a:customDisplayReference/>
               </acp>
             </acps>
-            <custom-params/>
-            <output-exprs/>
+            <custom-params>
+              <acp name="ae-key-data">
+                <a:value xsi:nil="true" xsi:type="xsd:string"/>
+                <a:local-id/>
+                <a:expr><![CDATA[= joinarray(  {    concat("Usuario que Modifico: ", pp!initiator),    char(10),    concat("Exportado en:", now()),    char(13),    "informacion Antigua",    char(13),    "Mercado,Operacion,Contrato,Nombre Cliente,Monto,Promotor,Usuario,Fecha de captura,Hora Captura,Riesgo,Emisora,Centro de Costos,Bitacora,Observaciones,Obligatorio,Tipo operacion,Titulo,IP,Revisado",    char(13),    concat(      pv!reporteAntiguo.mercado,      ",",      pv!reporteAntiguo.operacion,      ",",      pv!reporteAntiguo.contrato,      ",",      a!match(        value: index(          decrypttext(            valueToDecrypt: index( pv!reporteAntiguo, "nombre", null),            iv: #"_a-0000ec31-ac7e-8000-e69b-01ef9001ef90_10021470",            scsKey: #"_a-0000ec31-ac7e-8000-e69b-01ef9001ef90_10021476"          ),          "success",          null        ),        equals: true,        then: index(          decrypttext(            valueToDecrypt: index( pv!reporteAntiguo, "nombre", null),            iv: #"_a-0000ec31-ac7e-8000-e69b-01ef9001ef90_10021470",            scsKey: #"_a-0000ec31-ac7e-8000-e69b-01ef9001ef90_10021476"          ),          "value",          null        ),        equals: false,        then: index( pv!reporteAntiguo, "nombre", null),        default: "Sin nombre"      ),      ",",      pv!reporteAntiguo.monto,      ",",      pv!reporteAntiguo.promotor,      ",",      pv!reporteAntiguo.usuario,      ",",      pv!reporteAntiguo.fechacaptura,      ",",      pv!reporteAntiguo.horacaptura,      ",",      pv!reporteAntiguo.riesgo,      ",",      pv!reporteAntiguo.emisora,      ",",      pv!reporteAntiguo.ccostos,      ",",      pv!reporteAntiguo.bitacora,      ",",      pv!reporteAntiguo.observaciones,      ",",      pv!reporteAntiguo.obligatorio,      ",",      pv!reporteAntiguo.extra4,      ",",      pv!reporteAntiguo.titulo,      ",",      pv!reporteAntiguo.ip,      ",",      pv!reporteAntiguo.revisado,      ","    ),    char(13),    "Informacion NUEVA:",    char(13),    #"_a-0000ec52-2d7d-8000-e69d-01ef9001ef90_10100615"(      entidad: pv!Entidad,      seleccion: = #"SYSTEM_SYSRULES_querySelection"(        columns: {          #"SYSTEM_SYSRULES_queryColumn"(field: "mercado", alias: "Mercado"),          #"SYSTEM_SYSRULES_queryColumn"(field: "operacion", alias: "Operacion"),          #"SYSTEM_SYSRULES_queryColumn"(field: "contrato", alias: "Contrato"),          #"SYSTEM_SYSRULES_queryColumn"(field: "nombre", alias: "Nombre_cliente"),          #"SYSTEM_SYSRULES_queryColumn"(field: "monto", alias: "Monto"),          #"SYSTEM_SYSRULES_queryColumn"(field: "promotor", alias: "Promotor"),          #"SYSTEM_SYSRULES_queryColumn"(field: "usuario", alias: "Usuario"),          #"SYSTEM_SYSRULES_queryColumn"(            field: "fechacaptura",            alias: "Fecha_de_captura"          ),          #"SYSTEM_SYSRULES_queryColumn"(            field: "horacaptura",            alias: "Hora_captura"          ),          #"SYSTEM_SYSRULES_queryColumn"(field: "riesgo", alias: "Riesgo"),          #"SYSTEM_SYSRULES_queryColumn"(field: "emisora", alias: "Emisora"),          #"SYSTEM_SYSRULES_queryColumn"(            field: "ccostos",            alias: "Centro_de_Costos"          ),          #"SYSTEM_SYSRULES_queryColumn"(field: "bitacora", alias: "Bitacora"),          #"SYSTEM_SYSRULES_queryColumn"(            field: "observaciones",            alias: "Observaciones"          ),          #"SYSTEM_SYSRULES_queryColumn"(            field: "obligatorio",            alias: "Obligatorio"          ),          #"SYSTEM_SYSRULES_queryColumn"(field: "extra4", alias: "Tipo_operación"),          #"SYSTEM_SYSRULES_queryColumn"(field: "titulo", alias: "Titulo"),          #"SYSTEM_SYSRULES_queryColumn"(field: "ip", alias: "IP"),          #"SYSTEM_SYSRULES_queryColumn"(field: "revisado", alias: "Revisado")        }      ),      idreporte: pv!reporteId    )  })]]></a:expr>
+                <a:required>0</a:required>
+                <a:editable>1</a:editable>
+                <a:assign-to-pv/>
+                <a:input-to-activity-class>true</a:input-to-activity-class>
+                <a:hidden-from-designer>true</a:hidden-from-designer>
+                <a:generated>false</a:generated>
+                <a:enumeration/>
+                <a:customDisplayReference/>
+              </acp>
+            </custom-params>
+            <output-exprs>
+              <el typeFlag="1"><![CDATA[excel:AC!NewDocument]]></el>
+            </output-exprs>
             <requires-user-interaction>true</requires-user-interaction>
             <run-as>
               <performer id="0"/>
             </run-as>
-            <form-map>
-              <pair>
-                <locale country="" lang="es" variant=""/>
-                <form-config>
-                  <form>
-                    <type>3</type>
-                    <enabled>false</enabled>
-                    <dynamic-form>
-                      <form-elements>
-                        <form-element>
-                          <label><![CDATA[Question1]]></label>
-                          <instructions/>
-                          <editable>true</editable>
-                          <hidden>false</hidden>
-                          <multiple>false</multiple>
-                          <required>false</required>
-                          <type>2</type>
-                          <options/>
-                          <name><![CDATA[Question1]]></name>
-                          <mapped-to array-index="0" bean-array="inMap"><![CDATA[sppv]]></mapped-to>
-                          <value/>
-                          <extra><![CDATA[{}]]></extra>
-                        </form-element>
-                        <form-element>
-                          <label><![CDATA[Question2]]></label>
-                          <instructions/>
-                          <editable>true</editable>
-                          <hidden>false</hidden>
-                          <multiple>false</multiple>
-                          <required>false</required>
-                          <type>2</type>
-                          <options/>
-                          <name><![CDATA[Question2]]></name>
-                          <mapped-to array-index="1" bean-array="inMap"><![CDATA[sppv]]></mapped-to>
-                          <value/>
-                          <extra><![CDATA[{}]]></extra>
-                        </form-element>
-                        <form-element>
-                          <label><![CDATA[Question3]]></label>
-                          <instructions/>
-                          <editable>true</editable>
-                          <hidden>false</hidden>
-                          <multiple>false</multiple>
-                          <required>false</required>
-                          <type>2</type>
-                          <options/>
-                          <name><![CDATA[Question3]]></name>
-                          <mapped-to array-index="2" bean-array="inMap"><![CDATA[sppv]]></mapped-to>
-                          <value/>
-                          <extra><![CDATA[{}]]></extra>
-                        </form-element>
-                        <form-element>
-                          <label><![CDATA[Question4]]></label>
-                          <instructions/>
-                          <editable>true</editable>
-                          <hidden>false</hidden>
-                          <multiple>false</multiple>
-                          <required>false</required>
-                          <type>2</type>
-                          <options/>
-                          <name><![CDATA[Question4]]></name>
-                          <mapped-to array-index="3" bean-array="inMap"><![CDATA[sppv]]></mapped-to>
-                          <value/>
-                          <extra><![CDATA[{}]]></extra>
-                        </form-element>
-                      </form-elements>
-                    </dynamic-form>
-                    <uiExpressionForm>
-                      <expression><![CDATA[=/*41707069616E-GEN-DEBUG*/=a!formLayout(
-  buttons: a!buttonLayout(
-    primaryButtons: {
-      a!buttonWidgetSubmit(
-        label: "OK",
-        style: "PRIMARY"
-      )
-    }
-  ))]]></expression>
-                    </uiExpressionForm>
-                    <hiddenSections>16</hiddenSections>
-                  </form>
-                </form-config>
-              </pair>
-              <pair>
-                <locale country="US" lang="en" variant=""/>
-                <form-config>
-                  <form>
-                    <type>3</type>
-                    <enabled>true</enabled>
-                    <dynamic-form>
-                      <form-elements>
-                        <form-element>
-                          <label><![CDATA[Question1]]></label>
-                          <instructions/>
-                          <editable>true</editable>
-                          <hidden>false</hidden>
-                          <multiple>false</multiple>
-                          <required>false</required>
-                          <type>2</type>
-                          <options/>
-                          <name><![CDATA[Question1]]></name>
-                          <mapped-to array-index="0" bean-array="inMap"><![CDATA[sppv]]></mapped-to>
-                          <value/>
-                          <extra><![CDATA[{}]]></extra>
-                        </form-element>
-                        <form-element>
-                          <label><![CDATA[Question2]]></label>
-                          <instructions/>
-                          <editable>true</editable>
-                          <hidden>false</hidden>
-                          <multiple>false</multiple>
-                          <required>false</required>
-                          <type>2</type>
-                          <options/>
-                          <name><![CDATA[Question2]]></name>
-                          <mapped-to array-index="1" bean-array="inMap"><![CDATA[sppv]]></mapped-to>
-                          <value/>
-                          <extra><![CDATA[{}]]></extra>
-                        </form-element>
-                        <form-element>
-                          <label><![CDATA[Question3]]></label>
-                          <instructions/>
-                          <editable>true</editable>
-                          <hidden>false</hidden>
-                          <multiple>false</multiple>
-                          <required>false</required>
-                          <type>2</type>
-                          <options/>
-                          <name><![CDATA[Question3]]></name>
-                          <mapped-to array-index="2" bean-array="inMap"><![CDATA[sppv]]></mapped-to>
-                          <value/>
-                          <extra><![CDATA[{}]]></extra>
-                        </form-element>
-                        <form-element>
-                          <label><![CDATA[Question4]]></label>
-                          <instructions/>
-                          <editable>true</editable>
-                          <hidden>false</hidden>
-                          <multiple>false</multiple>
-                          <required>false</required>
-                          <type>2</type>
-                          <options/>
-                          <name><![CDATA[Question4]]></name>
-                          <mapped-to array-index="3" bean-array="inMap"><![CDATA[sppv]]></mapped-to>
-                          <value/>
-                          <extra><![CDATA[{}]]></extra>
-                        </form-element>
-                      </form-elements>
-                    </dynamic-form>
-                    <uiExpressionForm>
-                      <expression><![CDATA[=/*41707069616E-GEN-DEBUG*/=a!formLayout(
-  buttons: a!buttonLayout(
-    primaryButtons: {
-      a!buttonWidgetSubmit(
-        label: "OK",
-        style: "PRIMARY"
-      )
-    }
-  ))]]></expression>
-                    </uiExpressionForm>
-                    <hiddenSections>16</hiddenSections>
-                  </form>
-                </form-config>
-              </pair>
-            </form-map>
+            <form-map/>
             <helper-class/>
           </ac>
           <multiple-instance/>
@@ -1239,982 +1027,15 @@
           <connections>
             <connection>
               <guiId>5</guiId>
-              <to>1</to>
+              <to>9</to>
               <toObjectType>ap.gui.Node</toObjectType>
               <fromAnchor>1</fromAnchor>
               <toAnchor>0</toAnchor>
               <showArrowhead>true</showArrowhead>
               <flowLabel/>
               <label>
-                <fontColor>#000</fontColor>
-                <fontFamily>Appian Open Sans, Sans-Serif</fontFamily>
-                <fontSize>12</fontSize>
-                <bold>false</bold>
-                <italics>false</italics>
-                <underline>false</underline>
-              </label>
-              <associations/>
-              <chained>true</chained>
-              <overridesAssignment>true</overridesAssignment>
-              <synchronizeData>false</synchronizeData>
-            </connection>
-          </connections>
-          <associations/>
-          <target-completion>5.0</target-completion>
-          <target-lag>1.0</target-lag>
-          <attachments/>
-          <notes/>
-          <lingering>false</lingering>
-          <on-create-ignore-if-active>false</on-create-ignore-if-active>
-          <on-create-delete-previous-active>false</on-create-delete-previous-active>
-          <on-complete-delete-previous-completed>false</on-complete-delete-previous-completed>
-          <pre-triggers/>
-          <post-triggers/>
-          <event-producers/>
-          <exception-flow/>
-          <label>
-            <fontColor>#000</fontColor>
-            <fontFamily>Appian Open Sans, Sans-Serif</fontFamily>
-            <fontSize>12</fontSize>
-            <bold>false</bold>
-            <italics>false</italics>
-            <underline>false</underline>
-          </label>
-          <deadline>
-            <enabled>false</enabled>
-            <type>0</type>
-            <units>0</units>
-            <rex/>
-            <aex/>
-          </deadline>
-          <allowsBack>false</allowsBack>
-          <refreshDefaultValues>false</refreshDefaultValues>
-          <on-complete-keep-form-data>false</on-complete-keep-form-data>
-          <skipNotification>false</skipNotification>
-        </node>
-        <node uuid="0002eace-332e-8000-80e3-014d98014d98">
-          <guiId>5</guiId>
-          <owner/>
-          <icon id="60"/>
-          <picon id="61"/>
-          <fname>
-            <string-map>
-              <pair>
-                <locale country="US" lang="en" variant=""/>
-                <value><![CDATA[Subprocess]]></value>
-              </pair>
-              <pair>
-                <locale country="" lang="es" variant=""/>
-                <value><![CDATA[Copy of pistas R]]></value>
-              </pair>
-            </string-map>
-          </fname>
-          <x>756</x>
-          <y>168</y>
-          <display>
-            <string-map>
-              <pair>
-                <locale country="US" lang="en" variant=""/>
-                <value><![CDATA[Subprocess]]></value>
-              </pair>
-              <pair>
-                <locale country="" lang="es" variant=""/>
-                <value><![CDATA[Copy of pistas R]]></value>
-              </pair>
-            </string-map>
-          </display>
-          <desc>
-            <string-map>
-              <pair>
-                <locale country="US" lang="en" variant=""/>
-                <value/>
-              </pair>
-              <pair>
-                <locale country="" lang="es" variant=""/>
-                <value/>
-              </pair>
-            </string-map>
-          </desc>
-          <notify>false</notify>
-          <confirmation-url/>
-          <lane>0</lane>
-          <overrideLaneAssignment>false</overrideLaneAssignment>
-          <ac>
-            <local-id>internal.38</local-id>
-            <name><![CDATA[SUB_PROC]]></name>
-            <acps>
-              <acp name="Instructions">
-                <a:value xsi:nil="true" xsi:type="xsd:string"/>
-                <a:local-id>0</a:local-id>
-                <a:expr/>
-                <a:required>0</a:required>
-                <a:editable>0</a:editable>
-                <a:assign-to-pv/>
-                <a:input-to-activity-class>true</a:input-to-activity-class>
-                <a:hidden-from-designer>true</a:hidden-from-designer>
-                <a:generated>false</a:generated>
-                <a:enumeration/>
-                <a:customDisplayReference/>
-              </acp>
-              <acp name="pmID">
-                <a:value a:id="0008eac2-912e-8000-7df7-014d98014d98"
-                  xmlns="" xsi:type="a:ProcessModel"/>
-                <a:local-id>1</a:local-id>
-                <a:expr/>
-                <a:required>1</a:required>
-                <a:editable>0</a:editable>
-                <a:assign-to-pv/>
-                <a:input-to-activity-class>true</a:input-to-activity-class>
-                <a:hidden-from-designer>true</a:hidden-from-designer>
-                <a:generated>false</a:generated>
-                <a:enumeration/>
-                <a:customDisplayReference/>
-              </acp>
-              <acp name="inMap">
-                <a:value xmlns="" xsi:type="a:Bean?list">
-                  <a:acps>
-                    <a:acp name="oneInputMap">
-                      <a:value xsi:type="a:Bean">
-                        <a:acps>
-                          <a:acp name="sppn">
-                            <a:value xsi:type="xsd:string">codAudit</a:value>
-                            <a:local-id>4</a:local-id>
-                            <a:expr/>
-                            <a:required>1</a:required>
-                            <a:editable>0</a:editable>
-                            <a:assign-to-pv/>
-                            <a:input-to-activity-class>true</a:input-to-activity-class>
-                            <a:hidden-from-designer>false</a:hidden-from-designer>
-                            <a:generated>false</a:generated>
-                            <a:enumeration/>
-                            <a:customDisplayReference/>
-                          </a:acp>
-                          <a:acp name="sppv">
-                            <a:value xsi:nil="true" xsi:type="xsd:string"/>
-                            <a:local-id>5</a:local-id>
-                            <a:expr><![CDATA[="CDO_0002"]]></a:expr>
-                            <a:required>0</a:required>
-                            <a:editable>1</a:editable>
-                            <a:assign-to-pv/>
-                            <a:input-to-activity-class>true</a:input-to-activity-class>
-                            <a:hidden-from-designer>false</a:hidden-from-designer>
-                            <a:generated>false</a:generated>
-                            <a:enumeration/>
-                            <a:customDisplayReference/>
-                          </a:acp>
-                        </a:acps>
-                      </a:value>
-                      <a:local-id>3</a:local-id>
-                      <a:expr/>
-                      <a:required>1</a:required>
-                      <a:editable>1</a:editable>
-                      <a:assign-to-pv/>
-                      <a:input-to-activity-class>true</a:input-to-activity-class>
-                      <a:hidden-from-designer>false</a:hidden-from-designer>
-                      <a:generated>false</a:generated>
-                      <a:enumeration/>
-                      <a:customDisplayReference/>
-                    </a:acp>
-                    <a:acp name="oneInputMap">
-                      <a:value xsi:type="a:Bean">
-                        <a:acps>
-                          <a:acp name="sppn">
-                            <a:value xsi:type="xsd:string">infoAditional</a:value>
-                            <a:local-id>4</a:local-id>
-                            <a:expr/>
-                            <a:required>1</a:required>
-                            <a:editable>0</a:editable>
-                            <a:assign-to-pv/>
-                            <a:input-to-activity-class>true</a:input-to-activity-class>
-                            <a:hidden-from-designer>false</a:hidden-from-designer>
-                            <a:generated>false</a:generated>
-                            <a:enumeration/>
-                            <a:customDisplayReference/>
-                          </a:acp>
-                          <a:acp name="sppv">
-                            <a:value xsi:nil="true" xsi:type="xsd:string"/>
-                            <a:local-id>5</a:local-id>
-                            <a:expr><![CDATA[="SCDO_OBTENER_DOCUMENTO_DEL_OBJECT_STORAGE"]]></a:expr>
-                            <a:required>0</a:required>
-                            <a:editable>1</a:editable>
-                            <a:assign-to-pv/>
-                            <a:input-to-activity-class>true</a:input-to-activity-class>
-                            <a:hidden-from-designer>false</a:hidden-from-designer>
-                            <a:generated>false</a:generated>
-                            <a:enumeration/>
-                            <a:customDisplayReference/>
-                          </a:acp>
-                        </a:acps>
-                      </a:value>
-                      <a:local-id>3</a:local-id>
-                      <a:expr/>
-                      <a:required>1</a:required>
-                      <a:editable>1</a:editable>
-                      <a:assign-to-pv/>
-                      <a:input-to-activity-class>true</a:input-to-activity-class>
-                      <a:hidden-from-designer>false</a:hidden-from-designer>
-                      <a:generated>false</a:generated>
-                      <a:enumeration/>
-                      <a:customDisplayReference/>
-                    </a:acp>
-                    <a:acp name="oneInputMap">
-                      <a:value xsi:type="a:Bean">
-                        <a:acps>
-                          <a:acp name="sppn">
-                            <a:value xsi:type="xsd:string">nameAudit</a:value>
-                            <a:local-id>4</a:local-id>
-                            <a:expr/>
-                            <a:required>1</a:required>
-                            <a:editable>0</a:editable>
-                            <a:assign-to-pv/>
-                            <a:input-to-activity-class>true</a:input-to-activity-class>
-                            <a:hidden-from-designer>false</a:hidden-from-designer>
-                            <a:generated>false</a:generated>
-                            <a:enumeration/>
-                            <a:customDisplayReference/>
-                          </a:acp>
-                          <a:acp name="sppv">
-                            <a:value xsi:nil="true" xsi:type="xsd:string"/>
-                            <a:local-id>5</a:local-id>
-                            <a:expr><![CDATA[="SCDO_exportarExcelNoDocumental"]]></a:expr>
-                            <a:required>0</a:required>
-                            <a:editable>1</a:editable>
-                            <a:assign-to-pv/>
-                            <a:input-to-activity-class>true</a:input-to-activity-class>
-                            <a:hidden-from-designer>false</a:hidden-from-designer>
-                            <a:generated>false</a:generated>
-                            <a:enumeration/>
-                            <a:customDisplayReference/>
-                          </a:acp>
-                        </a:acps>
-                      </a:value>
-                      <a:local-id>3</a:local-id>
-                      <a:expr/>
-                      <a:required>1</a:required>
-                      <a:editable>1</a:editable>
-                      <a:assign-to-pv/>
-                      <a:input-to-activity-class>true</a:input-to-activity-class>
-                      <a:hidden-from-designer>false</a:hidden-from-designer>
-                      <a:generated>false</a:generated>
-                      <a:enumeration/>
-                      <a:customDisplayReference/>
-                    </a:acp>
-                    <a:acp name="oneInputMap">
-                      <a:value xsi:type="a:Bean">
-                        <a:acps>
-                          <a:acp name="sppn">
-                            <a:value xsi:type="xsd:string">resultAudit</a:value>
-                            <a:local-id>4</a:local-id>
-                            <a:expr/>
-                            <a:required>1</a:required>
-                            <a:editable>0</a:editable>
-                            <a:assign-to-pv/>
-                            <a:input-to-activity-class>true</a:input-to-activity-class>
-                            <a:hidden-from-designer>false</a:hidden-from-designer>
-                            <a:generated>false</a:generated>
-                            <a:enumeration/>
-                            <a:customDisplayReference/>
-                          </a:acp>
-                          <a:acp name="sppv">
-                            <a:value xsi:nil="true" xsi:type="xsd:string"/>
-                            <a:local-id>5</a:local-id>
-                            <a:expr><![CDATA[=concat("Se generó el Reporte: ",document(pv!excel,"name") ," en el apartado Panel de Control/Mantenimiento/Correción de Datos"," a petición del usuario: ",upper(user(loggedInUser(), "username")),
-", con fecha: ", text(now(), "yyyy-MM-dd hh:mm:ss")
-)
-]]></a:expr>
-                            <a:required>0</a:required>
-                            <a:editable>1</a:editable>
-                            <a:assign-to-pv/>
-                            <a:input-to-activity-class>true</a:input-to-activity-class>
-                            <a:hidden-from-designer>false</a:hidden-from-designer>
-                            <a:generated>false</a:generated>
-                            <a:enumeration/>
-                            <a:customDisplayReference/>
-                          </a:acp>
-                        </a:acps>
-                      </a:value>
-                      <a:local-id>3</a:local-id>
-                      <a:expr/>
-                      <a:required>1</a:required>
-                      <a:editable>1</a:editable>
-                      <a:assign-to-pv/>
-                      <a:input-to-activity-class>true</a:input-to-activity-class>
-                      <a:hidden-from-designer>false</a:hidden-from-designer>
-                      <a:generated>false</a:generated>
-                      <a:enumeration/>
-                      <a:customDisplayReference/>
-                    </a:acp>
-                  </a:acps>
-                </a:value>
-                <a:local-id>2</a:local-id>
-                <a:expr/>
-                <a:required>0</a:required>
-                <a:editable>1</a:editable>
-                <a:assign-to-pv/>
-                <a:input-to-activity-class>true</a:input-to-activity-class>
-                <a:hidden-from-designer>false</a:hidden-from-designer>
-                <a:generated>false</a:generated>
-                <a:enumeration/>
-                <a:customDisplayReference/>
-              </acp>
-              <acp name="outMap">
-                <a:value xsi:nil="true" xsi:type="a:Bean?list"/>
-                <a:local-id>6</a:local-id>
-                <a:expr/>
-                <a:required>0</a:required>
-                <a:editable>0</a:editable>
-                <a:assign-to-pv/>
-                <a:input-to-activity-class>false</a:input-to-activity-class>
-                <a:hidden-from-designer>false</a:hidden-from-designer>
-                <a:generated>false</a:generated>
-                <a:enumeration/>
-                <a:customDisplayReference/>
-              </acp>
-              <acp name="subProcessID">
-                <a:value xsi:nil="true" xsi:type="xsd:int"/>
-                <a:local-id>10</a:local-id>
-                <a:expr/>
-                <a:required>0</a:required>
-                <a:editable>0</a:editable>
-                <a:assign-to-pv/>
-                <a:input-to-activity-class>false</a:input-to-activity-class>
-                <a:hidden-from-designer>false</a:hidden-from-designer>
-                <a:generated>false</a:generated>
-                <a:enumeration/>
-                <a:customDisplayReference/>
-              </acp>
-              <acp name="procInheritsPriority">
-                <a:value xmlns="" xsi:type="xsd:int">1</a:value>
-                <a:local-id>11</a:local-id>
-                <a:expr/>
-                <a:required>0</a:required>
-                <a:editable>1</a:editable>
-                <a:assign-to-pv/>
-                <a:input-to-activity-class>false</a:input-to-activity-class>
-                <a:hidden-from-designer>false</a:hidden-from-designer>
-                <a:generated>false</a:generated>
-                <a:enumeration/>
-                <a:customDisplayReference/>
-              </acp>
-              <acp name="pmUUID">
-                <a:value xmlns="" xsi:type="xsd:string">0008eac2-912e-8000-7df7-014d98014d98</a:value>
-                <a:local-id>12</a:local-id>
-                <a:expr/>
-                <a:required>0</a:required>
-                <a:editable>1</a:editable>
-                <a:assign-to-pv/>
-                <a:input-to-activity-class>true</a:input-to-activity-class>
-                <a:hidden-from-designer>true</a:hidden-from-designer>
-                <a:generated>false</a:generated>
-                <a:enumeration/>
-                <a:customDisplayReference/>
-              </acp>
-              <acp name="isAsynchronous">
-                <a:value xmlns="" xsi:type="xsd:boolean">false</a:value>
-                <a:local-id>13</a:local-id>
-                <a:expr/>
-                <a:required>1</a:required>
-                <a:editable>1</a:editable>
-                <a:assign-to-pv/>
-                <a:input-to-activity-class>true</a:input-to-activity-class>
-                <a:hidden-from-designer>true</a:hidden-from-designer>
-                <a:generated>false</a:generated>
-                <a:enumeration/>
-                <a:customDisplayReference/>
-              </acp>
-              <acp name="isTransparent">
-                <a:value xmlns="" xsi:type="xsd:boolean">false</a:value>
-                <a:local-id>14</a:local-id>
-                <a:expr/>
-                <a:required>1</a:required>
-                <a:editable>1</a:editable>
-                <a:assign-to-pv/>
-                <a:input-to-activity-class>true</a:input-to-activity-class>
-                <a:hidden-from-designer>true</a:hidden-from-designer>
-                <a:generated>false</a:generated>
-                <a:enumeration/>
-                <a:customDisplayReference/>
-              </acp>
-              <acp name="inheritSecurity">
-                <a:value xmlns="" xsi:type="xsd:boolean">false</a:value>
-                <a:local-id>15</a:local-id>
-                <a:expr/>
-                <a:required>1</a:required>
-                <a:editable>1</a:editable>
-                <a:assign-to-pv/>
-                <a:input-to-activity-class>true</a:input-to-activity-class>
-                <a:hidden-from-designer>true</a:hidden-from-designer>
-                <a:generated>false</a:generated>
-                <a:enumeration/>
-                <a:customDisplayReference/>
-              </acp>
-              <acp name="chainsInto">
-                <a:value xmlns="" xsi:type="xsd:boolean">false</a:value>
-                <a:local-id>16</a:local-id>
-                <a:expr/>
-                <a:required>1</a:required>
-                <a:editable>1</a:editable>
-                <a:assign-to-pv/>
-                <a:input-to-activity-class>true</a:input-to-activity-class>
-                <a:hidden-from-designer>true</a:hidden-from-designer>
-                <a:generated>false</a:generated>
-                <a:enumeration/>
-                <a:customDisplayReference/>
-              </acp>
-            </acps>
-            <custom-params/>
-            <output-exprs/>
-            <requires-user-interaction>true</requires-user-interaction>
-            <run-as>
-              <performer id="0"/>
-            </run-as>
-            <form-map>
-              <pair>
-                <locale country="" lang="es" variant=""/>
-                <form-config>
-                  <form>
-                    <type>3</type>
-                    <enabled>false</enabled>
-                    <dynamic-form>
-                      <form-elements>
-                        <form-element>
-                          <label><![CDATA[Question1]]></label>
-                          <instructions/>
-                          <editable>true</editable>
-                          <hidden>false</hidden>
-                          <multiple>false</multiple>
-                          <required>false</required>
-                          <type>2</type>
-                          <options/>
-                          <name><![CDATA[Question1]]></name>
-                          <mapped-to array-index="0" bean-array="inMap"><![CDATA[sppv]]></mapped-to>
-                          <value/>
-                          <extra><![CDATA[{}]]></extra>
-                        </form-element>
-                        <form-element>
-                          <label><![CDATA[Question2]]></label>
-                          <instructions/>
-                          <editable>true</editable>
-                          <hidden>false</hidden>
-                          <multiple>false</multiple>
-                          <required>false</required>
-                          <type>2</type>
-                          <options/>
-                          <name><![CDATA[Question2]]></name>
-                          <mapped-to array-index="1" bean-array="inMap"><![CDATA[sppv]]></mapped-to>
-                          <value/>
-                          <extra><![CDATA[{}]]></extra>
-                        </form-element>
-                        <form-element>
-                          <label><![CDATA[Question3]]></label>
-                          <instructions/>
-                          <editable>true</editable>
-                          <hidden>false</hidden>
-                          <multiple>false</multiple>
-                          <required>false</required>
-                          <type>2</type>
-                          <options/>
-                          <name><![CDATA[Question3]]></name>
-                          <mapped-to array-index="2" bean-array="inMap"><![CDATA[sppv]]></mapped-to>
-                          <value/>
-                          <extra><![CDATA[{}]]></extra>
-                        </form-element>
-                        <form-element>
-                          <label><![CDATA[Question4]]></label>
-                          <instructions/>
-                          <editable>true</editable>
-                          <hidden>false</hidden>
-                          <multiple>false</multiple>
-                          <required>false</required>
-                          <type>2</type>
-                          <options/>
-                          <name><![CDATA[Question4]]></name>
-                          <mapped-to array-index="3" bean-array="inMap"><![CDATA[sppv]]></mapped-to>
-                          <value/>
-                          <extra><![CDATA[{}]]></extra>
-                        </form-element>
-                      </form-elements>
-                    </dynamic-form>
-                    <uiExpressionForm>
-                      <expression><![CDATA[=/*41707069616E-GEN-DEBUG*/=a!formLayout(
-  buttons: a!buttonLayout(
-    primaryButtons: {
-      a!buttonWidgetSubmit(
-        label: "OK",
-        style: "PRIMARY"
-      )
-    }
-  ))]]></expression>
-                    </uiExpressionForm>
-                    <hiddenSections>16</hiddenSections>
-                  </form>
-                </form-config>
-              </pair>
-              <pair>
-                <locale country="US" lang="en" variant=""/>
-                <form-config>
-                  <form>
-                    <type>3</type>
-                    <enabled>true</enabled>
-                    <dynamic-form>
-                      <form-elements>
-                        <form-element>
-                          <label><![CDATA[Question1]]></label>
-                          <instructions/>
-                          <editable>true</editable>
-                          <hidden>false</hidden>
-                          <multiple>false</multiple>
-                          <required>false</required>
-                          <type>2</type>
-                          <options/>
-                          <name><![CDATA[Question1]]></name>
-                          <mapped-to array-index="0" bean-array="inMap"><![CDATA[sppv]]></mapped-to>
-                          <value/>
-                          <extra><![CDATA[{}]]></extra>
-                        </form-element>
-                        <form-element>
-                          <label><![CDATA[Question2]]></label>
-                          <instructions/>
-                          <editable>true</editable>
-                          <hidden>false</hidden>
-                          <multiple>false</multiple>
-                          <required>false</required>
-                          <type>2</type>
-                          <options/>
-                          <name><![CDATA[Question2]]></name>
-                          <mapped-to array-index="1" bean-array="inMap"><![CDATA[sppv]]></mapped-to>
-                          <value/>
-                          <extra><![CDATA[{}]]></extra>
-                        </form-element>
-                        <form-element>
-                          <label><![CDATA[Question3]]></label>
-                          <instructions/>
-                          <editable>true</editable>
-                          <hidden>false</hidden>
-                          <multiple>false</multiple>
-                          <required>false</required>
-                          <type>2</type>
-                          <options/>
-                          <name><![CDATA[Question3]]></name>
-                          <mapped-to array-index="2" bean-array="inMap"><![CDATA[sppv]]></mapped-to>
-                          <value/>
-                          <extra><![CDATA[{}]]></extra>
-                        </form-element>
-                        <form-element>
-                          <label><![CDATA[Question4]]></label>
-                          <instructions/>
-                          <editable>true</editable>
-                          <hidden>false</hidden>
-                          <multiple>false</multiple>
-                          <required>false</required>
-                          <type>2</type>
-                          <options/>
-                          <name><![CDATA[Question4]]></name>
-                          <mapped-to array-index="3" bean-array="inMap"><![CDATA[sppv]]></mapped-to>
-                          <value/>
-                          <extra><![CDATA[{}]]></extra>
-                        </form-element>
-                      </form-elements>
-                    </dynamic-form>
-                    <uiExpressionForm>
-                      <expression><![CDATA[=/*41707069616E-GEN-DEBUG*/=a!formLayout(
-  buttons: a!buttonLayout(
-    primaryButtons: {
-      a!buttonWidgetSubmit(
-        label: "OK",
-        style: "PRIMARY"
-      )
-    }
-  ))]]></expression>
-                    </uiExpressionForm>
-                    <hiddenSections>16</hiddenSections>
-                  </form>
-                </form-config>
-              </pair>
-            </form-map>
-            <helper-class/>
-          </ac>
-          <multiple-instance/>
-          <escalations/>
-          <connections>
-            <connection>
-              <guiId>7</guiId>
-              <to>1</to>
-              <toObjectType>ap.gui.Node</toObjectType>
-              <fromAnchor/>
-              <toAnchor/>
-              <showArrowhead>true</showArrowhead>
-              <flowLabel/>
-              <label>
-                <fontColor>#000</fontColor>
-                <fontFamily>Appian Open Sans, Sans-Serif</fontFamily>
-                <fontSize>12</fontSize>
-                <bold>false</bold>
-                <italics>false</italics>
-                <underline>false</underline>
-              </label>
-              <associations/>
-              <chained>true</chained>
-              <overridesAssignment>true</overridesAssignment>
-              <synchronizeData>false</synchronizeData>
-            </connection>
-          </connections>
-          <associations/>
-          <target-completion>5.0</target-completion>
-          <target-lag>1.0</target-lag>
-          <attachments/>
-          <notes/>
-          <lingering>false</lingering>
-          <on-create-ignore-if-active>false</on-create-ignore-if-active>
-          <on-create-delete-previous-active>false</on-create-delete-previous-active>
-          <on-complete-delete-previous-completed>false</on-complete-delete-previous-completed>
-          <pre-triggers/>
-          <post-triggers/>
-          <event-producers/>
-          <exception-flow/>
-          <label>
-            <fontColor>#000</fontColor>
-            <fontFamily>Appian Open Sans, Sans-Serif</fontFamily>
-            <fontSize>12</fontSize>
-            <bold>false</bold>
-            <italics>false</italics>
-            <underline>false</underline>
-          </label>
-          <deadline>
-            <enabled>false</enabled>
-            <type>0</type>
-            <units>0</units>
-            <rex/>
-            <aex/>
-          </deadline>
-          <allowsBack>false</allowsBack>
-          <refreshDefaultValues>false</refreshDefaultValues>
-          <on-complete-keep-form-data>false</on-complete-keep-form-data>
-          <skipNotification>false</skipNotification>
-        </node>
-        <node uuid="0001e9cd-ab43-8000-fb6e-014d98014d98">
-          <guiId>2</guiId>
-          <owner/>
-          <icon id="998"/>
-          <picon id="98"/>
-          <fname>
-            <string-map>
-              <pair>
-                <locale country="US" lang="en" variant=""/>
-                <value><![CDATA[Export Data Store Entity to Excel]]></value>
-              </pair>
-              <pair>
-                <locale country="" lang="es" variant=""/>
-                <value><![CDATA[Exportar a Excel Cambios R]]></value>
-              </pair>
-            </string-map>
-          </fname>
-          <x>588</x>
-          <y>168</y>
-          <display>
-            <string-map>
-              <pair>
-                <locale country="US" lang="en" variant=""/>
-                <value><![CDATA[Export Data Store Entity to Excel]]></value>
-              </pair>
-              <pair>
-                <locale country="" lang="es" variant=""/>
-                <value><![CDATA[Exportar a Excel Cambios R]]></value>
-              </pair>
-            </string-map>
-          </display>
-          <desc>
-            <string-map>
-              <pair>
-                <locale country="US" lang="en" variant=""/>
-                <value/>
-              </pair>
-              <pair>
-                <locale country="" lang="es" variant=""/>
-                <value/>
-              </pair>
-            </string-map>
-          </desc>
-          <notify>false</notify>
-          <confirmation-url/>
-          <lane>0</lane>
-          <overrideLaneAssignment>false</overrideLaneAssignment>
-          <ac>
-            <local-id>appian.system.smart-services.data-export-entity-excel2</local-id>
-            <name><![CDATA[Export Data Store Entity to Excel]]></name>
-            <acps>
-              <acp name="DataStoreEntity">
-                <a:value xsi:nil="true" xsi:type="a:DataStoreEntity"/>
-                <a:local-id>input-DataStoreEntity</a:local-id>
-                <a:expr><![CDATA[=#"_a-0000e878-569a-8000-e5e4-01ef9001ef90_1932909"]]></a:expr>
-                <a:required>1</a:required>
-                <a:editable>1</a:editable>
-                <a:assign-to-pv/>
-                <a:input-to-activity-class>true</a:input-to-activity-class>
-                <a:hidden-from-designer>false</a:hidden-from-designer>
-                <a:generated>false</a:generated>
-                <a:enumeration/>
-                <a:customDisplayReference/>
-              </acp>
-              <acp name="Selection">
-                <a:value xsi:nil="true" xsi:type="a:Selection"/>
-                <a:local-id>input-Selection</a:local-id>
-                <a:expr><![CDATA[= #"SYSTEM_SYSRULES_querySelection"(columns: {#"SYSTEM_SYSRULES_queryColumn"(field: "mercado", alias: "Mercado"),#"SYSTEM_SYSRULES_queryColumn"(field: "operacion", alias: "Operacion"),    #"SYSTEM_SYSRULES_queryColumn"(field: "contrato", alias: "Contrato"),    #"SYSTEM_SYSRULES_queryColumn"(field: "nombre", alias: "Nombre_cliente"),    #"SYSTEM_SYSRULES_queryColumn"(field: "monto", alias: "Monto"), #"SYSTEM_SYSRULES_queryColumn"(field: "promotor", alias: "Promotor"),    #"SYSTEM_SYSRULES_queryColumn"(field: "usuario", alias: "Usuario"),    #"SYSTEM_SYSRULES_queryColumn"(      field: "fechacaptura",      alias: "Fecha_de_captura"    ),  #"SYSTEM_SYSRULES_queryColumn"(field: "horacaptura", alias: "Hora_captura"),  #"SYSTEM_SYSRULES_queryColumn"(field: "riesgo", alias: "Riesgo"),    #"SYSTEM_SYSRULES_queryColumn"(field: "emisora", alias: "Emisora"),    #"SYSTEM_SYSRULES_queryColumn"(field: "ccostos", alias: "Centro_de_Costos"),    #"SYSTEM_SYSRULES_queryColumn"(field: "bitacora", alias: "Bitacora"),    #"SYSTEM_SYSRULES_queryColumn"(      field: "observaciones",      alias: "Observaciones"    ),    #"SYSTEM_SYSRULES_queryColumn"(      field: "obligatorio",      alias: "Obligatorio"    ),    #"SYSTEM_SYSRULES_queryColumn"(field: "extra4", alias: "Tipo_operación"),    #"SYSTEM_SYSRULES_queryColumn"(field: "titulo", alias: "Titulo"), #"SYSTEM_SYSRULES_queryColumn"(      field: "ip",      alias: "IP"    ), #"SYSTEM_SYSRULES_queryColumn"(      field: "revisado",      alias: "Revisado"    )      })]]></a:expr>
-                <a:required>0</a:required>
-                <a:editable>1</a:editable>
-                <a:assign-to-pv/>
-                <a:input-to-activity-class>true</a:input-to-activity-class>
-                <a:hidden-from-designer>false</a:hidden-from-designer>
-                <a:generated>false</a:generated>
-                <a:enumeration/>
-                <a:customDisplayReference/>
-              </acp>
-              <acp name="Aggregation">
-                <a:value xsi:nil="true" xsi:type="a:Aggregation"/>
-                <a:local-id>input-Aggregation</a:local-id>
-                <a:expr/>
-                <a:required>0</a:required>
-                <a:editable>1</a:editable>
-                <a:assign-to-pv/>
-                <a:input-to-activity-class>true</a:input-to-activity-class>
-                <a:hidden-from-designer>false</a:hidden-from-designer>
-                <a:generated>false</a:generated>
-                <a:enumeration/>
-                <a:customDisplayReference/>
-              </acp>
-              <acp name="Filters">
-                <a:value xsi:nil="true" xsi:type="a:Variant"/>
-                <a:local-id>input-Filters</a:local-id>
-                <a:expr><![CDATA[=#"SYSTEM_SYSRULES_queryFilter"("idreporte", "=", pv!reporteId)]]></a:expr>
-                <a:required>0</a:required>
-                <a:editable>1</a:editable>
-                <a:assign-to-pv/>
-                <a:input-to-activity-class>true</a:input-to-activity-class>
-                <a:hidden-from-designer>false</a:hidden-from-designer>
-                <a:generated>false</a:generated>
-                <a:enumeration/>
-                <a:customDisplayReference/>
-              </acp>
-              <acp name="DocumentName">
-                <a:value xsi:nil="true" xsi:type="xsd:string"/>
-                <a:local-id>input-DocumentName</a:local-id>
-                <a:expr><![CDATA[="Reporte Traza Excel - " & pp!starttime]]></a:expr>
-                <a:required>0</a:required>
-                <a:editable>1</a:editable>
-                <a:assign-to-pv/>
-                <a:input-to-activity-class>true</a:input-to-activity-class>
-                <a:hidden-from-designer>false</a:hidden-from-designer>
-                <a:generated>false</a:generated>
-                <a:enumeration/>
-                <a:customDisplayReference/>
-              </acp>
-              <acp name="DocumentDescription">
-                <a:value xsi:nil="true" xsi:type="xsd:string"/>
-                <a:local-id>input-DocumentDescription</a:local-id>
-                <a:expr/>
-                <a:required>0</a:required>
-                <a:editable>1</a:editable>
-                <a:assign-to-pv/>
-                <a:input-to-activity-class>true</a:input-to-activity-class>
-                <a:hidden-from-designer>false</a:hidden-from-designer>
-                <a:generated>false</a:generated>
-                <a:enumeration/>
-                <a:customDisplayReference/>
-              </acp>
-              <acp name="SaveInFolder">
-                <a:value
-                  a:id="_a-0000e9a7-6d42-8000-e63f-01ef9001ef90_5434945"
-                  xmlns="" xsi:type="a:CollaborationFolder"/>
-                <a:local-id>input-SaveInFolder</a:local-id>
-                <a:expr/>
-                <a:required>0</a:required>
-                <a:editable>1</a:editable>
-                <a:assign-to-pv/>
-                <a:input-to-activity-class>true</a:input-to-activity-class>
-                <a:hidden-from-designer>false</a:hidden-from-designer>
-                <a:generated>false</a:generated>
-                <a:enumeration/>
-                <a:customDisplayReference/>
-              </acp>
-              <acp name="DocumentToUpdate">
-                <a:value xsi:nil="true" xsi:type="a:CollaborationDocument"/>
-                <a:local-id>input-DocumentToUpdate</a:local-id>
-                <a:expr/>
-                <a:required>0</a:required>
-                <a:editable>1</a:editable>
-                <a:assign-to-pv/>
-                <a:input-to-activity-class>true</a:input-to-activity-class>
-                <a:hidden-from-designer>false</a:hidden-from-designer>
-                <a:generated>false</a:generated>
-                <a:enumeration/>
-                <a:customDisplayReference/>
-              </acp>
-              <acp name="IncludeHeader">
-                <a:value xmlns="" xsi:type="xsd:boolean">true</a:value>
-                <a:local-id>input-IncludeHeader</a:local-id>
-                <a:expr/>
-                <a:required>0</a:required>
-                <a:editable>1</a:editable>
-                <a:assign-to-pv/>
-                <a:input-to-activity-class>true</a:input-to-activity-class>
-                <a:hidden-from-designer>false</a:hidden-from-designer>
-                <a:generated>false</a:generated>
-                <a:enumeration>include-header</a:enumeration>
-                <a:customDisplayReference/>
-              </acp>
-              <acp name="SheetName">
-                <a:value xsi:nil="true" xsi:type="xsd:string"/>
-                <a:local-id>input-SheetName</a:local-id>
-                <a:expr/>
-                <a:required>0</a:required>
-                <a:editable>1</a:editable>
-                <a:assign-to-pv/>
-                <a:input-to-activity-class>true</a:input-to-activity-class>
-                <a:hidden-from-designer>false</a:hidden-from-designer>
-                <a:generated>false</a:generated>
-                <a:enumeration/>
-                <a:customDisplayReference/>
-              </acp>
-              <acp name="SheetNumber">
-                <a:value xsi:nil="true" xsi:type="xsd:int"/>
-                <a:local-id>input-SheetNumber</a:local-id>
-                <a:expr/>
-                <a:required>0</a:required>
-                <a:editable>1</a:editable>
-                <a:assign-to-pv/>
-                <a:input-to-activity-class>true</a:input-to-activity-class>
-                <a:hidden-from-designer>false</a:hidden-from-designer>
-                <a:generated>false</a:generated>
-                <a:enumeration/>
-                <a:customDisplayReference/>
-              </acp>
-              <acp name="StartingCell">
-                <a:value xsi:nil="true" xsi:type="xsd:string"/>
-                <a:local-id>input-StartingCell</a:local-id>
-                <a:expr><![CDATA[="A10"]]></a:expr>
-                <a:required>0</a:required>
-                <a:editable>1</a:editable>
-                <a:assign-to-pv/>
-                <a:input-to-activity-class>true</a:input-to-activity-class>
-                <a:hidden-from-designer>false</a:hidden-from-designer>
-                <a:generated>false</a:generated>
-                <a:enumeration/>
-                <a:customDisplayReference/>
-              </acp>
-              <acp name="CustomCellPositions">
-                <a:value xsi:nil="true" xsi:type="a:Text?list"/>
-                <a:local-id>input-CustomCellPositions</a:local-id>
-                <a:expr><![CDATA[={"A1", "A5", "A6", "A7", "B6", "B7", "C6", "C7","D6", "D7", "E6", "E7", "F6", "F7", "G6", "G7", "H6", "H7", "I6", "I7", "J6", "J7", "K6", "K7", "L6", "L7", "M6", "M7", "N6", "N7", "O6", "O7", "P6", "P7", "Q6", "Q7", "R6", "R7", "S6", "S7", "A9", "B1", "A2", "B2"}]]></a:expr>
-                <a:required>0</a:required>
-                <a:editable>1</a:editable>
-                <a:assign-to-pv/>
-                <a:input-to-activity-class>true</a:input-to-activity-class>
-                <a:hidden-from-designer>false</a:hidden-from-designer>
-                <a:generated>false</a:generated>
-                <a:enumeration/>
-                <a:customDisplayReference/>
-              </acp>
-              <acp name="CustomCellValues">
-                <a:value xsi:nil="true" xsi:type="a:Text?list"/>
-                <a:local-id>input-CustomCellValues</a:local-id>
-                <a:expr><![CDATA[= {  "Usuario que modificó: ",  "Información Antigua",  "Mercado",  pv!reporteAntiguo.mercado,  "Operacion",  pv!reporteAntiguo.operacion,  "Contrato",  pv!reporteAntiguo.contrato,  "Nombre Cliente",  pv!reporteAntiguo.nombre,  "Monto",  pv!reporteAntiguo.monto,  /*fixed(todecimal(pv!reporteAntiguo.monto), 2),*/  "Promotor",  pv!reporteAntiguo.promotor,  "Usuario",  pv!reporteAntiguo.usuario,  "Fecha_de_captura",  pv!reporteAntiguo.fechacaptura,  "Hora Captura",  pv!reporteAntiguo.horacaptura,  "Riesgo",  pv!reporteAntiguo.riesgo,  "Emisora",  pv!reporteAntiguo.emisora,  "Centro_de_Costos",  pv!reporteAntiguo.ccostos,  "Bitacora",  pv!reporteAntiguo.bitacora,  "Observaciones",  pv!reporteAntiguo.observaciones,  "Obligatorio",  pv!reporteAntiguo.obligatorio,  "Tipo_operación",  pv!reporteAntiguo.extra4,  "Titulo",  pv!reporteAntiguo.titulo,  "IP",  pv!reporteAntiguo.ip,  "Revisado",  pv!reporteAntiguo.revisado,  "Información Correcta",  pv!user,  "Exportado en: ",  tp!starttime}]]></a:expr>
-                <a:required>0</a:required>
-                <a:editable>1</a:editable>
-                <a:assign-to-pv/>
-                <a:input-to-activity-class>true</a:input-to-activity-class>
-                <a:hidden-from-designer>false</a:hidden-from-designer>
-                <a:generated>false</a:generated>
-                <a:enumeration/>
-                <a:customDisplayReference/>
-              </acp>
-              <acp name="NewDocument">
-                <a:value xsi:nil="true" xsi:type="a:CollaborationDocument"/>
-                <a:local-id>output-NewDocument</a:local-id>
-                <a:expr/>
-                <a:required>0</a:required>
-                <a:editable>1</a:editable>
-                <a:assign-to-pv/>
-                <a:input-to-activity-class>false</a:input-to-activity-class>
-                <a:hidden-from-designer>false</a:hidden-from-designer>
-                <a:generated>false</a:generated>
-                <a:enumeration/>
-                <a:customDisplayReference/>
-              </acp>
-            </acps>
-            <custom-params/>
-            <output-exprs>
-              <el typeFlag="1"><![CDATA[excel:AC!NewDocument]]></el>
-            </output-exprs>
-            <requires-user-interaction>true</requires-user-interaction>
-            <run-as>
-              <performer id="0"/>
-            </run-as>
-            <form-map>
-              <pair>
-                <locale country="" lang="es" variant=""/>
-                <form-config>
-                  <form>
-                    <type>3</type>
-                    <enabled>false</enabled>
-                    <dynamic-form>
-                      <form-elements/>
-                    </dynamic-form>
-                    <uiExpressionForm>
-                      <expression><![CDATA[=/*41707069616E-GEN-DEBUG*/=a!formLayout(
-  buttons: a!buttonLayout(
-    primaryButtons: {
-      a!buttonWidgetSubmit(
-        label: "OK",
-        style: "PRIMARY"
-      )
-    }
-  ))]]></expression>
-                    </uiExpressionForm>
-                    <hiddenSections>16</hiddenSections>
-                  </form>
-                </form-config>
-              </pair>
-              <pair>
-                <locale country="US" lang="en" variant=""/>
-                <form-config>
-                  <form>
-                    <type>3</type>
-                    <enabled>true</enabled>
-                    <dynamic-form>
-                      <form-elements/>
-                    </dynamic-form>
-                    <uiExpressionForm>
-                      <expression><![CDATA[=/*41707069616E-GEN-DEBUG*/=a!formLayout(
-  buttons: a!buttonLayout(
-    primaryButtons: {
-      a!buttonWidgetSubmit(
-        label: "OK",
-        style: "PRIMARY"
-      )
-    }
-  ))]]></expression>
-                    </uiExpressionForm>
-                    <hiddenSections>16</hiddenSections>
-                  </form>
-                </form-config>
-              </pair>
-            </form-map>
-            <helper-class/>
-          </ac>
-          <multiple-instance/>
-          <escalations/>
-          <connections>
-            <connection>
-              <guiId>6</guiId>
-              <to>5</to>
-              <toObjectType>ap.gui.Node</toObjectType>
-              <fromAnchor/>
-              <toAnchor/>
-              <showArrowhead>true</showArrowhead>
-              <flowLabel/>
-              <label>
-                <fontColor>#000</fontColor>
-                <fontFamily>Appian Open Sans, Sans-Serif</fontFamily>
+                <fontColor>#000000</fontColor>
+                <fontFamily>Arial, Helvetica, Sans-Serif</fontFamily>
                 <fontSize>12</fontSize>
                 <bold>false</bold>
                 <italics>false</italics>
@@ -2259,34 +1080,34 @@
           <on-complete-keep-form-data>false</on-complete-keep-form-data>
           <skipNotification>false</skipNotification>
         </node>
-        <node uuid="0001e9da-968e-8000-052a-014d98014d98">
-          <guiId>7</guiId>
+        <node uuid="0002ec57-edd0-8000-cd83-014d98014d98">
+          <guiId>8</guiId>
           <owner/>
-          <icon id="998"/>
-          <picon id="98"/>
+          <icon id="86"/>
+          <picon id="86"/>
           <fname>
             <string-map>
               <pair>
                 <locale country="US" lang="en" variant=""/>
-                <value><![CDATA[Export Data Store Entity to Excel]]></value>
+                <value><![CDATA[XLXS REPORTES APROBADOS]]></value>
               </pair>
               <pair>
                 <locale country="" lang="es" variant=""/>
-                <value><![CDATA[Exportar a Excel Cambios RA]]></value>
+                <value><![CDATA[XLXS REPORTES APROBADOS]]></value>
               </pair>
             </string-map>
           </fname>
-          <x>588</x>
-          <y>56</y>
+          <x>700</x>
+          <y>224</y>
           <display>
             <string-map>
               <pair>
                 <locale country="US" lang="en" variant=""/>
-                <value><![CDATA[Export Data Store Entity to Excel]]></value>
+                <value><![CDATA[XLXS REPORTES APROBADOS]]></value>
               </pair>
               <pair>
                 <locale country="" lang="es" variant=""/>
-                <value><![CDATA[Exportar a Excel Cambios RA]]></value>
+                <value><![CDATA[XLXS REPORTES APROBADOS]]></value>
               </pair>
             </string-map>
           </display>
@@ -2307,13 +1128,258 @@
           <lane>0</lane>
           <overrideLaneAssignment>false</overrideLaneAssignment>
           <ac>
-            <local-id>appian.system.smart-services.data-export-entity-excel2</local-id>
-            <name><![CDATA[Export Data Store Entity to Excel]]></name>
+            <local-id>internal.texttemplatemerge601</local-id>
+            <name><![CDATA[Generate Text]]></name>
             <acps>
-              <acp name="DataStoreEntity">
-                <a:value xsi:nil="true" xsi:type="a:DataStoreEntity"/>
-                <a:local-id>input-DataStoreEntity</a:local-id>
-                <a:expr><![CDATA[=#"_a-0000e8d8-9b98-8000-e605-01ef9001ef90_2735521"]]></a:expr>
+              <acp name="BodyTemplate">
+                <a:value
+                  a:id="_a-0000ec31-ac7e-8000-e69b-01ef9001ef90_10030587"
+                  xmlns="" xsi:type="a:CollaborationDocument"/>
+                <a:local-id>bodytemplate</a:local-id>
+                <a:expr/>
+                <a:required>1</a:required>
+                <a:editable>1</a:editable>
+                <a:assign-to-pv/>
+                <a:input-to-activity-class>true</a:input-to-activity-class>
+                <a:hidden-from-designer>true</a:hidden-from-designer>
+                <a:generated>false</a:generated>
+                <a:enumeration/>
+                <a:customDisplayReference/>
+              </acp>
+              <acp name="CreateNewDoc">
+                <a:value xmlns="" xsi:type="xsd:boolean">true</a:value>
+                <a:local-id>createnewdoc</a:local-id>
+                <a:expr/>
+                <a:required>1</a:required>
+                <a:editable>1</a:editable>
+                <a:assign-to-pv/>
+                <a:input-to-activity-class>true</a:input-to-activity-class>
+                <a:hidden-from-designer>true</a:hidden-from-designer>
+                <a:generated>false</a:generated>
+                <a:enumeration/>
+                <a:customDisplayReference/>
+              </acp>
+              <acp name="NewDocName">
+                <a:value xsi:nil="true" xsi:type="xsd:string"/>
+                <a:local-id>newdocname</a:local-id>
+                <a:expr><![CDATA[="Actualizacion"&loggedInUser()]]></a:expr>
+                <a:required>0</a:required>
+                <a:editable>1</a:editable>
+                <a:assign-to-pv/>
+                <a:input-to-activity-class>true</a:input-to-activity-class>
+                <a:hidden-from-designer>true</a:hidden-from-designer>
+                <a:generated>false</a:generated>
+                <a:enumeration/>
+                <a:customDisplayReference/>
+              </acp>
+              <acp name="NewDocDesc">
+                <a:value xsi:nil="true" xsi:type="xsd:string"/>
+                <a:local-id>newdocdesc</a:local-id>
+                <a:expr/>
+                <a:required>0</a:required>
+                <a:editable>1</a:editable>
+                <a:assign-to-pv/>
+                <a:input-to-activity-class>true</a:input-to-activity-class>
+                <a:hidden-from-designer>true</a:hidden-from-designer>
+                <a:generated>false</a:generated>
+                <a:enumeration/>
+                <a:customDisplayReference/>
+              </acp>
+              <acp name="SaveInFolder">
+                <a:value
+                  a:id="_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1899585"
+                  xmlns="" xsi:type="a:CollaborationFolder"/>
+                <a:local-id>saveinfolder</a:local-id>
+                <a:expr/>
+                <a:required>0</a:required>
+                <a:editable>1</a:editable>
+                <a:assign-to-pv/>
+                <a:input-to-activity-class>true</a:input-to-activity-class>
+                <a:hidden-from-designer>true</a:hidden-from-designer>
+                <a:generated>false</a:generated>
+                <a:enumeration/>
+                <a:customDisplayReference/>
+              </acp>
+              <acp name="DocToReplace">
+                <a:value
+                  a:id="_a-0000ec31-ac7e-8000-e69b-01ef9001ef90_10030587"
+                  xmlns="" xsi:type="a:CollaborationDocument"/>
+                <a:local-id>doctoreplace</a:local-id>
+                <a:expr/>
+                <a:required>0</a:required>
+                <a:editable>1</a:editable>
+                <a:assign-to-pv/>
+                <a:input-to-activity-class>true</a:input-to-activity-class>
+                <a:hidden-from-designer>true</a:hidden-from-designer>
+                <a:generated>false</a:generated>
+                <a:enumeration/>
+                <a:customDisplayReference/>
+              </acp>
+              <acp name="RuntimeBodyTemplate">
+                <a:value xsi:nil="true" xsi:type="a:CollaborationDocument"/>
+                <a:local-id>runtimebodytemplate</a:local-id>
+                <a:expr/>
+                <a:required>0</a:required>
+                <a:editable>1</a:editable>
+                <a:assign-to-pv/>
+                <a:input-to-activity-class>true</a:input-to-activity-class>
+                <a:hidden-from-designer>true</a:hidden-from-designer>
+                <a:generated>false</a:generated>
+                <a:enumeration/>
+                <a:customDisplayReference/>
+              </acp>
+              <acp name="NewDocument">
+                <a:value xsi:nil="true" xsi:type="a:CollaborationDocument"/>
+                <a:local-id>newdocument</a:local-id>
+                <a:expr/>
+                <a:required>0</a:required>
+                <a:editable>1</a:editable>
+                <a:assign-to-pv/>
+                <a:input-to-activity-class>false</a:input-to-activity-class>
+                <a:hidden-from-designer>false</a:hidden-from-designer>
+                <a:generated>false</a:generated>
+                <a:enumeration/>
+                <a:customDisplayReference/>
+              </acp>
+            </acps>
+            <custom-params>
+              <acp name="ae-key-data">
+                <a:value xsi:nil="true" xsi:type="xsd:string"/>
+                <a:local-id/>
+                <a:expr><![CDATA[= joinarray(  {    concat("Usuario que Modifico: ", pp!initiator),    char(10),    concat("Exportado en:", now()),    char(13),    "informacion Antigua",    char(13),    "Mercado,Operacion,Contrato,Nombre Cliente,Monto,Promotor,Usuario,Fecha de captura,Hora Captura,Riesgo,Emisora,Centro de Costos,Bitacora,Observaciones,Obligatorio,Tipo operacion,Titulo,IP,Revisado",    char(13),    concat(      pv!reporteAprobadoAntiguo.mercado,      ",",      pv!reporteAprobadoAntiguo.operacion,      ",",      pv!reporteAprobadoAntiguo.contrato,      ",",      a!match(        value: index(          decrypttext(            valueToDecrypt: index(pv!reporteAprobadoAntiguo, "nombre", null),            iv: #"_a-0000ec31-ac7e-8000-e69b-01ef9001ef90_10021470",            scsKey: #"_a-0000ec31-ac7e-8000-e69b-01ef9001ef90_10021476"          ),          "success",          null        ),        equals: true,        then: index(          decrypttext(            valueToDecrypt: index(pv!reporteAprobadoAntiguo, "nombre", null),            iv: #"_a-0000ec31-ac7e-8000-e69b-01ef9001ef90_10021470",            scsKey: #"_a-0000ec31-ac7e-8000-e69b-01ef9001ef90_10021476"          ),          "value",          null        ),        equals: false,        then: index(pv!reporteAprobadoAntiguo, "nombre", null),        default: "Sin nombre"      ),      ",",      pv!reporteAprobadoAntiguo.monto,      ",",      pv!reporteAprobadoAntiguo.promotor,      ",",      pv!reporteAprobadoAntiguo.usuario,      ",",      pv!reporteAprobadoAntiguo.fechacaptura,      ",",      pv!reporteAprobadoAntiguo.horacaptura,      ",",      pv!reporteAprobadoAntiguo.riesgo,      ",",      pv!reporteAprobadoAntiguo.emisora,      ",",      pv!reporteAprobadoAntiguo.ccostos,      ",",      pv!reporteAprobadoAntiguo.bitacora,      ",",      pv!reporteAprobadoAntiguo.observaciones,      ",",      pv!reporteAprobadoAntiguo.obligatorio,      ",",      pv!reporteAprobadoAntiguo.extra4,      ",",      pv!reporteAprobadoAntiguo.titulo,      ",",      pv!reporteAprobadoAntiguo.ip,      ",",      pv!reporteAprobadoAntiguo.revisado,      ","    ),    char(13),    "Informacion NUEVA:",    char(13),    #"_a-0000ec52-2d7d-8000-e69d-01ef9001ef90_10100615"(      entidad: pv!Entidad,      seleccion: = #"SYSTEM_SYSRULES_querySelection"(        columns: {          #"SYSTEM_SYSRULES_queryColumn"(field: "mercado", alias: "Mercado"),          #"SYSTEM_SYSRULES_queryColumn"(field: "operacion", alias: "Operacion"),          #"SYSTEM_SYSRULES_queryColumn"(field: "contrato", alias: "Contrato"),          #"SYSTEM_SYSRULES_queryColumn"(field: "nombre", alias: "Nombre_cliente"),          #"SYSTEM_SYSRULES_queryColumn"(field: "monto", alias: "Monto"),          #"SYSTEM_SYSRULES_queryColumn"(field: "promotor", alias: "Promotor"),          #"SYSTEM_SYSRULES_queryColumn"(field: "usuario", alias: "Usuario"),          #"SYSTEM_SYSRULES_queryColumn"(            field: "fechacaptura",            alias: "Fecha_de_captura"          ),          #"SYSTEM_SYSRULES_queryColumn"(            field: "horacaptura",            alias: "Hora_captura"          ),          #"SYSTEM_SYSRULES_queryColumn"(field: "riesgo", alias: "Riesgo"),          #"SYSTEM_SYSRULES_queryColumn"(field: "emisora", alias: "Emisora"),          #"SYSTEM_SYSRULES_queryColumn"(            field: "ccostos",            alias: "Centro_de_Costos"          ),          #"SYSTEM_SYSRULES_queryColumn"(field: "bitacora", alias: "Bitacora"),          #"SYSTEM_SYSRULES_queryColumn"(            field: "observaciones",            alias: "Observaciones"          ),          #"SYSTEM_SYSRULES_queryColumn"(            field: "obligatorio",            alias: "Obligatorio"          ),          #"SYSTEM_SYSRULES_queryColumn"(field: "extra4", alias: "Tipo_operación"),          #"SYSTEM_SYSRULES_queryColumn"(field: "titulo", alias: "Titulo"),          #"SYSTEM_SYSRULES_queryColumn"(field: "ip", alias: "IP"),          #"SYSTEM_SYSRULES_queryColumn"(field: "revisado", alias: "Revisado")        }      ),      idreporte: pv!reporteId    )  })]]></a:expr>
+                <a:required>0</a:required>
+                <a:editable>1</a:editable>
+                <a:assign-to-pv/>
+                <a:input-to-activity-class>true</a:input-to-activity-class>
+                <a:hidden-from-designer>true</a:hidden-from-designer>
+                <a:generated>false</a:generated>
+                <a:enumeration/>
+                <a:customDisplayReference/>
+              </acp>
+            </custom-params>
+            <output-exprs>
+              <el typeFlag="1"><![CDATA[excel:AC!NewDocument]]></el>
+            </output-exprs>
+            <requires-user-interaction>true</requires-user-interaction>
+            <run-as>
+              <performer id="0"/>
+            </run-as>
+            <form-map/>
+            <helper-class/>
+          </ac>
+          <multiple-instance/>
+          <escalations/>
+          <connections>
+            <connection>
+              <guiId>10</guiId>
+              <to>9</to>
+              <toObjectType>ap.gui.Node</toObjectType>
+              <fromAnchor/>
+              <toAnchor/>
+              <showArrowhead>true</showArrowhead>
+              <flowLabel/>
+              <label>
+                <fontColor>#000000</fontColor>
+                <fontFamily>Arial, Helvetica, Sans-Serif</fontFamily>
+                <fontSize>12</fontSize>
+                <bold>false</bold>
+                <italics>false</italics>
+                <underline>false</underline>
+              </label>
+              <associations/>
+              <chained>true</chained>
+              <overridesAssignment>true</overridesAssignment>
+              <synchronizeData>false</synchronizeData>
+            </connection>
+          </connections>
+          <associations/>
+          <target-completion>5.0</target-completion>
+          <target-lag>1.0</target-lag>
+          <attachments/>
+          <notes/>
+          <lingering>false</lingering>
+          <on-create-ignore-if-active>false</on-create-ignore-if-active>
+          <on-create-delete-previous-active>false</on-create-delete-previous-active>
+          <on-complete-delete-previous-completed>false</on-complete-delete-previous-completed>
+          <pre-triggers/>
+          <post-triggers/>
+          <event-producers/>
+          <exception-flow/>
+          <label>
+            <fontColor>#000000</fontColor>
+            <fontFamily>Arial, Helvetica, Sans-Serif</fontFamily>
+            <fontSize>12</fontSize>
+            <bold>false</bold>
+            <italics>false</italics>
+            <underline>false</underline>
+          </label>
+          <deadline>
+            <enabled>false</enabled>
+            <type>0</type>
+            <units>0</units>
+            <rex/>
+            <aex/>
+          </deadline>
+          <allowsBack>false</allowsBack>
+          <refreshDefaultValues>false</refreshDefaultValues>
+          <on-complete-keep-form-data>false</on-complete-keep-form-data>
+          <skipNotification>false</skipNotification>
+        </node>
+        <node uuid="0003ec57-edd0-8000-cd83-014d98014d98">
+          <guiId>9</guiId>
+          <owner/>
+          <icon id="998"/>
+          <picon id="98"/>
+          <fname>
+            <string-map>
+              <pair>
+                <locale country="US" lang="en" variant=""/>
+                <value><![CDATA[Generate EXCEL from CSV]]></value>
+              </pair>
+              <pair>
+                <locale country="" lang="es" variant=""/>
+                <value><![CDATA[Generate EXCEL from CSV]]></value>
+              </pair>
+            </string-map>
+          </fname>
+          <x>868</x>
+          <y>224</y>
+          <display>
+            <string-map>
+              <pair>
+                <locale country="US" lang="en" variant=""/>
+                <value><![CDATA[Generate EXCEL from CSV]]></value>
+              </pair>
+              <pair>
+                <locale country="" lang="es" variant=""/>
+                <value><![CDATA[Generate EXCEL from CSV]]></value>
+              </pair>
+            </string-map>
+          </display>
+          <desc>
+            <string-map>
+              <pair>
+                <locale country="US" lang="en" variant=""/>
+                <value/>
+              </pair>
+              <pair>
+                <locale country="" lang="es" variant=""/>
+                <value/>
+              </pair>
+            </string-map>
+          </desc>
+          <notify>false</notify>
+          <confirmation-url/>
+          <lane>0</lane>
+          <overrideLaneAssignment>false</overrideLaneAssignment>
+          <ac>
+            <local-id>com.vuram.plugins.csvtoexcel.GenerateEXCELfromCSV</local-id>
+            <name><![CDATA[Generate EXCEL from CSV]]></name>
+            <acps>
+              <acp name="CreateNewDocument">
+                <a:value xmlns="" xsi:type="xsd:boolean">true</a:value>
+                <a:local-id>input-CreateNewDocument</a:local-id>
+                <a:expr/>
                 <a:required>1</a:required>
                 <a:editable>1</a:editable>
                 <a:assign-to-pv/>
@@ -2323,11 +1389,11 @@
                 <a:enumeration/>
                 <a:customDisplayReference/>
               </acp>
-              <acp name="Selection">
-                <a:value xsi:nil="true" xsi:type="a:Selection"/>
-                <a:local-id>input-Selection</a:local-id>
-                <a:expr><![CDATA[= #"SYSTEM_SYSRULES_querySelection"(columns: {#"SYSTEM_SYSRULES_queryColumn"(field: "mercado", alias: "Mercado"),#"SYSTEM_SYSRULES_queryColumn"(field: "operacion", alias: "Operacion"),    #"SYSTEM_SYSRULES_queryColumn"(field: "contrato", alias: "Contrato"),    #"SYSTEM_SYSRULES_queryColumn"(field: "nombre", alias: "Nombre_cliente"),    #"SYSTEM_SYSRULES_queryColumn"(field: "monto", alias: "Monto"), #"SYSTEM_SYSRULES_queryColumn"(field: "promotor", alias: "Promotor"),    #"SYSTEM_SYSRULES_queryColumn"(field: "usuario", alias: "Usuario"),    #"SYSTEM_SYSRULES_queryColumn"(      field: "fechacaptura",      alias: "Fecha_de_captura"    ),  #"SYSTEM_SYSRULES_queryColumn"(field: "horacaptura", alias: "Hora_captura"), #"SYSTEM_SYSRULES_queryColumn"(field: "riesgo", alias: "Riesgo"), #"SYSTEM_SYSRULES_queryColumn"(field: "emisora", alias: "Emisora"), #"SYSTEM_SYSRULES_queryColumn"(field: "ccostos", alias: "Centro_de_Costos"),    #"SYSTEM_SYSRULES_queryColumn"(field: "bitacora", alias: "Bitacora"), #"SYSTEM_SYSRULES_queryColumn"(field: "observaciones",alias: "Observaciones"), #"SYSTEM_SYSRULES_queryColumn"(field: "obligatorio",alias: "Obligatorio"), #"SYSTEM_SYSRULES_queryColumn"(field: "extra4", alias: "Tipo_operación"), #"SYSTEM_SYSRULES_queryColumn"(field: "titulo", alias: "Titulo"), #"SYSTEM_SYSRULES_queryColumn"(field: "ip",alias: "IP"), #"SYSTEM_SYSRULES_queryColumn"(field: "revisado",alias: "Revisado"), #"SYSTEM_SYSRULES_queryColumn"(field: "usuarioreviso",alias: "Usuario_reviso"), #"SYSTEM_SYSRULES_queryColumn"(field: "ccreviso",alias: "CCReviso"), #"SYSTEM_SYSRULES_queryColumn"(field: "fechareviso",alias: "Fecha_reviso")})]]></a:expr>
-                <a:required>0</a:required>
+              <acp name="Delimiter">
+                <a:value xsi:nil="true" xsi:type="xsd:string"/>
+                <a:local-id>input-Delimiter</a:local-id>
+                <a:expr><![CDATA[=","]]></a:expr>
+                <a:required>1</a:required>
                 <a:editable>1</a:editable>
                 <a:assign-to-pv/>
                 <a:input-to-activity-class>true</a:input-to-activity-class>
@@ -2336,9 +1402,35 @@
                 <a:enumeration/>
                 <a:customDisplayReference/>
               </acp>
-              <acp name="Aggregation">
-                <a:value xsi:nil="true" xsi:type="a:Aggregation"/>
-                <a:local-id>input-Aggregation</a:local-id>
+              <acp name="Error">
+                <a:value xsi:nil="true" xsi:type="xsd:boolean"/>
+                <a:local-id>output-Error</a:local-id>
+                <a:expr/>
+                <a:required>0</a:required>
+                <a:editable>1</a:editable>
+                <a:assign-to-pv/>
+                <a:input-to-activity-class>false</a:input-to-activity-class>
+                <a:hidden-from-designer>false</a:hidden-from-designer>
+                <a:generated>false</a:generated>
+                <a:enumeration/>
+                <a:customDisplayReference/>
+              </acp>
+              <acp name="ErrorMessage">
+                <a:value xsi:nil="true" xsi:type="xsd:string"/>
+                <a:local-id>output-ErrorMessage</a:local-id>
+                <a:expr/>
+                <a:required>0</a:required>
+                <a:editable>1</a:editable>
+                <a:assign-to-pv/>
+                <a:input-to-activity-class>false</a:input-to-activity-class>
+                <a:hidden-from-designer>false</a:hidden-from-designer>
+                <a:generated>false</a:generated>
+                <a:enumeration/>
+                <a:customDisplayReference/>
+              </acp>
+              <acp name="ExistingDocument">
+                <a:value xsi:nil="true" xsi:type="a:CollaborationDocument"/>
+                <a:local-id>input-ExistingDocument</a:local-id>
                 <a:expr/>
                 <a:required>0</a:required>
                 <a:editable>1</a:editable>
@@ -2349,36 +1441,36 @@
                 <a:enumeration/>
                 <a:customDisplayReference/>
               </acp>
-              <acp name="Filters">
-                <a:value xsi:nil="true" xsi:type="a:Variant"/>
-                <a:local-id>input-Filters</a:local-id>
-                <a:expr><![CDATA[=#"SYSTEM_SYSRULES_queryFilter"("idreporte", "=", pv!reporteId)]]></a:expr>
-                <a:required>0</a:required>
-                <a:editable>1</a:editable>
-                <a:assign-to-pv/>
-                <a:input-to-activity-class>true</a:input-to-activity-class>
-                <a:hidden-from-designer>false</a:hidden-from-designer>
-                <a:generated>false</a:generated>
-                <a:enumeration/>
-                <a:customDisplayReference/>
-              </acp>
-              <acp name="DocumentName">
-                <a:value xsi:nil="true" xsi:type="xsd:string"/>
-                <a:local-id>input-DocumentName</a:local-id>
-                <a:expr><![CDATA[="Reporte Aprobado Traza Excel - " & pp!starttime]]></a:expr>
-                <a:required>0</a:required>
-                <a:editable>1</a:editable>
-                <a:assign-to-pv/>
-                <a:input-to-activity-class>true</a:input-to-activity-class>
-                <a:hidden-from-designer>false</a:hidden-from-designer>
-                <a:generated>false</a:generated>
-                <a:enumeration/>
-                <a:customDisplayReference/>
-              </acp>
-              <acp name="DocumentDescription">
-                <a:value xsi:nil="true" xsi:type="xsd:string"/>
-                <a:local-id>input-DocumentDescription</a:local-id>
+              <acp name="NewDocumentCreated">
+                <a:value xsi:nil="true" xsi:type="a:CollaborationDocument"/>
+                <a:local-id>output-NewDocumentCreated</a:local-id>
                 <a:expr/>
+                <a:required>0</a:required>
+                <a:editable>1</a:editable>
+                <a:assign-to-pv/>
+                <a:input-to-activity-class>false</a:input-to-activity-class>
+                <a:hidden-from-designer>false</a:hidden-from-designer>
+                <a:generated>false</a:generated>
+                <a:enumeration/>
+                <a:customDisplayReference/>
+              </acp>
+              <acp name="NewDocumentDesc">
+                <a:value xsi:nil="true" xsi:type="xsd:string"/>
+                <a:local-id>input-NewDocumentDesc</a:local-id>
+                <a:expr/>
+                <a:required>0</a:required>
+                <a:editable>1</a:editable>
+                <a:assign-to-pv/>
+                <a:input-to-activity-class>true</a:input-to-activity-class>
+                <a:hidden-from-designer>false</a:hidden-from-designer>
+                <a:generated>false</a:generated>
+                <a:enumeration/>
+                <a:customDisplayReference/>
+              </acp>
+              <acp name="NewDocumentName">
+                <a:value xsi:nil="true" xsi:type="xsd:string"/>
+                <a:local-id>input-NewDocumentName</a:local-id>
+                <a:expr><![CDATA[="SCDO_Plantilla_Reporte_Operaciones_NEW"]]></a:expr>
                 <a:required>0</a:required>
                 <a:editable>1</a:editable>
                 <a:assign-to-pv/>
@@ -2390,7 +1482,7 @@
               </acp>
               <acp name="SaveInFolder">
                 <a:value
-                  a:id="_a-0000e9a7-6d42-8000-e63f-01ef9001ef90_5434945"
+                  a:id="_a-0000e867-3fd5-8000-e5e3-01ef9001ef90_1899585"
                   xmlns="" xsi:type="a:CollaborationFolder"/>
                 <a:local-id>input-SaveInFolder</a:local-id>
                 <a:expr/>
@@ -2403,36 +1495,10 @@
                 <a:enumeration/>
                 <a:customDisplayReference/>
               </acp>
-              <acp name="DocumentToUpdate">
-                <a:value xsi:nil="true" xsi:type="a:CollaborationDocument"/>
-                <a:local-id>input-DocumentToUpdate</a:local-id>
-                <a:expr/>
-                <a:required>0</a:required>
-                <a:editable>1</a:editable>
-                <a:assign-to-pv/>
-                <a:input-to-activity-class>true</a:input-to-activity-class>
-                <a:hidden-from-designer>false</a:hidden-from-designer>
-                <a:generated>false</a:generated>
-                <a:enumeration/>
-                <a:customDisplayReference/>
-              </acp>
-              <acp name="IncludeHeader">
-                <a:value xmlns="" xsi:type="xsd:boolean">true</a:value>
-                <a:local-id>input-IncludeHeader</a:local-id>
-                <a:expr/>
-                <a:required>0</a:required>
-                <a:editable>1</a:editable>
-                <a:assign-to-pv/>
-                <a:input-to-activity-class>true</a:input-to-activity-class>
-                <a:hidden-from-designer>false</a:hidden-from-designer>
-                <a:generated>false</a:generated>
-                <a:enumeration>include-header</a:enumeration>
-                <a:customDisplayReference/>
-              </acp>
               <acp name="SheetName">
                 <a:value xsi:nil="true" xsi:type="xsd:string"/>
                 <a:local-id>input-SheetName</a:local-id>
-                <a:expr/>
+                <a:expr><![CDATA[="Reporte_Consulta"]]></a:expr>
                 <a:required>0</a:required>
                 <a:editable>1</a:editable>
                 <a:assign-to-pv/>
@@ -2442,66 +1508,14 @@
                 <a:enumeration/>
                 <a:customDisplayReference/>
               </acp>
-              <acp name="SheetNumber">
-                <a:value xsi:nil="true" xsi:type="xsd:int"/>
-                <a:local-id>input-SheetNumber</a:local-id>
-                <a:expr/>
-                <a:required>0</a:required>
-                <a:editable>1</a:editable>
-                <a:assign-to-pv/>
-                <a:input-to-activity-class>true</a:input-to-activity-class>
-                <a:hidden-from-designer>false</a:hidden-from-designer>
-                <a:generated>false</a:generated>
-                <a:enumeration/>
-                <a:customDisplayReference/>
-              </acp>
-              <acp name="StartingCell">
-                <a:value xsi:nil="true" xsi:type="xsd:string"/>
-                <a:local-id>input-StartingCell</a:local-id>
-                <a:expr><![CDATA[="A10"]]></a:expr>
-                <a:required>0</a:required>
-                <a:editable>1</a:editable>
-                <a:assign-to-pv/>
-                <a:input-to-activity-class>true</a:input-to-activity-class>
-                <a:hidden-from-designer>false</a:hidden-from-designer>
-                <a:generated>false</a:generated>
-                <a:enumeration/>
-                <a:customDisplayReference/>
-              </acp>
-              <acp name="CustomCellPositions">
-                <a:value xsi:nil="true" xsi:type="a:Text?list"/>
-                <a:local-id>input-CustomCellPositions</a:local-id>
-                <a:expr><![CDATA[={"A1", "A5", "A6", "A7", "B6", "B7", "C6", "C7","D6", "D7", "E6", "E7", "F6", "F7", "G6", "G7", "H6", "H7", "I6", "I7", "J6", "J7", "K6", "K7", "L6", "L7", "M6", "M7", "N6", "N7", "O6", "O7", "P6", "P7", "Q6", "Q7", "R6", "R7", "S6", "S7", "T6", "T7", "U6", "U7", "V6", "V7", "A9", "B1", "A2", "B2"}]]></a:expr>
-                <a:required>0</a:required>
-                <a:editable>1</a:editable>
-                <a:assign-to-pv/>
-                <a:input-to-activity-class>true</a:input-to-activity-class>
-                <a:hidden-from-designer>false</a:hidden-from-designer>
-                <a:generated>false</a:generated>
-                <a:enumeration/>
-                <a:customDisplayReference/>
-              </acp>
-              <acp name="CustomCellValues">
-                <a:value xsi:nil="true" xsi:type="a:Text?list"/>
-                <a:local-id>input-CustomCellValues</a:local-id>
-                <a:expr><![CDATA[= {  "Usuario que modificó: ",  "Información Antigua",  "Mercado",  pv!reporteAprobadoAntiguo.mercado,  "Operacion",  pv!reporteAprobadoAntiguo.operacion,  "Contrato",  pv!reporteAprobadoAntiguo.contrato,  "Nombre Cliente",  pv!reporteAprobadoAntiguo.nombre,  "Monto",  pv!reporteAprobadoAntiguo.monto,/*fixed(todecimal(pv!reporteAprobadoAntiguo.monto), 2),*/   "Promotor",  pv!reporteAprobadoAntiguo.promotor,  "Usuario",  pv!reporteAprobadoAntiguo.usuario,  "Fecha_de_captura",  pv!reporteAprobadoAntiguo.fechacaptura,  "Hora Captura",  pv!reporteAprobadoAntiguo.horacaptura,  "Riesgo",  pv!reporteAprobadoAntiguo.riesgo,  "Emisora",  pv!reporteAprobadoAntiguo.emisora,  "Centro_de_Costos",  pv!reporteAprobadoAntiguo.ccostos,  "Bitacora",  pv!reporteAprobadoAntiguo.bitacora,  "Observaciones",  pv!reporteAprobadoAntiguo.observaciones,  "Obligatorio",  pv!reporteAprobadoAntiguo.obligatorio,  "Tipo_operación",  pv!reporteAprobadoAntiguo.extra4,  "Titulo",  pv!reporteAprobadoAntiguo.titulo,  "IP",  pv!reporteAprobadoAntiguo.ip,  "Revisado",  pv!reporteAprobadoAntiguo.revisado,  "Usuario Reviso",  pv!reporteAprobadoAntiguo.usuarioreviso,  "CCReviso",  pv!reporteAprobadoAntiguo.ccreviso,  "Fecha Reviso",  pv!reporteAprobadoAntiguo.fechareviso,  "Información Correcta",  pv!user,  "Exportado en: ",  tp!starttime}]]></a:expr>
-                <a:required>0</a:required>
-                <a:editable>1</a:editable>
-                <a:assign-to-pv/>
-                <a:input-to-activity-class>true</a:input-to-activity-class>
-                <a:hidden-from-designer>false</a:hidden-from-designer>
-                <a:generated>false</a:generated>
-                <a:enumeration/>
-                <a:customDisplayReference/>
-              </acp>
-              <acp name="NewDocument">
+              <acp name="SourceDocument">
                 <a:value xsi:nil="true" xsi:type="a:CollaborationDocument"/>
-                <a:local-id>output-NewDocument</a:local-id>
-                <a:expr/>
-                <a:required>0</a:required>
+                <a:local-id>input-SourceDocument</a:local-id>
+                <a:expr><![CDATA[=pv!excel]]></a:expr>
+                <a:required>1</a:required>
                 <a:editable>1</a:editable>
                 <a:assign-to-pv/>
-                <a:input-to-activity-class>false</a:input-to-activity-class>
+                <a:input-to-activity-class>true</a:input-to-activity-class>
                 <a:hidden-from-designer>false</a:hidden-from-designer>
                 <a:generated>false</a:generated>
                 <a:enumeration/>
@@ -2510,7 +1524,7 @@
             </acps>
             <custom-params/>
             <output-exprs>
-              <el typeFlag="1"><![CDATA[excel:AC!NewDocument]]></el>
+              <el typeFlag="1"><![CDATA[excel:AC!NewDocumentCreated]]></el>
             </output-exprs>
             <requires-user-interaction>true</requires-user-interaction>
             <run-as>
@@ -2572,11 +1586,11 @@
           <escalations/>
           <connections>
             <connection>
-              <guiId>4</guiId>
-              <to>4</to>
+              <guiId>11</guiId>
+              <to>1</to>
               <toObjectType>ap.gui.Node</toObjectType>
-              <fromAnchor>1</fromAnchor>
-              <toAnchor>3</toAnchor>
+              <fromAnchor/>
+              <toAnchor/>
               <showArrowhead>true</showArrowhead>
               <flowLabel/>
               <label>
@@ -2631,7 +1645,7 @@
       <lanes>
         <lane>
           <laneLabel><![CDATA[Sistema]]></laneLabel>
-          <dimension>259</dimension>
+          <dimension>420</dimension>
           <color>#00CC33</color>
           <isVertical>false</isVertical>
           <isLaneAssignment>false</isLaneAssignment>
@@ -2694,5 +1708,7 @@
     <historyInfo versionUuid="0001ead2-4c48-8000-82a2-014d98014d98"/>
     <historyInfo versionUuid="0001eb77-a403-8000-aeab-014d98014d98"/>
     <historyInfo versionUuid="0001eba3-4db9-8000-b76b-014d98014d98"/>
+    <historyInfo versionUuid="0001ec5b-6a06-8000-cd97-014d98014d98"/>
+    <historyInfo versionUuid="0000ec71-ec44-8000-cfd6-014d98014d98"/>
   </history>
 </processModelHaul>

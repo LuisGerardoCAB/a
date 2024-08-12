@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
-    <versionUuid>_a-0000eb9b-4ec6-8000-e68b-01ef9001ef90_9647973</versionUuid>
+    <versionUuid>_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10124860</versionUuid>
     <interface>
         <name>SCDO_AdjuntoDocumentoInterfazEjecutivo</name>
         <uuid>_a-0000e9f5-96e6-8000-e641-01ef9001ef90_6327654</uuid>
@@ -17,7 +17,7 @@
         </visibility>
         <definition>a!localVariables(
   /* Se Obtiene el reporte  */
-  local!datos: #"_a-0000e982-d80b-8000-e63b-01ef9001ef90_4635413"(idreporte: ri!idReporteSeleccionado)[1],
+  local!datos: #"_a-0000e982-d80b-8000-e63b-01ef9001ef90_4635413"(idreporte: ri!idReporteSeleccionado),
   local!nombre_documento: concat(
     local!datos.contrato,
     "_",
@@ -30,15 +30,15 @@
     a!isNullOrEmpty(
       #"_a-0000e968-30a1-8000-e639-01ef9001ef90_4493495"(
         idsegmento: 2,
-        pagingInfo: #"SYSTEM_SYSRULES_pagingInfo"(startIndex: 1, batchSize: - 1)
+        pagingInfo: #"SYSTEM_SYSRULES_pagingInfo"(startIndex: 1, batchSize: 500)
       )
     ),
     null,
     #"_a-0000e968-30a1-8000-e639-01ef9001ef90_4493570"(
-      idsDocumentos: #"_a-0000e968-30a1-8000-e639-01ef9001ef90_4493495"(
+      idsDocumentos: index(#"_a-0000e968-30a1-8000-e639-01ef9001ef90_4493495"(
         idsegmento: ri!ejecutivo.idsegmento,
-        pagingInfo: #"SYSTEM_SYSRULES_pagingInfo"(startIndex: 1, batchSize: - 1)
-      ).iddocumento
+        pagingInfo: #"SYSTEM_SYSRULES_pagingInfo"(startIndex: 1, batchSize: 500)
+      ),"iddocumento",null)
     ),
 
   ),
@@ -55,12 +55,8 @@
         items: local!catalogoDelSegmento,
         expression: if(
           and(
-            fv!item.documentaa = "CONTRATO",
-            /*if(*/
-              /*a!isNotNullOrEmpty(fv!item.adf),*/
-              /*tointeger(fv!item.adf) &lt;&gt; 1,*/
-              /*true*/
-            /*)*/
+            index(fv!item,"documentaa",null) = "CONTRATO",
+            
           ),
           fv!item,
           null
@@ -85,8 +81,8 @@
         items: local!catalogoDelSegmento,
         expression: if(
           and(
-            fv!item.documentaa = "CONTRATO",
-            a!isNotNullOrEmpty(fv!item.adf) = 1
+            index(fv!item,"documentaa",null) = "CONTRATO",
+            a!isNotNullOrEmpty(index(fv!item,"adf",null)) = 1
           ),
           fv!item,
           null
@@ -107,7 +103,7 @@
       #"SYSTEM_SYSRULES_forEach"(
         items: local!catalogoDelSegmento,
         expression: if(
-          fv!item.documentaa = "OPERACION",
+          index(fv!item,"documentaa",null) = "OPERACION",
           fv!item,
           null
         )
@@ -122,12 +118,12 @@
   local!documentacionAceptados: if(
     a!isNullOrEmpty(local!catDocContratoGeneral),
     null,
-    #"_a-0000e8b2-d897-8000-e5f1-01ef9001ef90_2372887"(
+    index(#"_a-0000e8b2-d897-8000-e5f1-01ef9001ef90_2372887"(
       contrato: local!datos.contrato,
       idsDocumentos: local!catDocContratoGeneral.iddocumento,
       estado: "A",
       /*usuariocargo:ri!ejecutivo.expediente*/
-    ).data,
+    ),"data",null)
 
   ),
   /*
@@ -156,7 +152,7 @@
         expression: if(
           contains(
             local!documentacionAceptados.iddocumento,
-            fv!item.iddocumento
+            index(fv!item,"iddocumento",null)
           ),
           fv!item,
           null
@@ -181,7 +177,7 @@
         expression: if(
           contains(
             local!documentacionRechazados.iddocumento,
-            fv!item.iddocumento
+            index(fv!item,"iddocumento",null)
           ),
           fv!item,
           null
@@ -214,7 +210,7 @@
         expression: if(
           contains(
             local!adfsAceptados.iddocumento,
-            fv!item.iddocumento
+            index(fv!item,"iddocumento",null)
           ),
           fv!item,
           null
@@ -249,7 +245,7 @@
         expression: if(
           contains(
             local!digitalizadosAceptados.iddocumento,
-            fv!item.iddocumento
+            index(fv!item,"iddocumento",null)
           ),
           fv!item,
           null
@@ -276,7 +272,7 @@
         expression: if(
           contains(
             local!digitalizadosRechazados.iddocumento,
-            fv!item.iddocumento
+            index(fv!item,"iddocumento",null)
           ),
           fv!item,
           null
@@ -348,11 +344,11 @@
   local!estan_en_documentacion_pendientes_contrato: if(
     a!isNullOrEmpty(local!catDocContratoGeneral),
     null,
-    #"_a-0000e8b2-d897-8000-e5f1-01ef9001ef90_2372887"(
+    index(#"_a-0000e8b2-d897-8000-e5f1-01ef9001ef90_2372887"(
       contrato: local!datos.contrato,
       idsDocumentos: local!catDocContratoGeneral.iddocumento,
       estado: "P"
-    ).data,
+    ),"data",null)
 
   ),
   local!catestan_en_documentacion_pendientes_contrato: if(
@@ -365,7 +361,7 @@
         expression: if(
           contains(
             local!estan_en_documentacion_pendientes_contrato.iddocumento,
-            fv!item.iddocumento
+            index(fv!item,"iddocumento",null)
           ),
           fv!item,
           null
@@ -375,12 +371,52 @@
     ),
 
   ),
+  local!unionAceptadosRechazados:  a!match(
+    value: and(a!isNotNullOrEmpty(local!solo_aceptados_contrato),
+    a!isNotNullOrEmpty(local!solo_rechazados_contrato)
+    ),
+    equals: true(),
+    then: union(local!solo_aceptados_contrato, local!solo_rechazados_contrato),
+    whenTrue: and(
+      a!isNullOrEmpty(local!solo_aceptados_contrato),
+      a!isNullOrEmpty(local!solo_rechazados_contrato)),
+      then: {},
+      whenTrue:  and(a!isNullOrEmpty(local!solo_aceptados_contrato),
+      a!isNotNullOrEmpty(local!solo_rechazados_contrato)
+      ),
+      then: local!solo_rechazados_contrato,
+      default: local!solo_aceptados_contrato
+      ),
+      
+  /*),*/
+  /*if(*/
+    /*and(a!isNotNullOrEmpty(local!solo_aceptados_contrato),*/
+    /*a!isNotNullOrEmpty(local!solo_rechazados_contrato)*/
+    /*),*/
+    /*union(local!solo_aceptados_contrato, local!solo_rechazados_contrato),*/
+    /*if(*/
+      /*and(*/
+        /*a!isNullOrEmpty(local!solo_aceptados_contrato),*/
+        /*a!isNullOrEmpty(local!solo_rechazados_contrato)*/
+      /*),*/
+      /*{},*/
+      /*if(*/
+        /*and(a!isNullOrEmpty(local!solo_aceptados_contrato),*/
+        /*a!isNotNullOrEmpty(local!solo_rechazados_contrato)*/
+        /*),*/
+        /*local!solo_rechazados_contrato,*/
+        /*local!solo_aceptados_contrato*/
+/**/
+/**/
+      /*)*/
+    /*)*/
+  /*),*/
   local!faltan_contrato: 
   if(a!isNotNullOrEmpty(local!catDocContratoGeneral),
   #"_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9534907"(
     arreglo_1:local!catDocContratoGeneral,
     arreglo_2:local!catestan_en_documentacion_pendientes_contrato,
-    arreglo_3:local!catDocAceptadosDeContrato
+    arreglo_3:local!unionAceptadosRechazados
   ),
   /*difference(*/
     /*local!catDocContratoGeneral,*/
@@ -444,7 +480,7 @@
                     local!solo_aceptados_contrato,
                     if(
                       true,
-                      fv!item.documento &amp; " - " &amp; "(Aceptado)",
+                      index(fv!item,"documento",null) &amp; " - " &amp; "(Aceptado)",
                       ""
                     )
                   ),
@@ -465,18 +501,30 @@
 
                   choiceLabels: #"SYSTEM_SYSRULES_forEach"(
                     local!catDocParaADFAceptado,
-                    if(a!isNotNullOrEmpty(local!catDocAceptadosDeContrato),
-                    if(
-                      contains(
-                        local!catDocAceptadosDeContrato,
-                        fv!item
-                      ),
-                      fv!item.documento &amp; " - " &amp; "(Aceptado)" &amp; " - " &amp; "📜",
-                      fv!item.documento &amp; " - " &amp; "📜",
-
+                    a!match(value: a!isNotNullOrEmpty(local!catDocAceptadosDeContrato),
+                    equals: false(),
+                    then:index(fv!item,"documento",null) &amp; " - " &amp; "📜",
+                    whenTrue:  contains(
+                      local!catDocAceptadosDeContrato,
+                      fv!item
                     ),
-                    fv!item.documento &amp; " - " &amp; "📜",
-                    )
+                    then:  index(fv!item,"documento",null) &amp; " - " &amp; "(Aceptado)" &amp; " - " &amp; "📜",
+                    default: index(fv!item,"documento",null) &amp; " - " &amp; "📜",
+                    ),
+                    
+                    
+                    /*if(a!isNotNullOrEmpty(local!catDocAceptadosDeContrato),*/
+                    /*if(*/
+                      /*contains(*/
+                        /*local!catDocAceptadosDeContrato,*/
+                        /*fv!item*/
+                      /*),*/
+                      /*index(fv!item,"documento",null) &amp; " - " &amp; "(Aceptado)" &amp; " - " &amp; "📜",*/
+                      /*index(fv!item,"documento",null) &amp; " - " &amp; "📜",*/
+/**/
+                    /*),*/
+                    /*index(fv!item,"documento",null) &amp; " - " &amp; "📜",*/
+                    /*)*/
                     
                   ),
                   choiceValues: local!catDocParaADFAceptado.iddocumento,
@@ -497,7 +545,7 @@
                   choiceLabels: #"SYSTEM_SYSRULES_forEach"(
                     local!solo_rechazados_contrato,
 
-                    fv!item.documento &amp; " - " &amp; "(Rechazado)"
+                    index(fv!item,"documento",null) &amp; " - " &amp; "(Rechazado)"
 
                   ),
                  
@@ -544,7 +592,7 @@
                   choiceLabels: #"SYSTEM_SYSRULES_forEach"(
                     local!catDocAceptadoDeOperacion,
 
-                    fv!item.documento &amp; " - " &amp; "(Aceptado)"
+                    index(fv!item,"documento",null) &amp; " - " &amp; "(Aceptado)"
 
                   )
                   ,
@@ -566,7 +614,7 @@
                     local!catDocRechazadosDeOperacion,
                     if(
                       true,
-                      fv!item.documento &amp; " - " &amp; "(Rechazado)",
+                      index(fv!item,"documento",null) &amp; " - " &amp; "(Rechazado)",
                       ""
                     )
                   ),
@@ -639,7 +687,7 @@
                                     items: local!catDocAceptadosDeContrato,
                                     expression: #"SYSTEM_SYSRULES_richTextDisplayField"(
                                       value: {
-                                        #"SYSTEM_SYSRULES_richTextItem_v1"(text: concat(fv!item.documento, " "), ),
+                                        #"SYSTEM_SYSRULES_richTextItem_v1"(text: concat(index(fv!item,"documento",null), " "), ),
                                         #"SYSTEM_SYSRULES_richTextIcon"(
                                           icon: "check-circle",
                                           color: "POSITIVE",
@@ -651,7 +699,7 @@
                                               local!verDetallesAceptado,
                                               a!save(
                                                 local!idDocumentoSeleccionado,
-                                                fv!item.iddocumento
+                                                index(fv!item,"iddocumento",null)
                                               ),
                                               a!save(
                                                 local!documentoRechazadoSeleccionado,
@@ -670,7 +718,7 @@
                                                     #"SYSTEM_SYSRULES_forEach"(
                                                       items: local!documentacionAceptados,
                                                       expression: if(
-                                                        tointeger(fv!item.iddocumento) = local!idDocumentoSeleccionado,
+                                                        tointeger(index(fv!item,"iddocumento",null)) = local!idDocumentoSeleccionado,
                                                         fv!item,
                                                         null
                                                       )
@@ -704,7 +752,7 @@
                                   items: local!catDocRechazadosDeContrato,
                                   expression: #"SYSTEM_SYSRULES_richTextDisplayField"(
                                     value: {
-                                      #"SYSTEM_SYSRULES_richTextItem_v1"(text: concat(fv!item.documento, " "), ),
+                                      #"SYSTEM_SYSRULES_richTextItem_v1"(text: concat(index(fv!item,"documento",null), " "), ),
                                       #"SYSTEM_SYSRULES_richTextIcon"(
                                         icon: "times-circle",
                                         color: "NEGATIVE",
@@ -716,7 +764,7 @@
                                             local!verDetallesAceptado,
                                             a!save(
                                               local!idDocumentoSeleccionado,
-                                              fv!item.iddocumento
+                                              index(fv!item,"iddocumento",null)
                                             ),
                                             a!save(local!documentoSeleccionado, null),
                                             a!save(
@@ -732,7 +780,7 @@
                                                   #"SYSTEM_SYSRULES_forEach"(
                                                     items: local!documentacionRechazados,
                                                     expression: if(
-                                                      tointeger(fv!item.iddocumento) = local!idDocumentoSeleccionado,
+                                                      tointeger(index(fv!item,"iddocumento",null)) = local!idDocumentoSeleccionado,
                                                       fv!item,
                                                       null
                                                     )
@@ -767,7 +815,7 @@
                                   items: local!catDocAceptadoDeOperacion,
                                   expression: #"SYSTEM_SYSRULES_richTextDisplayField"(
                                     value: {
-                                      #"SYSTEM_SYSRULES_richTextItem_v1"(text: fv!item.documento &amp; " ", ),
+                                      #"SYSTEM_SYSRULES_richTextItem_v1"(text: index(fv!item,"documento",null) &amp; " ", ),
                                       #"SYSTEM_SYSRULES_richTextIcon"(
                                         icon: "check-circle",
                                         caption: "Mostrar Detalles",
@@ -779,7 +827,7 @@
                                             local!verDetallesAceptado,
                                             a!save(
                                               local!idDocumentoSeleccionado,
-                                              fv!item.iddocumento
+                                              index(fv!item,"iddocumento",null)
                                             ),
                                             a!save(local!documentoSeleccionado, null),
                                             a!save(
@@ -798,7 +846,7 @@
                                                   #"SYSTEM_SYSRULES_forEach"(
                                                     items: local!digitalizadosAceptados,
                                                     expression: if(
-                                                      local!idDocumentoSeleccionado = tointeger(fv!item.iddocumento),
+                                                      local!idDocumentoSeleccionado = tointeger(index(fv!item,"iddocumento",null)),
                                                       fv!item,
                                                       null
                                                     )
@@ -830,7 +878,7 @@
                                   items: local!catDocRechazadosDeOperacion,
                                   expression: #"SYSTEM_SYSRULES_richTextDisplayField"(
                                     value: {
-                                      #"SYSTEM_SYSRULES_richTextItem_v1"(text: concat(fv!item.documento, " "), ),
+                                      #"SYSTEM_SYSRULES_richTextItem_v1"(text: concat(index(fv!item,"documento",null), " "), ),
                                       #"SYSTEM_SYSRULES_richTextIcon"(
                                         icon: "times-circle",
                                         color: "NEGATIVE",
@@ -842,7 +890,7 @@
                                             local!verDetallesAceptado,
                                             a!save(
                                               local!idDocumentoSeleccionado,
-                                              fv!item.iddocumento
+                                              index(fv!item,"iddocumento",null)
                                             ),
                                             a!save(
                                               local!digitalizadoRechazadoSeleccionado,
@@ -852,7 +900,7 @@
                                                   #"SYSTEM_SYSRULES_forEach"(
                                                     items: local!digitalizadosRechazados,
                                                     expression: if(
-                                                      tointeger(fv!item.iddocumento) = local!idDocumentoSeleccionado,
+                                                      tointeger(index(fv!item,"iddocumento",null)) = local!idDocumentoSeleccionado,
                                                       fv!item,
                                                       null
                                                     )
@@ -894,8 +942,8 @@
                               #"SYSTEM_SYSRULES_forEach"(
                                 items: local!catalogoDelSegmento,
                                 expression: if(
-                                  tointeger(fv!item.iddocumento) = local!idDocumentoSeleccionado,
-                                  fv!item.documento,
+                                  tointeger(index(fv!item,"iddocumento",null)) = local!idDocumentoSeleccionado,
+                                  index(fv!item,"documento",null),
                                   null
                                 )
                               )
@@ -915,7 +963,7 @@
                                             #"SYSTEM_SYSRULES_richTextItem_v1"(
                                               text: concat(
                                                 "Nombre de Documento: ",
-                                                local!documentoSeleccionado[1].nomdocumento
+                                                index(local!documentoSeleccionado,"nomdocumento", null)
                                               )
                                             )
                                           }
@@ -925,7 +973,7 @@
                                             #"SYSTEM_SYSRULES_richTextItem_v1"(
                                               text: concat(
                                                 "Usuario Carga: ",
-                                                local!documentoSeleccionado[1].usuariocargo
+                                                index(local!documentoSeleccionado,"usuariocargo", null)
                                               )
                                             )
                                           }
@@ -935,7 +983,7 @@
                                             #"SYSTEM_SYSRULES_richTextItem_v1"(
                                               text: concat(
                                                 "Fecha de Carga: ",
-                                                local!documentoSeleccionado[1].fechacarga
+                                                index(local!documentoSeleccionado,"fechacarga", null)
                                               )
                                             )
                                           }
@@ -945,7 +993,7 @@
                                             #"SYSTEM_SYSRULES_richTextItem_v1"(
                                               text: concat(
                                                 "Usuario Acepto: ",
-                                                local!documentoSeleccionado[1].usuarioacepto
+                                                index(local!documentoSeleccionado,"usuarioacepto", null)
                                               )
                                             )
                                           }
@@ -1000,8 +1048,8 @@
                                 #"SYSTEM_SYSRULES_forEach"(
                                   items: local!catalogoDelSegmento,
                                   expression: if(
-                                    tointeger(fv!item.iddocumento) = local!idDocumentoSeleccionado,
-                                    fv!item.documento,
+                                    tointeger(index(fv!item,"iddocumento",null)) = local!idDocumentoSeleccionado,
+                                    index(fv!item,"documento",null),
                                     null
                                   )
                                 )
@@ -1021,7 +1069,7 @@
                                               #"SYSTEM_SYSRULES_richTextItem_v1"(
                                                 text: concat(
                                                   "Nombre de Documento: ",
-                                                  local!documentoRechazadoSeleccionado[1].nomdocumento
+                                                  index(local!documentoRechazadoSeleccionado,"nomdocumento", null)
                                                 )
                                               )
                                             }
@@ -1031,7 +1079,7 @@
                                               #"SYSTEM_SYSRULES_richTextItem_v1"(
                                                 text: concat(
                                                   "Fecha de Rechazo: ",
-                                                  local!documentoRechazadoSeleccionado[1].fecha
+                                                  index(local!documentoRechazadoSeleccionado,"fecha", null)
                                                 )
                                               )
                                             }
@@ -1041,7 +1089,7 @@
                                               #"SYSTEM_SYSRULES_richTextItem_v1"(
                                                 text: concat(
                                                   "Usuario Rechazo: ",
-                                                  local!documentoRechazadoSeleccionado[1].usuariorechazo
+                                                  index(local!documentoRechazadoSeleccionado,"usuariorechazo", null)
                                                 )
                                               )
                                             }
@@ -1100,8 +1148,8 @@
                                 #"SYSTEM_SYSRULES_forEach"(
                                   items: local!catalogoDelSegmento,
                                   expression: if(
-                                    tointeger(fv!item.iddocumento) = local!idDocumentoSeleccionado,
-                                    fv!item.documento,
+                                    tointeger(index(fv!item,"iddocumento",null)) = local!idDocumentoSeleccionado,
+                                    index(fv!item,"documento",null),
                                     null
                                   )
                                 )
@@ -1121,7 +1169,7 @@
                                               #"SYSTEM_SYSRULES_richTextItem_v1"(
                                                 text: concat(
                                                   "Nombre de Documento: ",
-                                                  local!digitalizadoSeleccionado[1].nombreimagen
+                                                  index(local!digitalizadoSeleccionado,"nombreimagen", null)
                                                 )
                                               )
                                             }
@@ -1131,7 +1179,7 @@
                                               #"SYSTEM_SYSRULES_richTextItem_v1"(
                                                 text: concat(
                                                   "Fecha de Acepto: ",
-                                                  local!digitalizadoSeleccionado[1].fechaacepto
+                                                  index(local!digitalizadoSeleccionado,"fechaacepto", null)
                                                 )
                                               )
                                             }
@@ -1141,7 +1189,7 @@
                                               #"SYSTEM_SYSRULES_richTextItem_v1"(
                                                 text: concat(
                                                   "Usuario Acepto: ",
-                                                  local!digitalizadoSeleccionado[1].usuarioacepto
+                                                  index(local!digitalizadoSeleccionado,"usuarioacepto", null)
                                                 )
                                               )
                                             }
@@ -1199,8 +1247,8 @@
                                 #"SYSTEM_SYSRULES_forEach"(
                                   items: local!catalogoDelSegmento,
                                   expression: if(
-                                    tointeger(fv!item.iddocumento) = local!idDocumentoSeleccionado,
-                                    fv!item.documento,
+                                    tointeger(index(fv!item,"iddocumento",null)) = local!idDocumentoSeleccionado,
+                                    index(fv!item,"documento",null),
                                     null
                                   )
                                 )
@@ -1222,7 +1270,7 @@
                                               #"SYSTEM_SYSRULES_richTextItem_v1"(
                                                 text: concat(
                                                   "Nombre de Documento: ",
-                                                  local!digitalizadoRechazadoSeleccionado[1].nombreimagen
+                                                  index(local!digitalizadorechazadoSeleccionado,"nombreimagen", null)
                                                 )
                                               )
                                             }
@@ -1232,7 +1280,7 @@
                                               #"SYSTEM_SYSRULES_richTextItem_v1"(
                                                 text: concat(
                                                   "Fecha de Rechazo: ",
-                                                  local!digitalizadoRechazadoSeleccionado[1].fecharechazo
+                                                  index(local!digitalizadorechazadoSeleccionado,"fecharechazo", null)
                                                 )
                                               )
                                             }
@@ -1242,7 +1290,7 @@
                                               #"SYSTEM_SYSRULES_richTextItem_v1"(
                                                 text: concat(
                                                   "Usuario Rechazo: ",
-                                                  local!digitalizadoRechazadoSeleccionado[1].usuariorechazo
+                                                  index(local!digitalizadorechazadoSeleccionado,"usuariorechazo", null)
                                                 )
                                               )
                                             }
@@ -1398,7 +1446,6 @@
                         processParameters: {
                           nombre_documento: local!nombre_documento,
                           datos: local!datos,
-                          documentoSubido: ri!documento,
                           ejecutivo: ri!ejecutivo,
                           esLlamada: ri!activo,
                           idsDocumentosContrato: if(
@@ -1564,7 +1611,7 @@
             <el>
                 <a:name/>
                 <a:ruleInputTestConfigs>
-                    <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="a:Expression">22576673</a:value>
+                    <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="a:Expression">598</a:value>
                     <a:nameRef>idReporteSeleccionado</a:nameRef>
                     <a:id>1</a:id>
                 </a:ruleInputTestConfigs>
@@ -1574,7 +1621,7 @@
                     <a:id>2</a:id>
                 </a:ruleInputTestConfigs>
                 <a:ruleInputTestConfigs>
-                    <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="xsd:int"/>
+                    <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:int">1</a:value>
                     <a:nameRef>activo</a:nameRef>
                     <a:id>3</a:id>
                 </a:ruleInputTestConfigs>
@@ -1584,12 +1631,12 @@
                     <a:id>4</a:id>
                 </a:ruleInputTestConfigs>
                 <a:ruleInputTestConfigs>
-                    <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="xsd:int"/>
+                    <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:int">1</a:value>
                     <a:nameRef>startIndex</a:nameRef>
                     <a:id>5</a:id>
                 </a:ruleInputTestConfigs>
                 <a:ruleInputTestConfigs>
-                    <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="xsd:int"/>
+                    <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:int">10</a:value>
                     <a:nameRef>batchSize</a:nameRef>
                     <a:id>6</a:id>
                 </a:ruleInputTestConfigs>
@@ -1599,7 +1646,7 @@
                     <a:id>7</a:id>
                 </a:ruleInputTestConfigs>
                 <a:ruleInputTestConfigs>
-                    <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                    <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string">0145</a:value>
                     <a:nameRef>contrato</a:nameRef>
                     <a:id>8</a:id>
                 </a:ruleInputTestConfigs>
@@ -1619,5 +1666,6 @@
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9539715"/>
         <historyInfo versionUuid="_a-0000eb9b-4ec6-8000-e68b-01ef9001ef90_9607072"/>
         <historyInfo versionUuid="_a-0000eb9b-4ec6-8000-e68b-01ef9001ef90_9647973"/>
+        <historyInfo versionUuid="_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10124860"/>
     </history>
 </contentHaul>

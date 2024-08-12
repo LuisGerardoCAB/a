@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
-    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9538997</versionUuid>
+    <versionUuid>_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10121298</versionUuid>
     <rule>
         <name>SCDO_UNION_4_ARREGLOS</name>
         <uuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9533439</uuid>
@@ -16,200 +16,117 @@
             <unlogged>false</unlogged>
         </visibility>
         <definition>a!localVariables(
-  local!devolver: /*if(*/
-  /*and(*/
-  /*a!isNullOrEmpty(ri!arreglo_1),*/
-  /*a!isNullOrEmpty(ri!arreglo_2),*/
-  /*a!isNullOrEmpty(ri!arreglo_3),),*/
-  /*null,*/
-  /*if(*/
-  /*and(*/
-  /*a!isNullOrEmpty(ri!arreglo_1),*/
-  /*a!isNullOrEmpty(ri!arreglo_2)*/
-  /*),*/
-  /*ri!arreglo_3,*/
-  /*if(*/
-  /*and(*/
-  /*a!isNullOrEmpty(ri!arreglo_1),*/
-  /*a!isNullOrEmpty(ri!arreglo_3)*/
-  /*),*/
-  /*ri!arreglo_2,*/
-  /*if(*/
-  /*and(*/
-  /*a!isNullOrEmpty(ri!arreglo_2),*/
-  /*a!isNullOrEmpty(ri!arreglo_3)*/
-  /*),*/
-  /*ri!arreglo_1,*/
-  /*if(and(*/
-  /*a!isNullOrEmpty(ri!arreglo_1),*/
-  /*and(*/
-  /*a!isNotNullOrEmpty(ri!arreglo_2),*/
-  /*a!isNotNullOrEmpty(ri!arreglo_3)*/
-  /*)),*/
-  /*union(ri!arreglo_2, ri!arreglo_3),*/
-  /*if(and(*/
-  /*a!isNullOrEmpty(ri!arreglo_2),*/
-  /*and(*/
-  /*a!isNotNullOrEmpty(ri!arreglo_1),*/
-  /*a!isNotNullOrEmpty(ri!arreglo_3)*/
-  /*)),*/
-  /*union(ri!arreglo_1, ri!arreglo_3),*/
-  /*if(and(*/
-  /*a!isNullOrEmpty(ri!arreglo_3),*/
-  /*and(*/
-  /*a!isNotNullOrEmpty(ri!arreglo_1),*/
-  /*a!isNotNullOrEmpty(ri!arreglo_2)*/
-  /*)),*/
-  /*union(ri!arreglo_1, ri!arreglo_2),*/
-  /*union(ri!arreglo_1, ri!arreglo_2, ri!arreglo_3)*/
-  /*)*/
-  /*)*/
-  /*)*/
-  /*)*/
-  /*)*/
-  /*)*/
-  /*    */
-  /*),*/
-  /*local!devolver*/
-  if(
-    and(
+  local!devolverMatch: a!match(
+    value: and(
       a!isNullOrEmpty(ri!arreglo_1),
       a!isNullOrEmpty(ri!arreglo_2),
       a!isNullOrEmpty(ri!arreglo_3),
       a!isNullOrEmpty(ri!arreglo_4)
     ),
-    null,
-    if(
-      and(
-        a!isNullOrEmpty(ri!arreglo_1),
-        a!isNullOrEmpty(ri!arreglo_2),
-        a!isNullOrEmpty(ri!arreglo_3)
-      ),
-      ri!arreglo_4,
-      if(
-        and(
-          a!isNullOrEmpty(ri!arreglo_1),
-          a!isNullOrEmpty(ri!arreglo_2),
-          a!isNullOrEmpty(ri!arreglo_4)
-        ),
-        ri!arreglo_3,
-        if(
-          and(
-            a!isNullOrEmpty(ri!arreglo_1),
-            a!isNullOrEmpty(ri!arreglo_3),
-            a!isNullOrEmpty(ri!arreglo_4)
-          ),
-          ri!arreglo_2,
-          if(
-            and(
-              a!isNullOrEmpty(ri!arreglo_2),
-              a!isNullOrEmpty(ri!arreglo_3),
-              a!isNullOrEmpty(ri!arreglo_4)
-            ),
-            ri!arreglo_1,
-            if(
-              and(
-                a!isNullOrEmpty(ri!arreglo_1),
-                a!isNotNullOrEmpty(ri!arreglo_2),
-                a!isNotNullOrEmpty(ri!arreglo_3),
-                a!isNotNullOrEmpty(ri!arreglo_4)
-              ),
-              union(ri!arreglo_2, ri!arreglo_3, ri!arreglo_4),
-              if(
-                and(
-                  a!isNullOrEmpty(ri!arreglo_2),
-                  a!isNotNullOrEmpty(ri!arreglo_1),
-                  a!isNotNullOrEmpty(ri!arreglo_3),
-                  a!isNotNullOrEmpty(ri!arreglo_4)
-                ),
-                union(ri!arreglo_1, ri!arreglo_3, ri!arreglo_4),
-                if(
-                  and(
-                    a!isNullOrEmpty(ri!arreglo_3),
-                    a!isNotNullOrEmpty(ri!arreglo_1),
-                    a!isNotNullOrEmpty(ri!arreglo_2),
-                    a!isNotNullOrEmpty(ri!arreglo_4)
-                  ),
-                  union(ri!arreglo_1, ri!arreglo_2, ri!arreglo_4),
-                  if(
-                    and(
-                      a!isNullOrEmpty(ri!arreglo_4),
-                      a!isNotNullOrEmpty(ri!arreglo_1),
-                      a!isNotNullOrEmpty(ri!arreglo_2),
-                      a!isNotNullOrEmpty(ri!arreglo_3)
-                    ),
-                    union(ri!arreglo_1, ri!arreglo_2, ri!arreglo_3),
-                    if(
-                      and(
-                        a!isNullOrEmpty(ri!arreglo_1),
-                        a!isNullOrEmpty(ri!arreglo_2),
-                        a!isNotNullOrEmpty(ri!arreglo_3),
-                        a!isNotNullOrEmpty(ri!arreglo_4)
-                      ),
-                      union(ri!arreglo_3, ri!arreglo_4),
-                      if(
-                        and(
-                          a!isNullOrEmpty(ri!arreglo_1),
-                          a!isNullOrEmpty(ri!arreglo_3),
-                          a!isNotNullOrEmpty(ri!arreglo_2),
-                          a!isNotNullOrEmpty(ri!arreglo_4)
-                        ),
-                        union(ri!arreglo_2, ri!arreglo_4),
-                        if(
-                          and(
-                            a!isNullOrEmpty(ri!arreglo_1),
-                            a!isNullOrEmpty(ri!arreglo_4),
-                            a!isNotNullOrEmpty(ri!arreglo_2),
-                            a!isNotNullOrEmpty(ri!arreglo_3)
-                          ),
-                          union(ri!arreglo_2, ri!arreglo_3),
-                          if(
-                            and(
-                              a!isNullOrEmpty(ri!arreglo_2),
-                              a!isNullOrEmpty(ri!arreglo_3),
-                              a!isNotNullOrEmpty(ri!arreglo_1),
-                              a!isNotNullOrEmpty(ri!arreglo_4)
-                            ),
-                            union(ri!arreglo_1, ri!arreglo_4),
-                            if(
-                              and(
-                                a!isNullOrEmpty(ri!arreglo_2),
-                                a!isNullOrEmpty(ri!arreglo_4),
-                                a!isNotNullOrEmpty(ri!arreglo_1),
-                                a!isNotNullOrEmpty(ri!arreglo_3)
-                              ),
-                              union(ri!arreglo_1, ri!arreglo_3),
-                              if(
-                                and(
-                                  a!isNullOrEmpty(ri!arreglo_3),
-                                  a!isNullOrEmpty(ri!arreglo_4),
-                                  a!isNotNullOrEmpty(ri!arreglo_1),
-                                  a!isNotNullOrEmpty(ri!arreglo_2)
-                                ),
-                                union(ri!arreglo_1, ri!arreglo_2),
-                                union(
-                                  ri!arreglo_1,
-                                  ri!arreglo_2,
-                                  ri!arreglo_3,
-                                  ri!arreglo_4
-                                ),
-
-                              )
-                            )
-                          )
-                        )
-                      )
-                    )
-                  )
-                )
-              )
-            )
-          )
-        )
-      )
+    equals: true(),
+    then: null,
+    whenTrue: and(
+      a!isNullOrEmpty(ri!arreglo_1),
+      a!isNullOrEmpty(ri!arreglo_2),
+      a!isNullOrEmpty(ri!arreglo_3)
+    ),
+    then: ri!arreglo_4,
+    whenTrue: and(
+      a!isNullOrEmpty(ri!arreglo_1),
+      a!isNullOrEmpty(ri!arreglo_2),
+      a!isNullOrEmpty(ri!arreglo_4)
+    ),
+    then: ri!arreglo_3,
+    whenTrue: and(
+      a!isNullOrEmpty(ri!arreglo_1),
+      a!isNullOrEmpty(ri!arreglo_3),
+      a!isNullOrEmpty(ri!arreglo_4)
+    ),
+    then: ri!arreglo_2,
+    whenTrue: and(
+      a!isNullOrEmpty(ri!arreglo_2),
+      a!isNullOrEmpty(ri!arreglo_3),
+      a!isNullOrEmpty(ri!arreglo_4)
+    ),
+    then: ri!arreglo_1,
+    whenTrue: and(
+      a!isNullOrEmpty(ri!arreglo_1),
+      a!isNotNullOrEmpty(ri!arreglo_2),
+      a!isNotNullOrEmpty(ri!arreglo_3),
+      a!isNotNullOrEmpty(ri!arreglo_4)
+    ),
+    then: union(ri!arreglo_2, ri!arreglo_3, ri!arreglo_4),
+    whenTrue: and(
+      a!isNullOrEmpty(ri!arreglo_2),
+      a!isNotNullOrEmpty(ri!arreglo_1),
+      a!isNotNullOrEmpty(ri!arreglo_3),
+      a!isNotNullOrEmpty(ri!arreglo_4)
+    ),
+    then: union(ri!arreglo_1, ri!arreglo_3, ri!arreglo_4),
+    whenTrue: and(
+      a!isNullOrEmpty(ri!arreglo_3),
+      a!isNotNullOrEmpty(ri!arreglo_1),
+      a!isNotNullOrEmpty(ri!arreglo_2),
+      a!isNotNullOrEmpty(ri!arreglo_4)
+    ),
+    then: union(ri!arreglo_1, ri!arreglo_2, ri!arreglo_4),
+    whenTrue: and(
+      a!isNullOrEmpty(ri!arreglo_4),
+      a!isNotNullOrEmpty(ri!arreglo_1),
+      a!isNotNullOrEmpty(ri!arreglo_2),
+      a!isNotNullOrEmpty(ri!arreglo_3)
+    ),
+    then: union(ri!arreglo_1, ri!arreglo_2, ri!arreglo_3),
+    whenTrue: and(
+      a!isNullOrEmpty(ri!arreglo_1),
+      a!isNullOrEmpty(ri!arreglo_2),
+      a!isNotNullOrEmpty(ri!arreglo_3),
+      a!isNotNullOrEmpty(ri!arreglo_4)
+    ),
+    then: union(ri!arreglo_3, ri!arreglo_4),
+    whenTrue: and(
+      a!isNullOrEmpty(ri!arreglo_1),
+      a!isNullOrEmpty(ri!arreglo_3),
+      a!isNotNullOrEmpty(ri!arreglo_2),
+      a!isNotNullOrEmpty(ri!arreglo_4)
+    ),
+    then: union(ri!arreglo_2, ri!arreglo_4),
+    whenTrue: and(
+      a!isNullOrEmpty(ri!arreglo_1),
+      a!isNullOrEmpty(ri!arreglo_4),
+      a!isNotNullOrEmpty(ri!arreglo_2),
+      a!isNotNullOrEmpty(ri!arreglo_3)
+    ),
+    then: union(ri!arreglo_2, ri!arreglo_3),
+    whenTrue: and(
+      a!isNullOrEmpty(ri!arreglo_2),
+      a!isNullOrEmpty(ri!arreglo_3),
+      a!isNotNullOrEmpty(ri!arreglo_1),
+      a!isNotNullOrEmpty(ri!arreglo_4)
+    ),
+    then: union(ri!arreglo_1, ri!arreglo_4),
+    whenTrue: and(
+      a!isNullOrEmpty(ri!arreglo_2),
+      a!isNullOrEmpty(ri!arreglo_4),
+      a!isNotNullOrEmpty(ri!arreglo_1),
+      a!isNotNullOrEmpty(ri!arreglo_3)
+    ),
+    then: union(ri!arreglo_1, ri!arreglo_3),
+    whenTrue: and(
+      a!isNullOrEmpty(ri!arreglo_3),
+      a!isNullOrEmpty(ri!arreglo_4),
+      a!isNotNullOrEmpty(ri!arreglo_1),
+      a!isNotNullOrEmpty(ri!arreglo_2)
+    ),
+    then: union(ri!arreglo_1, ri!arreglo_2),
+    default: union(
+      ri!arreglo_1,
+      ri!arreglo_2,
+      ri!arreglo_3,
+      ri!arreglo_4
     )
   ),
-  local!devolver
+  local!devolverMatch
 )</definition>
         <namedTypedValue>
             <name>arreglo_1</name>
@@ -270,5 +187,6 @@
     </roleMap>
     <history>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9538997"/>
+        <historyInfo versionUuid="_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10121298"/>
     </history>
 </contentHaul>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
-    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9387645</versionUuid>
+    <versionUuid>_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10114695</versionUuid>
     <interface>
         <name>SCDO_Documentacion_Operacion_Aprobada</name>
         <uuid>_a-0000e9a7-6d42-8000-e63f-01ef9001ef90_4879925</uuid>
@@ -73,6 +73,12 @@
       emptyGridMessage: "No hay documentacón para mostrar",
       data: /*ri!documentacion*/ri!documentacion_d,
       columns: {
+        #"SYSTEM_SYSRULES_gridColumn"(
+          label: "Tipo Documento",
+          value: index(#"_a-0000e968-30a1-8000-e639-01ef9001ef90_4493570"(iddocumento: =index(fv!row,"iddocumento",null)), "documento",null),
+          align: "CENTER",
+          width: "MEDIUM_PLUS"
+        ),
         #"SYSTEM_SYSRULES_gridColumn"(
           label: "Documento",
           value: /*fv!row.nomdocumento*/fv!row.nombreimagen,
@@ -254,5 +260,6 @@
         <historyInfo versionUuid="_a-0000e9a7-6d42-8000-e63f-01ef9001ef90_4880115"/>
         <historyInfo versionUuid="_a-0000eae4-5659-8000-e685-01ef9001ef90_8692305"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9387645"/>
+        <historyInfo versionUuid="_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10114695"/>
     </history>
 </contentHaul>

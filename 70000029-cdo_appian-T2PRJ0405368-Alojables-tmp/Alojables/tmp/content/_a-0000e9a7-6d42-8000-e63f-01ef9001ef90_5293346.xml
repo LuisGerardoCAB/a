@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
-    <versionUuid>_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9451709</versionUuid>
+    <versionUuid>_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10122538</versionUuid>
     <rule>
         <name>SCDO_getCatDocumentoByFilterGridRegistroADF</name>
         <uuid>_a-0000e9a7-6d42-8000-e63f-01ef9001ef90_5293346</uuid>
@@ -15,7 +15,7 @@
             <system>false</system>
             <unlogged>false</unlogged>
         </visibility>
-        <definition>#"SYSTEM_SYSRULES_queryEntity_v2"(
+        <definition>index(#"SYSTEM_SYSRULES_queryEntity_v2"(
   fetchTotalCount: ri!fetchTotalCount,
   entity: #"_a-0000e8d8-9b98-8000-e605-01ef9001ef90_2694251",
   query: #"SYSTEM_SYSRULES_query"(
@@ -37,10 +37,10 @@
       },
       ignoreFiltersWithEmptyValues: true
     ),
-    pagingInfo: a!defaultValue(ri!paginInfo,#"SYSTEM_SYSRULES_pagingInfo"(1,-1))
+    pagingInfo: a!defaultValue(ri!paginInfo,#"SYSTEM_SYSRULES_pagingInfo"(1,200))
   ),
 
-).data</definition>
+),"data",null)</definition>
         <namedTypedValue>
             <name>iddocumento</name>
             <type>
@@ -111,5 +111,6 @@
         <historyInfo versionUuid="_a-0000e9a7-6d42-8000-e63f-01ef9001ef90_5293497"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9385796"/>
         <historyInfo versionUuid="_a-0000eb53-0a0e-8000-e689-01ef9001ef90_9451709"/>
+        <historyInfo versionUuid="_a-0000ec5b-dce3-8000-e69f-01ef9001ef90_10122538"/>
     </history>
 </contentHaul>

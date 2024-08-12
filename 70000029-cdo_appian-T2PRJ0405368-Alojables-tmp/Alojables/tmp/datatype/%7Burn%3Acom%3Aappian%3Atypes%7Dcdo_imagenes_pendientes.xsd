@@ -6,11 +6,12 @@
       <xsd:appinfo source="appian.jpa">@Table(name="CDO_MX_AUX_IMAGENES_PENDIENTES")</xsd:appinfo>
       <xsd:appinfo source="http://www.appian.com/ae/types/2009">
         <ns2:Metadata xmlns:ns2="http://www.appian.com/ae/types/2009">
-          <ns2:versionUuid>0000eae5-40db-8000-886f-014d98014d98</ns2:versionUuid>
+          <ns2:versionUuid>0000ec5f-6174-8000-ce0d-014d98014d98</ns2:versionUuid>
           <ns2:history>
             <ns2:historyInfo versionUuid="0000e868-4964-8000-4a61-014d98014d98"/>
             <ns2:historyInfo versionUuid="0000ea20-54b4-8000-2640-014d98014d98"/>
             <ns2:historyInfo versionUuid="0000eae5-40db-8000-886f-014d98014d98"/>
+            <ns2:historyInfo versionUuid="0000ec5f-6174-8000-ce0d-014d98014d98"/>
           </ns2:history>
         </ns2:Metadata>
       </xsd:appinfo>
@@ -65,11 +66,6 @@
       <xsd:element name="fechacaptura" nillable="true" type="xsd:string">
         <xsd:annotation>
           <xsd:appinfo source="appian.jpa">@Column(name="FECHACAPTURA", columnDefinition="VARCHAR2(50)")</xsd:appinfo>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="id_doc_appian" nillable="true" type="xsd:int">
-        <xsd:annotation>
-          <xsd:appinfo source="appian.jpa">@Column(name="ID_DOC_APPIAN", columnDefinition="NUMBER")</xsd:appinfo>
         </xsd:annotation>
       </xsd:element>
     </xsd:sequence>
